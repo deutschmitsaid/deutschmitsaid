@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deutsch mit Said – Vokabelblatt</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <style>
+    :root{
+      --bg:#f4f7ff;
+      --card:#ffffff;
+      --ink:#0f172a;
+      --muted:#64748b;
+
+      --blue1:#2563eb;
+      --blue2:#7c3aed;
+      --blue3:#06b6d4;
+
+      --shadow: 0 10px 30px rgba(2, 6, 23, 0.10);
+      --green:#16a34a;
+
+      --wa:#25D366;
+      --waDark:#0b5a46;
+    }
+
+    body{
+      font-family: Arial, sans-serif;
+      margin:0; padding:0;
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(37,99,235,0.18), transparent 55%),
+        radial-gradient(1000px 500px at 90% 0%, rgba(124,58,237,0.16), transparent 55%),
+        radial-gradient(900px 500px at 50% 110%, rgba(6,182,212,0.12), transparent 55%),
+        var(--bg);
+      color:var(--ink);
+    }
+
+    #app{ max-width: 1100px; margin:0 auto; padding:18px; }
+
+    /* ---------- TOP BAR ---------- */
+    .topbar{
+      position: sticky;
+      top: 10px;
+      z-index: 10;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(2,6,23,0.06);
+    }
+
+    .brand{
+      display:flex; flex-direction:column;
+      gap:3px;
+      min-width: 240px;
+    }
+    .brandTitle{
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: .2px;
+      line-height:1.1;
+      background: linear-gradient(90deg, var(--blue1), var(--blue2), var(--blue3));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .brandSub{
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .topActions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .pill{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border-radius: 999px;
+      background: rgba(2,6,23,0.04);
+      border: 1px solid rgba(2,6,23,0.06);
+    }
+
+    .pill input{
+      padding:10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(2,6,23,0.14);
+      outline:none;
+      background:#fff;
+      font-size: 14px;
+      min-width: 170px;
+      font-weight: 800;
+      font-family: Arial, sans-serif;
+    }
+    .pill input:focus{
+      border-color: rgba(34,197,94,0.55);
+      box-shadow: 0 0 0 4px rgba(34,197,94,0.14);
+    }
+
+    .btn{
+      border: none;
+      cursor: pointer;
+      padding:10px 14px;
+      border-radius: 999px;
+      font-weight: 900;
+      transition: transform .12s ease, opacity .12s ease;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      user-select:none;
+      white-space:nowrap;
+      font-family: Arial, sans-serif;
+    }
+    .btn:hover{ transform: translateY(-1px); opacity:.96; }
+
+    .btnPrimary{
+      background: linear-gradient(90deg, var(--blue1), var(--blue2));
+      color:#fff;
+      box-shadow: 0 10px 20px rgba(37,99,235,0.20);
+    }
+    .btnDanger{
+      background: linear-gradient(90deg, #ef4444, #f97316);
+      color:#fff;
+      box-shadow: 0 10px 20px rgba(239,68,68,0.18);
+    }
+    .btnLang{
+      background: linear-gradient(90deg, #16a34a, #22c55e);
+      color:#fff;
+      box-shadow: 0 10px 20px rgba(34,197,94,0.18);
+    }
+
+    /* ---------- CONTROLS ---------- */
+    #controls{
+      margin-top: 14px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      padding:14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(2,6,23,0.06);
+      justify-content:center;
+    }
+
+    .control-group{ display:flex; align-items:center; gap:10px; }
+    .control-group label{
+      font-weight: 900;
+      color:#334155;
+      font-size: 14px;
+    }
+
+    select, input[type="range"]{
+      padding:10px 12px;
+      border:1px solid rgba(2,6,23,0.14);
+      border-radius: 14px;
+      background:#fff;
+      font-weight: 900;
+      font-family: Arial, sans-serif;
+    }
+
+    #debug{
+      margin: 10px 0 0;
+      text-align:center;
+      font-size: 14px;
+      color:#475569;
+      font-weight: 900;
+    }
+    .error{
+      display:none;
+      margin-top:8px;
+      text-align:center;
+      color:#b91c1c;
+      font-weight:900;
+    }
+
+    /* ---------- GRID ---------- */
+    #grid{
+      margin-top: 16px;
+      display:grid;
+      justify-content:center;
+      padding:10px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(2,6,23,0.06);
+      position:relative;
+    }
+
+    .box{
+      aspect-ratio: 1;
+      border-radius: 16px;
+      background: var(--card);
+      position:relative;
+      overflow:hidden;
+      border: 1px solid rgba(2,6,23,0.06);
+    }
+
+    /* Flip */
+    .flip-card{ width:100%; height:100%; position:relative; transform-style:preserve-3d; transition: transform .55s ease; }
+    .flip-card.flipped{ transform: rotateY(180deg); }
+
+    .flip-side{
+      position:absolute; inset:0;
+      backface-visibility:hidden;
+      display:flex; flex-direction:column;
+      padding:14px;
+      box-sizing:border-box;
+      gap:10px;
+      font-family: Arial, sans-serif;
+    }
+    .flip-back{
+      transform: rotateY(180deg);
+      direction: rtl;
+      text-align:right;
+      font-family: Arial, sans-serif;
+    }
+
+    /* FRONT layout */
+    .frontWordWrap{
+      flex: 1;
+      display:flex; align-items:center; justify-content:center;
+      padding: 8px 6px 0;
+    }
+    .wordInput{
+      width:100%;
+      border:none; outline:none; resize:none;
+      background:transparent;
+      font-weight:900;
+      font-size: 16px;
+      line-height:1.25;
+      text-align:center;
+      overflow:hidden;
+      min-height: 34px;
+      font-family: Arial, sans-serif;
+    }
+
+    .exampleWrap{
+      border-top: 1px solid rgba(2,6,23,0.10);
+      padding-top: 10px;
+      min-height: 42%;
+      display:flex; flex-direction:column;
+      gap:6px;
+    }
+    .exampleLabel{
+      font-size:12px;
+      color:#64748b;
+      font-weight:900;
+      text-align:left;
+      direction:ltr;
+      font-family: Arial, sans-serif;
+    }
+    .explainInput{
+      border:none; outline:none; resize:none;
+      background:transparent;
+      font-size: 13px;
+      line-height:1.35;
+      text-align:left;
+      overflow:hidden;
+      flex:1;
+      font-family: Arial, sans-serif;
+    }
+
+    /* BACK layout */
+    .posBadge{
+      display:inline-flex;
+      align-self:flex-start;
+      padding:4px 10px;
+      border-radius:999px;
+      font-size: 11px;
+      font-weight: 900;
+      background: rgba(37,99,235,0.10);
+      color: #1d4ed8;
+      direction:ltr;
+      text-align:left;
+      user-select:none;
+      cursor:pointer;
+      font-family: Arial, sans-serif;
+    }
+
+    .backTopRow{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-top: 2px;
+    }
+
+    .arabicCenter{
+      flex: 1;
+      text-align:center;
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.7;
+      direction: rtl;
+      font-family: Arial, sans-serif;
+    }
+
+    .darijaSide{
+      width: 40%;
+      text-align:right;
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.65;
+      direction: rtl;
+      white-space: normal;
+      font-family: Arial, sans-serif;
+    }
+
+    .backNoteWrap{
+      margin-top: 6px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(2,6,23,0.10);
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      flex: 1;
+    }
+
+    .noteLabel{
+      font-size: 12px;
+      font-weight: 800;
+      opacity: .85;
+      direction: rtl;
+      text-align: right;
+      font-family: Arial, sans-serif;
+    }
+
+    .noteInput{
+      border:none;
+      outline:none;
+      resize:none;
+      background:transparent;
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 70px;
+      text-align:right;
+      direction: rtl;
+      font-family: Arial, sans-serif;
+    }
+
+    .darijaExample{
+      font-size: 13px;
+      font-weight: 600;
+      line-height:1.65;
+      opacity:.95;
+      direction: rtl;
+      text-align: right;
+      font-family: Arial, sans-serif;
+    }
+
+    .missing{ opacity: .78; }
+
+    /* ---------- PDF stage ---------- */
+    #pdfStage{
+      position:fixed; left:-99999px; top:-99999px;
+      width:210mm; padding:10mm;
+      background:#fff; color:#111;
+      box-sizing:border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    .pdfBigTitle{
+      text-align:center;
+      color: var(--green);
+      font-weight: 900;
+      font-size: 18px;
+      margin: 0 0 7mm 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .pdfWrap{
+      position:relative;
+      margin: 0 auto;
+      background:#fff;
+      padding: 10mm;
+      box-sizing:border-box;
+      width: 100%;
+      overflow: hidden;
+      border: none;
+      font-family: Arial, sans-serif;
+    }
+
+    .pdfFooter{
+      margin-top: 6mm;
+      display:flex;
+      gap:6mm;
+      flex-wrap:wrap;
+      justify-content:center;
+      font-size: 11px;
+      color:#111;
+      font-weight: 900;
+      font-family: Arial, sans-serif;
+    }
+    .pdfFooter span{
+      border: 1px solid rgba(0,0,0,0.12);
+      border-radius: 999px;
+      padding: 2.5mm 4mm;
+      background: rgba(0,0,0,0.02);
+      font-family: Arial, sans-serif;
+    }
+
+    @media (max-width:900px){
+      .brand{ min-width: unset; }
+      .pill input{ min-width: 130px; }
+    }
+
+    /* ---------- WhatsApp widget ---------- */
+    #waBtn{
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 54px;
+      height: 54px;
+      border-radius: 999px;
+      background: var(--wa);
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 16px 30px rgba(0,0,0,0.25);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index: 9999;
+    }
+    #waBtn:active{ transform: scale(0.98); }
+    #waBtn svg{ width: 26px; height: 26px; fill: #fff; }
+
+    #waPopup{
+      position: fixed;
+      right: 18px;
+      bottom: 86px;
+      width: 320px;
+      max-width: calc(100vw - 36px);
+      border-radius: 14px;
+      overflow:hidden;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.25);
+      background:#fff;
+      z-index: 9999;
+      display:none;
+    }
+    #waPopup.open{ display:block; }
+    .waHeader{
+      background: var(--waDark);
+      padding: 12px 12px;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      color:#fff;
+      font-family: Arial, sans-serif;
+    }
+    .waAvatar{
+      width: 40px; height: 40px;
+      border-radius: 999px;
+      object-fit: cover;
+      border: 2px solid rgba(255,255,255,0.35);
+      background:#0f172a;
+    }
+    .waTitle{ font-weight: 900; line-height:1.1; font-family: Arial, sans-serif; }
+    .waSub{ font-size: 12px; opacity: .9; margin-top: 2px; font-family: Arial, sans-serif; }
+
+    .waClose{
+      margin-left:auto;
+      border:none;
+      background: rgba(255,255,255,0.12);
+      color:#fff;
+      width: 32px; height: 32px;
+      border-radius: 10px;
+      cursor:pointer;
+      font-weight: 900;
+      font-family: Arial, sans-serif;
+    }
+
+    .waBody{
+      padding: 12px;
+      background: #f6f7f8;
+      font-family: Arial, sans-serif;
+    }
+    .waBubble{
+      background:#fff;
+      border-radius: 12px;
+      padding: 10px 10px;
+      border: 1px solid rgba(2,6,23,0.06);
+      font-weight: 800;
+      color:#0f172a;
+      font-family: Arial, sans-serif;
+    }
+    .waBubble small{ display:block; margin-top:6px; color:#64748b; font-weight:800; font-family: Arial, sans-serif; }
+
+    .waInputWrap{
+      margin-top: 10px;
+      display:flex;
+      gap:8px;
+    }
+    #waInput{
+      flex:1;
+      border-radius: 12px;
+      border: 1px solid rgba(2,6,23,0.14);
+      padding: 10px 10px;
+      outline:none;
+      font-weight: 800;
+      font-family: Arial, sans-serif;
+    }
+    #waSend{
+      border:none;
+      border-radius: 12px;
+      padding: 10px 12px;
+      background: var(--wa);
+      color:#fff;
+      font-weight: 900;
+      cursor:pointer;
+      font-family: Arial, sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brandTitle">Deutsch mit Said</div>
+        <div class="brandSub" data-i18n="subtitle">ist einfacher: wählen • schreiben • drucken</div>
+      </div>
+
+      <div class="topActions">
+        <div class="pill">
+          <input type="text" id="name" placeholder="Name">
+          <input type="date" id="date">
+          <input type="text" id="topic" placeholder="Thema">
+        </div>
+
+        <button class="btn btnLang" id="langBtn" type="button">Deutsch / English</button>
+      </div>
+    </div>
+
+    <div id="controls">
+      <div class="control-group">
+        <label data-i18n="count">Anzahl</label>
+        <input type="range" id="numBoxes" min="1" max="200" value="12" step="1">
+        <span id="numBoxesValue" style="font-weight:900;">12</span>
+      </div>
+
+      <div class="control-group">
+        <label data-i18n="cols">Spalten</label>
+        <select id="columns">
+          <option value="2">2</option>
+          <option value="3" selected>3</option>
+          <option value="4">4</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label data-i18n="size">Größe</label>
+        <select id="boxSize">
+          <option value="small" data-i18n="small">Klein</option>
+          <option value="normal" selected data-i18n="normal">Normal</option>
+          <option value="large" data-i18n="large">Groß</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label><input type="checkbox" id="showBack"> <span data-i18n="back">Rückseite zeigen</span></label>
+      </div>
+
+      <button class="btn btnDanger" id="resetBtn" type="button" data-i18n="reset">Alles leeren</button>
+      <button class="btn btnPrimary" id="downloadPdfBtn" type="button" data-i18n="pdf">PDF</button>
+    </div>
+
+    <!-- ✅ حيدنا مساعد سريع كامل -->
+    <div id="debug">Viel Erfolg</div>
+    <div id="errorMsg" class="error"></div>
+
+    <div id="grid"></div>
+  </div>
+
+  <div id="pdfStage" aria-hidden="true"></div>
+
+  <!-- WhatsApp Widget -->
+  <button id="waBtn" aria-label="WhatsApp">
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M19.11 17.25c-.27-.14-1.6-.79-1.85-.88-.25-.09-.43-.14-.62.14-.18.27-.71.88-.87 1.06-.16.18-.32.21-.59.07-.27-.14-1.16-.43-2.21-1.36-.82-.73-1.38-1.63-1.54-1.9-.16-.27-.02-.42.12-.56.12-.12.27-.32.41-.48.14-.16.18-.27.27-.46.09-.18.05-.34-.02-.48-.07-.14-.62-1.5-.85-2.06-.22-.53-.45-.46-.62-.47h-.53c-.18 0-.48.07-.73.34-.25.27-.96.94-.96 2.29 0 1.35.99 2.65 1.13 2.83.14.18 1.95 2.97 4.73 4.17.66.29 1.18.46 1.58.59.66.21 1.26.18 1.74.11.53-.08 1.6-.65 1.83-1.27.23-.62.23-1.15.16-1.27-.07-.12-.25-.18-.52-.32zM16 3C9.38 3 4 8.38 4 15c0 2.11.55 4.17 1.6 5.99L4 29l8.21-1.56A11.92 11.92 0 0 0 16 27c6.62 0 12-5.38 12-12S22.62 3 16 3zm0 21.7c-1.94 0-3.83-.52-5.47-1.5l-.39-.23-4.87.93.93-4.74-.25-.41A9.69 9.69 0 0 1 6.3 15C6.3 9.64 10.64 5.3 16 5.3S25.7 9.64 25.7 15 21.36 24.7 16 24.7z"/>
+    </svg>
+  </button>
+
+  <div id="waPopup">
+    <div class="waHeader">
+      <img class="waAvatar" id="waAvatar" src="YOUR_SAID_IMAGE_URL_HERE" alt="Said Lehrer">
+      <div>
+        <div class="waTitle">Said Lehrer</div>
+        <div class="waSub">Deutsch-Fragen? Schreib mir.</div>
+      </div>
+      <button class="waClose" id="waClose">×</button>
+    </div>
+
+    <div class="waBody">
+      <div class="waBubble">
+        Hi! 👋<br>
+        Schick mir deine Frage zu Deutsch.<br>
+        <small>ما تترددش: سولني وأنا نجاوبك 😉</small>
+      </div>
+
+      <div class="waInputWrap">
+        <input id="waInput" type="text" placeholder="Deine Frage…">
+        <button id="waSend">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ================= i18n =================
+    let lang = 'de';
+    const I18N = {
+      de: {
+        subtitle: "ist einfacher: wählen • schreiben • drucken",
+        count: "Anzahl",
+        cols: "Spalten",
+        size: "Größe",
+        small: "Klein",
+        normal: "Normal",
+        large: "Groß",
+        back: "Rückseite zeigen",
+        reset: "Alles leeren",
+        pdf: "PDF"
+      },
+      en: {
+        subtitle: "made easy: choose • write • print",
+        count: "Count",
+        cols: "Columns",
+        size: "Size",
+        small: "Small",
+        normal: "Normal",
+        large: "Large",
+        back: "Show back side",
+        reset: "Clear all",
+        pdf: "PDF"
+      }
+    };
+
+    const langBtn = document.getElementById('langBtn');
+    function updateLangButton(){
+      langBtn.textContent = (lang === 'de') ? 'Deutsch / English' : 'English / Deutsch';
+    }
+
+    function applyI18n() {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (I18N[lang] && I18N[lang][key]) el.textContent = I18N[lang][key];
+      });
+      document.querySelector('option[value="small"]').textContent = I18N[lang].small;
+      document.querySelector('option[value="normal"]').textContent = I18N[lang].normal;
+      document.querySelector('option[value="large"]').textContent = I18N[lang].large;
+    }
+
+    // ================= Dictionary (offline, lightweight) =================
+    const DICT = {
+      "gehen": {pos:"V", ar:"يذهب", dar:"يمشي"},
+      "kommen": {pos:"V", ar:"يأتي", dar:"كيجي"},
+      "lernen": {pos:"V", ar:"يتعلم", dar:"كيتعلم"},
+      "sprechen": {pos:"V", ar:"يتكلم", dar:"كيهضر"},
+      "schreiben": {pos:"V", ar:"يكتب", dar:"كيكتب"},
+      "lesen": {pos:"V", ar:"يقرأ", dar:"كيقرا"},
+      "essen": {pos:"V", ar:"يأكل", dar:"كياكل"},
+      "trinken": {pos:"V", ar:"يشرب", dar:"كيشرب"},
+      "haus": {pos:"N", ar:"بيت", dar:"دار"},
+      "wohnung": {pos:"N", ar:"شقة", dar:"شقة"},
+      "schule": {pos:"N", ar:"مدرسة", dar:"مدرسة"},
+      "arbeit": {pos:"N", ar:"عمل", dar:"خدمة"},
+      "freund": {pos:"N", ar:"صديق", dar:"صاحب"},
+      "familie": {pos:"N", ar:"عائلة", dar:"عائلة"},
+      "wasser": {pos:"N", ar:"ماء", dar:"الما"},
+      "buch": {pos:"N", ar:"كتاب", dar:"كتاب"},
+      "musik": {pos:"N", ar:"موسيقى", dar:"موسيقى"},
+      "gut": {pos:"A", ar:"جيد", dar:"مزيان"},
+      "schlecht": {pos:"A", ar:"سيئ", dar:"خايب"},
+      "groß": {pos:"A", ar:"كبير", dar:"كبير"},
+      "klein": {pos:"A", ar:"صغير", dar:"صغير"},
+      "neu": {pos:"A", ar:"جديد", dar:"جديد"},
+      "alt": {pos:"A", ar:"قديم", dar:"قديم"},
+      "trotzdem": {pos:"A", ar:"رغم ذلك", dar:"رغم ذلك"},
+      "außerdem": {pos:"A", ar:"بالإضافة إلى ذلك", dar:"وزيد"},
+      "weil": {pos:"A", ar:"لأن", dar:"حيت"},
+      "aber": {pos:"A", ar:"لكن", dar:"ولكن"},
+      "und": {pos:"A", ar:"و", dar:"و"},
+      "oder": {pos:"A", ar:"أو", dar:"ولا"},
+      "heute": {pos:"A", ar:"اليوم", dar:"اليوم"},
+      "morgen": {pos:"A", ar:"غداً", dar:"غدا"},
+      "gestern": {pos:"A", ar:"أمس", dar:"البارح"},
+      "immer": {pos:"A", ar:"دائماً", dar:"ديما"},
+      "nie": {pos:"A", ar:"أبداً", dar:"عمرو"}
+    };
+
+    // ================= State =================
+    let boxes = [];
+    let settings = { numBoxes: 12, columns: 3, boxSize: 'normal', showBack: false };
+
+    // ================= DOM =================
+    const grid = document.getElementById('grid');
+    const numBoxesInput = document.getElementById('numBoxes');
+    const numBoxesValue = document.getElementById('numBoxesValue');
+    const columnsSelect = document.getElementById('columns');
+    const boxSizeSelect = document.getElementById('boxSize');
+    const showBackCheckbox = document.getElementById('showBack');
+    const resetBtn = document.getElementById('resetBtn');
+    const downloadPdfBtn = document.getElementById('downloadPdfBtn');
+
+    const pdfStage = document.getElementById('pdfStage');
+    const nameInput = document.getElementById('name');
+    const dateInput = document.getElementById('date');
+    const topicInput = document.getElementById('topic');
+
+    const errorMsg = document.getElementById('errorMsg');
+    const debug = document.getElementById('debug');
+
+    // ================= Errors =================
+    function log(msg){ debug.textContent = msg; }
+    function showError(msg){
+      errorMsg.textContent = 'Fehler: ' + msg;
+      errorMsg.style.display = 'block';
+      log(msg);
+    }
+    function clearError(){ errorMsg.style.display='none'; errorMsg.textContent=''; }
+    window.onerror = function(message, source, lineno){
+      showError(String(message) + ' (Zeile ' + lineno + ')');
+      return false;
+    };
+
+    // ================= Helpers =================
+    function normalizeWord(raw){
+      return String(raw||'').trim().toLowerCase()
+        .replace(/[.,;:!?()"'„“”’]/g,'')
+        .replace(/\s+/g,' ');
+    }
+    function stripArticleIfAny(w){
+      const s = normalizeWord(w);
+      return s.replace(/^(der|die|das)\s+/,'');
+    }
+    function lookupEntry(normWord){
+      const w = normalizeWord(normWord);
+      return DICT[w] || null;
+    }
+
+    function guessPOS(wordRaw){
+      const w = stripArticleIfAny(wordRaw);
+      if (!w) return '';
+      const d = lookupEntry(w);
+      if (d && d.pos) return d.pos;
+      const original = String(wordRaw||'').trim();
+      if (original && original[0] === original[0]?.toUpperCase() && /[A-ZÄÖÜ]/.test(original[0])) return 'N';
+      if (/(en|n)$/.test(w)) return 'V';
+      return 'A';
+    }
+
+    function guessLemmaForVerb(norm){
+      const w = normalizeWord(norm);
+      if (!w) return w;
+      if (lookupEntry(w)) return w;
+      const tries = [ w.replace(/e$/,'en'), w.replace(/st$/,'en'), w.replace(/t$/,'en') ];
+      for (const t of tries){
+        if (t && lookupEntry(t)) return t;
+      }
+      return w;
+    }
+
+    function getWordTranslations(wordRaw, posOverride){
+      const raw = String(wordRaw||'').trim();
+      if (!raw) return { pos:'', ar:'', dar:'', lemma:'' };
+
+      const base = stripArticleIfAny(raw);
+      let pos = posOverride || guessPOS(raw);
+      let lemma = base;
+      if (pos === 'V') lemma = guessLemmaForVerb(base);
+
+      const key = normalizeWord(lemma);
+      let entry = lookupEntry(key);
+      if (!entry && pos === 'N') entry = lookupEntry(key.toLowerCase());
+
+      return {
+        pos, lemma,
+        ar: entry ? entry.ar : '(Übersetzung fehlt)',
+        dar: entry ? entry.dar : '(Darija fehlt)'
+      };
+    }
+
+    function translateSentenceDarija(sentence){
+      const s = String(sentence||'').trim();
+      if (!s) return '';
+      const tokens = s.match(/[\p{L}\p{M}]+|[0-9]+|[^\s]/gu) || [];
+      const out = tokens.map(tok => {
+        const norm = normalizeWord(tok);
+        if (!norm || (tok.length === 1 && /[.,;:!?()]/.test(tok))) return tok;
+        let entry = lookupEntry(norm);
+        if (entry && entry.dar) return entry.dar;
+        const maybeVerb = guessLemmaForVerb(norm);
+        entry = lookupEntry(maybeVerb);
+        if (entry && entry.dar) return entry.dar;
+        return tok;
+      });
+      return out.join(' ')
+        .replace(/\s+([.,;:!?])/g, '$1')
+        .replace(/\(\s+/g,'(')
+        .replace(/\s+\)/g,')');
+    }
+
+    function getBoxSizePx(size){
+      return ({ small: 150, normal: 190, large: 230 }[size] || 190);
+    }
+
+    function clampSettings(){
+      settings.numBoxes = Math.max(1, Math.min(200, parseInt(settings.numBoxes,10) || 12));
+      settings.columns = [2,3,4].includes(parseInt(settings.columns,10)) ? parseInt(settings.columns,10) : 3;
+      settings.boxSize = ['small','normal','large'].includes(settings.boxSize) ? settings.boxSize : 'normal';
+      settings.showBack = !!settings.showBack;
+    }
+
+    function ensureBoxesLength(){
+      if (!Array.isArray(boxes)) boxes = [];
+      if (boxes.length < settings.numBoxes){
+        for (let i=boxes.length; i<settings.numBoxes; i++){
+          boxes.push({ word:'', example:'', posOverride:'', note:'' });
+        }
+      } else if (boxes.length > settings.numBoxes){
+        boxes = boxes.slice(0, settings.numBoxes);
+      }
+    }
+
+    function autoFitTextarea(textarea, min=10, max=16){
+      textarea.style.fontSize = max + 'px';
+      for (let s=max; s>=min; s--){
+        textarea.style.fontSize = s + 'px';
+        if (textarea.scrollHeight <= textarea.clientHeight + 1) break;
+      }
+    }
+
+    // ================= Storage =================
+    function saveToStorage(){
+      try{
+        localStorage.setItem('dms_boxes', JSON.stringify(boxes));
+        localStorage.setItem('dms_settings', JSON.stringify(settings));
+        localStorage.setItem('dms_header', JSON.stringify({name:nameInput.value, date:dateInput.value, topic:topicInput.value}));
+        localStorage.setItem('dms_lang', lang);
+      }catch(e){}
+    }
+    function loadFromStorage(){
+      try{
+        const sb = localStorage.getItem('dms_boxes');
+        const ss = localStorage.getItem('dms_settings');
+        const sh = localStorage.getItem('dms_header');
+        const sl = localStorage.getItem('dms_lang');
+
+        if (sb) boxes = JSON.parse(sb);
+        if (ss) settings = {...settings, ...JSON.parse(ss)};
+        if (sh){
+          const h = JSON.parse(sh) || {};
+          nameInput.value = h.name || '';
+          dateInput.value = h.date || '';
+          topicInput.value = h.topic || '';
+        }
+        if (sl) lang = sl;
+      }catch(e){
+        boxes = [];
+      }
+    }
+
+    function updateSettingsUI(){
+      clampSettings();
+      numBoxesInput.value = settings.numBoxes;
+      numBoxesValue.textContent = settings.numBoxes;
+      columnsSelect.value = String(settings.columns);
+      boxSizeSelect.value = settings.boxSize;
+      showBackCheckbox.checked = settings.showBack;
+    }
+
+    // ================= Render =================
+    function createBoxElement(index){
+      const data = boxes[index] || { word:'', example:'', posOverride:'', note:'' };
+
+      const box = document.createElement('div');
+      box.className = 'box';
+      const size = getBoxSizePx(settings.boxSize);
+      box.style.width = size + 'px';
+      box.style.height = size + 'px';
+
+      const flip = document.createElement('div');
+      flip.className = 'flip-card' + (settings.showBack ? ' flipped' : '');
+
+      // FRONT
+      const front = document.createElement('div');
+      front.className = 'flip-side flip-front';
+
+      const wordWrap = document.createElement('div');
+      wordWrap.className = 'frontWordWrap';
+
+      const wordTA = document.createElement('textarea');
+      wordTA.className = 'wordInput';
+      wordTA.placeholder = 'Wort (Deutsch)';
+      wordTA.value = data.word || '';
+      wordTA.rows = 2;
+      wordWrap.appendChild(wordTA);
+
+      const exampleWrap = document.createElement('div');
+      exampleWrap.className = 'exampleWrap';
+
+      const exLabel = document.createElement('div');
+      exLabel.className = 'exampleLabel';
+      exLabel.textContent = 'Beispiel (Deutsch)';
+
+      const exTA = document.createElement('textarea');
+      exTA.className = 'explainInput';
+      exTA.placeholder = 'z.B. Ich gehe heute nach Hause.';
+      exTA.value = data.example || '';
+      exTA.rows = 5;
+
+      exampleWrap.appendChild(exLabel);
+      exampleWrap.appendChild(exTA);
+
+      front.appendChild(wordWrap);
+      front.appendChild(exampleWrap);
+
+      // BACK
+      const back = document.createElement('div');
+      back.className = 'flip-side flip-back';
+
+      const posBadge = document.createElement('div');
+      posBadge.className = 'posBadge';
+
+      const topRow = document.createElement('div');
+      topRow.className = 'backTopRow';
+
+      const arCenter = document.createElement('div');
+      arCenter.className = 'arabicCenter';
+
+      const darSide = document.createElement('div');
+      darSide.className = 'darijaSide';
+
+      topRow.appendChild(darSide);
+      topRow.appendChild(arCenter);
+
+      const noteWrap = document.createElement('div');
+      noteWrap.className = 'backNoteWrap';
+
+      const noteLabel = document.createElement('div');
+      noteLabel.className = 'noteLabel';
+      noteLabel.textContent = '✍️ شرحك هنا / ملاحظة:';
+
+      const noteTA = document.createElement('textarea');
+      noteTA.className = 'noteInput';
+      noteTA.placeholder = 'كتب شرحك هنا...';
+      noteTA.value = data.note || '';
+      noteTA.rows = 4;
+
+      const darExample = document.createElement('div');
+      darExample.className = 'darijaExample';
+
+      noteWrap.appendChild(noteLabel);
+      noteWrap.appendChild(noteTA);
+      noteWrap.appendChild(darExample);
+
+      back.appendChild(posBadge);
+      back.appendChild(topRow);
+      back.appendChild(noteWrap);
+
+      function renderBack(){
+        const word = wordTA.value;
+        const posO = boxes[index].posOverride || '';
+        const t = getWordTranslations(word, posO);
+
+        const posName = (t.pos === 'V') ? 'Verb' : (t.pos === 'N') ? 'Nomen' : (t.pos === 'A') ? 'Adjektiv' : '—';
+        posBadge.textContent = posName + (boxes[index].posOverride ? ' (fix)' : '');
+
+        arCenter.textContent = t.ar || '';
+        darSide.textContent = t.dar ? ('دارجة: ' + t.dar) : '';
+
+        const ex = exTA.value || '';
+        const darEx = ex ? translateSentenceDarija(ex) : '';
+        darExample.textContent = darEx ? ('مثال (دارجة): ' + darEx) : '';
+
+        arCenter.classList.toggle('missing', t.ar === '(Übersetzung fehlt)');
+        darSide.classList.toggle('missing', t.dar === '(Darija fehlt)');
+      }
+
+      posBadge.addEventListener('click', () => {
+        const cur = boxes[index].posOverride || '';
+        const next = (cur === '') ? 'V' : (cur === 'V') ? 'N' : (cur === 'N') ? 'A' : '';
+        boxes[index].posOverride = next;
+        saveToStorage();
+        renderBack();
+      });
+
+      wordTA.addEventListener('input', () => {
+        boxes[index].word = wordTA.value;
+        autoFitTextarea(wordTA, 11, 16);
+        renderBack();
+        saveToStorage();
+      });
+
+      exTA.addEventListener('input', () => {
+        boxes[index].example = exTA.value;
+        autoFitTextarea(exTA, 11, 14);
+        renderBack();
+        saveToStorage();
+      });
+
+      noteTA.addEventListener('input', () => {
+        boxes[index].note = noteTA.value;
+        autoFitTextarea(noteTA, 12, 14);
+        saveToStorage();
+      });
+
+      setTimeout(() => {
+        autoFitTextarea(wordTA, 11, 16);
+        autoFitTextarea(exTA, 11, 14);
+        autoFitTextarea(noteTA, 12, 14);
+        renderBack();
+      }, 0);
+
+      flip.appendChild(front);
+      flip.appendChild(back);
+      box.appendChild(flip);
+
+      box.addEventListener('dblclick', () => flip.classList.toggle('flipped'));
+      return box;
+    }
+
+    function updateGrid(){
+      clearError();
+      clampSettings();
+      ensureBoxesLength();
+
+      grid.innerHTML = '';
+      grid.style.gridTemplateColumns = `repeat(${settings.columns}, 1fr)`;
+      grid.style.gap = '0px';
+
+      for (let i=0; i<settings.numBoxes; i++){
+        if (!boxes[i]) boxes[i] = { word:'', example:'', posOverride:'', note:'' };
+        grid.appendChild(createBoxElement(i));
+      }
+      log('Viel Erfolg');
+    }
+
+    // ================= Reset =================
+    function resetAll(){
+      boxes = [];
+      settings = { numBoxes: 12, columns: 3, boxSize: 'normal', showBack: false };
+      nameInput.value = '';
+      dateInput.value = '';
+      topicInput.value = '';
+      try{
+        localStorage.removeItem('dms_boxes');
+        localStorage.removeItem('dms_settings');
+        localStorage.removeItem('dms_header');
+      }catch(_){}
+      updateSettingsUI();
+      updateGrid();
+      log('Viel Erfolg');
+    }
+
+    // ================= PDF (clean, no dots, no labels/placeholders) =================
+    function buildPdfPageDOM(mode, showMeta){
+      pdfStage.innerHTML = '';
+      pdfStage.style.fontFamily = 'Arial, sans-serif';
+
+      const title = document.createElement('div');
+      title.className = 'pdfBigTitle';
+      title.style.fontFamily = 'Arial, sans-serif';
+      title.textContent = 'Deutsch mit Said ist einfacher, als du denkst.';
+      pdfStage.appendChild(title);
+
+      const wrap = document.createElement('div');
+      wrap.className = 'pdfWrap';
+      wrap.style.fontFamily = 'Arial, sans-serif';
+      wrap.style.padding = '10mm';
+      wrap.style.border = 'none';
+      pdfStage.appendChild(wrap);
+
+      const g = document.createElement('div');
+      g.style.display = 'grid';
+      g.style.justifyContent = 'center';
+      g.style.alignContent = 'start';
+      g.style.gridTemplateColumns = `repeat(${settings.columns}, auto)`;
+      g.style.gap = '12px';
+      wrap.appendChild(g);
+
+      // حجم مناسب لـ A4 باش 4 أعمدة يدخلو بلا مشاكل
+      const sizeMap = { small: 120, normal: 150, large: 170 };
+      const boxSize = sizeMap[settings.boxSize] || 150;
+
+      for (let i=0; i<settings.numBoxes; i++){
+        const d = boxes[i] || {word:'', example:'', posOverride:'', note:''};
+
+        const b = document.createElement('div');
+        b.className = 'box';
+        b.style.width = boxSize + 'px';
+        b.style.height = boxSize + 'px';
+        b.style.border = '1px solid rgba(0,0,0,0.10)';
+        b.style.borderRadius = '14px';
+        b.style.background = '#fff';
+        b.style.position = 'relative';
+        b.style.overflow = 'hidden';
+        b.style.fontFamily = 'Arial, sans-serif';
+
+        const content = document.createElement('div');
+        content.style.position = 'absolute';
+        content.style.inset = '0';
+        content.style.padding = '12px';
+        content.style.boxSizing = 'border-box';
+        content.style.display = 'flex';
+        content.style.flexDirection = 'column';
+        content.style.gap = '8px';
+        content.style.fontFamily = 'Arial, sans-serif';
+
+        if (mode === 'front'){
+          // ✅ Page 1: يطبع غير الكلمة + المثال اللي كتبوه (بلا labels)
+          const word = document.createElement('div');
+          word.style.fontWeight = '900';
+          word.style.fontSize = '18px';
+          word.style.textAlign = 'left';
+          word.style.whiteSpace = 'pre-wrap';
+          word.textContent = (d.word || '').trim();
+          content.appendChild(word);
+
+          const line = document.createElement('div');
+          line.style.height = '1px';
+          line.style.background = 'rgba(0,0,0,0.10)';
+          content.appendChild(line);
+
+          const ex = document.createElement('div');
+          ex.style.flex = '1';
+          ex.style.fontSize = '13px';
+          ex.style.lineHeight = '1.35';
+          ex.style.whiteSpace = 'pre-wrap';
+          ex.textContent = (d.example || '').trim();
+          content.appendChild(ex);
+
+        } else {
+          // ✅ Page 2: Rückseite (ترجمة + دارجة + note إذا كاين) بلا عناوين
+          const t = getWordTranslations(d.word, d.posOverride);
+
+          const ar = document.createElement('div');
+          ar.style.direction = 'rtl';
+          ar.style.textAlign = 'center';
+          ar.style.fontSize = '20px';
+          ar.style.fontWeight = '700';
+          ar.style.lineHeight = '1.7';
+          ar.textContent = (t.ar && t.ar !== '(Übersetzung fehlt)') ? t.ar : '';
+          content.appendChild(ar);
+
+          const dar = document.createElement('div');
+          dar.style.direction = 'rtl';
+          dar.style.textAlign = 'right';
+          dar.style.fontSize = '14px';
+          dar.style.fontWeight = '700';
+          dar.style.lineHeight = '1.6';
+          dar.textContent = (t.dar && t.dar !== '(Darija fehlt)') ? t.dar : '';
+          content.appendChild(dar);
+
+          const note = (d.note || '').trim();
+          if (note){
+            const noteLine = document.createElement('div');
+            noteLine.style.height = '1px';
+            noteLine.style.background = 'rgba(0,0,0,0.10)';
+            content.appendChild(noteLine);
+
+            const noteBox = document.createElement('div');
+            noteBox.style.direction = 'rtl';
+            noteBox.style.textAlign = 'right';
+            noteBox.style.fontSize = '13px';
+            noteBox.style.lineHeight = '1.6';
+            noteBox.style.whiteSpace = 'pre-wrap';
+            noteBox.textContent = note;
+            content.appendChild(noteBox);
+          }
+        }
+
+        b.appendChild(content);
+        g.appendChild(b);
+      }
+
+      // ✅ Name/Datum/Thema غير فالأول
+      if (showMeta){
+        const footer = document.createElement('div');
+        footer.className = 'pdfFooter';
+        footer.style.fontFamily = 'Arial, sans-serif';
+        const nm = (nameInput.value || '').trim();
+        const dt = (dateInput.value || '').trim();
+        const tp = (topicInput.value || '').trim();
+        footer.innerHTML = `
+          <span>Name: ${nm ? nm : '—'}</span>
+          <span>Datum: ${dt ? dt : '—'}</span>
+          <span>Thema: ${tp ? tp : '—'}</span>
+        `;
+        pdfStage.appendChild(footer);
+      }
+
+      return pdfStage;
+    }
+
+    async function addCanvasAsPagedImagesToPdf(pdf, canvas, marginMm=10){
+      const pageWidth=210, pageHeight=297;
+      const usableW = pageWidth - 2*marginMm;
+      const usableH = pageHeight - 2*marginMm;
+
+      const imgW = usableW;
+      const imgH = (canvas.height * imgW) / canvas.width;
+
+      if (imgH <= usableH){
+        pdf.addImage(canvas.toDataURL('image/png'), 'PNG', marginMm, marginMm, imgW, imgH);
+        return;
+      }
+
+      const pxPerMm = canvas.width / imgW;
+      const slicePxH = usableH * pxPerMm;
+
+      let y=0;
+      let first=true;
+      while (y < canvas.height - 1){
+        if (!first) pdf.addPage();
+        first=false;
+
+        const sH = Math.min(slicePxH, canvas.height - y);
+        const tmp = document.createElement('canvas');
+        tmp.width = canvas.width;
+        tmp.height = sH;
+        const ctx = tmp.getContext('2d');
+        ctx.drawImage(canvas, 0, y, canvas.width, sH, 0, 0, canvas.width, sH);
+
+        const drawH = (sH * imgW) / canvas.width;
+        pdf.addImage(tmp.toDataURL('image/png'), 'PNG', marginMm, marginMm, imgW, drawH);
+        y += sH;
+      }
+    }
+
+    async function downloadAsPdf(){
+      try{
+        clearError();
+        log('Viel Erfolg');
+
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('p','mm','a4');
+
+        // Page 1: Deutsch + meta
+        buildPdfPageDOM('front', true);
+        await new Promise(r => setTimeout(r, 80));
+        const c1 = await html2canvas(pdfStage, {scale:2, useCORS:true, backgroundColor:'#ffffff'});
+        await addCanvasAsPagedImagesToPdf(pdf, c1, 10);
+
+        // Page 2: Rückseite (no meta)
+        pdf.addPage();
+        buildPdfPageDOM('back', false);
+        await new Promise(r => setTimeout(r, 80));
+        const c2 = await html2canvas(pdfStage, {scale:2, useCORS:true, backgroundColor:'#ffffff'});
+        await addCanvasAsPagedImagesToPdf(pdf, c2, 10);
+
+        pdf.save('Deutsch_mit_Said_Vokabelblatt.pdf');
+        log('Viel Erfolg');
+      }catch(e){
+        showError(e.message || String(e));
+      }
+    }
+
+    // ================= WhatsApp Widget =================
+    const waBtn = document.getElementById('waBtn');
+    const waPopup = document.getElementById('waPopup');
+    const waClose = document.getElementById('waClose');
+    const waInput = document.getElementById('waInput');
+    const waSend = document.getElementById('waSend');
+
+    const YOUR_PHONE_NUMBER = "0690010348";
+
+    function normalizeWaNumber(n){
+      let s = String(n||"").replace(/\s+/g,'').trim();
+      if (/^0\d{9}$/.test(s)) s = '212' + s.slice(1);
+      s = s.replace(/^\+/, '');
+      return s;
+    }
+
+    function openWa(){
+      waPopup.classList.add('open');
+      setTimeout(() => waInput.focus(), 50);
+    }
+    function closeWa(){ waPopup.classList.remove('open'); }
+
+    waBtn.addEventListener('click', () => {
+      if (waPopup.classList.contains('open')) closeWa();
+      else openWa();
+    });
+    waClose.addEventListener('click', closeWa);
+
+    function sendWa(){
+      const msg = (waInput.value || "").trim();
+      const text = msg ? msg : "Hallo Said! Ich habe eine Frage zu Deutsch 🙂";
+      const phone = normalizeWaNumber(YOUR_PHONE_NUMBER);
+      const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+      window.open(url, "_blank", "noopener,noreferrer");
+    }
+    waSend.addEventListener('click', sendWa);
+    waInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') sendWa();
+    });
+
+    // ================= Listeners =================
+    function attachListeners(){
+      numBoxesInput.addEventListener('input', () => {
+        settings.numBoxes = Math.max(1, parseInt(numBoxesInput.value,10) || 12);
+        numBoxesValue.textContent = settings.numBoxes;
+        updateGrid(); saveToStorage();
+      });
+
+      columnsSelect.addEventListener('change', () => {
+        settings.columns = parseInt(columnsSelect.value,10);
+        updateGrid(); saveToStorage();
+      });
+
+      boxSizeSelect.addEventListener('change', () => {
+        settings.boxSize = boxSizeSelect.value;
+        updateSettingsUI();
+        updateGrid(); saveToStorage();
+      });
+
+      showBackCheckbox.addEventListener('change', () => {
+        settings.showBack = showBackCheckbox.checked;
+        updateGrid(); saveToStorage();
+      });
+
+      resetBtn.addEventListener('click', resetAll);
+      downloadPdfBtn.addEventListener('click', downloadAsPdf);
+
+      langBtn.addEventListener('click', () => {
+        lang = (lang === 'de') ? 'en' : 'de';
+        applyI18n();
+        updateLangButton();
+        saveToStorage();
+      });
+
+      [nameInput, dateInput, topicInput].forEach(el => el.addEventListener('input', saveToStorage));
+    }
+
+    function init(){
+      try{
+        loadFromStorage();
+        clampSettings();
+        ensureBoxesLength();
+        updateSettingsUI();
+        applyI18n();
+        updateLangButton();
+        attachListeners();
+        updateGrid();
+      }catch(e){
+        showError(e.message || String(e));
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
