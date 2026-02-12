@@ -544,24 +544,46 @@ body::before{
   transform: rotate(-20deg);
   pointer-events: none;
   z-index: 9998;
-/* Watermark صغير وما يضايقش */
+/* Watermark شبه مخفي (كيبان مزيان فـ Screenshot) */
 .watermark{
   position: fixed;
-  bottom: 10px;
-  right: 15px;
+  inset: 0;
   z-index: 9998;
   pointer-events: none;
-  opacity: 0.35;
+
+  /* نخليه خفيف بزاف */
+  opacity: 0.035;
+
+  /* نخليه كيمتزج مع الخلفية */
+  mix-blend-mode: multiply;
+
+  /* pattern متكرر */
+  background-image: repeating-linear-gradient(
+    -30deg,
+    rgba(15,23,42,1) 0,
+    rgba(15,23,42,1) 2px,
+    transparent 2px,
+    transparent 60px
+  );
+}
+
+/* النص اللي غادي يكون فوق الpattern */
+.watermark::after{
+  content: "deutschmitsaid.online • deutschmitsaid.online • deutschmitsaid.online";
+  position: absolute;
+  top: 45%;
+  left: -10%;
+  right: -10%;
+  transform: rotate(-18deg);
   font-weight: 900;
-  font-size: 14px;
-  color: #0f172a;
-  letter-spacing: 0.5px;
+  font-size: 44px;
+  letter-spacing: 1px;
+  text-align: center;
+  color: rgba(15,23,42,1);
 }
 
 /* خلي الواجهة فوق watermark */
 #waPopup, #waBtn { z-index: 9999; }
-
-
 
 #waPopup, #waBtn { z-index: 9999; }
 
@@ -572,6 +594,7 @@ body::before{
   <body>
 
 <div class="watermark">deutschmitsaid.online</div>
+
 
 <div id="app">
 
