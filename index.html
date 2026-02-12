@@ -544,7 +544,27 @@ body::before{
   transform: rotate(-20deg);
   pointer-events: none;
   z-index: 9998;
+}/* Watermark يظهر فـ أي Screenshot */
+.watermark{
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.13;
+  transform: rotate(-20deg);
+  font-weight: 900;
+  font-size: 46px;
+  letter-spacing: 1px;
+  color: #0f172a;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.12);
 }
+
+/* خلي الواجهة فوق watermark */
+#waPopup, #waBtn { z-index: 9999; }
+
 
 #waPopup, #waBtn { z-index: 9999; }
 
@@ -552,6 +572,12 @@ body::before{
 </head>
 
 <body>
+  <body>
+
+<div class="watermark">deutschmitsaid.online</div>
+
+<div id="app">
+
   <div id="app">
     <div class="topbar">
       <div class="brand">
