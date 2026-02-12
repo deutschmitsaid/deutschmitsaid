@@ -523,7 +523,31 @@
       font-weight: 900;
       cursor:pointer;
       font-family: Arial, sans-serif;
-    }
+    }/* Anti-copy (deterrent) */
+img {
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+  pointer-events: none;
+}
+
+body::before{
+  content: "Deutsch mit Said • ©";
+  position: fixed;
+  inset: 0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size: 48px;
+  font-weight: 900;
+  opacity: 0.08;
+  transform: rotate(-20deg);
+  pointer-events: none;
+  z-index: 9998;
+}
+
+#waPopup, #waBtn { z-index: 9999; }
+
   </style>
 </head>
 
@@ -1363,6 +1387,31 @@
     }
 
     init();
+    // ===== Anti-copy (deterrent) =====
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('dragstart', e => e.preventDefault());
+
+const appEl = document.getElementById('app');
+document.addEventListener('visibilitychange', () => {
+  if (!appEl) return;
+  if (document.hidden) appEl.style.filter = 'blur(12px)';
+  else appEl.style.filter = '';
+});
+
+document.addEventListener('keydown', (e) => {
+  const k = (e.key || '').toLowerCase();
+
+  if (e.key === 'F12') e.preventDefault();
+  if (e.ctrlKey && e.shiftKey && (k === 'i' || k === 'j' || k === 'c')) e.preventDefault();
+  if (e.ctrlKey && (k === 'u' || k === 's' || k === 'p')) e.preventDefault();
+
+  if (k === 'printscreen') {
+    e.preventDefault();
+    if (appEl) appEl.style.filter = 'blur(12px)';
+    setTimeout(()=>{ if(appEl) appEl.style.filter=''; }, 700);
+  }
+});
+
   </script>
 </body>
 </html>
