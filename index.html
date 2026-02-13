@@ -5,21 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Deutsch mit Said – Vokabelblatt</title>
 
-  <!-- ✅ jsPDF (No html2canvas needed) -->
+  <!-- ✅ jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <style>
     :root{
-      /* ===== Requested Colors ===== */
-      --carbon:#0B0D0E;          /* Carbon Black */
+      --carbon:#0B0D0E;
       --carbon2:#0F1412;
       --ink:#EAF2EE;
       --muted:#A7B6AE;
 
-      --moss:#2E5E3A;            /* Moss Green */
+      --moss:#2E5E3A;
       --moss2:#3E7A4B;
 
-      --brg:#004225;             /* British Racing Green */
+      --brg:#004225;
       --brg2:#0B5A36;
 
       --line: rgba(255,255,255,0.12);
@@ -28,12 +27,13 @@
       --glass1: rgba(255,255,255,0.10);
       --glass2: rgba(255,255,255,0.06);
 
-      /* responsive box size (screen) */
       --box: clamp(150px, 34vw, 220px);
 
-      /* WhatsApp */
       --wa:#25D366;
       --waDark:#0b5a46;
+
+      /* ✅ height reserve for fixed controls */
+      --controlsH: 92px;
     }
 
     *{ box-sizing:border-box; }
@@ -98,18 +98,15 @@
       max-width: 1100px;
       margin:0 auto;
       padding:16px;
+      /* ✅ reserve space for fixed controls bar */
+      padding-top: calc(var(--controlsH) + 18px);
     }
 
-    /* IMPORTANT: on mobile we make header fixed => add padding-top */
-    @media (max-width: 720px){
-      #app{ padding-top: 128px; }
-    }
-
-    /* ---------- TOP BAR ---------- */
+    /* ---------- HEADER (IMAGE 44) ---------- */
     .topbar{
-      position: sticky;
-      top: 10px;
-      z-index: 10;
+      /* ✅ NOT sticky / NOT fixed => it scrolls normally (like your image 44 request) */
+      position: relative;
+      z-index: 5;
       display:flex;
       align-items:flex-start;
       justify-content:space-between;
@@ -121,16 +118,6 @@
       backdrop-filter: blur(12px);
       box-shadow: var(--shadow);
       flex-wrap: wrap;
-    }
-
-    /* ✅ Fix for iPhone sticky bugs: make it fixed on small screens */
-    @media (max-width: 720px){
-      .topbar{
-        position: fixed;
-        left: 12px;
-        right: 12px;
-        top: 10px;
-      }
     }
 
     .brand{
@@ -235,9 +222,15 @@
       box-shadow: 0 12px 28px rgba(0,0,0,0.28);
     }
 
-    /* ---------- CONTROLS ---------- */
+    /* ---------- CONTROLS (IMAGE 33) ---------- */
     #controls{
-      margin-top: 14px;
+      /* ✅ FIXED: always visible, does NOT move */
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(1100px, calc(100vw - 24px));
+      z-index: 999; /* above everything */
       display:flex;
       flex-wrap:wrap;
       gap:12px;
@@ -313,7 +306,6 @@
       touch-action: manipulation;
     }
 
-    /* Flip */
     .flip-card{
       width:100%; height:100%;
       position:relative;
@@ -569,7 +561,44 @@
 </head>
 
 <body>
+
+  <!-- ✅ FIXED CONTROLS BAR (Image 33) -->
+  <div id="controls">
+    <div class="control-group">
+      <label data-i18n="count">Anzahl</label>
+      <input type="range" id="numBoxes" min="1" max="200" value="12" step="1">
+      <span id="numBoxesValue" style="font-weight:900;">12</span>
+    </div>
+
+    <div class="control-group">
+      <label data-i18n="cols">Spalten</label>
+      <select id="columns">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3" selected>3</option>
+        <option value="4">4</option>
+      </select>
+    </div>
+
+    <div class="control-group">
+      <label data-i18n="size">Größe</label>
+      <select id="boxSize">
+        <option value="small" data-i18n="small">Klein</option>
+        <option value="normal" selected data-i18n="normal">Normal</option>
+        <option value="large" data-i18n="large">Groß</option>
+      </select>
+    </div>
+
+    <div class="control-group">
+      <label><input type="checkbox" id="showBack"> <span data-i18n="back">Rückseite zeigen</span></label>
+    </div>
+
+    <button class="btn btnDanger" id="resetBtn" type="button" data-i18n="reset">Alles leeren</button>
+    <button class="btn btnPrimary" id="downloadPdfBtn" type="button">PDF erstellen</button>
+  </div>
+
   <div id="app">
+    <!-- ✅ HEADER (Image 44) - scrolls normally -->
     <div class="topbar" id="topbar">
       <div class="brand">
         <div class="brandTitle">Deutsch mit Said</div>
@@ -585,42 +614,6 @@
 
         <button class="btn btnLang" id="langBtn" type="button">Deutsch / English</button>
       </div>
-    </div>
-
-    <div id="controls">
-      <div class="control-group">
-        <label data-i18n="count">Anzahl</label>
-        <input type="range" id="numBoxes" min="1" max="200" value="12" step="1">
-        <span id="numBoxesValue" style="font-weight:900;">12</span>
-      </div>
-
-      <div class="control-group">
-        <label data-i18n="cols">Spalten</label>
-        <select id="columns">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3" selected>3</option>
-          <option value="4">4</option>
-        </select>
-      </div>
-
-      <div class="control-group">
-        <label data-i18n="size">Größe</label>
-        <select id="boxSize">
-          <option value="small" data-i18n="small">Klein</option>
-          <option value="normal" selected data-i18n="normal">Normal</option>
-          <option value="large" data-i18n="large">Groß</option>
-        </select>
-      </div>
-
-      <div class="control-group">
-        <label><input type="checkbox" id="showBack"> <span data-i18n="back">Rückseite zeigen</span></label>
-      </div>
-
-      <button class="btn btnDanger" id="resetBtn" type="button" data-i18n="reset">Alles leeren</button>
-
-      <!-- ✅ ONE PDF BUTTON ONLY -->
-      <button class="btn btnPrimary" id="downloadPdfBtn" type="button">PDF erstellen</button>
     </div>
 
     <div id="debug">Viel Erfolg</div>
@@ -661,7 +654,7 @@
   </div>
 
   <script>
-    /* ========= Deterrents (cannot fully stop screenshots) ========= */
+    /* ========= Deterrents (deterrent only) ========= */
     (function(){
       document.addEventListener('contextmenu', e => e.preventDefault());
       document.addEventListener('dragstart', e => e.preventDefault());
@@ -670,7 +663,6 @@
         if ((e.ctrlKey || e.metaKey) && ['s','u','p','c','x','a'].includes(k)) e.preventDefault();
       });
 
-      // watermark overlay inside each card
       const css = document.createElement('style');
       css.textContent = `
         .box::after{
@@ -759,7 +751,6 @@
     const boxSizeSelect = document.getElementById('boxSize');
     const showBackCheckbox = document.getElementById('showBack');
     const resetBtn = document.getElementById('resetBtn');
-
     const downloadPdfBtn = document.getElementById('downloadPdfBtn');
 
     const nameInput = document.getElementById('name');
@@ -865,7 +856,6 @@
       settings.boxSize = ['small','normal','large'].includes(settings.boxSize) ? settings.boxSize : 'normal';
       settings.showBack = !!settings.showBack;
 
-      // mobile safety
       const w = window.innerWidth || 9999;
       if (w < 360) settings.columns = 1;
       else if (w < 520) settings.columns = Math.min(settings.columns, 2);
@@ -1080,7 +1070,6 @@
       flip.appendChild(back);
       box.appendChild(flip);
 
-      // Mobile-friendly flip (tap on card, not while typing)
       const isTypingTarget = (el) => el && (el.tagName === 'TEXTAREA' || el.tagName === 'INPUT' || el.isContentEditable);
       box.addEventListener('click', (e) => {
         if (isTypingTarget(e.target)) return;
@@ -1158,13 +1147,44 @@
     waSend.addEventListener('click', sendWa);
     waInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendWa(); });
 
-    // ================= PDF (jsPDF) =================
+    // ================= Arabic Font for jsPDF =================
+    async function loadArabicFont(pdf){
+      if (pdf.getFontList && pdf.getFontList().Amiri) return;
+
+      const cached = localStorage.getItem("amiri_ttf_base64");
+      if (cached){
+        pdf.addFileToVFS("Amiri-Regular.ttf", cached);
+        pdf.addFont("Amiri-Regular.ttf", "Amiri", "normal");
+        return;
+      }
+
+      const res = await fetch("fonts/Amiri-Regular.ttf");
+      if(!res.ok) throw new Error("Arabic font not found: fonts/Amiri-Regular.ttf");
+      const buf = await res.arrayBuffer();
+
+      let binary = "";
+      const bytes = new Uint8Array(buf);
+      const chunk = 0x8000;
+      for (let i = 0; i < bytes.length; i += chunk) {
+        binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
+      }
+      const base64 = btoa(binary);
+
+      localStorage.setItem("amiri_ttf_base64", base64);
+
+      pdf.addFileToVFS("Amiri-Regular.ttf", base64);
+      pdf.addFont("Amiri-Regular.ttf", "Amiri", "normal");
+    }
+
+    // ================= PDF (Front+Back pairing) =================
     downloadPdfBtn.addEventListener("click", generatePDF);
 
-    function generatePDF(){
+    async function generatePDF(){
       try{
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF("p","mm","a4");
+
+        await loadArabicFont(pdf);
 
         const pageWidth = 210;
         const pageHeight = 297;
@@ -1172,36 +1192,35 @@
         const margin = 15;
         const usableWidth = pageWidth - margin*2;
 
-        // respect user columns (max 3 in PDF for readability)
         let cols = Math.min(settings.columns, 3);
-
         const gap = 6;
         const boxSize = (usableWidth - gap*(cols-1)) / cols;
 
-        const rowsPerPage = Math.floor((pageHeight - 50) / (boxSize + gap));
-        const perPage = cols * rowsPerPage;
+        const headerFirst = 42; // slogan + meta
+        const headerOther = 28; // slogan only
+
+        const rowsFirst  = Math.floor((pageHeight - margin - headerFirst) / (boxSize + gap));
+        const rowsOther  = Math.floor((pageHeight - margin - headerOther) / (boxSize + gap));
 
         let index = 0;
-        let firstPage = true;
+        let firstPair = true;
 
         while(index < boxes.length){
 
-          // -------- FRONT PAGE --------
-          if(!firstPage) pdf.addPage();
-          firstPage = false;
+          // FRONT
+          if(!firstPair) pdf.addPage();
+          drawHeader(pdf, { showMeta: firstPair });
 
-          drawHeader(pdf);
+          const perFront = cols * (firstPair ? rowsFirst : rowsOther);
+          drawBoxes(pdf, index, perFront, cols, boxSize, gap, false, { yStart: firstPair ? headerFirst : headerOther });
 
-          drawBoxes(pdf, index, perPage, cols, boxSize, gap, false);
-
-          // -------- BACK PAGE --------
+          // BACK (same amount for duplex pairing)
           pdf.addPage();
+          drawHeader(pdf, { showMeta: false });
+          drawBoxes(pdf, index, perFront, cols, boxSize, gap, true, { yStart: headerOther });
 
-          drawHeader(pdf);
-
-          drawBoxes(pdf, index, perPage, cols, boxSize, gap, true);
-
-          index += perPage;
+          index += perFront;
+          firstPair = false;
         }
 
         pdf.save("Deutsch_mit_Said.pdf");
@@ -1210,62 +1229,77 @@
       }
     }
 
-    function drawHeader(pdf){
+    function drawHeader(pdf, {showMeta}){
+      // slogan on all pages
+      pdf.setFont("helvetica","bold");
       pdf.setFontSize(16);
       pdf.setTextColor(11,90,54);
-      pdf.text("Deutsch mit Said",105,20,{align:"center"});
+      pdf.text("Deutsch mit Said ist einfacher als du denkst.", 105, 18, {align:"center"});
 
+      if(!showMeta) return;
+
+      pdf.setFont("helvetica","normal");
       pdf.setFontSize(10);
       pdf.setTextColor(0,0,0);
 
-      const name = nameInput.value || "-";
-      const date = dateInput.value || "-";
-      const topic = topicInput.value || "-";
+      const name = (nameInput.value || "-").toString();
+      const date = (dateInput.value || "-").toString();
+      const topic = (topicInput.value || "-").toString();
 
-      pdf.text(`Name: ${name}`,15,30);
-      pdf.text(`Datum: ${date}`,80,30);
-      pdf.text(`Thema: ${topic}`,150,30);
+      pdf.text(`Name: ${name}`, 15, 30);
+      pdf.text(`Datum: ${date}`, 80, 30);
+      pdf.text(`Thema: ${topic}`, 150, 30);
     }
 
-    function drawBoxes(pdf,start,perPage,cols,boxSize,gap,isBack){
+    function drawBoxes(pdf,start,perPage,cols,boxSize,gap,isBack,{yStart}){
       const margin = 15;
       let x = margin;
-      let y = 40;
+      let y = yStart;
 
       for(let i=0;i<perPage;i++){
         const boxIndex = start + i;
         if(boxIndex >= boxes.length) break;
 
         const data = boxes[boxIndex] || {};
-
+        pdf.setDrawColor(0);
         pdf.rect(x,y,boxSize,boxSize);
 
         if(!isBack){
-          pdf.setFontSize(12);
+          // FRONT: German
+          pdf.setFont("helvetica","normal");
           pdf.setTextColor(0,0,0);
+
+          pdf.setFontSize(12);
           pdf.text((data.word || ""), x+4, y+8, {maxWidth: boxSize-8});
 
           pdf.setFontSize(9);
           pdf.text((data.example || ""), x+4, y+18, {maxWidth: boxSize-8});
-
         }else{
+          // BACK: ONLY translation (no German word)
           const t = getWordTranslations(data.word, data.posOverride);
 
-          pdf.setFontSize(12);
+          pdf.setFont("Amiri","normal");
           pdf.setTextColor(0,0,0);
-          pdf.text((t.ar || ""), x+boxSize/2, y+12, {align:"center", maxWidth: boxSize-8});
 
-          pdf.setFontSize(9);
-          pdf.text((t.dar || ""), x+boxSize-4, y+22, {align:"right", maxWidth: boxSize-8});
+          if (pdf.setR2L) pdf.setR2L(true);
+
+          pdf.setFontSize(13);
+          pdf.text((t.ar || ""), x + boxSize/2, y + 12, {align:"center", maxWidth: boxSize-8});
+
+          pdf.setFontSize(10);
+          pdf.text((t.dar || ""), x + boxSize - 4, y + 22, {align:"right", maxWidth: boxSize-8});
 
           if(data.note){
             pdf.line(x+4, y+30, x+boxSize-4, y+30);
-            pdf.text(String(data.note), x+4, y+38, {maxWidth: boxSize-8});
+            pdf.setFontSize(10);
+            pdf.text(String(data.note), x + boxSize - 4, y + 38, {align:"right", maxWidth: boxSize-8});
           }
+
+          if (pdf.setR2L) pdf.setR2L(false);
+          pdf.setFont("helvetica","normal");
         }
 
         x += boxSize + gap;
-
         if((i+1) % cols === 0){
           x = margin;
           y += boxSize + gap;
