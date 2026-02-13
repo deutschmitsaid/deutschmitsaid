@@ -99,11 +99,7 @@
       max-width: 1100px;
       margin:0 auto;
       padding:16px;
-    }
-
-    /* IMPORTANT: on mobile we make header fixed => add padding-top */
-    @media (max-width: 720px){
-      #app{ padding-top: 128px; }
+      padding-top: var(--appTopPad, 16px);
     }
 
     /* ---------- TOP BAR ---------- */
@@ -124,13 +120,17 @@
       flex-wrap: wrap;
     }
 
-    /* ✅ FIX for iPhone sticky bugs: make it fixed on small screens */
+    /* ✅ FIX on mobile: make header fixed + safe area + no jitter blur */
     @media (max-width: 720px){
       .topbar{
-        position: fixed;
+        position: fixed !important;
         left: 12px;
         right: 12px;
-        top: 10px;
+        top: calc(10px + env(safe-area-inset-top));
+        z-index: 9999;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        background: rgba(15,20,18,0.92) !important; /* ثابت */
       }
     }
 
@@ -143,20 +143,23 @@
     }
 
     .brandTitle{
-      font-size: 22px;
+      font-size: 24px;
       font-weight: 900;
-      line-height:1.1;
-      background: linear-gradient(90deg, #d7f7e6, rgba(62,122,75,0.95), rgba(0,66,37,0.95));
+      line-height:1.05;
+      background: linear-gradient(90deg, #ffffff, #c9ffd9, #79d99a);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      text-shadow: 0 0 22px rgba(46,94,58,0.22);
+      text-shadow:
+        0 2px 10px rgba(0,0,0,0.55),
+        0 0 18px rgba(62,122,75,0.25);
     }
 
     .brandSub{
       font-size: 13px;
-      color: var(--muted);
+      color: rgba(255,255,255,0.78);
       font-weight: 800;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.55);
     }
 
     .topActions{
@@ -250,6 +253,15 @@
       box-shadow: var(--shadow);
     }
 
+    /* ✅ Mobile: remove blur jitter on controls too */
+    @media (max-width: 720px){
+      #controls{
+        backdrop-filter:none !important;
+        -webkit-backdrop-filter:none !important;
+        background: rgba(15,20,18,0.92) !important;
+      }
+    }
+
     .control-group{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:center; }
     .control-group label{
       font-weight: 900;
@@ -311,6 +323,22 @@
       box-shadow: 0 18px 40px rgba(0,0,0,0.35);
       contain: content;
       touch-action: manipulation;
+    }
+
+    /* watermark overlay inside each card (deterrent) */
+    .box::after{
+      content:"Deutsch mit Said";
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      font-size:14px;
+      color: rgba(255,255,255,0.06);
+      transform: rotate(-22deg);
+      pointer-events:none;
+      letter-spacing: .6px;
     }
 
     /* Flip */
@@ -469,25 +497,27 @@
 
     .missing{ opacity: .65; }
 
-    /* ===== PDF STAGE (IMPORTANT FIX: not offscreen - avoids blank PDF) ===== */
+    /* ===== PDF STAGE (renderable, not blank) ===== */
     #pdfStage{
       position: fixed;
       left: 0;
       top: 0;
       width: 210mm;
-      min-height: 297mm;
+      height: 297mm;
       padding: 10mm;
       background: #fff;
       color:#111;
       box-sizing:border-box;
-      opacity: 0;            /* hidden but renderable */
+
+      /* IMPORTANT: not 0, otherwise canvas can be blank */
+      opacity: 0.01;
       pointer-events:none;
       z-index: -1;
     }
 
     .pdfBigTitle{
       text-align:center;
-      color: var(--brg2);
+      color: #0B5A36;
       font-weight: 900;
       font-size: 18px;
       margin: 0 0 6mm 0;
@@ -512,6 +542,7 @@
 
     .pdfWrap{
       width: 100%;
+      height: calc(297mm - 20mm - 6mm - 7mm - 18px); /* safe */
       background:#fff;
       padding: 0;
       border:none;
@@ -688,8 +719,8 @@
 
   <div id="waPopup">
     <div class="waHeader">
-      <!-- ✅ said.jpg -->
-<img class="waAvatar" id="waAvatar" src="images/said.jpg" alt="Said Lehrer" draggable="false">
+      <!-- ✅ said.jpg same folder as index.html -->
+      <img class="waAvatar" id="waAvatar" src="said.jpg" alt="Said Lehrer" draggable="false">
       <div>
         <div class="waTitle">Said Lehrer</div>
         <div class="waSub">Deutsch-Fragen? Schreib mir.</div>
@@ -716,32 +747,10 @@
     (function(){
       document.addEventListener('contextmenu', e => e.preventDefault());
       document.addEventListener('dragstart', e => e.preventDefault());
-
       document.addEventListener('keydown', (e) => {
         const k = (e.key || '').toLowerCase();
         if ((e.ctrlKey || e.metaKey) && ['s','u','p','c','x','a'].includes(k)) e.preventDefault();
-        if (e.key === 'PrintScreen') e.preventDefault();
       });
-
-      // watermark overlay inside each card for deterrence
-      const css = document.createElement('style');
-      css.textContent = `
-        .box::after{
-          content:"Deutsch mit Said";
-          position:absolute;
-          inset:0;
-          display:flex;
-          align-items:center;
-          justify-content:center;
-          font-weight:900;
-          font-size:14px;
-          color: rgba(255,255,255,0.06);
-          transform: rotate(-22deg);
-          pointer-events:none;
-          letter-spacing: .6px;
-        }
-      `;
-      document.head.appendChild(css);
     })();
 
     // ================= i18n =================
@@ -919,7 +928,7 @@
       settings.boxSize = ['small','normal','large'].includes(settings.boxSize) ? settings.boxSize : 'normal';
       settings.showBack = !!settings.showBack;
 
-      // mobile safety
+      // mobile safety columns
       const w = window.innerWidth || 9999;
       if (w < 360) settings.columns = 1;
       else if (w < 520) settings.columns = Math.min(settings.columns, 2);
@@ -953,7 +962,7 @@
       document.documentElement.style.setProperty('--box', map[settings.boxSize] || map.normal);
     }
 
-    // ================= Storage =================
+    // ================= Storage (Debounced) =================
     function saveToStorage(){
       try{
         localStorage.setItem('dms_boxes', JSON.stringify(boxes));
@@ -962,6 +971,12 @@
         localStorage.setItem('dms_lang', lang);
       }catch(e){}
     }
+    let saveTimer = null;
+    function saveToStorageDebounced(){
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(saveToStorage, 260);
+    }
+
     function loadFromStorage(){
       try{
         const sb = localStorage.getItem('dms_boxes');
@@ -1102,7 +1117,7 @@
         const cur = boxes[index].posOverride || '';
         const next = (cur === '') ? 'V' : (cur === 'V') ? 'N' : (cur === 'N') ? 'A' : '';
         boxes[index].posOverride = next;
-        saveToStorage();
+        saveToStorageDebounced();
         renderBack();
       });
 
@@ -1110,20 +1125,20 @@
         boxes[index].word = wordTA.value;
         autoFitTextarea(wordTA, 11, 16);
         renderBack();
-        saveToStorage();
+        saveToStorageDebounced();
       });
 
       exTA.addEventListener('input', () => {
         boxes[index].example = exTA.value;
         autoFitTextarea(exTA, 11, 14);
         renderBack();
-        saveToStorage();
+        saveToStorageDebounced();
       });
 
       noteTA.addEventListener('input', () => {
         boxes[index].note = noteTA.value;
         autoFitTextarea(noteTA, 12, 14);
-        saveToStorage();
+        saveToStorageDebounced();
       });
 
       setTimeout(() => {
@@ -1143,7 +1158,6 @@
         if (isTypingTarget(e.target)) return;
         flip.classList.toggle('flipped');
       });
-      box.addEventListener('dblclick', () => flip.classList.toggle('flipped'));
 
       return box;
     }
@@ -1181,8 +1195,19 @@
       log('Viel Erfolg');
     }
 
-    // ================= PDF (BIG BOXES + META UNDER TITLE) =================
-    function buildPdfPageDOM(mode){
+    // ================= PDF (DUPEX SAFE: same positions front/back) =================
+    function getPdfLayout(){
+      // Keep boxes big: max 3 cols
+      const cols = Math.min(settings.columns, 3);
+      // bigger boxes => fewer rows
+      const rows = (cols === 1) ? 7 : (cols === 2) ? 5 : 4;
+      const perPage = cols * rows;
+      // mm box size
+      const boxMm = (settings.boxSize === 'small') ? 58 : (settings.boxSize === 'large') ? 74 : 66;
+      return { cols, rows, perPage, boxMm };
+    }
+
+    function buildPdfPageDOM(mode, startIndex, count, showMeta){
       pdfStage.innerHTML = '';
 
       const title = document.createElement('div');
@@ -1190,40 +1215,36 @@
       title.textContent = 'Deutsch mit Said ist einfacher, als du denkst.';
       pdfStage.appendChild(title);
 
-      // ✅ meta row under title (like your screenshot 3)
-      const meta = document.createElement('div');
-      meta.className = 'pdfMetaRow';
-      const nm = (nameInput.value || '').trim() || '—';
-      const dt = (dateInput.value || '').trim() || '—';
-      const tp = (topicInput.value || '').trim() || '—';
-      meta.innerHTML = `<span>Name: ${nm}</span><span>Datum: ${dt}</span><span>Thema: ${tp}</span>`;
-      pdfStage.appendChild(meta);
+      if (showMeta){
+        const meta = document.createElement('div');
+        meta.className = 'pdfMetaRow';
+        const nm = (nameInput.value || '').trim() || '—';
+        const dt = (dateInput.value || '').trim() || '—';
+        const tp = (topicInput.value || '').trim() || '—';
+        meta.innerHTML = `<span>Name: ${nm}</span><span>Datum: ${dt}</span><span>Thema: ${tp}</span>`;
+        pdfStage.appendChild(meta);
+      } else {
+        const spacer = document.createElement('div');
+        spacer.style.height = '7mm';
+        pdfStage.appendChild(spacer);
+      }
 
       const wrap = document.createElement('div');
       wrap.className = 'pdfWrap';
       pdfStage.appendChild(wrap);
 
-      // ✅ PDF columns: safe fit + big squares
-      const pdfCols = Math.min(settings.columns, 3); // avoid tiny boxes
-      const sizeMap = { small: 58, normal: 66, large: 74 }; // mm
-      const boxMm = sizeMap[settings.boxSize] || 66;
+      const { cols, boxMm } = getPdfLayout();
 
       const g = document.createElement('div');
       g.style.display = 'grid';
-      g.style.gridTemplateColumns = `repeat(${pdfCols}, ${boxMm}mm)`;
+      g.style.gridTemplateColumns = `repeat(${cols}, ${boxMm}mm)`;
       g.style.gap = '6mm';
       g.style.justifyContent = 'center';
       wrap.appendChild(g);
 
-      // how many boxes per page depends on cols
-      const perRow = pdfCols;
-      const maxRows = (pdfCols === 1) ? 7 : (pdfCols === 2) ? 5 : 4; // bigger boxes => fewer rows
-      const perPage = perRow * maxRows;
-
-      // We'll render ALL boxes by auto paging using canvas slicing (later).
-      // Just build full grid; slicing will create pages.
-      for (let i=0; i<settings.numBoxes; i++){
-        const d = boxes[i] || {word:'', example:'', posOverride:'', note:''};
+      for (let i=0; i<count; i++){
+        const idx = startIndex + i;
+        const d = boxes[idx] || {word:'', example:'', posOverride:'', note:''};
 
         const b = document.createElement('div');
         b.style.width = boxMm + 'mm';
@@ -1234,7 +1255,6 @@
         b.style.overflow = 'hidden';
         b.style.position = 'relative';
 
-        // tiny watermark in PDF too
         const wm = document.createElement('div');
         wm.textContent = 'Deutsch mit Said';
         wm.style.position = 'absolute';
@@ -1319,43 +1339,16 @@
         b.appendChild(content);
         g.appendChild(b);
       }
-
-      return { pdfCols, perPage };
     }
 
-    async function addCanvasAsPagedImagesToPdf(pdf, canvas, marginMm=10){
-      const pageWidth=210, pageHeight=297;
-      const usableW = pageWidth - 2*marginMm;
-      const usableH = pageHeight - 2*marginMm;
-
-      const imgW = usableW;
-      const imgH = (canvas.height * imgW) / canvas.width;
-
-      if (imgH <= usableH){
-        pdf.addImage(canvas.toDataURL('image/png'), 'PNG', marginMm, marginMm, imgW, imgH);
-        return;
-      }
-
-      const pxPerMm = canvas.width / imgW;
-      const slicePxH = usableH * pxPerMm;
-
-      let y=0;
-      let first=true;
-      while (y < canvas.height - 1){
-        if (!first) pdf.addPage();
-        first=false;
-
-        const sH = Math.min(slicePxH, canvas.height - y);
-        const tmp = document.createElement('canvas');
-        tmp.width = canvas.width;
-        tmp.height = sH;
-        const ctx = tmp.getContext('2d');
-        ctx.drawImage(canvas, 0, y, canvas.width, sH, 0, 0, canvas.width, sH);
-
-        const drawH = (sH * imgW) / canvas.width;
-        pdf.addImage(tmp.toDataURL('image/png'), 'PNG', marginMm, marginMm, imgW, drawH);
-        y += sH;
-      }
+    async function renderPdfPageToCanvas(){
+      await new Promise(r => setTimeout(r, 60));
+      // scale lower => faster + less crashes on mobile
+      return await html2canvas(pdfStage, {
+        scale: 1.6,
+        backgroundColor: '#ffffff',
+        useCORS: true
+      });
     }
 
     async function downloadAsPdf(){
@@ -1370,27 +1363,51 @@
 
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF('p','mm','a4');
+        const marginMm = 10;
 
-        // Front page(s)
-        buildPdfPageDOM('front');
-        await new Promise(r => setTimeout(r, 120));
-        const c1 = await html2canvas(pdfStage, {
-          scale: 2,
-          backgroundColor: '#ffffff',
-          useCORS: true
-        });
-        await addCanvasAsPagedImagesToPdf(pdf, c1, 10);
+        const { perPage } = getPdfLayout();
+        const total = settings.numBoxes;
+        const pages = Math.max(1, Math.ceil(total / perPage));
 
-        // Back page(s)
-        pdf.addPage();
-        buildPdfPageDOM('back');
-        await new Promise(r => setTimeout(r, 120));
-        const c2 = await html2canvas(pdfStage, {
-          scale: 2,
-          backgroundColor: '#ffffff',
-          useCORS: true
-        });
-        await addCanvasAsPagedImagesToPdf(pdf, c2, 10);
+        // FRONT pages
+        for (let p=0; p<pages; p++){
+          const start = p * perPage;
+          const count = Math.min(perPage, total - start);
+          const showMeta = (p === 0); // meta only on first front page
+
+          buildPdfPageDOM('front', start, count, showMeta);
+          const canvas = await renderPdfPageToCanvas();
+
+          if (p > 0) pdf.addPage();
+          const pageWidth=210, pageHeight=297;
+          const usableW = pageWidth - 2*marginMm;
+          const usableH = pageHeight - 2*marginMm;
+          const imgW = usableW;
+          const imgH = (canvas.height * imgW) / canvas.width;
+
+          // fit in page
+          const drawH = Math.min(imgH, usableH);
+          pdf.addImage(canvas.toDataURL('image/png'), 'PNG', marginMm, marginMm, imgW, drawH);
+        }
+
+        // BACK pages (same count/order => duplex alignment)
+        for (let p=0; p<pages; p++){
+          pdf.addPage();
+          const start = p * perPage;
+          const count = Math.min(perPage, total - start);
+          // meta optional on back: we keep spacing same, but hide meta row to match layout
+          buildPdfPageDOM('back', start, count, false);
+          const canvas = await renderPdfPageToCanvas();
+
+          const pageWidth=210, pageHeight=297;
+          const usableW = pageWidth - 2*marginMm;
+          const usableH = pageHeight - 2*marginMm;
+          const imgW = usableW;
+          const imgH = (canvas.height * imgW) / canvas.width;
+          const drawH = Math.min(imgH, usableH);
+
+          pdf.addImage(canvas.toDataURL('image/png'), 'PNG', marginMm, marginMm, imgW, drawH);
+        }
 
         pdf.save('Deutsch_mit_Said_Vokabelblatt.pdf');
         log('Viel Erfolg');
@@ -1433,29 +1450,44 @@
     waSend.addEventListener('click', sendWa);
     waInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendWa(); });
 
+    // ================= Header padding calc (prevents overlap on mobile) =================
+    function updateAppTopPadding(){
+      const topbar = document.getElementById('topbar');
+      if (!topbar) return;
+      const mobile = window.matchMedia('(max-width: 720px)').matches;
+      if (!mobile){
+        document.documentElement.style.setProperty('--appTopPad', '16px');
+        return;
+      }
+      // height + spacing
+      const h = Math.ceil(topbar.getBoundingClientRect().height);
+      const pad = h + 22; // extra space
+      document.documentElement.style.setProperty('--appTopPad', `${pad}px`);
+    }
+
     // ================= Settings UI listeners =================
     function attachListeners(){
       numBoxesInput.addEventListener('input', () => {
         settings.numBoxes = Math.max(1, parseInt(numBoxesInput.value,10) || 12);
         numBoxesValue.textContent = settings.numBoxes;
-        updateGrid(); saveToStorage();
+        updateGrid(); saveToStorageDebounced();
       });
 
       columnsSelect.addEventListener('change', () => {
         settings.columns = parseInt(columnsSelect.value,10);
         updateSettingsUI();
-        updateGrid(); saveToStorage();
+        updateGrid(); saveToStorageDebounced();
       });
 
       boxSizeSelect.addEventListener('change', () => {
         settings.boxSize = boxSizeSelect.value;
         updateSettingsUI();
-        updateGrid(); saveToStorage();
+        updateGrid(); saveToStorageDebounced();
       });
 
       showBackCheckbox.addEventListener('change', () => {
         settings.showBack = showBackCheckbox.checked;
-        updateGrid(); saveToStorage();
+        updateGrid(); saveToStorageDebounced();
       });
 
       resetBtn.addEventListener('click', resetAll);
@@ -1465,14 +1497,15 @@
         lang = (lang === 'de') ? 'en' : 'de';
         applyI18n();
         updateLangButton();
-        saveToStorage();
+        saveToStorageDebounced();
       });
 
-      [nameInput, dateInput, topicInput].forEach(el => el.addEventListener('input', saveToStorage));
+      [nameInput, dateInput, topicInput].forEach(el => el.addEventListener('input', saveToStorageDebounced));
 
       window.addEventListener('resize', () => {
         const before = settings.columns;
         updateSettingsUI();
+        updateAppTopPadding();
         if (String(before) !== String(settings.columns)) updateGrid();
       }, {passive:true});
     }
@@ -1486,6 +1519,7 @@
         updateLangButton();
         attachListeners();
         updateGrid();
+        updateAppTopPadding();
       }catch(e){
         showError(e.message || String(e));
       }
