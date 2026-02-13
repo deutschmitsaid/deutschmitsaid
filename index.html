@@ -5,29 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Deutsch mit Said – Vokabelblatt</title>
 
+  <!-- libs -->
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
   <style>
     :root{
-      /* ===== Theme (Carbon Black + Moss Green motion + British Racing Green accents) ===== */
+      /* ===== Colors (requested) ===== */
       --carbon:#0B0D0E;          /* Carbon Black */
-      --carbon2:#0F1214;
-      --card: rgba(255,255,255,0.06);
-      --card2: rgba(255,255,255,0.08);
-      --ink: #EAF2EE;
+      --carbon2:#0F1412;
+      --ink:#EAF2EE;
       --muted:#A7B6AE;
 
-      --moss:#2E5E3A;            /* Moss Green (moving aura) */
+      --moss:#2E5E3A;            /* Moss Green */
       --moss2:#3E7A4B;
-      --brg:#004225;             /* British Racing Green (buttons/accents) */
+
+      --brg:#004225;             /* British Racing Green */
       --brg2:#0B5A36;
 
-      --line: rgba(255,255,255,0.10);
-      --shadow: 0 18px 60px rgba(0,0,0,0.45);
+      --line: rgba(255,255,255,0.12);
+      --shadow: 0 16px 60px rgba(0,0,0,0.45);
 
-      /* responsive box size */
-      --box: clamp(140px, 34vw, 210px);
+      --glass1: rgba(255,255,255,0.10);
+      --glass2: rgba(255,255,255,0.06);
+
+      /* responsive box size (screen) */
+      --box: clamp(145px, 34vw, 215px);
 
       /* WhatsApp */
       --wa:#25D366;
@@ -38,44 +41,48 @@
     html, body{ height:100%; }
     body{
       font-family: Arial, sans-serif;
-      margin:0; padding:0;
+      margin:0;
       color:var(--ink);
-      background: radial-gradient(1200px 600px at 20% -10%, rgba(46,94,58,0.18), transparent 60%),
-                  radial-gradient(900px 500px at 90% 0%, rgba(0,66,37,0.16), transparent 60%),
-                  radial-gradient(900px 600px at 50% 110%, rgba(62,122,75,0.12), transparent 60%),
-                  linear-gradient(180deg, var(--carbon), var(--carbon2));
-      overflow-x: hidden;
+      background: linear-gradient(180deg, var(--carbon), var(--carbon2));
+      overflow-x:hidden;
       -webkit-text-size-adjust: 100%;
       text-size-adjust: 100%;
     }
 
-    /* ===== Creative moving “aura / jaw / wave” background (CSS only, lightweight) ===== */
+    /* ===== FIXED animated aura background (doesn't scroll) ===== */
     body::before{
       content:"";
       position: fixed;
       inset: -35%;
       z-index: -2;
-      pointer-events: none;
-
+      pointer-events:none;
       background:
         radial-gradient(60% 50% at 12% 22%, rgba(46,94,58,0.55), transparent 62%),
         radial-gradient(55% 50% at 88% 28%, rgba(0,66,37,0.48), transparent 62%),
-        radial-gradient(50% 45% at 55% 85%, rgba(62,122,75,0.40), transparent 62%),
-        radial-gradient(45% 40% at 25% 78%, rgba(46,94,58,0.30), transparent 60%),
-        radial-gradient(55% 55% at 70% 10%, rgba(0,66,37,0.22), transparent 60%);
-      filter: blur(28px) saturate(1.2);
+        radial-gradient(50% 45% at 55% 85%, rgba(62,122,75,0.38), transparent 62%),
+        radial-gradient(45% 40% at 25% 78%, rgba(46,94,58,0.26), transparent 60%),
+        radial-gradient(55% 55% at 70% 10%, rgba(0,66,37,0.20), transparent 60%);
+      filter: blur(26px) saturate(1.15);
       transform: translate3d(0,0,0);
       animation: auraDrift 18s ease-in-out infinite alternate;
-      opacity: .95;
+      opacity: .92;
+    }
+    @keyframes auraDrift{
+      0%   { transform: translate3d(-2%, -1%, 0) scale(1.02) rotate(0deg); }
+      45%  { transform: translate3d( 2%,  2%, 0) scale(1.06) rotate(1deg); }
+      100% { transform: translate3d(-1%,  3%, 0) scale(1.03) rotate(-1deg); }
+    }
+    @media (prefers-reduced-motion: reduce){
+      body::before{ animation:none; }
     }
 
-    /* subtle “carbon noise” (no images) */
+    /* soft carbon grain */
     body::after{
       content:"";
       position: fixed;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
       background:
         repeating-radial-gradient(circle at 20% 30%,
           rgba(255,255,255,0.030) 0 1px,
@@ -83,24 +90,20 @@
         repeating-radial-gradient(circle at 80% 70%,
           rgba(255,255,255,0.020) 0 1px,
           rgba(0,0,0,0) 1px 7px);
-      opacity: .35;
+      opacity:.30;
       mix-blend-mode: overlay;
     }
 
-    @keyframes auraDrift{
-      0%   { transform: translate3d(-2%, -1%, 0) scale(1.02) rotate(0deg); }
-      45%  { transform: translate3d( 2%,  2%, 0) scale(1.06) rotate(1deg); }
-      100% { transform: translate3d(-1%,  3%, 0) scale(1.03) rotate(-1deg); }
-    }
-
-    @media (prefers-reduced-motion: reduce){
-      body::before{ animation:none; }
-    }
-
+    /* ===== APP ===== */
     #app{
       max-width: 1100px;
       margin:0 auto;
       padding:16px;
+    }
+
+    /* IMPORTANT: on mobile we make header fixed => add padding-top */
+    @media (max-width: 720px){
+      #app{ padding-top: 128px; }
     }
 
     /* ---------- TOP BAR ---------- */
@@ -114,17 +117,26 @@
       gap:12px;
       padding:14px 14px;
       border-radius: 18px;
-
-      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.06));
-      border: 1px solid rgba(255,255,255,0.10);
-      backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, var(--glass1), var(--glass2));
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(12px);
       box-shadow: var(--shadow);
-
       flex-wrap: wrap;
     }
 
+    /* ✅ FIX for iPhone sticky bugs: make it fixed on small screens */
+    @media (max-width: 720px){
+      .topbar{
+        position: fixed;
+        left: 12px;
+        right: 12px;
+        top: 10px;
+      }
+    }
+
     .brand{
-      display:flex; flex-direction:column;
+      display:flex;
+      flex-direction:column;
       gap:3px;
       min-width: 220px;
       flex: 1 1 220px;
@@ -133,13 +145,12 @@
     .brandTitle{
       font-size: 22px;
       font-weight: 900;
-      letter-spacing: .2px;
       line-height:1.1;
       background: linear-gradient(90deg, #d7f7e6, rgba(62,122,75,0.95), rgba(0,66,37,0.95));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      text-shadow: 0 0 22px rgba(46,94,58,0.20);
+      text-shadow: 0 0 22px rgba(46,94,58,0.22);
     }
 
     .brandSub{
@@ -164,10 +175,8 @@
       gap:10px;
       padding:10px 12px;
       border-radius: 999px;
-
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.10);
-
+      background: rgba(0,0,0,0.16);
+      border: 1px solid rgba(255,255,255,0.12);
       flex-wrap: wrap;
       width: min(560px, 100%);
       justify-content:flex-end;
@@ -178,22 +187,18 @@
       border-radius: 999px;
       border: 1px solid rgba(255,255,255,0.14);
       outline:none;
-      background: rgba(0,0,0,0.22);
+      background: rgba(0,0,0,0.24);
       color: var(--ink);
       font-size: 14px;
       font-weight: 800;
-      font-family: Arial, sans-serif;
-
       min-width: 0;
       flex: 1 1 150px;
       max-width: 100%;
     }
-
     .pill input::placeholder{ color: rgba(234,242,238,0.55); }
-
     .pill input:focus{
       border-color: rgba(62,122,75,0.70);
-      box-shadow: 0 0 0 4px rgba(62,122,75,0.20);
+      box-shadow: 0 0 0 4px rgba(62,122,75,0.18);
     }
 
     .btn{
@@ -208,7 +213,6 @@
       gap:8px;
       user-select:none;
       white-space:nowrap;
-      font-family: Arial, sans-serif;
       -webkit-tap-highlight-color: transparent;
     }
     .btn:hover{ transform: translateY(-1px); opacity:.98; filter: brightness(1.02); }
@@ -219,13 +223,11 @@
       color:#EAF2EE;
       box-shadow: 0 12px 28px rgba(0,66,37,0.35);
     }
-
     .btnDanger{
       background: linear-gradient(90deg, #7a1b1b, #b45309);
       color:#fff;
       box-shadow: 0 12px 28px rgba(0,0,0,0.35);
     }
-
     .btnLang{
       background: linear-gradient(90deg, rgba(255,255,255,0.10), rgba(255,255,255,0.06));
       border: 1px solid rgba(255,255,255,0.12);
@@ -242,10 +244,9 @@
       padding:14px;
       border-radius: 18px;
       justify-content:center;
-
       background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.05));
       border: 1px solid rgba(255,255,255,0.10);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
       box-shadow: var(--shadow);
     }
 
@@ -263,7 +264,6 @@
       background: rgba(0,0,0,0.20);
       color: var(--ink);
       font-weight: 900;
-      font-family: Arial, sans-serif;
       max-width: 100%;
       outline: none;
     }
@@ -293,7 +293,6 @@
       border-radius: 18px;
       position:relative;
       gap: 10px;
-
       background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.04));
       border: 1px solid rgba(255,255,255,0.08);
     }
@@ -301,17 +300,14 @@
     .box{
       width: var(--box);
       height: var(--box);
-      aspect-ratio: 1;
       border-radius: 16px;
       position:relative;
       overflow:hidden;
       border: 1px solid rgba(255,255,255,0.10);
-
       background:
         radial-gradient(700px 260px at 10% 0%, rgba(62,122,75,0.10), transparent 55%),
         radial-gradient(700px 260px at 90% 0%, rgba(0,66,37,0.10), transparent 55%),
         linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.04));
-
       box-shadow: 0 18px 40px rgba(0,0,0,0.35);
       contain: content;
       touch-action: manipulation;
@@ -332,7 +328,6 @@
       display:flex; flex-direction:column;
       padding:14px;
       gap:10px;
-      font-family: Arial, sans-serif;
     }
     .flip-back{
       transform: rotateY(180deg);
@@ -356,7 +351,6 @@
       text-align:center;
       overflow:hidden;
       min-height: 34px;
-      font-family: Arial, sans-serif;
     }
 
     .exampleWrap{
@@ -382,7 +376,6 @@
       text-align:left;
       overflow:hidden;
       flex:1;
-      font-family: Arial, sans-serif;
     }
 
     .posBadge{
@@ -396,7 +389,6 @@
       border: 1px solid rgba(62,122,75,0.28);
       color: #d7f7e6;
       direction:ltr;
-      text-align:left;
       user-select:none;
       cursor:pointer;
     }
@@ -426,7 +418,6 @@
       font-weight: 700;
       line-height: 1.65;
       direction: rtl;
-      white-space: normal;
       word-break: break-word;
       color: rgba(234,242,238,0.88);
     }
@@ -462,7 +453,6 @@
       min-height: 70px;
       text-align:right;
       direction: rtl;
-      font-family: Arial, sans-serif;
       overflow:hidden;
     }
 
@@ -479,49 +469,55 @@
 
     .missing{ opacity: .65; }
 
-    /* ---------- PDF stage ---------- */
+    /* ===== PDF STAGE (IMPORTANT FIX: not offscreen - avoids blank PDF) ===== */
     #pdfStage{
-      position:fixed; left:-99999px; top:-99999px;
-      width:210mm; padding:10mm;
-      background:#fff; color:#111;
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 210mm;
+      min-height: 297mm;
+      padding: 10mm;
+      background: #fff;
+      color:#111;
       box-sizing:border-box;
-      font-family: Arial, sans-serif;
+      opacity: 0;            /* hidden but renderable */
+      pointer-events:none;
+      z-index: -1;
     }
+
     .pdfBigTitle{
       text-align:center;
-      color: #0b5a36;
+      color: var(--brg2);
       font-weight: 900;
       font-size: 18px;
-      margin: 0 0 7mm 0;
+      margin: 0 0 6mm 0;
     }
-    .pdfWrap{
-      position:relative;
-      margin: 0 auto;
-      background:#fff;
-      padding: 10mm;
-      box-sizing:border-box;
-      width: 100%;
-      overflow: hidden;
-      border: none;
-    }
-    .pdfFooter{
-      margin-top: 6mm;
+
+    .pdfMetaRow{
       display:flex;
+      justify-content:center;
       gap:6mm;
       flex-wrap:wrap;
-      justify-content:center;
+      margin: 0 0 7mm 0;
       font-size: 11px;
-      color:#111;
       font-weight: 900;
+      color:#111;
     }
-    .pdfFooter span{
-      border: 1px solid rgba(0,0,0,0.12);
+    .pdfMetaRow span{
+      border: 1px solid rgba(0,0,0,0.14);
       border-radius: 999px;
       padding: 2.5mm 4mm;
       background: rgba(0,0,0,0.02);
     }
 
-    /* ---------- WhatsApp widget ---------- */
+    .pdfWrap{
+      width: 100%;
+      background:#fff;
+      padding: 0;
+      border:none;
+    }
+
+    /* WhatsApp */
     #waBtn{
       position: fixed;
       right: 18px;
@@ -584,11 +580,7 @@
       cursor:pointer;
       font-weight: 900;
     }
-
-    .waBody{
-      padding: 12px;
-      background: #f6f7f8;
-    }
+    .waBody{ padding: 12px; background: #f6f7f8; }
     .waBubble{
       background:#fff;
       border-radius: 12px;
@@ -598,12 +590,7 @@
       color:#0f172a;
     }
     .waBubble small{ display:block; margin-top:6px; color:#64748b; font-weight:800; }
-
-    .waInputWrap{
-      margin-top: 10px;
-      display:flex;
-      gap:8px;
-    }
+    .waInputWrap{ margin-top: 10px; display:flex; gap:8px; }
     #waInput{
       flex:1;
       border-radius: 12px;
@@ -624,21 +611,15 @@
       white-space: nowrap;
     }
 
-    @media (max-width: 520px){
-      #app{ padding: 12px; }
-      .brandTitle{ font-size: 20px; }
-      .pill{ border-radius: 16px; }
-      :root{ --box: clamp(135px, 44vw, 190px); }
-    }
-    @media (max-width: 360px){
-      :root{ --box: clamp(132px, 86vw, 180px); }
-    }
+    /* ===== Anti-copy / anti-select (deterrent) ===== */
+    body, #app{ user-select:none; -webkit-user-select:none; }
+    input, textarea{ user-select:text !important; -webkit-user-select:text !important; }
   </style>
 </head>
 
 <body>
   <div id="app">
-    <div class="topbar">
+    <div class="topbar" id="topbar">
       <div class="brand">
         <div class="brandTitle">Deutsch mit Said</div>
         <div class="brandSub" data-i18n="subtitle">ist einfacher: wählen • schreiben • drucken</div>
@@ -695,6 +676,7 @@
     <div id="grid"></div>
   </div>
 
+  <!-- PDF Stage -->
   <div id="pdfStage" aria-hidden="true"></div>
 
   <!-- WhatsApp Widget -->
@@ -706,7 +688,8 @@
 
   <div id="waPopup">
     <div class="waHeader">
-      <img class="waAvatar" id="waAvatar" src="YOUR_SAID_IMAGE_URL_HERE" alt="Said Lehrer">
+      <!-- ✅ said.jpg -->
+      <img class="waAvatar" id="waAvatar" src="said.jpg" alt="Said Lehrer" draggable="false">
       <div>
         <div class="waTitle">Said Lehrer</div>
         <div class="waSub">Deutsch-Fragen? Schreib mir.</div>
@@ -729,41 +712,49 @@
   </div>
 
   <script>
+    /* ========= Light anti-copy deterrents (cannot 100% stop screenshots) ========= */
+    (function(){
+      document.addEventListener('contextmenu', e => e.preventDefault());
+      document.addEventListener('dragstart', e => e.preventDefault());
+
+      document.addEventListener('keydown', (e) => {
+        const k = (e.key || '').toLowerCase();
+        if ((e.ctrlKey || e.metaKey) && ['s','u','p','c','x','a'].includes(k)) e.preventDefault();
+        if (e.key === 'PrintScreen') e.preventDefault();
+      });
+
+      // watermark overlay inside each card for deterrence
+      const css = document.createElement('style');
+      css.textContent = `
+        .box::after{
+          content:"Deutsch mit Said";
+          position:absolute;
+          inset:0;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          font-weight:900;
+          font-size:14px;
+          color: rgba(255,255,255,0.06);
+          transform: rotate(-22deg);
+          pointer-events:none;
+          letter-spacing: .6px;
+        }
+      `;
+      document.head.appendChild(css);
+    })();
+
     // ================= i18n =================
     let lang = 'de';
     const I18N = {
-      de: {
-        subtitle: "ist einfacher: wählen • schreiben • drucken",
-        count: "Anzahl",
-        cols: "Spalten",
-        size: "Größe",
-        small: "Klein",
-        normal: "Normal",
-        large: "Groß",
-        back: "Rückseite zeigen",
-        reset: "Alles leeren",
-        pdf: "PDF"
-      },
-      en: {
-        subtitle: "made easy: choose • write • print",
-        count: "Count",
-        cols: "Columns",
-        size: "Size",
-        small: "Small",
-        normal: "Normal",
-        large: "Large",
-        back: "Show back side",
-        reset: "Clear all",
-        pdf: "PDF"
-      }
+      de: { subtitle:"ist einfacher: wählen • schreiben • drucken", count:"Anzahl", cols:"Spalten", size:"Größe", small:"Klein", normal:"Normal", large:"Groß", back:"Rückseite zeigen", reset:"Alles leeren", pdf:"PDF" },
+      en: { subtitle:"made easy: choose • write • print", count:"Count", cols:"Columns", size:"Size", small:"Small", normal:"Normal", large:"Large", back:"Show back side", reset:"Clear all", pdf:"PDF" }
     };
 
     const langBtn = document.getElementById('langBtn');
-    function updateLangButton(){
-      langBtn.textContent = (lang === 'de') ? 'Deutsch / English' : 'English / Deutsch';
-    }
-    function applyI18n() {
-      document.querySelectorAll('[data-i18n]').forEach(el => {
+    function updateLangButton(){ langBtn.textContent = (lang === 'de') ? 'Deutsch / English' : 'English / Deutsch'; }
+    function applyI18n(){
+      document.querySelectorAll('[data-i18n]').forEach(el=>{
         const key = el.getAttribute('data-i18n');
         if (I18N[lang] && I18N[lang][key]) el.textContent = I18N[lang][key];
       });
@@ -772,7 +763,7 @@
       document.querySelector('option[value="large"]').textContent = I18N[lang].large;
     }
 
-    // ================= Dictionary (offline, lightweight) =================
+    // ================= Dictionary =================
     const DICT = {
       "gehen": {pos:"V", ar:"يذهب", dar:"يمشي"},
       "kommen": {pos:"V", ar:"يأتي", dar:"كيجي"},
@@ -955,9 +946,9 @@
 
     function applyBoxCssSize(){
       const map = {
-        small:  'clamp(130px, 30vw, 180px)',
-        normal: 'clamp(140px, 34vw, 210px)',
-        large:  'clamp(160px, 40vw, 240px)'
+        small:  'clamp(140px, 30vw, 190px)',
+        normal: 'clamp(150px, 34vw, 220px)',
+        large:  'clamp(175px, 40vw, 255px)'
       };
       document.documentElement.style.setProperty('--box', map[settings.boxSize] || map.normal);
     }
@@ -1190,68 +1181,98 @@
       log('Viel Erfolg');
     }
 
-    // ================= PDF (unchanged logic) =================
-    function buildPdfPageDOM(mode, showMeta){
+    // ================= PDF (BIG BOXES + META UNDER TITLE) =================
+    function buildPdfPageDOM(mode){
       pdfStage.innerHTML = '';
-      pdfStage.style.fontFamily = 'Arial, sans-serif';
 
       const title = document.createElement('div');
       title.className = 'pdfBigTitle';
       title.textContent = 'Deutsch mit Said ist einfacher, als du denkst.';
       pdfStage.appendChild(title);
 
+      // ✅ meta row under title (like your screenshot 3)
+      const meta = document.createElement('div');
+      meta.className = 'pdfMetaRow';
+      const nm = (nameInput.value || '').trim() || '—';
+      const dt = (dateInput.value || '').trim() || '—';
+      const tp = (topicInput.value || '').trim() || '—';
+      meta.innerHTML = `<span>Name: ${nm}</span><span>Datum: ${dt}</span><span>Thema: ${tp}</span>`;
+      pdfStage.appendChild(meta);
+
       const wrap = document.createElement('div');
       wrap.className = 'pdfWrap';
       pdfStage.appendChild(wrap);
 
+      // ✅ PDF columns: safe fit + big squares
+      const pdfCols = Math.min(settings.columns, 3); // avoid tiny boxes
+      const sizeMap = { small: 58, normal: 66, large: 74 }; // mm
+      const boxMm = sizeMap[settings.boxSize] || 66;
+
       const g = document.createElement('div');
       g.style.display = 'grid';
+      g.style.gridTemplateColumns = `repeat(${pdfCols}, ${boxMm}mm)`;
+      g.style.gap = '6mm';
       g.style.justifyContent = 'center';
-      g.style.alignContent = 'start';
-      g.style.gridTemplateColumns = `repeat(${settings.columns}, auto)`;
-      g.style.gap = '12px';
       wrap.appendChild(g);
 
-      const sizeMap = { small: 120, normal: 150, large: 170 };
-      const boxSize = sizeMap[settings.boxSize] || 150;
+      // how many boxes per page depends on cols
+      const perRow = pdfCols;
+      const maxRows = (pdfCols === 1) ? 7 : (pdfCols === 2) ? 5 : 4; // bigger boxes => fewer rows
+      const perPage = perRow * maxRows;
 
+      // We'll render ALL boxes by auto paging using canvas slicing (later).
+      // Just build full grid; slicing will create pages.
       for (let i=0; i<settings.numBoxes; i++){
         const d = boxes[i] || {word:'', example:'', posOverride:'', note:''};
 
         const b = document.createElement('div');
-        b.style.width = boxSize + 'px';
-        b.style.height = boxSize + 'px';
-        b.style.border = '1px solid rgba(0,0,0,0.10)';
-        b.style.borderRadius = '14px';
+        b.style.width = boxMm + 'mm';
+        b.style.height = boxMm + 'mm';
+        b.style.border = '1px solid rgba(0,0,0,0.14)';
+        b.style.borderRadius = '5mm';
         b.style.background = '#fff';
-        b.style.position = 'relative';
         b.style.overflow = 'hidden';
+        b.style.position = 'relative';
+
+        // tiny watermark in PDF too
+        const wm = document.createElement('div');
+        wm.textContent = 'Deutsch mit Said';
+        wm.style.position = 'absolute';
+        wm.style.inset = '0';
+        wm.style.display = 'flex';
+        wm.style.alignItems = 'center';
+        wm.style.justifyContent = 'center';
+        wm.style.transform = 'rotate(-22deg)';
+        wm.style.color = 'rgba(0,0,0,0.06)';
+        wm.style.fontWeight = '900';
+        wm.style.fontSize = '10px';
+        wm.style.pointerEvents = 'none';
+        b.appendChild(wm);
 
         const content = document.createElement('div');
         content.style.position = 'absolute';
         content.style.inset = '0';
-        content.style.padding = '12px';
+        content.style.padding = '4mm';
         content.style.display = 'flex';
         content.style.flexDirection = 'column';
-        content.style.gap = '8px';
+        content.style.gap = '2.5mm';
 
         if (mode === 'front'){
           const word = document.createElement('div');
           word.style.fontWeight = '900';
-          word.style.fontSize = '18px';
-          word.style.textAlign = 'left';
+          word.style.fontSize = '13px';
           word.style.whiteSpace = 'pre-wrap';
           word.textContent = (d.word || '').trim();
           content.appendChild(word);
 
           const line = document.createElement('div');
           line.style.height = '1px';
-          line.style.background = 'rgba(0,0,0,0.10)';
+          line.style.background = 'rgba(0,0,0,0.12)';
           content.appendChild(line);
 
           const ex = document.createElement('div');
           ex.style.flex = '1';
-          ex.style.fontSize = '13px';
+          ex.style.fontSize = '10.5px';
           ex.style.lineHeight = '1.35';
           ex.style.whiteSpace = 'pre-wrap';
           ex.textContent = (d.example || '').trim();
@@ -1262,18 +1283,18 @@
           const ar = document.createElement('div');
           ar.style.direction = 'rtl';
           ar.style.textAlign = 'center';
-          ar.style.fontSize = '20px';
+          ar.style.fontSize = '13px';
           ar.style.fontWeight = '700';
-          ar.style.lineHeight = '1.7';
+          ar.style.lineHeight = '1.6';
           ar.textContent = (t.ar && t.ar !== '(Übersetzung fehlt)') ? t.ar : '';
           content.appendChild(ar);
 
           const dar = document.createElement('div');
           dar.style.direction = 'rtl';
           dar.style.textAlign = 'right';
-          dar.style.fontSize = '14px';
+          dar.style.fontSize = '10.5px';
           dar.style.fontWeight = '700';
-          dar.style.lineHeight = '1.6';
+          dar.style.lineHeight = '1.45';
           dar.textContent = (t.dar && t.dar !== '(Darija fehlt)') ? t.dar : '';
           content.appendChild(dar);
 
@@ -1281,14 +1302,14 @@
           if (note){
             const noteLine = document.createElement('div');
             noteLine.style.height = '1px';
-            noteLine.style.background = 'rgba(0,0,0,0.10)';
+            noteLine.style.background = 'rgba(0,0,0,0.12)';
             content.appendChild(noteLine);
 
             const noteBox = document.createElement('div');
             noteBox.style.direction = 'rtl';
             noteBox.style.textAlign = 'right';
-            noteBox.style.fontSize = '13px';
-            noteBox.style.lineHeight = '1.6';
+            noteBox.style.fontSize = '10.5px';
+            noteBox.style.lineHeight = '1.45';
             noteBox.style.whiteSpace = 'pre-wrap';
             noteBox.textContent = note;
             content.appendChild(noteBox);
@@ -1299,21 +1320,7 @@
         g.appendChild(b);
       }
 
-      if (showMeta){
-        const footer = document.createElement('div');
-        footer.className = 'pdfFooter';
-        const nm = (nameInput.value || '').trim();
-        const dt = (dateInput.value || '').trim();
-        const tp = (topicInput.value || '').trim();
-        footer.innerHTML = `
-          <span>Name: ${nm ? nm : '—'}</span>
-          <span>Datum: ${dt ? dt : '—'}</span>
-          <span>Thema: ${tp ? tp : '—'}</span>
-        `;
-        pdfStage.appendChild(footer);
-      }
-
-      return pdfStage;
+      return { pdfCols, perPage };
     }
 
     async function addCanvasAsPagedImagesToPdf(pdf, canvas, marginMm=10){
@@ -1354,20 +1361,35 @@
     async function downloadAsPdf(){
       try{
         clearError();
-        log('Viel Erfolg');
+        log('Generating PDF...');
+
+        if (!window.jspdf || !window.html2canvas){
+          showError('PDF libraries not loaded. Check internet or CDN.');
+          return;
+        }
 
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF('p','mm','a4');
 
-        buildPdfPageDOM('front', true);
-        await new Promise(r => setTimeout(r, 80));
-        const c1 = await html2canvas(pdfStage, {scale:2, useCORS:true, backgroundColor:'#ffffff'});
+        // Front page(s)
+        buildPdfPageDOM('front');
+        await new Promise(r => setTimeout(r, 120));
+        const c1 = await html2canvas(pdfStage, {
+          scale: 2,
+          backgroundColor: '#ffffff',
+          useCORS: true
+        });
         await addCanvasAsPagedImagesToPdf(pdf, c1, 10);
 
+        // Back page(s)
         pdf.addPage();
-        buildPdfPageDOM('back', false);
-        await new Promise(r => setTimeout(r, 80));
-        const c2 = await html2canvas(pdfStage, {scale:2, useCORS:true, backgroundColor:'#ffffff'});
+        buildPdfPageDOM('back');
+        await new Promise(r => setTimeout(r, 120));
+        const c2 = await html2canvas(pdfStage, {
+          scale: 2,
+          backgroundColor: '#ffffff',
+          useCORS: true
+        });
         await addCanvasAsPagedImagesToPdf(pdf, c2, 10);
 
         pdf.save('Deutsch_mit_Said_Vokabelblatt.pdf');
@@ -1401,7 +1423,6 @@
       else openWa();
     });
     waClose.addEventListener('click', closeWa);
-
     function sendWa(){
       const msg = (waInput.value || "").trim();
       const text = msg ? msg : "Hallo Said! Ich habe eine Frage zu Deutsch 🙂";
@@ -1410,19 +1431,9 @@
       window.open(url, "_blank", "noopener,noreferrer");
     }
     waSend.addEventListener('click', sendWa);
-    waInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') sendWa();
-    });
+    waInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendWa(); });
 
-    // ================= Language button =================
-    langBtn.addEventListener('click', () => {
-      lang = (lang === 'de') ? 'en' : 'de';
-      applyI18n();
-      updateLangButton();
-      saveToStorage();
-    });
-
-    // ================= Listeners =================
+    // ================= Settings UI listeners =================
     function attachListeners(){
       numBoxesInput.addEventListener('input', () => {
         settings.numBoxes = Math.max(1, parseInt(numBoxesInput.value,10) || 12);
@@ -1450,6 +1461,13 @@
       resetBtn.addEventListener('click', resetAll);
       downloadPdfBtn.addEventListener('click', downloadAsPdf);
 
+      langBtn.addEventListener('click', () => {
+        lang = (lang === 'de') ? 'en' : 'de';
+        applyI18n();
+        updateLangButton();
+        saveToStorage();
+      });
+
       [nameInput, dateInput, topicInput].forEach(el => el.addEventListener('input', saveToStorage));
 
       window.addEventListener('resize', () => {
@@ -1459,7 +1477,6 @@
       }, {passive:true});
     }
 
-    // ================= Init =================
     function init(){
       try{
         loadFromStorage();
