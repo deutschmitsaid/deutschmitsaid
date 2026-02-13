@@ -10,23 +10,28 @@
 
   <style>
     :root{
-      --bg:#f4f7ff;
-      --card:#ffffff;
-      --ink:#0f172a;
-      --muted:#64748b;
+      /* ===== Theme (Carbon Black + Moss Green motion + British Racing Green accents) ===== */
+      --carbon:#0B0D0E;          /* Carbon Black */
+      --carbon2:#0F1214;
+      --card: rgba(255,255,255,0.06);
+      --card2: rgba(255,255,255,0.08);
+      --ink: #EAF2EE;
+      --muted:#A7B6AE;
 
-      --blue1:#2563eb;
-      --blue2:#7c3aed;
-      --blue3:#06b6d4;
+      --moss:#2E5E3A;            /* Moss Green (moving aura) */
+      --moss2:#3E7A4B;
+      --brg:#004225;             /* British Racing Green (buttons/accents) */
+      --brg2:#0B5A36;
 
-      --shadow: 0 10px 30px rgba(2, 6, 23, 0.10);
-      --green:#16a34a;
+      --line: rgba(255,255,255,0.10);
+      --shadow: 0 18px 60px rgba(0,0,0,0.45);
 
+      /* responsive box size */
+      --box: clamp(140px, 34vw, 210px);
+
+      /* WhatsApp */
       --wa:#25D366;
       --waDark:#0b5a46;
-
-      /* ✅ responsive box size */
-      --box: clamp(140px, 34vw, 210px);
     }
 
     *{ box-sizing:border-box; }
@@ -34,17 +39,62 @@
     body{
       font-family: Arial, sans-serif;
       margin:0; padding:0;
-      background:
-        radial-gradient(1200px 600px at 10% -10%, rgba(37,99,235,0.18), transparent 55%),
-        radial-gradient(1000px 500px at 90% 0%, rgba(124,58,237,0.16), transparent 55%),
-        radial-gradient(900px 500px at 50% 110%, rgba(6,182,212,0.12), transparent 55%),
-        var(--bg);
       color:var(--ink);
-
-      /* ✅ prevents horizontal scroll on mobile */
+      background: radial-gradient(1200px 600px at 20% -10%, rgba(46,94,58,0.18), transparent 60%),
+                  radial-gradient(900px 500px at 90% 0%, rgba(0,66,37,0.16), transparent 60%),
+                  radial-gradient(900px 600px at 50% 110%, rgba(62,122,75,0.12), transparent 60%),
+                  linear-gradient(180deg, var(--carbon), var(--carbon2));
       overflow-x: hidden;
       -webkit-text-size-adjust: 100%;
       text-size-adjust: 100%;
+    }
+
+    /* ===== Creative moving “aura / jaw / wave” background (CSS only, lightweight) ===== */
+    body::before{
+      content:"";
+      position: fixed;
+      inset: -35%;
+      z-index: -2;
+      pointer-events: none;
+
+      background:
+        radial-gradient(60% 50% at 12% 22%, rgba(46,94,58,0.55), transparent 62%),
+        radial-gradient(55% 50% at 88% 28%, rgba(0,66,37,0.48), transparent 62%),
+        radial-gradient(50% 45% at 55% 85%, rgba(62,122,75,0.40), transparent 62%),
+        radial-gradient(45% 40% at 25% 78%, rgba(46,94,58,0.30), transparent 60%),
+        radial-gradient(55% 55% at 70% 10%, rgba(0,66,37,0.22), transparent 60%);
+      filter: blur(28px) saturate(1.2);
+      transform: translate3d(0,0,0);
+      animation: auraDrift 18s ease-in-out infinite alternate;
+      opacity: .95;
+    }
+
+    /* subtle “carbon noise” (no images) */
+    body::after{
+      content:"";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background:
+        repeating-radial-gradient(circle at 20% 30%,
+          rgba(255,255,255,0.030) 0 1px,
+          rgba(0,0,0,0) 1px 6px),
+        repeating-radial-gradient(circle at 80% 70%,
+          rgba(255,255,255,0.020) 0 1px,
+          rgba(0,0,0,0) 1px 7px);
+      opacity: .35;
+      mix-blend-mode: overlay;
+    }
+
+    @keyframes auraDrift{
+      0%   { transform: translate3d(-2%, -1%, 0) scale(1.02) rotate(0deg); }
+      45%  { transform: translate3d( 2%,  2%, 0) scale(1.06) rotate(1deg); }
+      100% { transform: translate3d(-1%,  3%, 0) scale(1.03) rotate(-1deg); }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      body::before{ animation:none; }
     }
 
     #app{
@@ -64,12 +114,12 @@
       gap:12px;
       padding:14px 14px;
       border-radius: 18px;
-      background: rgba(255,255,255,0.78);
+
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.06));
+      border: 1px solid rgba(255,255,255,0.10);
       backdrop-filter: blur(10px);
       box-shadow: var(--shadow);
-      border: 1px solid rgba(2,6,23,0.06);
 
-      /* ✅ allow wrapping on mobile */
       flex-wrap: wrap;
     }
 
@@ -79,16 +129,19 @@
       min-width: 220px;
       flex: 1 1 220px;
     }
+
     .brandTitle{
       font-size: 22px;
       font-weight: 900;
       letter-spacing: .2px;
       line-height:1.1;
-      background: linear-gradient(90deg, var(--blue1), var(--blue2), var(--blue3));
+      background: linear-gradient(90deg, #d7f7e6, rgba(62,122,75,0.95), rgba(0,66,37,0.95));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
+      text-shadow: 0 0 22px rgba(46,94,58,0.20);
     }
+
     .brandSub{
       font-size: 13px;
       color: var(--muted);
@@ -111,10 +164,10 @@
       gap:10px;
       padding:10px 12px;
       border-radius: 999px;
-      background: rgba(2,6,23,0.04);
-      border: 1px solid rgba(2,6,23,0.06);
 
-      /* ✅ wrap inputs instead of overflowing */
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+
       flex-wrap: wrap;
       width: min(560px, 100%);
       justify-content:flex-end;
@@ -123,21 +176,24 @@
     .pill input{
       padding:10px 12px;
       border-radius: 999px;
-      border: 1px solid rgba(2,6,23,0.14);
+      border: 1px solid rgba(255,255,255,0.14);
       outline:none;
-      background:#fff;
+      background: rgba(0,0,0,0.22);
+      color: var(--ink);
       font-size: 14px;
       font-weight: 800;
       font-family: Arial, sans-serif;
 
-      /* ✅ critical for mobile: let inputs shrink */
       min-width: 0;
       flex: 1 1 150px;
       max-width: 100%;
     }
+
+    .pill input::placeholder{ color: rgba(234,242,238,0.55); }
+
     .pill input:focus{
-      border-color: rgba(34,197,94,0.55);
-      box-shadow: 0 0 0 4px rgba(34,197,94,0.14);
+      border-color: rgba(62,122,75,0.70);
+      box-shadow: 0 0 0 4px rgba(62,122,75,0.20);
     }
 
     .btn{
@@ -146,7 +202,7 @@
       padding:10px 14px;
       border-radius: 999px;
       font-weight: 900;
-      transition: transform .12s ease, opacity .12s ease;
+      transition: transform .12s ease, opacity .12s ease, filter .12s ease;
       display:flex;
       align-items:center;
       gap:8px;
@@ -155,23 +211,26 @@
       font-family: Arial, sans-serif;
       -webkit-tap-highlight-color: transparent;
     }
-    .btn:hover{ transform: translateY(-1px); opacity:.96; }
+    .btn:hover{ transform: translateY(-1px); opacity:.98; filter: brightness(1.02); }
     .btn:active{ transform: translateY(0px) scale(0.99); }
 
     .btnPrimary{
-      background: linear-gradient(90deg, var(--blue1), var(--blue2));
-      color:#fff;
-      box-shadow: 0 10px 20px rgba(37,99,235,0.20);
+      background: linear-gradient(90deg, var(--brg), var(--moss2));
+      color:#EAF2EE;
+      box-shadow: 0 12px 28px rgba(0,66,37,0.35);
     }
+
     .btnDanger{
-      background: linear-gradient(90deg, #ef4444, #f97316);
+      background: linear-gradient(90deg, #7a1b1b, #b45309);
       color:#fff;
-      box-shadow: 0 10px 20px rgba(239,68,68,0.18);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.35);
     }
+
     .btnLang{
-      background: linear-gradient(90deg, #16a34a, #22c55e);
-      color:#fff;
-      box-shadow: 0 10px 20px rgba(34,197,94,0.18);
+      background: linear-gradient(90deg, rgba(255,255,255,0.10), rgba(255,255,255,0.06));
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--ink);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.28);
     }
 
     /* ---------- CONTROLS ---------- */
@@ -182,42 +241,45 @@
       gap:12px;
       padding:14px;
       border-radius: 18px;
-      background: rgba(255,255,255,0.72);
+      justify-content:center;
+
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.05));
+      border: 1px solid rgba(255,255,255,0.10);
       backdrop-filter: blur(10px);
       box-shadow: var(--shadow);
-      border: 1px solid rgba(2,6,23,0.06);
-      justify-content:center;
     }
 
     .control-group{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:center; }
     .control-group label{
       font-weight: 900;
-      color:#334155;
+      color: rgba(234,242,238,0.92);
       font-size: 14px;
     }
 
     select, input[type="range"]{
       padding:10px 12px;
-      border:1px solid rgba(2,6,23,0.14);
+      border:1px solid rgba(255,255,255,0.14);
       border-radius: 14px;
-      background:#fff;
+      background: rgba(0,0,0,0.20);
+      color: var(--ink);
       font-weight: 900;
       font-family: Arial, sans-serif;
       max-width: 100%;
+      outline: none;
     }
 
     #debug{
       margin: 10px 0 0;
       text-align:center;
       font-size: 14px;
-      color:#475569;
+      color: rgba(234,242,238,0.82);
       font-weight: 900;
     }
     .error{
       display:none;
       margin-top:8px;
       text-align:center;
-      color:#b91c1c;
+      color:#ffb4b4;
       font-weight:900;
       padding: 0 10px;
     }
@@ -229,14 +291,11 @@
       justify-content:center;
       padding:10px;
       border-radius: 18px;
-      background: rgba(255,255,255,0.55);
-      border: 1px solid rgba(2,6,23,0.06);
       position:relative;
-
-      /* ✅ default gap for readability */
       gap: 10px;
 
-      /* will be set by JS too */
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.04));
+      border: 1px solid rgba(255,255,255,0.08);
     }
 
     .box{
@@ -244,12 +303,16 @@
       height: var(--box);
       aspect-ratio: 1;
       border-radius: 16px;
-      background: var(--card);
       position:relative;
       overflow:hidden;
-      border: 1px solid rgba(2,6,23,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
 
-      /* ✅ avoid layout jitter */
+      background:
+        radial-gradient(700px 260px at 10% 0%, rgba(62,122,75,0.10), transparent 55%),
+        radial-gradient(700px 260px at 90% 0%, rgba(0,66,37,0.10), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.04));
+
+      box-shadow: 0 18px 40px rgba(0,0,0,0.35);
       contain: content;
       touch-action: manipulation;
     }
@@ -286,6 +349,7 @@
       width:100%;
       border:none; outline:none; resize:none;
       background:transparent;
+      color: var(--ink);
       font-weight:900;
       font-size: 16px;
       line-height:1.25;
@@ -296,7 +360,7 @@
     }
 
     .exampleWrap{
-      border-top: 1px solid rgba(2,6,23,0.10);
+      border-top: 1px solid rgba(255,255,255,0.10);
       padding-top: 10px;
       min-height: 42%;
       display:flex; flex-direction:column;
@@ -304,7 +368,7 @@
     }
     .exampleLabel{
       font-size:12px;
-      color:#64748b;
+      color: rgba(234,242,238,0.65);
       font-weight:900;
       text-align:left;
       direction:ltr;
@@ -312,6 +376,7 @@
     .explainInput{
       border:none; outline:none; resize:none;
       background:transparent;
+      color: rgba(234,242,238,0.92);
       font-size: 13px;
       line-height:1.35;
       text-align:left;
@@ -327,8 +392,9 @@
       border-radius:999px;
       font-size: 11px;
       font-weight: 900;
-      background: rgba(37,99,235,0.10);
-      color: #1d4ed8;
+      background: rgba(62,122,75,0.18);
+      border: 1px solid rgba(62,122,75,0.28);
+      color: #d7f7e6;
       direction:ltr;
       text-align:left;
       user-select:none;
@@ -350,6 +416,7 @@
       font-weight: 700;
       line-height: 1.7;
       direction: rtl;
+      color: #e9fff4;
     }
 
     .darijaSide{
@@ -361,12 +428,13 @@
       direction: rtl;
       white-space: normal;
       word-break: break-word;
+      color: rgba(234,242,238,0.88);
     }
 
     .backNoteWrap{
       margin-top: 6px;
       padding-top: 8px;
-      border-top: 1px solid rgba(2,6,23,0.10);
+      border-top: 1px solid rgba(255,255,255,0.10);
       display:flex;
       flex-direction:column;
       gap:6px;
@@ -377,9 +445,10 @@
     .noteLabel{
       font-size: 12px;
       font-weight: 800;
-      opacity: .85;
+      opacity: .90;
       direction: rtl;
       text-align: right;
+      color: rgba(234,242,238,0.90);
     }
 
     .noteInput{
@@ -387,6 +456,7 @@
       outline:none;
       resize:none;
       background:transparent;
+      color: rgba(234,242,238,0.92);
       font-size: 14px;
       line-height: 1.6;
       min-height: 70px;
@@ -404,9 +474,10 @@
       direction: rtl;
       text-align: right;
       word-break: break-word;
+      color: rgba(234,242,238,0.86);
     }
 
-    .missing{ opacity: .78; }
+    .missing{ opacity: .65; }
 
     /* ---------- PDF stage ---------- */
     #pdfStage{
@@ -416,15 +487,13 @@
       box-sizing:border-box;
       font-family: Arial, sans-serif;
     }
-
     .pdfBigTitle{
       text-align:center;
-      color: var(--green);
+      color: #0b5a36;
       font-weight: 900;
       font-size: 18px;
       margin: 0 0 7mm 0;
     }
-
     .pdfWrap{
       position:relative;
       margin: 0 auto;
@@ -435,7 +504,6 @@
       overflow: hidden;
       border: none;
     }
-
     .pdfFooter{
       margin-top: 6mm;
       display:flex;
@@ -464,7 +532,7 @@
       background: var(--wa);
       border: none;
       cursor: pointer;
-      box-shadow: 0 16px 30px rgba(0,0,0,0.25);
+      box-shadow: 0 16px 30px rgba(0,0,0,0.35);
       display:flex;
       align-items:center;
       justify-content:center;
@@ -482,7 +550,7 @@
       max-width: calc(100vw - 36px);
       border-radius: 14px;
       overflow:hidden;
-      box-shadow: 0 18px 50px rgba(0,0,0,0.25);
+      box-shadow: 0 18px 50px rgba(0,0,0,0.35);
       background:#fff;
       z-index: 9999;
       display:none;
@@ -495,7 +563,6 @@
       gap:10px;
       align-items:center;
       color:#fff;
-      font-family: Arial, sans-serif;
     }
     .waAvatar{
       width: 40px; height: 40px;
@@ -516,13 +583,11 @@
       border-radius: 10px;
       cursor:pointer;
       font-weight: 900;
-      font-family: Arial, sans-serif;
     }
 
     .waBody{
       padding: 12px;
       background: #f6f7f8;
-      font-family: Arial, sans-serif;
     }
     .waBubble{
       background:#fff;
@@ -546,7 +611,6 @@
       padding: 10px 10px;
       outline:none;
       font-weight: 800;
-      font-family: Arial, sans-serif;
       min-width: 0;
     }
     #waSend{
@@ -557,11 +621,9 @@
       color:#fff;
       font-weight: 900;
       cursor:pointer;
-      font-family: Arial, sans-serif;
       white-space: nowrap;
     }
 
-    /* ✅ small phones */
     @media (max-width: 520px){
       #app{ padding: 12px; }
       .brandTitle{ font-size: 20px; }
@@ -700,7 +762,6 @@
     function updateLangButton(){
       langBtn.textContent = (lang === 'de') ? 'Deutsch / English' : 'English / Deutsch';
     }
-
     function applyI18n() {
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
@@ -867,7 +928,7 @@
       settings.boxSize = ['small','normal','large'].includes(settings.boxSize) ? settings.boxSize : 'normal';
       settings.showBack = !!settings.showBack;
 
-      // ✅ force safe columns on small screens
+      // mobile safety
       const w = window.innerWidth || 9999;
       if (w < 360) settings.columns = 1;
       else if (w < 520) settings.columns = Math.min(settings.columns, 2);
@@ -892,7 +953,6 @@
       }
     }
 
-    // ✅ map size dropdown to CSS variable (responsive)
     function applyBoxCssSize(){
       const map = {
         small:  'clamp(130px, 30vw, 180px)',
@@ -1086,14 +1146,12 @@
       flip.appendChild(back);
       box.appendChild(flip);
 
-      // ✅ Mobile-friendly flip: tap on card (but NOT when typing)
+      // Mobile-friendly flip (tap on card, not while typing)
       const isTypingTarget = (el) => el && (el.tagName === 'TEXTAREA' || el.tagName === 'INPUT' || el.isContentEditable);
       box.addEventListener('click', (e) => {
         if (isTypingTarget(e.target)) return;
         flip.classList.toggle('flipped');
       });
-
-      // Keep dblclick for desktop too
       box.addEventListener('dblclick', () => flip.classList.toggle('flipped'));
 
       return box;
@@ -1106,8 +1164,6 @@
       applyBoxCssSize();
 
       grid.innerHTML = '';
-
-      // ✅ columns now safe for mobile, and boxes are responsive
       grid.style.gridTemplateColumns = `repeat(${settings.columns}, var(--box))`;
 
       for (let i=0; i<settings.numBoxes; i++){
@@ -1134,7 +1190,7 @@
       log('Viel Erfolg');
     }
 
-    // ================= PDF (your original, unchanged) =================
+    // ================= PDF (unchanged logic) =================
     function buildPdfPageDOM(mode, showMeta){
       pdfStage.innerHTML = '';
       pdfStage.style.fontFamily = 'Arial, sans-serif';
@@ -1163,7 +1219,6 @@
         const d = boxes[i] || {word:'', example:'', posOverride:'', note:''};
 
         const b = document.createElement('div');
-        b.className = 'box';
         b.style.width = boxSize + 'px';
         b.style.height = boxSize + 'px';
         b.style.border = '1px solid rgba(0,0,0,0.10)';
@@ -1330,20 +1385,17 @@
     const waSend = document.getElementById('waSend');
 
     const YOUR_PHONE_NUMBER = "0690010348";
-
     function normalizeWaNumber(n){
       let s = String(n||"").replace(/\s+/g,'').trim();
       if (/^0\d{9}$/.test(s)) s = '212' + s.slice(1);
       s = s.replace(/^\+/, '');
       return s;
     }
-
     function openWa(){
       waPopup.classList.add('open');
       setTimeout(() => waInput.focus(), 50);
     }
     function closeWa(){ waPopup.classList.remove('open'); }
-
     waBtn.addEventListener('click', () => {
       if (waPopup.classList.contains('open')) closeWa();
       else openWa();
@@ -1360,6 +1412,14 @@
     waSend.addEventListener('click', sendWa);
     waInput.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') sendWa();
+    });
+
+    // ================= Language button =================
+    langBtn.addEventListener('click', () => {
+      lang = (lang === 'de') ? 'en' : 'de';
+      applyI18n();
+      updateLangButton();
+      saveToStorage();
     });
 
     // ================= Listeners =================
@@ -1390,16 +1450,8 @@
       resetBtn.addEventListener('click', resetAll);
       downloadPdfBtn.addEventListener('click', downloadAsPdf);
 
-      langBtn.addEventListener('click', () => {
-        lang = (lang === 'de') ? 'en' : 'de';
-        applyI18n();
-        updateLangButton();
-        saveToStorage();
-      });
-
       [nameInput, dateInput, topicInput].forEach(el => el.addEventListener('input', saveToStorage));
 
-      // ✅ re-clamp columns when device rotates / resizes
       window.addEventListener('resize', () => {
         const before = settings.columns;
         updateSettingsUI();
@@ -1407,6 +1459,7 @@
       }, {passive:true});
     }
 
+    // ================= Init =================
     function init(){
       try{
         loadFromStorage();
@@ -1420,8 +1473,6 @@
         showError(e.message || String(e));
       }
     }
-
-    // Wait for deferred libs
     window.addEventListener('DOMContentLoaded', init);
   </script>
 </body>
