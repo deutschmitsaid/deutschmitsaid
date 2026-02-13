@@ -1184,7 +1184,7 @@ const res = await fetch("./fonts/Amiri-Regular.ttf");
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF("p","mm","a4");
 
-        await loadArabicFont(pdf);
+await loadArabicFont(pdf);
 
         const pageWidth = 210;
         const pageHeight = 297;
