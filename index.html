@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Deutsch mit Said – Vokabelblatt</title>
 
+  <!-- ✅ jsPDF (No html2canvas needed) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
   <style>
     :root{
       /* ===== Requested Colors ===== */
@@ -229,11 +232,6 @@
       background: linear-gradient(90deg, rgba(255,255,255,0.10), rgba(255,255,255,0.06));
       border: 1px solid rgba(255,255,255,0.12);
       color: var(--ink);
-      box-shadow: 0 12px 28px rgba(0,0,0,0.28);
-    }
-    .btnPrint{
-      background: linear-gradient(90deg, rgba(0,66,37,0.35), rgba(62,122,75,0.35));
-      border: 1px solid rgba(255,255,255,0.12);
       box-shadow: 0 12px 28px rgba(0,0,0,0.28);
     }
 
@@ -469,8 +467,6 @@
       color: rgba(234,242,238,0.86);
     }
 
-    .missing{ opacity: .65; }
-
     /* ---------- WhatsApp widget ---------- */
     #waBtn{
       position: fixed;
@@ -569,152 +565,6 @@
     /* ===== Anti-copy / anti-select (deterrent only) ===== */
     body, #app{ user-select:none; -webkit-user-select:none; }
     input, textarea{ user-select:text !important; -webkit-user-select:text !important; }
-
-    /* ===== PRINT SYSTEM (Professional Teaching Mode) ===== */
-    #printArea{
-      display:none;
-      font-family: Arial, sans-serif;
-      color:#111;
-    }
-
-    @page{
-      size: A4;
-      margin: 10mm;
-    }
-
-    @media print{
-      body{
-        background:#fff !important;
-      }
-
-      /* hide everything */
-      body *{
-        visibility: hidden !important;
-      }
-
-      /* show print area only */
-      #printArea, #printArea *{
-        visibility: visible !important;
-      }
-
-      #printArea{
-        display:block !important;
-        position: fixed;
-        left: 0;
-        top: 0;
-        width: 190mm;   /* A4 minus margins */
-        height: 277mm;
-        background:#fff;
-      }
-
-      .pTitle{
-        text-align:center;
-        font-weight:900;
-        font-size: 16pt;
-        margin: 0 0 5mm 0;
-        color:#0B5A36;
-      }
-
-      .pMeta{
-        display:flex;
-        justify-content:center;
-        gap:6mm;
-        flex-wrap:wrap;
-        font-size: 10pt;
-        font-weight: 900;
-        margin: 0 0 6mm 0;
-      }
-      .pMeta span{
-        border: 0.3mm solid rgba(0,0,0,0.20);
-        border-radius: 999px;
-        padding: 2mm 4mm;
-      }
-
-      /* grid aligned for duplex */
-      .pGrid{
-        display:grid;
-        justify-content:center;
-        gap: 6mm;
-        /* columns + box size set by JS */
-      }
-
-      .pBox{
-        width: var(--pBoxSize);
-        height: var(--pBoxSize);
-        border: 0.35mm solid rgba(0,0,0,0.22);
-        border-radius: 6mm;
-        overflow:hidden;
-        position:relative;
-        background:#fff;
-        page-break-inside: avoid;
-        break-inside: avoid;
-      }
-
-      .pWm{
-        position:absolute;
-        inset:0;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        transform: rotate(-22deg);
-        color: rgba(0,0,0,0.06);
-        font-weight: 900;
-        font-size: 9pt;
-        pointer-events:none;
-      }
-
-      .pContent{
-        position:absolute;
-        inset:0;
-        padding: 5mm;
-        display:flex;
-        flex-direction:column;
-        gap: 3mm;
-      }
-
-      .pWord{
-        font-weight: 900;
-        font-size: 12pt;
-        white-space: pre-wrap;
-      }
-
-      .pLine{
-        height: 0.3mm;
-        background: rgba(0,0,0,0.18);
-      }
-
-      .pExample{
-        font-size: 9.5pt;
-        line-height: 1.35;
-        white-space: pre-wrap;
-      }
-
-      .pAr{
-        direction: rtl;
-        text-align: center;
-        font-size: 12pt;
-        font-weight: 700;
-        line-height: 1.6;
-        white-space: pre-wrap;
-      }
-
-      .pDar{
-        direction: rtl;
-        text-align: right;
-        font-size: 9.5pt;
-        font-weight: 700;
-        line-height: 1.45;
-        white-space: pre-wrap;
-      }
-
-      .pNote{
-        direction: rtl;
-        text-align: right;
-        font-size: 9.5pt;
-        line-height: 1.45;
-        white-space: pre-wrap;
-      }
-    }
   </style>
 </head>
 
@@ -769,9 +619,8 @@
 
       <button class="btn btnDanger" id="resetBtn" type="button" data-i18n="reset">Alles leeren</button>
 
-      <!-- ✅ Professional print buttons -->
-      <button class="btn btnPrint" id="printFrontBtn" type="button">Drucken (Deutsch)</button>
-      <button class="btn btnPrimary" id="printBackBtn" type="button">Drucken (Rückseite)</button>
+      <!-- ✅ ONE PDF BUTTON ONLY -->
+      <button class="btn btnPrimary" id="downloadPdfBtn" type="button">PDF erstellen</button>
     </div>
 
     <div id="debug">Viel Erfolg</div>
@@ -779,9 +628,6 @@
 
     <div id="grid"></div>
   </div>
-
-  <!-- ✅ Print Area (built dynamically for perfect duplex alignment) -->
-  <div id="printArea" aria-hidden="true"></div>
 
   <!-- WhatsApp Widget -->
   <button id="waBtn" aria-label="WhatsApp">
@@ -914,10 +760,7 @@
     const showBackCheckbox = document.getElementById('showBack');
     const resetBtn = document.getElementById('resetBtn');
 
-    const printFrontBtn = document.getElementById('printFrontBtn');
-    const printBackBtn  = document.getElementById('printBackBtn');
-
-    const printArea = document.getElementById('printArea');
+    const downloadPdfBtn = document.getElementById('downloadPdfBtn');
 
     const nameInput = document.getElementById('name');
     const dateInput = document.getElementById('date');
@@ -1281,115 +1124,6 @@
       log('Viel Erfolg');
     }
 
-    // ================= Professional Print Builder =================
-    function computePrintLayout(){
-      // box size in mm (good for duplex alignment)
-      let boxMm = (settings.boxSize === 'small') ? 55 : (settings.boxSize === 'large') ? 70 : 62;
-
-      // columns in print: keep boxes big and readable
-      let cols = Math.min(settings.columns, 3);
-      if (settings.boxSize === 'large') cols = Math.min(cols, 2);
-      if (cols < 1) cols = 1;
-
-      // update CSS var for print
-      document.documentElement.style.setProperty('--pBoxSize', boxMm + 'mm');
-
-      return { cols, boxMm };
-    }
-
-    function buildPrintArea(mode){
-      // mode: 'front' or 'back'
-      const { cols } = computePrintLayout();
-      printArea.innerHTML = '';
-
-      const title = document.createElement('div');
-      title.className = 'pTitle';
-      title.textContent = 'Deutsch mit Said ist einfacher, als du denkst.';
-      printArea.appendChild(title);
-
-      const meta = document.createElement('div');
-      meta.className = 'pMeta';
-      const nm = (nameInput.value || '').trim() || '—';
-      const dt = (dateInput.value || '').trim() || '—';
-      const tp = (topicInput.value || '').trim() || '—';
-      meta.innerHTML = `<span>Name: ${nm}</span><span>Datum: ${dt}</span><span>Thema: ${tp}</span>`;
-      printArea.appendChild(meta);
-
-      const gridP = document.createElement('div');
-      gridP.className = 'pGrid';
-      gridP.style.gridTemplateColumns = `repeat(${cols}, var(--pBoxSize))`;
-      printArea.appendChild(gridP);
-
-      for (let i=0; i<settings.numBoxes; i++){
-        const d = boxes[i] || { word:'', example:'', posOverride:'', note:'' };
-
-        const b = document.createElement('div');
-        b.className = 'pBox';
-
-        const wm = document.createElement('div');
-        wm.className = 'pWm';
-        wm.textContent = 'Deutsch mit Said';
-        b.appendChild(wm);
-
-        const c = document.createElement('div');
-        c.className = 'pContent';
-
-        if (mode === 'front'){
-          const w = document.createElement('div');
-          w.className = 'pWord';
-          w.textContent = (d.word || '').trim();
-          c.appendChild(w);
-
-          const line = document.createElement('div');
-          line.className = 'pLine';
-          c.appendChild(line);
-
-          const ex = document.createElement('div');
-          ex.className = 'pExample';
-          ex.textContent = (d.example || '').trim();
-          c.appendChild(ex);
-        } else {
-          const t = getWordTranslations(d.word, d.posOverride);
-
-          const ar = document.createElement('div');
-          ar.className = 'pAr';
-          ar.textContent = (t.ar || '').trim();
-          c.appendChild(ar);
-
-          const dar = document.createElement('div');
-          dar.className = 'pDar';
-          dar.textContent = (t.dar || '').trim();
-          c.appendChild(dar);
-
-          const note = (d.note || '').trim();
-          if (note){
-            const line = document.createElement('div');
-            line.className = 'pLine';
-            c.appendChild(line);
-
-            const n = document.createElement('div');
-            n.className = 'pNote';
-            n.textContent = note;
-            c.appendChild(n);
-          }
-        }
-
-        b.appendChild(c);
-        gridP.appendChild(b);
-      }
-    }
-
-    function printFront(){
-      buildPrintArea('front');
-      // give browser a tiny moment to layout
-      setTimeout(()=> window.print(), 30);
-    }
-
-    function printBack(){
-      buildPrintArea('back');
-      setTimeout(()=> window.print(), 30);
-    }
-
     // ================= WhatsApp Widget =================
     const waBtn = document.getElementById('waBtn');
     const waPopup = document.getElementById('waPopup');
@@ -1424,6 +1158,121 @@
     waSend.addEventListener('click', sendWa);
     waInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendWa(); });
 
+    // ================= PDF (jsPDF) =================
+    downloadPdfBtn.addEventListener("click", generatePDF);
+
+    function generatePDF(){
+      try{
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF("p","mm","a4");
+
+        const pageWidth = 210;
+        const pageHeight = 297;
+
+        const margin = 15;
+        const usableWidth = pageWidth - margin*2;
+
+        // respect user columns (max 3 in PDF for readability)
+        let cols = Math.min(settings.columns, 3);
+
+        const gap = 6;
+        const boxSize = (usableWidth - gap*(cols-1)) / cols;
+
+        const rowsPerPage = Math.floor((pageHeight - 50) / (boxSize + gap));
+        const perPage = cols * rowsPerPage;
+
+        let index = 0;
+        let firstPage = true;
+
+        while(index < boxes.length){
+
+          // -------- FRONT PAGE --------
+          if(!firstPage) pdf.addPage();
+          firstPage = false;
+
+          drawHeader(pdf);
+
+          drawBoxes(pdf, index, perPage, cols, boxSize, gap, false);
+
+          // -------- BACK PAGE --------
+          pdf.addPage();
+
+          drawHeader(pdf);
+
+          drawBoxes(pdf, index, perPage, cols, boxSize, gap, true);
+
+          index += perPage;
+        }
+
+        pdf.save("Deutsch_mit_Said.pdf");
+      }catch(e){
+        showError(e.message || String(e));
+      }
+    }
+
+    function drawHeader(pdf){
+      pdf.setFontSize(16);
+      pdf.setTextColor(11,90,54);
+      pdf.text("Deutsch mit Said",105,20,{align:"center"});
+
+      pdf.setFontSize(10);
+      pdf.setTextColor(0,0,0);
+
+      const name = nameInput.value || "-";
+      const date = dateInput.value || "-";
+      const topic = topicInput.value || "-";
+
+      pdf.text(`Name: ${name}`,15,30);
+      pdf.text(`Datum: ${date}`,80,30);
+      pdf.text(`Thema: ${topic}`,150,30);
+    }
+
+    function drawBoxes(pdf,start,perPage,cols,boxSize,gap,isBack){
+      const margin = 15;
+      let x = margin;
+      let y = 40;
+
+      for(let i=0;i<perPage;i++){
+        const boxIndex = start + i;
+        if(boxIndex >= boxes.length) break;
+
+        const data = boxes[boxIndex] || {};
+
+        pdf.rect(x,y,boxSize,boxSize);
+
+        if(!isBack){
+          pdf.setFontSize(12);
+          pdf.setTextColor(0,0,0);
+          pdf.text((data.word || ""), x+4, y+8, {maxWidth: boxSize-8});
+
+          pdf.setFontSize(9);
+          pdf.text((data.example || ""), x+4, y+18, {maxWidth: boxSize-8});
+
+        }else{
+          const t = getWordTranslations(data.word, data.posOverride);
+
+          pdf.setFontSize(12);
+          pdf.setTextColor(0,0,0);
+          pdf.text((t.ar || ""), x+boxSize/2, y+12, {align:"center", maxWidth: boxSize-8});
+
+          pdf.setFontSize(9);
+          pdf.text((t.dar || ""), x+boxSize-4, y+22, {align:"right", maxWidth: boxSize-8});
+
+          if(data.note){
+            pdf.line(x+4, y+30, x+boxSize-4, y+30);
+            pdf.text(String(data.note), x+4, y+38, {maxWidth: boxSize-8});
+          }
+        }
+
+        x += boxSize + gap;
+
+        if((i+1) % cols === 0){
+          x = margin;
+          y += boxSize + gap;
+        }
+      }
+    }
+
     // ================= Listeners =================
     function attachListeners(){
       numBoxesInput.addEventListener('input', () => {
@@ -1450,9 +1299,6 @@
       });
 
       resetBtn.addEventListener('click', resetAll);
-
-      printFrontBtn.addEventListener('click', printFront);
-      printBackBtn.addEventListener('click', printBack);
 
       langBtn.addEventListener('click', () => {
         lang = (lang === 'de') ? 'en' : 'de';
