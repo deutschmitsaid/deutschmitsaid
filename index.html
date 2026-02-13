@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -7,6 +8,10 @@
 
   <!-- ✅ jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <!-- ✅ Arabic shaping (fixes þÓþ… + disconnected letters) -->
+  <script src="https://cdn.jsdelivr.net/npm/arabic-persian-reshaper@1.0.0/dist/arabicPersianReshaper.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bidi-js@1.0.3/dist/bidi.min.js"></script>
 
   <style>
     :root{
@@ -21,9 +26,7 @@
       --brg:#004225;
       --brg2:#0B5A36;
 
-      --line: rgba(255,255,255,0.12);
       --shadow: 0 16px 60px rgba(0,0,0,0.45);
-
       --glass1: rgba(255,255,255,0.10);
       --glass2: rgba(255,255,255,0.06);
 
@@ -32,7 +35,7 @@
       --wa:#25D366;
       --waDark:#0b5a46;
 
-      /* ✅ height reserve for fixed controls */
+      /* ✅ reserve height for fixed controls */
       --controlsH: 92px;
     }
 
@@ -48,7 +51,7 @@
       text-size-adjust: 100%;
     }
 
-    /* ===== FIXED animated aura background (doesn't scroll) ===== */
+    /* aura */
     body::before{
       content:"";
       position: fixed;
@@ -75,7 +78,6 @@
       body::before{ animation:none; }
     }
 
-    /* soft carbon grain */
     body::after{
       content:"";
       position: fixed;
@@ -98,13 +100,11 @@
       max-width: 1100px;
       margin:0 auto;
       padding:16px;
-      /* ✅ reserve space for fixed controls bar */
       padding-top: calc(var(--controlsH) + 18px);
     }
 
-    /* ---------- HEADER (IMAGE 44) ---------- */
+    /* ---------- HEADER (scrolls normally like image 44) ---------- */
     .topbar{
-      /* ✅ NOT sticky / NOT fixed => it scrolls normally (like your image 44 request) */
       position: relative;
       z-index: 5;
       display:flex;
@@ -222,15 +222,14 @@
       box-shadow: 0 12px 28px rgba(0,0,0,0.28);
     }
 
-    /* ---------- CONTROLS (IMAGE 33) ---------- */
+    /* ---------- CONTROLS (fixed like image 33) ---------- */
     #controls{
-      /* ✅ FIXED: always visible, does NOT move */
       position: fixed;
       top: 10px;
       left: 50%;
       transform: translateX(-50%);
       width: min(1100px, calc(100vw - 24px));
-      z-index: 999; /* above everything */
+      z-index: 999;
       display:flex;
       flex-wrap:wrap;
       gap:12px;
@@ -459,7 +458,7 @@
       color: rgba(234,242,238,0.86);
     }
 
-    /* ---------- WhatsApp widget ---------- */
+    /* WhatsApp */
     #waBtn{
       position: fixed;
       right: 18px;
@@ -554,7 +553,7 @@
       white-space: nowrap;
     }
 
-    /* ===== Anti-copy / anti-select (deterrent only) ===== */
+    /* deterrent */
     body, #app{ user-select:none; -webkit-user-select:none; }
     input, textarea{ user-select:text !important; -webkit-user-select:text !important; }
   </style>
@@ -562,7 +561,7 @@
 
 <body>
 
-  <!-- ✅ FIXED CONTROLS BAR (Image 33) -->
+  <!-- ✅ FIXED CONTROLS -->
   <div id="controls">
     <div class="control-group">
       <label data-i18n="count">Anzahl</label>
@@ -598,7 +597,7 @@
   </div>
 
   <div id="app">
-    <!-- ✅ HEADER (Image 44) - scrolls normally -->
+    <!-- ✅ HEADER (scrolls) -->
     <div class="topbar" id="topbar">
       <div class="brand">
         <div class="brandTitle">Deutsch mit Said</div>
@@ -618,11 +617,10 @@
 
     <div id="debug">Viel Erfolg</div>
     <div id="errorMsg" class="error"></div>
-
     <div id="grid"></div>
   </div>
 
-  <!-- WhatsApp Widget -->
+  <!-- WhatsApp -->
   <button id="waBtn" aria-label="WhatsApp">
     <svg viewBox="0 0 32 32" aria-hidden="true">
       <path d="M19.11 17.25c-.27-.14-1.6-.79-1.85-.88-.25-.09-.43-.14-.62.14-.18.27-.71.88-.87 1.06-.16.18-.32.21-.59.07-.27-.14-1.16-.43-2.21-1.36-.82-.73-1.38-1.63-1.54-1.9-.16-.27-.02-.42.12-.56.12-.12.27-.32.41-.48.14-.16.18-.27.27-.46.09-.18.05-.34-.02-.48-.07-.14-.62-1.5-.85-2.06-.22-.53-.45-.46-.62-.47h-.53c-.18 0-.48.07-.73.34-.25.27-.96.94-.96 2.29 0 1.35.99 2.65 1.13 2.83.14.18 1.95 2.97 4.73 4.17.66.29 1.18.46 1.58.59.66.21 1.26.18 1.74.11.53-.08 1.6-.65 1.83-1.27.23-.62.23-1.15.16-1.27-.07-.12-.25-.18-.52-.32zM16 3C9.38 3 4 8.38 4 15c0 2.11.55 4.17 1.6 5.99L4 29l8.21-1.56A11.92 11.92 0 0 0 16 27c6.62 0 12-5.38 12-12S22.62 3 16 3zm0 21.7c-1.94 0-3.83-.52-5.47-1.5l-.39-.23-4.87.93.93-4.74-.25-.41A9.69 9.69 0 0 1 6.3 15C6.3 9.64 10.64 5.3 16 5.3S25.7 9.64 25.7 15 21.36 24.7 16 24.7z"/>
@@ -823,11 +821,7 @@
       let entry = lookupEntry(key);
       if (!entry && pos === 'N') entry = lookupEntry(key.toLowerCase());
 
-      return {
-        pos, lemma,
-        ar: entry ? entry.ar : '',
-        dar: entry ? entry.dar : ''
-      };
+      return { pos, lemma, ar: entry ? entry.ar : '', dar: entry ? entry.dar : '' };
     }
 
     function translateSentenceDarija(sentence){
@@ -1113,7 +1107,7 @@
       log('Viel Erfolg');
     }
 
-    // ================= WhatsApp Widget =================
+    // ================= WhatsApp =================
     const waBtn = document.getElementById('waBtn');
     const waPopup = document.getElementById('waPopup');
     const waClose = document.getElementById('waClose');
@@ -1147,45 +1141,62 @@
     waSend.addEventListener('click', sendWa);
     waInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendWa(); });
 
-    // ================= Arabic Font for jsPDF =================
+    // ================= Arabic shaping (for PDF) =================
+    function shapeArabicForPdf(text){
+      const s = String(text || "").trim();
+      if (!s) return "";
+
+      const reshaper = window.arabicPersianReshaper;
+      const reshaped = reshaper && reshaper.reshape ? reshaper.reshape(s) : s;
+
+      const bidi = window.bidi;
+      if (bidi && bidi.getEmbeddingLevels && bidi.getReorderedString){
+        const levels = bidi.getEmbeddingLevels(reshaped);
+        return bidi.getReorderedString(reshaped, levels);
+      }
+      return reshaped;
+    }
+
+    // ================= Arabic font loader for jsPDF =================
+    // IMPORTANT:
+    // Put the font file here:  /fonts/Amiri-Regular.ttf
+    // And run via Live Server (NOT file://).
     async function loadArabicFontSafe(pdf){
-  try{
-    // already loaded?
-    if (pdf.getFontList && pdf.getFontList().Amiri) return true;
+      try{
+        // already loaded?
+        if (pdf.getFontList && pdf.getFontList().Amiri) return true;
 
-    // cached?
-    const cached = localStorage.getItem("amiri_ttf_base64");
-    if (cached){
-      pdf.addFileToVFS("Amiri-Regular.ttf", cached);
-      pdf.addFont("Amiri-Regular.ttf", "Amiri", "normal");
-      return true;
+        // cached?
+        const cached = localStorage.getItem("amiri_ttf_base64");
+        if (cached){
+          pdf.addFileToVFS("Amiri-Regular.ttf", cached);
+          pdf.addFont("Amiri-Regular.ttf", "Amiri", "normal", "Identity-H"); // ✅ Unicode
+          return true;
+        }
+
+        const res = await fetch("fonts/Amiri-Regular.ttf", { cache: "no-store" });
+        if(!res.ok) return false;
+
+        const buf = await res.arrayBuffer();
+
+        // arrayBuffer -> base64
+        let binary = "";
+        const bytes = new Uint8Array(buf);
+        const chunk = 0x8000;
+        for (let i = 0; i < bytes.length; i += chunk) {
+          binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
+        }
+        const base64 = btoa(binary);
+
+        localStorage.setItem("amiri_ttf_base64", base64);
+
+        pdf.addFileToVFS("Amiri-Regular.ttf", base64);
+        pdf.addFont("Amiri-Regular.ttf", "Amiri", "normal", "Identity-H"); // ✅ Unicode
+        return true;
+      }catch(e){
+        return false;
+      }
     }
-
-    // try fetch (may fail on file:// or missing file)
-    const res = await fetch("fonts/Amiri-Regular.ttf");
-    if(!res.ok) return false;
-
-    const buf = await res.arrayBuffer();
-
-    // arrayBuffer -> base64
-    let binary = "";
-    const bytes = new Uint8Array(buf);
-    const chunk = 0x8000;
-    for (let i = 0; i < bytes.length; i += chunk) {
-      binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
-    }
-    const base64 = btoa(binary);
-
-    localStorage.setItem("amiri_ttf_base64", base64);
-
-    pdf.addFileToVFS("Amiri-Regular.ttf", base64);
-    pdf.addFont("Amiri-Regular.ttf", "Amiri", "normal");
-    return true;
-  }catch(e){
-    return false; // ✅ NO ERROR, just fallback
-  }
-}
-
 
     // ================= PDF (Front+Back pairing) =================
     downloadPdfBtn.addEventListener("click", generatePDF);
@@ -1195,7 +1206,7 @@
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF("p","mm","a4");
 
-const arabicOK = await loadArabicFontSafe(pdf);
+        const arabicOK = await loadArabicFontSafe(pdf);
 
         const pageWidth = 210;
         const pageHeight = 297;
@@ -1203,10 +1214,14 @@ const arabicOK = await loadArabicFontSafe(pdf);
         const margin = 15;
         const usableWidth = pageWidth - margin*2;
 
-        let cols = Math.min(settings.columns, 3);
+        // respect user columns (max 3 in PDF for readability)
+        const cols = Math.min(settings.columns, 3);
         const gap = 6;
         const boxSize = (usableWidth - gap*(cols-1)) / cols;
 
+        // ✅ header behavior:
+        // - slogan on ALL pages
+        // - name/date/topic ONLY on the FIRST page of the whole PDF
         const headerFirst = 42; // slogan + meta
         const headerOther = 28; // slogan only
 
@@ -1218,17 +1233,17 @@ const arabicOK = await loadArabicFontSafe(pdf);
 
         while(index < boxes.length){
 
-          // FRONT
+          // FRONT PAGE (German)
           if(!firstPair) pdf.addPage();
           drawHeader(pdf, { showMeta: firstPair });
 
           const perFront = cols * (firstPair ? rowsFirst : rowsOther);
-          drawBoxes(pdf, index, perFront, cols, boxSize, gap, false, { yStart: firstPair ? headerFirst : headerOther });
+          drawBoxes(pdf, index, perFront, cols, boxSize, gap, false, { yStart: firstPair ? headerFirst : headerOther }, arabicOK);
 
-          // BACK (same amount for duplex pairing)
+          // BACK PAGE (Translation only)
           pdf.addPage();
           drawHeader(pdf, { showMeta: false });
-          drawBoxes(pdf, index, perFront, cols, boxSize, gap, true, { yStart: headerOther });
+          drawBoxes(pdf, index, perFront, cols, boxSize, gap, true, { yStart: headerOther }, arabicOK);
 
           index += perFront;
           firstPair = false;
@@ -1249,6 +1264,7 @@ const arabicOK = await loadArabicFontSafe(pdf);
 
       if(!showMeta) return;
 
+      // meta only on first page
       pdf.setFont("helvetica","normal");
       pdf.setFontSize(10);
       pdf.setTextColor(0,0,0);
@@ -1262,7 +1278,7 @@ const arabicOK = await loadArabicFontSafe(pdf);
       pdf.text(`Thema: ${topic}`, 150, 30);
     }
 
-    function drawBoxes(pdf,start,perPage,cols,boxSize,gap,isBack,{yStart}){
+    function drawBoxes(pdf,start,perPage,cols,boxSize,gap,isBack,{yStart}, arabicOK){
       const margin = 15;
       let x = margin;
       let y = yStart;
@@ -1286,28 +1302,33 @@ const arabicOK = await loadArabicFontSafe(pdf);
           pdf.setFontSize(9);
           pdf.text((data.example || ""), x+4, y+18, {maxWidth: boxSize-8});
         }else{
-          // BACK: ONLY translation (no German word)
+          // BACK: ONLY translation (NO German word)
           const t = getWordTranslations(data.word, data.posOverride);
-
-          pdf.setFont("Amiri","normal");
           pdf.setTextColor(0,0,0);
 
-          if (pdf.setR2L) pdf.setR2L(true);
+          // Arabic (shaped + RTL) only if font OK
+          if(arabicOK){
+            pdf.setFont("Amiri","normal");
+            pdf.setFontSize(13);
+            const arText = shapeArabicForPdf(t.ar || "");
+            pdf.text(arText, x + boxSize/2, y + 12, {align:"center", maxWidth: boxSize-8});
+          }else{
+            pdf.setFont("helvetica","italic");
+            pdf.setFontSize(10);
+            pdf.text("Arabic font missing", x + boxSize/2, y + 12, {align:"center"});
+          }
 
-          pdf.setFontSize(13);
-          pdf.text((t.ar || ""), x + boxSize/2, y + 12, {align:"center", maxWidth: boxSize-8});
-
+          // Darija
+          pdf.setFont("helvetica","normal");
           pdf.setFontSize(10);
           pdf.text((t.dar || ""), x + boxSize - 4, y + 22, {align:"right", maxWidth: boxSize-8});
 
+          // Note
           if(data.note){
             pdf.line(x+4, y+30, x+boxSize-4, y+30);
             pdf.setFontSize(10);
             pdf.text(String(data.note), x + boxSize - 4, y + 38, {align:"right", maxWidth: boxSize-8});
           }
-
-          if (pdf.setR2L) pdf.setR2L(false);
-          pdf.setFont("helvetica","normal");
         }
 
         x += boxSize + gap;
@@ -1378,3 +1399,4 @@ const arabicOK = await loadArabicFontSafe(pdf);
   </script>
 </body>
 </html>
+```
