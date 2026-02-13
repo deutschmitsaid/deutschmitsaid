@@ -7,10 +7,10 @@
 
   <!-- ✅ jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <!-- ✅ html2canvas (طريقة Code 2 باش العربية تطلع صحيحة) -->
+  <!-- ✅ html2canvas (for perfect A4 pages, NO slicing bars) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-  <!-- ✅ Optional: Web font for Arabic (helps html2canvas render nicely) -->
+  <!-- ✅ Arabic font for html2canvas capture -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
@@ -105,7 +105,7 @@
       padding-top: calc(var(--controlsH) + 18px);
     }
 
-    /* ---------- HEADER (scrolls normally) ---------- */
+    /* ---------- HEADER ---------- */
     .topbar{
       position: relative;
       z-index: 5;
@@ -328,37 +328,33 @@
       text-align:right;
     }
 
+    /* ✅ word centered in box front */
     .frontWordWrap{
-  flex: 1;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding: 0;              /* ✅ حيد padding اللي كيطلعها لفوق */
-  min-height: 52%;         /* ✅ خلي مساحة كافية باش تبان فالنص */
-}
-
-.wordInput{
-  width:100%;
-  border:none;
-  outline:none;
-  resize:none;
-  background:transparent;
-
-  color: var(--ink);
-  font-weight:900;
-  font-size: 18px;         /* ✅ شوية أكبر */
-  line-height:1.25;
-
-  text-align:center;
-  overflow:hidden;
-
-  margin: 0;               /* ✅ مهم */
-  padding: 0 6px;          /* ✅ غير شوية فالجوانب */
-  min-height: 40px;
-  display:flex;            /* ✅ باش textarea يتوسط مزيان فبعض المتصفحات */
-  align-items:center;
-}
-
+      flex: 1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 0;
+      min-height: 52%;
+    }
+    .wordInput{
+      width:100%;
+      border:none;
+      outline:none;
+      resize:none;
+      background:transparent;
+      color: var(--ink);
+      font-weight:900;
+      font-size: 18px;
+      line-height:1.25;
+      text-align:center;
+      overflow:hidden;
+      margin:0;
+      padding: 0 6px;
+      min-height: 40px;
+      display:flex;
+      align-items:center;
+    }
 
     .exampleWrap{
       border-top: 1px solid rgba(255,255,255,0.10);
@@ -416,7 +412,6 @@
       line-height: 1.7;
       direction: rtl;
       color: #e9fff4;
-      font-family: "Amiri", Arial, sans-serif;
     }
 
     .darijaSide{
@@ -428,7 +423,6 @@
       direction: rtl;
       word-break: break-word;
       color: rgba(234,242,238,0.88);
-      font-family: Arial, sans-serif;
     }
 
     .backNoteWrap{
@@ -463,7 +457,6 @@
       text-align:right;
       direction: rtl;
       overflow:hidden;
-      font-family: Arial, sans-serif;
     }
 
     .darijaExample{
@@ -576,61 +569,86 @@
     body, #app{ user-select:none; -webkit-user-select:none; }
     input, textarea{ user-select:text !important; -webkit-user-select:text !important; }
 
-    /* ---------- PDF stage (hidden) ---------- */
+    /* ================= PDF (A4 fixed — NO slicing) ================= */
     #pdfStage{
       position: fixed;
       left: -99999px;
       top: -99999px;
+
       width: 210mm;
+      height: 297mm;
       padding: 10mm;
+
       background:#fff;
       color:#111;
       box-sizing:border-box;
       font-family: Arial, sans-serif;
+
+      display:flex;
+      flex-direction:column;
+      gap: 4mm;
     }
+
     .pdfBigTitle{
+      margin:0;
       text-align:center;
-      color: #0B5A36;
       font-weight: 900;
       font-size: 18px;
-      margin: 0 0 7mm 0;
+      color:#0B5A36;
+      line-height: 1.2;
     }
+
     .pdfMeta{
       display:flex;
       justify-content:space-between;
-      gap:8mm;
-      margin: 0 0 6mm 0;
+      gap: 6mm;
       font-size: 11px;
       font-weight: 900;
       color:#111;
     }
     .pdfMeta span{
-      border: 1px solid rgba(0,0,0,0.12);
+      border: 1px solid rgba(0,0,0,0.14);
       border-radius: 999px;
       padding: 2.5mm 4mm;
       background: rgba(0,0,0,0.02);
       white-space: nowrap;
     }
+
     .pdfGrid{
+      margin-top: 2mm;
       display:grid;
       justify-content:center;
       align-content:start;
-      gap: 10px;
+      gap: var(--pdfGap, 4mm);
+      grid-template-columns: repeat(var(--pdfCols, 3), var(--pdfBox, 50mm));
     }
+
     .pdfCard{
+      width: var(--pdfBox, 50mm);
+      height: var(--pdfBox, 50mm);
       background:#fff;
       border: 1px solid rgba(0,0,0,0.22);
       border-radius: 14px;
       overflow:hidden;
     }
+
     .pdfCardInner{
       padding: 12px;
+      height: 100%;
+      box-sizing:border-box;
       display:flex;
       flex-direction:column;
       gap: 8px;
-      height: 100%;
-      box-sizing:border-box;
       font-family: Arial, sans-serif;
+    }
+
+    /* ✅ German word centered (PDF) */
+    .pdfWordWrap{
+      flex: 1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
     }
     .pdfWord{
       font-weight: 900;
@@ -638,17 +656,20 @@
       color:#111;
       white-space: pre-wrap;
     }
+
     .pdfLine{
       height:1px;
-      background: rgba(0,0,0,0.12);
+      background: rgba(0,0,0,0.14);
     }
+
     .pdfExample{
       font-size: 12px;
       line-height: 1.35;
       color:#111;
       white-space: pre-wrap;
-      flex:1;
+      flex: 1;
     }
+
     .pdfAr{
       direction: rtl;
       text-align: center;
@@ -659,6 +680,7 @@
       color:#111;
       white-space: pre-wrap;
     }
+
     .pdfDar{
       direction: rtl;
       text-align: right;
@@ -668,6 +690,7 @@
       color:#111;
       white-space: pre-wrap;
     }
+
     .pdfNote{
       direction: rtl;
       text-align: right;
@@ -717,7 +740,7 @@
   </div>
 
   <div id="app">
-    <!-- ✅ HEADER (scrolls) -->
+    <!-- ✅ HEADER -->
     <div class="topbar" id="topbar">
       <div class="brand">
         <div class="brandTitle">Deutsch mit Said</div>
@@ -740,7 +763,7 @@
     <div id="grid"></div>
   </div>
 
-  <!-- PDF stage (hidden) -->
+  <!-- ✅ PDF stage (hidden, A4 fixed) -->
   <div id="pdfStage" aria-hidden="true"></div>
 
   <!-- WhatsApp -->
@@ -874,14 +897,14 @@
     const resetBtn = document.getElementById('resetBtn');
     const downloadPdfBtn = document.getElementById('downloadPdfBtn');
 
+    const pdfStage = document.getElementById('pdfStage');
+
     const nameInput = document.getElementById('name');
     const dateInput = document.getElementById('date');
     const topicInput = document.getElementById('topic');
 
     const errorMsg = document.getElementById('errorMsg');
     const debug = document.getElementById('debug');
-
-    const pdfStage = document.getElementById('pdfStage');
 
     // ================= Errors =================
     function log(msg){ debug.textContent = msg; }
@@ -1160,7 +1183,7 @@
 
       wordTA.addEventListener('input', () => {
         boxes[index].word = wordTA.value;
-        autoFitTextarea(wordTA, 11, 16);
+        autoFitTextarea(wordTA, 11, 18);
         renderBack();
         saveToStorage();
       });
@@ -1179,7 +1202,7 @@
       });
 
       setTimeout(() => {
-        autoFitTextarea(wordTA, 11, 16);
+        autoFitTextarea(wordTA, 11, 18);
         autoFitTextarea(exTA, 11, 14);
         autoFitTextarea(noteTA, 12, 14);
         renderBack();
@@ -1266,93 +1289,113 @@
     waSend.addEventListener('click', sendWa);
     waInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendWa(); });
 
-    // ================= PDF (NEW: html2canvas like Code 2) =================
+    // ================= PDF (A4 fixed pages — NO slicing) =================
     downloadPdfBtn.addEventListener("click", downloadAsPdf);
 
-    function getPdfCardSizePx(){
-      // ✅ tuned for A4 screenshots
-      return ({ small: 120, normal: 150, large: 170 }[settings.boxSize] || 150);
+    function calcPdfLayout(cols, showMeta){
+      // A4 mm
+      const pageW = 210, pageH = 297;
+      const pad = 10;                 // matches #pdfStage padding (mm)
+      const innerW = pageW - 2*pad;   // 190
+      const innerH = pageH - 2*pad;   // 277
+
+      const gap = 4;                  // mm (grid gap)
+      const safeCols = Math.min(Math.max(1, cols), 4);
+
+      // stable header height in mm
+      const headerH = showMeta ? 22 : 12;
+
+      // box size from width
+      const box = (innerW - gap*(safeCols - 1)) / safeCols;
+
+      // rows that fit vertically
+      const rows = Math.max(1, Math.floor((innerH - headerH) / (box + gap)));
+      const perPage = safeCols * rows;
+
+      return { safeCols, gap, box, rows, perPage };
     }
 
-    function buildPdfPageDOM(mode, showMeta, startIndex, count){
-      pdfStage.innerHTML = '';
+    function buildPdfPageDOM(mode, showMeta, startIndex, count, cols, boxMm, gapMm){
+      pdfStage.innerHTML = "";
 
-      const title = document.createElement('div');
-      title.className = 'pdfBigTitle';
-      title.textContent = 'Deutsch mit Said ist einfacher, als du denkst.';
+      pdfStage.style.setProperty("--pdfCols", String(cols));
+      pdfStage.style.setProperty("--pdfBox", boxMm + "mm");
+      pdfStage.style.setProperty("--pdfGap", gapMm + "mm");
+
+      const title = document.createElement("div");
+      title.className = "pdfBigTitle";
+      title.textContent = "Deutsch mit Said ist einfacher, als du denkst.";
       pdfStage.appendChild(title);
 
       if (showMeta){
-        const meta = document.createElement('div');
-        meta.className = 'pdfMeta';
-        const nm = (nameInput.value || '').trim();
-        const dt = (dateInput.value || '').trim();
-        const tp = (topicInput.value || '').trim();
+        const meta = document.createElement("div");
+        meta.className = "pdfMeta";
+        const nm = (nameInput.value || "").trim();
+        const dt = (dateInput.value || "").trim();
+        const tp = (topicInput.value || "").trim();
         meta.innerHTML = `
-          <span>Name: ${nm ? nm : '—'}</span>
-          <span>Datum: ${dt ? dt : '—'}</span>
-          <span>Thema: ${tp ? tp : '—'}</span>
+          <span>Name: ${nm ? nm : "—"}</span>
+          <span>Datum: ${dt ? dt : "—"}</span>
+          <span>Thema: ${tp ? tp : "—"}</span>
         `;
         pdfStage.appendChild(meta);
       }
 
-      const g = document.createElement('div');
-      g.className = 'pdfGrid';
-
-      // ✅ columns: use user columns BUT max 4 (A4)
-      const cols = Math.min(Math.max(1, settings.columns), 4);
-      g.style.gridTemplateColumns = `repeat(${cols}, auto)`;
-
-      const boxSize = getPdfCardSizePx();
+      const g = document.createElement("div");
+      g.className = "pdfGrid";
 
       for (let i=0; i<count; i++){
         const idx = startIndex + i;
         if (idx >= boxes.length) break;
 
-        const d = boxes[idx] || {word:'', example:'', posOverride:'', note:''};
+        const d = boxes[idx] || {word:"", example:"", posOverride:"", note:""};
         const t = getWordTranslations(d.word, d.posOverride);
 
-        const card = document.createElement('div');
-        card.className = 'pdfCard';
-        card.style.width = boxSize + 'px';
-        card.style.height = boxSize + 'px';
+        const card = document.createElement("div");
+        card.className = "pdfCard";
 
-        const inner = document.createElement('div');
-        inner.className = 'pdfCardInner';
+        const inner = document.createElement("div");
+        inner.className = "pdfCardInner";
 
-        if (mode === 'front'){
-          const w = document.createElement('div');
-          w.className = 'pdfWord';
-          w.textContent = (d.word || '').trim();
-          inner.appendChild(w);
+        if (mode === "front"){
+          // ✅ word centered in PDF
+          const wWrap = document.createElement("div");
+          wWrap.className = "pdfWordWrap";
 
-          const line = document.createElement('div');
-          line.className = 'pdfLine';
+          const w = document.createElement("div");
+          w.className = "pdfWord";
+          w.textContent = (d.word || "").trim();
+          wWrap.appendChild(w);
+          inner.appendChild(wWrap);
+
+          const line = document.createElement("div");
+          line.className = "pdfLine";
           inner.appendChild(line);
 
-          const ex = document.createElement('div');
-          ex.className = 'pdfExample';
-          ex.textContent = (d.example || '').trim();
+          const ex = document.createElement("div");
+          ex.className = "pdfExample";
+          ex.textContent = (d.example || "").trim();
           inner.appendChild(ex);
+
         } else {
-          const ar = document.createElement('div');
-          ar.className = 'pdfAr';
-          ar.textContent = (t.ar || '').trim();
+          const ar = document.createElement("div");
+          ar.className = "pdfAr";
+          ar.textContent = (t.ar || "").trim();
           inner.appendChild(ar);
 
-          const dar = document.createElement('div');
-          dar.className = 'pdfDar';
-          dar.textContent = (t.dar || '').trim();
+          const dar = document.createElement("div");
+          dar.className = "pdfDar";
+          dar.textContent = (t.dar || "").trim();
           inner.appendChild(dar);
 
-          const note = (d.note || '').trim();
+          const note = (d.note || "").trim();
           if (note){
-            const line = document.createElement('div');
-            line.className = 'pdfLine';
+            const line = document.createElement("div");
+            line.className = "pdfLine";
             inner.appendChild(line);
 
-            const n = document.createElement('div');
-            n.className = 'pdfNote';
+            const n = document.createElement("div");
+            n.className = "pdfNote";
             n.textContent = note;
             inner.appendChild(n);
           }
@@ -1363,110 +1406,63 @@
       }
 
       pdfStage.appendChild(g);
-      return { cols };
     }
 
-    async function addCanvasAsPagedImagesToPdf(pdf, canvas, marginMm=10){
-      const pageWidth=210, pageHeight=297;
-      const usableW = pageWidth - 2*marginMm;
-      const usableH = pageHeight - 2*marginMm;
-
-      const imgW = usableW;
-      const imgH = (canvas.height * imgW) / canvas.width;
-
-      if (imgH <= usableH){
-        pdf.addImage(canvas.toDataURL('image/png'), 'PNG', marginMm, marginMm, imgW, imgH);
-        return;
-      }
-
-      const pxPerMm = canvas.width / imgW;
-      const slicePxH = usableH * pxPerMm;
-
-      let y=0;
-      let first=true;
-      while (y < canvas.height - 1){
-        if (!first) pdf.addPage();
-        first=false;
-
-        const sH = Math.min(slicePxH, canvas.height - y);
-        const tmp = document.createElement('canvas');
-        tmp.width = canvas.width;
-        tmp.height = sH;
-        const ctx = tmp.getContext('2d');
-        ctx.drawImage(canvas, 0, y, canvas.width, sH, 0, 0, canvas.width, sH);
-
-        const drawH = (sH * imgW) / canvas.width;
-        pdf.addImage(tmp.toDataURL('image/png'), 'PNG', marginMm, marginMm, imgW, drawH);
-        y += sH;
-      }
+    async function captureStageToCanvas(){
+      await new Promise(r => setTimeout(r, 120));
+      return await html2canvas(pdfStage, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: "#ffffff",
+        windowWidth: pdfStage.scrollWidth,
+        windowHeight: pdfStage.scrollHeight
+      });
     }
 
-    function computePerPdfPage(cols, boxPx){
-      // estimate how many cards fit in A4 screenshot area (rough but stable)
-      // html2canvas captures full stage, then we slice into A4 pages.
-      // Here we instead keep stage "reasonable" by limiting items per stage.
-      const topMm = 10 + 7 + 8; // stage padding + title margin + meta area approx
-      // We’ll just use a safe cap:
-      // For 4 cols: 24 cards (6 rows)
-      // For 3 cols: 21 cards (7 rows)
-      // For 2 cols: 16 cards (8 rows)
-      // For 1 col : 10 cards
-      if (cols >= 4) return 24;
-      if (cols === 3) return 21;
-      if (cols === 2) return 16;
-      return 10;
+    async function addA4CanvasAsFullPage(pdf, canvas){
+      const img = canvas.toDataURL("image/png");
+      pdf.addImage(img, "PNG", 0, 0, 210, 297);
     }
 
     async function downloadAsPdf(){
       try{
         clearError();
-        log('PDF wird erstellt...');
+        log("PDF wird erstellt...");
 
         const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF('p','mm','a4');
+        const pdf = new jsPDF("p","mm","a4");
 
-        // ensure boxes length
         ensureBoxesLength();
 
-        // use user columns in PDF but keep max 4
         const cols = Math.min(Math.max(1, settings.columns), 4);
-        const boxSize = getPdfCardSizePx();
-        const perChunk = computePerPdfPage(cols, boxSize);
 
         let index = 0;
-        let isFirstPair = true;
+        let firstPair = true;
 
         while (index < boxes.length){
+          const layoutFront = calcPdfLayout(cols, firstPair);
+          const perPage = layoutFront.perPage;
+
           // FRONT
-          buildPdfPageDOM('front', isFirstPair, index, perChunk);
-          await new Promise(r => setTimeout(r, 80));
-          const c1 = await html2canvas(pdfStage, {
-            scale: 2,
-            useCORS: true,
-            backgroundColor: '#ffffff'
-          });
-          await addCanvasAsPagedImagesToPdf(pdf, c1, 10);
+          buildPdfPageDOM("front", firstPair, index, perPage, layoutFront.safeCols, layoutFront.box, layoutFront.gap);
+          const c1 = await captureStageToCanvas();
+          await addA4CanvasAsFullPage(pdf, c1);
 
           // BACK
           pdf.addPage();
-          buildPdfPageDOM('back', false, index, perChunk);
-          await new Promise(r => setTimeout(r, 80));
-          const c2 = await html2canvas(pdfStage, {
-            scale: 2,
-            useCORS: true,
-            backgroundColor: '#ffffff'
-          });
-          await addCanvasAsPagedImagesToPdf(pdf, c2, 10);
+          const layoutBack = calcPdfLayout(cols, false);
+          buildPdfPageDOM("back", false, index, perPage, layoutBack.safeCols, layoutBack.box, layoutBack.gap);
+          const c2 = await captureStageToCanvas();
+          await addA4CanvasAsFullPage(pdf, c2);
 
-          index += perChunk;
-          isFirstPair = false;
+          index += perPage;
+          firstPair = false;
 
-          // if more chunks remain, add a new page before next front
-          if (index < boxes.length) pdf.addPage();
+          if (index < boxes.length) pdf.addPage(); // next front
         }
 
-        pdf.save('Deutsch_mit_Said.pdf');
-        log('Viel Erfolg');
+        pdf.save("Deutsch_mit_Said.pdf");
+        log("Viel Erfolg");
       }catch(e){
         showError(e.message || String(e));
       }
