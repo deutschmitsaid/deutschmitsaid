@@ -1158,7 +1158,7 @@
         return;
       }
 
-      const res = await fetch("fonts/Amiri-Regular.ttf");
+const res = await fetch("./fonts/Amiri-Regular.ttf");
       if(!res.ok) throw new Error("Arabic font not found: fonts/Amiri-Regular.ttf");
       const buf = await res.arrayBuffer();
 
