@@ -498,22 +498,28 @@
     .missing{ opacity: .65; }
 
     /* ===== PDF STAGE (renderable, not blank) ===== */
-    #pdfStage{
-      position: fixed;
-      left: 0;
-      top: 0;
-      width: 210mm;
-      height: 297mm;
-      padding: 10mm;
-      background: #fff;
-      color:#111;
-      box-sizing:border-box;
+    /* ===== PDF STAGE (Safari/iPhone safe) ===== */
+#pdfStage{
+  position: fixed;
+  left: 0;
+  top: 0;
 
-      /* IMPORTANT: not 0, otherwise canvas can be blank */
-      opacity: 0.01;
-      pointer-events:none;
-      z-index: -1;
-    }
+  /* use PX (more stable than mm on mobile html2canvas) */
+  width: 794px;        /* ~A4 at 96dpi */
+  height: 1123px;      /* ~A4 at 96dpi */
+  padding: 38px;       /* ~10mm */
+
+  background: #fff;
+  color:#111;
+  box-sizing:border-box;
+
+  /* IMPORTANT: not display:none and not z-index:-1 */
+  visibility: hidden;  /* hidden but renderable */
+  opacity: 0.01;       /* Safari sometimes needs >0 */
+  pointer-events:none;
+  z-index: 9990;
+}
+
 
     .pdfBigTitle{
       text-align:center;
@@ -1351,63 +1357,246 @@
       });
     }
 
-    async function downloadAsPdf(){
-      try{
-        clearError();
-        log('Generating PDF...');
+   // ================= PDF (SAFE: page-by-page, same layout front/back) =================
+function showPdfStage(show){
+  pdfStage.style.visibility = show ? 'visible' : 'hidden';
+}
 
-        if (!window.jspdf || !window.html2canvas){
-          showError('PDF libraries not loaded. Check internet or CDN.');
-          return;
-        }
+function pdfPageLayout(){
+  // Fixed A4 px sizes (stable for html2canvas on mobile)
+  const PAGE_W = 794;
+  const PAGE_H = 1123;
+  const PAD = 38;
 
-        const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF('p','mm','a4');
-        const marginMm = 10;
+  // choose cols for PDF (keep boxes big + printable)
+  let cols = Math.min(settings.columns, 3);
+  if (settings.boxSize === 'large') cols = Math.min(cols, 2);
+  if (settings.boxSize === 'small') cols = Math.min(cols, 3);
 
-        const { perPage } = getPdfLayout();
-        const total = settings.numBoxes;
-        const pages = Math.max(1, Math.ceil(total / perPage));
+  const gap = 24; // px
+  const usableW = PAGE_W - PAD*2;
+  const usableH = PAGE_H - PAD*2;
 
-        // FRONT pages
-        for (let p=0; p<pages; p++){
-          const start = p * perPage;
-          const count = Math.min(perPage, total - start);
-          const showMeta = (p === 0); // meta only on first front page
+  // Base box px (will auto-scale to fit)
+  let box = (settings.boxSize === 'small') ? 210 : (settings.boxSize === 'large') ? 270 : 240;
 
-          buildPdfPageDOM('front', start, count, showMeta);
-          const canvas = await renderPdfPageToCanvas();
+  // Fit width
+  const maxBoxByWidth = Math.floor((usableW - gap*(cols-1)) / cols);
+  box = Math.min(box, maxBoxByWidth);
 
-          if (p > 0) pdf.addPage();
-          const pageWidth=210, pageHeight=297;
-          const usableW = pageWidth - 2*marginMm;
-          const usableH = pageHeight - 2*marginMm;
-          const imgW = usableW;
-          const imgH = (canvas.height * imgW) / canvas.width;
+  // Rows depend on height (leave space for title/meta)
+  // Title+meta approx 140px
+  const headerH = 140;
+  const maxRows = Math.floor((usableH - headerH - gap*2) / (box + gap));
+  const rows = Math.max(2, Math.min(maxRows, 5)); // keep nice
+  const perPage = cols * rows;
 
-          // fit in page
-          const drawH = Math.min(imgH, usableH);
-          pdf.addImage(canvas.toDataURL('image/png'), 'PNG', marginMm, marginMm, imgW, drawH);
-        }
+  return { PAGE_W, PAGE_H, PAD, cols, rows, box, gap, perPage };
+}
 
-        // BACK pages (same count/order => duplex alignment)
-        for (let p=0; p<pages; p++){
-          pdf.addPage();
-          const start = p * perPage;
-          const count = Math.min(perPage, total - start);
-          // meta optional on back: we keep spacing same, but hide meta row to match layout
-          buildPdfPageDOM('back', start, count, false);
-          const canvas = await renderPdfPageToCanvas();
+function buildPdfOnePage(mode, startIndex){
+  const L = pdfPageLayout();
+  pdfStage.innerHTML = '';
 
-          const pageWidth=210, pageHeight=297;
-          const usableW = pageWidth - 2*marginMm;
-          const usableH = pageHeight - 2*marginMm;
-          const imgW = usableW;
-          const imgH = (canvas.height * imgW) / canvas.width;
-          const drawH = Math.min(imgH, usableH);
+  // Title
+  const title = document.createElement('div');
+  title.className = 'pdfBigTitle';
+  title.textContent = 'Deutsch mit Said ist einfacher, als du denkst.';
+  title.style.margin = '0 0 10px 0';
+  pdfStage.appendChild(title);
 
-          pdf.addImage(canvas.toDataURL('image/png'), 'PNG', marginMm, marginMm, imgW, drawH);
-        }
+  // Meta row (always on every page to keep same height front/back)
+  const meta = document.createElement('div');
+  meta.className = 'pdfMetaRow';
+  const nm = (nameInput.value || '').trim() || '—';
+  const dt = (dateInput.value || '').trim() || '—';
+  const tp = (topicInput.value || '').trim() || '—';
+  meta.innerHTML = `<span>Name: ${nm}</span><span>Datum: ${dt}</span><span>Thema: ${tp}</span>`;
+  pdfStage.appendChild(meta);
+
+  const wrap = document.createElement('div');
+  wrap.className = 'pdfWrap';
+  pdfStage.appendChild(wrap);
+
+  // Grid
+  const g = document.createElement('div');
+  g.style.display = 'grid';
+  g.style.gridTemplateColumns = `repeat(${L.cols}, ${L.box}px)`;
+  g.style.gap = `${L.gap}px`;
+  g.style.justifyContent = 'center';
+  g.style.marginTop = '14px';
+  wrap.appendChild(g);
+
+  const endIndex = Math.min(startIndex + L.perPage, settings.numBoxes);
+
+  for (let i=startIndex; i<endIndex; i++){
+    const d = boxes[i] || {word:'', example:'', posOverride:'', note:''};
+
+    const b = document.createElement('div');
+    b.style.width = L.box + 'px';
+    b.style.height = L.box + 'px';
+    b.style.border = '1px solid rgba(0,0,0,0.14)';
+    b.style.borderRadius = '22px';
+    b.style.background = '#fff';
+    b.style.position = 'relative';
+    b.style.overflow = 'hidden';
+
+    // watermark (light)
+    const wm = document.createElement('div');
+    wm.textContent = 'Deutsch mit Said';
+    wm.style.position = 'absolute';
+    wm.style.inset = '0';
+    wm.style.display = 'flex';
+    wm.style.alignItems = 'center';
+    wm.style.justifyContent = 'center';
+    wm.style.transform = 'rotate(-22deg)';
+    wm.style.color = 'rgba(0,0,0,0.06)';
+    wm.style.fontWeight = '900';
+    wm.style.fontSize = '11px';
+    wm.style.pointerEvents = 'none';
+    b.appendChild(wm);
+
+    const content = document.createElement('div');
+    content.style.position = 'absolute';
+    content.style.inset = '0';
+    content.style.padding = '16px';
+    content.style.display = 'flex';
+    content.style.flexDirection = 'column';
+    content.style.gap = '10px';
+
+    if (mode === 'front'){
+      const word = document.createElement('div');
+      word.style.fontWeight = '900';
+      word.style.fontSize = '15px';
+      word.style.whiteSpace = 'pre-wrap';
+      word.textContent = (d.word || '').trim();
+      content.appendChild(word);
+
+      const line = document.createElement('div');
+      line.style.height = '1px';
+      line.style.background = 'rgba(0,0,0,0.12)';
+      content.appendChild(line);
+
+      const ex = document.createElement('div');
+      ex.style.flex = '1';
+      ex.style.fontSize = '12px';
+      ex.style.lineHeight = '1.35';
+      ex.style.whiteSpace = 'pre-wrap';
+      ex.textContent = (d.example || '').trim();
+      content.appendChild(ex);
+
+    } else {
+      const t = getWordTranslations(d.word, d.posOverride);
+
+      const ar = document.createElement('div');
+      ar.style.direction = 'rtl';
+      ar.style.textAlign = 'center';
+      ar.style.fontSize = '15px';
+      ar.style.fontWeight = '700';
+      ar.style.lineHeight = '1.55';
+      ar.textContent = (t.ar && t.ar !== '(Übersetzung fehlt)') ? t.ar : '';
+      content.appendChild(ar);
+
+      const dar = document.createElement('div');
+      dar.style.direction = 'rtl';
+      dar.style.textAlign = 'right';
+      dar.style.fontSize = '12px';
+      dar.style.fontWeight = '700';
+      dar.style.lineHeight = '1.45';
+      dar.textContent = (t.dar && t.dar !== '(Darija fehlt)') ? t.dar : '';
+      content.appendChild(dar);
+
+      const note = (d.note || '').trim();
+      if (note){
+        const noteLine = document.createElement('div');
+        noteLine.style.height = '1px';
+        noteLine.style.background = 'rgba(0,0,0,0.12)';
+        content.appendChild(noteLine);
+
+        const noteBox = document.createElement('div');
+        noteBox.style.direction = 'rtl';
+        noteBox.style.textAlign = 'right';
+        noteBox.style.fontSize = '12px';
+        noteBox.style.lineHeight = '1.45';
+        noteBox.style.whiteSpace = 'pre-wrap';
+        noteBox.textContent = note;
+        content.appendChild(noteBox);
+      }
+    }
+
+    b.appendChild(content);
+    g.appendChild(b);
+  }
+
+  return { endIndex, perPage: L.perPage };
+}
+
+async function capturePdfStage(){
+  // IMPORTANT: lower scale for mobile stability
+  return await html2canvas(pdfStage, {
+    scale: 1.5,
+    backgroundColor: '#ffffff',
+    useCORS: true
+  });
+}
+
+async function downloadAsPdf(){
+  try{
+    clearError();
+    log('Generating PDF...');
+
+    if (!window.jspdf || !window.html2canvas){
+      showError('PDF libraries not loaded. Check internet or CDN.');
+      return;
+    }
+
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF('p','mm','a4');
+
+    showPdfStage(true);
+
+    // ===== FRONT pages =====
+    let i = 0;
+    let first = true;
+    while (i < settings.numBoxes){
+      buildPdfOnePage('front', i);
+      await new Promise(r => setTimeout(r, 80));
+      const canvas = await capturePdfStage();
+
+      if (!first) pdf.addPage();
+      first = false;
+
+      const img = canvas.toDataURL('image/png');
+      pdf.addImage(img, 'PNG', 0, 0, 210, 297);
+
+      i += pdfPageLayout().perPage;
+    }
+
+    // ===== BACK pages =====
+    i = 0;
+    while (i < settings.numBoxes){
+      pdf.addPage();
+
+      buildPdfOnePage('back', i);
+      await new Promise(r => setTimeout(r, 80));
+      const canvas = await capturePdfStage();
+
+      const img = canvas.toDataURL('image/png');
+      pdf.addImage(img, 'PNG', 0, 0, 210, 297);
+
+      i += pdfPageLayout().perPage;
+    }
+
+    showPdfStage(false);
+
+    pdf.save('Deutsch_mit_Said_Vokabelblatt.pdf');
+    log('Viel Erfolg');
+  }catch(e){
+    showPdfStage(false);
+    showError(e.message || String(e));
+  }
+}
+
 
         pdf.save('Deutsch_mit_Said_Vokabelblatt.pdf');
         log('Viel Erfolg');
