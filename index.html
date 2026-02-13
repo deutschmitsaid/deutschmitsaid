@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -8,10 +7,13 @@
 
   <!-- ✅ jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <!-- ✅ html2canvas (طريقة Code 2 باش العربية تطلع صحيحة) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-  <!-- ✅ Arabic shaping (fixes þÓþ… + disconnected letters) -->
-  <script src="https://cdn.jsdelivr.net/npm/arabic-persian-reshaper@1.0.0/dist/arabicPersianReshaper.umd.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bidi-js@1.0.3/dist/bidi.min.js"></script>
+  <!-- ✅ Optional: Web font for Arabic (helps html2canvas render nicely) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
@@ -103,7 +105,7 @@
       padding-top: calc(var(--controlsH) + 18px);
     }
 
-    /* ---------- HEADER (scrolls normally like image 44) ---------- */
+    /* ---------- HEADER (scrolls normally) ---------- */
     .topbar{
       position: relative;
       z-index: 5;
@@ -222,7 +224,7 @@
       box-shadow: 0 12px 28px rgba(0,0,0,0.28);
     }
 
-    /* ---------- CONTROLS (fixed like image 33) ---------- */
+    /* ---------- CONTROLS (fixed) ---------- */
     #controls{
       position: fixed;
       top: 10px;
@@ -400,6 +402,7 @@
       line-height: 1.7;
       direction: rtl;
       color: #e9fff4;
+      font-family: "Amiri", Arial, sans-serif;
     }
 
     .darijaSide{
@@ -411,6 +414,7 @@
       direction: rtl;
       word-break: break-word;
       color: rgba(234,242,238,0.88);
+      font-family: Arial, sans-serif;
     }
 
     .backNoteWrap{
@@ -445,6 +449,7 @@
       text-align:right;
       direction: rtl;
       overflow:hidden;
+      font-family: Arial, sans-serif;
     }
 
     .darijaExample{
@@ -556,6 +561,107 @@
     /* deterrent */
     body, #app{ user-select:none; -webkit-user-select:none; }
     input, textarea{ user-select:text !important; -webkit-user-select:text !important; }
+
+    /* ---------- PDF stage (hidden) ---------- */
+    #pdfStage{
+      position: fixed;
+      left: -99999px;
+      top: -99999px;
+      width: 210mm;
+      padding: 10mm;
+      background:#fff;
+      color:#111;
+      box-sizing:border-box;
+      font-family: Arial, sans-serif;
+    }
+    .pdfBigTitle{
+      text-align:center;
+      color: #0B5A36;
+      font-weight: 900;
+      font-size: 18px;
+      margin: 0 0 7mm 0;
+    }
+    .pdfMeta{
+      display:flex;
+      justify-content:space-between;
+      gap:8mm;
+      margin: 0 0 6mm 0;
+      font-size: 11px;
+      font-weight: 900;
+      color:#111;
+    }
+    .pdfMeta span{
+      border: 1px solid rgba(0,0,0,0.12);
+      border-radius: 999px;
+      padding: 2.5mm 4mm;
+      background: rgba(0,0,0,0.02);
+      white-space: nowrap;
+    }
+    .pdfGrid{
+      display:grid;
+      justify-content:center;
+      align-content:start;
+      gap: 10px;
+    }
+    .pdfCard{
+      background:#fff;
+      border: 1px solid rgba(0,0,0,0.22);
+      border-radius: 14px;
+      overflow:hidden;
+    }
+    .pdfCardInner{
+      padding: 12px;
+      display:flex;
+      flex-direction:column;
+      gap: 8px;
+      height: 100%;
+      box-sizing:border-box;
+      font-family: Arial, sans-serif;
+    }
+    .pdfWord{
+      font-weight: 900;
+      font-size: 16px;
+      color:#111;
+      white-space: pre-wrap;
+    }
+    .pdfLine{
+      height:1px;
+      background: rgba(0,0,0,0.12);
+    }
+    .pdfExample{
+      font-size: 12px;
+      line-height: 1.35;
+      color:#111;
+      white-space: pre-wrap;
+      flex:1;
+    }
+    .pdfAr{
+      direction: rtl;
+      text-align: center;
+      font-family: "Amiri", Arial, sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 1.7;
+      color:#111;
+      white-space: pre-wrap;
+    }
+    .pdfDar{
+      direction: rtl;
+      text-align: right;
+      font-weight: 700;
+      font-size: 13px;
+      line-height: 1.6;
+      color:#111;
+      white-space: pre-wrap;
+    }
+    .pdfNote{
+      direction: rtl;
+      text-align: right;
+      font-size: 12px;
+      line-height: 1.6;
+      color:#111;
+      white-space: pre-wrap;
+    }
   </style>
 </head>
 
@@ -619,6 +725,9 @@
     <div id="errorMsg" class="error"></div>
     <div id="grid"></div>
   </div>
+
+  <!-- PDF stage (hidden) -->
+  <div id="pdfStage" aria-hidden="true"></div>
 
   <!-- WhatsApp -->
   <button id="waBtn" aria-label="WhatsApp">
@@ -757,6 +866,8 @@
 
     const errorMsg = document.getElementById('errorMsg');
     const debug = document.getElementById('debug');
+
+    const pdfStage = document.getElementById('pdfStage');
 
     // ================= Errors =================
     function log(msg){ debug.textContent = msg; }
@@ -1141,201 +1252,209 @@
     waSend.addEventListener('click', sendWa);
     waInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendWa(); });
 
-    // ================= Arabic shaping (for PDF) =================
-    function shapeArabicForPdf(text){
-      const s = String(text || "").trim();
-      if (!s) return "";
+    // ================= PDF (NEW: html2canvas like Code 2) =================
+    downloadPdfBtn.addEventListener("click", downloadAsPdf);
 
-      const reshaper = window.arabicPersianReshaper;
-      const reshaped = reshaper && reshaper.reshape ? reshaper.reshape(s) : s;
-
-      const bidi = window.bidi;
-      if (bidi && bidi.getEmbeddingLevels && bidi.getReorderedString){
-        const levels = bidi.getEmbeddingLevels(reshaped);
-        return bidi.getReorderedString(reshaped, levels);
-      }
-      return reshaped;
+    function getPdfCardSizePx(){
+      // ✅ tuned for A4 screenshots
+      return ({ small: 120, normal: 150, large: 170 }[settings.boxSize] || 150);
     }
 
-    // ================= Arabic font loader for jsPDF =================
-    // IMPORTANT:
-    // Put the font file here:  /fonts/Amiri-Regular.ttf
-    // And run via Live Server (NOT file://).
-    async function loadArabicFontSafe(pdf){
-      try{
-        // already loaded?
-        if (pdf.getFontList && pdf.getFontList().Amiri) return true;
+    function buildPdfPageDOM(mode, showMeta, startIndex, count){
+      pdfStage.innerHTML = '';
 
-        // cached?
-        const cached = localStorage.getItem("amiri_ttf_base64");
-        if (cached){
-          pdf.addFileToVFS("Amiri-Regular.ttf", cached);
-          pdf.addFont("Amiri-Regular.ttf", "Amiri", "normal", "Identity-H"); // ✅ Unicode
-          return true;
+      const title = document.createElement('div');
+      title.className = 'pdfBigTitle';
+      title.textContent = 'Deutsch mit Said ist einfacher, als du denkst.';
+      pdfStage.appendChild(title);
+
+      if (showMeta){
+        const meta = document.createElement('div');
+        meta.className = 'pdfMeta';
+        const nm = (nameInput.value || '').trim();
+        const dt = (dateInput.value || '').trim();
+        const tp = (topicInput.value || '').trim();
+        meta.innerHTML = `
+          <span>Name: ${nm ? nm : '—'}</span>
+          <span>Datum: ${dt ? dt : '—'}</span>
+          <span>Thema: ${tp ? tp : '—'}</span>
+        `;
+        pdfStage.appendChild(meta);
+      }
+
+      const g = document.createElement('div');
+      g.className = 'pdfGrid';
+
+      // ✅ columns: use user columns BUT max 4 (A4)
+      const cols = Math.min(Math.max(1, settings.columns), 4);
+      g.style.gridTemplateColumns = `repeat(${cols}, auto)`;
+
+      const boxSize = getPdfCardSizePx();
+
+      for (let i=0; i<count; i++){
+        const idx = startIndex + i;
+        if (idx >= boxes.length) break;
+
+        const d = boxes[idx] || {word:'', example:'', posOverride:'', note:''};
+        const t = getWordTranslations(d.word, d.posOverride);
+
+        const card = document.createElement('div');
+        card.className = 'pdfCard';
+        card.style.width = boxSize + 'px';
+        card.style.height = boxSize + 'px';
+
+        const inner = document.createElement('div');
+        inner.className = 'pdfCardInner';
+
+        if (mode === 'front'){
+          const w = document.createElement('div');
+          w.className = 'pdfWord';
+          w.textContent = (d.word || '').trim();
+          inner.appendChild(w);
+
+          const line = document.createElement('div');
+          line.className = 'pdfLine';
+          inner.appendChild(line);
+
+          const ex = document.createElement('div');
+          ex.className = 'pdfExample';
+          ex.textContent = (d.example || '').trim();
+          inner.appendChild(ex);
+        } else {
+          const ar = document.createElement('div');
+          ar.className = 'pdfAr';
+          ar.textContent = (t.ar || '').trim();
+          inner.appendChild(ar);
+
+          const dar = document.createElement('div');
+          dar.className = 'pdfDar';
+          dar.textContent = (t.dar || '').trim();
+          inner.appendChild(dar);
+
+          const note = (d.note || '').trim();
+          if (note){
+            const line = document.createElement('div');
+            line.className = 'pdfLine';
+            inner.appendChild(line);
+
+            const n = document.createElement('div');
+            n.className = 'pdfNote';
+            n.textContent = note;
+            inner.appendChild(n);
+          }
         }
 
-        const res = await fetch("fonts/Amiri-Regular.ttf", { cache: "no-store" });
-        if(!res.ok) return false;
+        card.appendChild(inner);
+        g.appendChild(card);
+      }
 
-        const buf = await res.arrayBuffer();
+      pdfStage.appendChild(g);
+      return { cols };
+    }
 
-        // arrayBuffer -> base64
-        let binary = "";
-        const bytes = new Uint8Array(buf);
-        const chunk = 0x8000;
-        for (let i = 0; i < bytes.length; i += chunk) {
-          binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
-        }
-        const base64 = btoa(binary);
+    async function addCanvasAsPagedImagesToPdf(pdf, canvas, marginMm=10){
+      const pageWidth=210, pageHeight=297;
+      const usableW = pageWidth - 2*marginMm;
+      const usableH = pageHeight - 2*marginMm;
 
-        localStorage.setItem("amiri_ttf_base64", base64);
+      const imgW = usableW;
+      const imgH = (canvas.height * imgW) / canvas.width;
 
-        pdf.addFileToVFS("Amiri-Regular.ttf", base64);
-        pdf.addFont("Amiri-Regular.ttf", "Amiri", "normal", "Identity-H"); // ✅ Unicode
-        return true;
-      }catch(e){
-        return false;
+      if (imgH <= usableH){
+        pdf.addImage(canvas.toDataURL('image/png'), 'PNG', marginMm, marginMm, imgW, imgH);
+        return;
+      }
+
+      const pxPerMm = canvas.width / imgW;
+      const slicePxH = usableH * pxPerMm;
+
+      let y=0;
+      let first=true;
+      while (y < canvas.height - 1){
+        if (!first) pdf.addPage();
+        first=false;
+
+        const sH = Math.min(slicePxH, canvas.height - y);
+        const tmp = document.createElement('canvas');
+        tmp.width = canvas.width;
+        tmp.height = sH;
+        const ctx = tmp.getContext('2d');
+        ctx.drawImage(canvas, 0, y, canvas.width, sH, 0, 0, canvas.width, sH);
+
+        const drawH = (sH * imgW) / canvas.width;
+        pdf.addImage(tmp.toDataURL('image/png'), 'PNG', marginMm, marginMm, imgW, drawH);
+        y += sH;
       }
     }
 
-    // ================= PDF (Front+Back pairing) =================
-    downloadPdfBtn.addEventListener("click", generatePDF);
+    function computePerPdfPage(cols, boxPx){
+      // estimate how many cards fit in A4 screenshot area (rough but stable)
+      // html2canvas captures full stage, then we slice into A4 pages.
+      // Here we instead keep stage "reasonable" by limiting items per stage.
+      const topMm = 10 + 7 + 8; // stage padding + title margin + meta area approx
+      // We’ll just use a safe cap:
+      // For 4 cols: 24 cards (6 rows)
+      // For 3 cols: 21 cards (7 rows)
+      // For 2 cols: 16 cards (8 rows)
+      // For 1 col : 10 cards
+      if (cols >= 4) return 24;
+      if (cols === 3) return 21;
+      if (cols === 2) return 16;
+      return 10;
+    }
 
-    async function generatePDF(){
+    async function downloadAsPdf(){
       try{
+        clearError();
+        log('PDF wird erstellt...');
+
         const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF("p","mm","a4");
+        const pdf = new jsPDF('p','mm','a4');
 
-        const arabicOK = await loadArabicFontSafe(pdf);
+        // ensure boxes length
+        ensureBoxesLength();
 
-        const pageWidth = 210;
-        const pageHeight = 297;
-
-        const margin = 15;
-        const usableWidth = pageWidth - margin*2;
-
-        // respect user columns (max 3 in PDF for readability)
-        const cols = Math.min(settings.columns, 3);
-        const gap = 6;
-        const boxSize = (usableWidth - gap*(cols-1)) / cols;
-
-        // ✅ header behavior:
-        // - slogan on ALL pages
-        // - name/date/topic ONLY on the FIRST page of the whole PDF
-        const headerFirst = 42; // slogan + meta
-        const headerOther = 28; // slogan only
-
-        const rowsFirst  = Math.floor((pageHeight - margin - headerFirst) / (boxSize + gap));
-        const rowsOther  = Math.floor((pageHeight - margin - headerOther) / (boxSize + gap));
+        // use user columns in PDF but keep max 4
+        const cols = Math.min(Math.max(1, settings.columns), 4);
+        const boxSize = getPdfCardSizePx();
+        const perChunk = computePerPdfPage(cols, boxSize);
 
         let index = 0;
-        let firstPair = true;
+        let isFirstPair = true;
 
-        while(index < boxes.length){
+        while (index < boxes.length){
+          // FRONT
+          buildPdfPageDOM('front', isFirstPair, index, perChunk);
+          await new Promise(r => setTimeout(r, 80));
+          const c1 = await html2canvas(pdfStage, {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: '#ffffff'
+          });
+          await addCanvasAsPagedImagesToPdf(pdf, c1, 10);
 
-          // FRONT PAGE (German)
-          if(!firstPair) pdf.addPage();
-          drawHeader(pdf, { showMeta: firstPair });
-
-          const perFront = cols * (firstPair ? rowsFirst : rowsOther);
-          drawBoxes(pdf, index, perFront, cols, boxSize, gap, false, { yStart: firstPair ? headerFirst : headerOther }, arabicOK);
-
-          // BACK PAGE (Translation only)
+          // BACK
           pdf.addPage();
-          drawHeader(pdf, { showMeta: false });
-          drawBoxes(pdf, index, perFront, cols, boxSize, gap, true, { yStart: headerOther }, arabicOK);
+          buildPdfPageDOM('back', false, index, perChunk);
+          await new Promise(r => setTimeout(r, 80));
+          const c2 = await html2canvas(pdfStage, {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: '#ffffff'
+          });
+          await addCanvasAsPagedImagesToPdf(pdf, c2, 10);
 
-          index += perFront;
-          firstPair = false;
+          index += perChunk;
+          isFirstPair = false;
+
+          // if more chunks remain, add a new page before next front
+          if (index < boxes.length) pdf.addPage();
         }
 
-        pdf.save("Deutsch_mit_Said.pdf");
+        pdf.save('Deutsch_mit_Said.pdf');
+        log('Viel Erfolg');
       }catch(e){
         showError(e.message || String(e));
-      }
-    }
-
-    function drawHeader(pdf, {showMeta}){
-      // slogan on all pages
-      pdf.setFont("helvetica","bold");
-      pdf.setFontSize(16);
-      pdf.setTextColor(11,90,54);
-      pdf.text("Deutsch mit Said ist einfacher als du denkst.", 105, 18, {align:"center"});
-
-      if(!showMeta) return;
-
-      // meta only on first page
-      pdf.setFont("helvetica","normal");
-      pdf.setFontSize(10);
-      pdf.setTextColor(0,0,0);
-
-      const name = (nameInput.value || "-").toString();
-      const date = (dateInput.value || "-").toString();
-      const topic = (topicInput.value || "-").toString();
-
-      pdf.text(`Name: ${name}`, 15, 30);
-      pdf.text(`Datum: ${date}`, 80, 30);
-      pdf.text(`Thema: ${topic}`, 150, 30);
-    }
-
-    function drawBoxes(pdf,start,perPage,cols,boxSize,gap,isBack,{yStart}, arabicOK){
-      const margin = 15;
-      let x = margin;
-      let y = yStart;
-
-      for(let i=0;i<perPage;i++){
-        const boxIndex = start + i;
-        if(boxIndex >= boxes.length) break;
-
-        const data = boxes[boxIndex] || {};
-        pdf.setDrawColor(0);
-        pdf.rect(x,y,boxSize,boxSize);
-
-        if(!isBack){
-          // FRONT: German
-          pdf.setFont("helvetica","normal");
-          pdf.setTextColor(0,0,0);
-
-          pdf.setFontSize(12);
-          pdf.text((data.word || ""), x+4, y+8, {maxWidth: boxSize-8});
-
-          pdf.setFontSize(9);
-          pdf.text((data.example || ""), x+4, y+18, {maxWidth: boxSize-8});
-        }else{
-          // BACK: ONLY translation (NO German word)
-          const t = getWordTranslations(data.word, data.posOverride);
-          pdf.setTextColor(0,0,0);
-
-          // Arabic (shaped + RTL) only if font OK
-          if(arabicOK){
-            pdf.setFont("Amiri","normal");
-            pdf.setFontSize(13);
-            const arText = shapeArabicForPdf(t.ar || "");
-            pdf.text(arText, x + boxSize/2, y + 12, {align:"center", maxWidth: boxSize-8});
-          }else{
-            pdf.setFont("helvetica","italic");
-            pdf.setFontSize(10);
-            pdf.text("Arabic font missing", x + boxSize/2, y + 12, {align:"center"});
-          }
-
-          // Darija
-          pdf.setFont("helvetica","normal");
-          pdf.setFontSize(10);
-          pdf.text((t.dar || ""), x + boxSize - 4, y + 22, {align:"right", maxWidth: boxSize-8});
-
-          // Note
-          if(data.note){
-            pdf.line(x+4, y+30, x+boxSize-4, y+30);
-            pdf.setFontSize(10);
-            pdf.text(String(data.note), x + boxSize - 4, y + 38, {align:"right", maxWidth: boxSize-8});
-          }
-        }
-
-        x += boxSize + gap;
-        if((i+1) % cols === 0){
-          x = margin;
-          y += boxSize + gap;
-        }
       }
     }
 
@@ -1399,4 +1518,3 @@
   </script>
 </body>
 </html>
-```
