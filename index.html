@@ -1148,33 +1148,44 @@
     waInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendWa(); });
 
     // ================= Arabic Font for jsPDF =================
-    async function loadArabicFont(pdf){
-      if (pdf.getFontList && pdf.getFontList().Amiri) return;
+    async function loadArabicFontSafe(pdf){
+  try{
+    // already loaded?
+    if (pdf.getFontList && pdf.getFontList().Amiri) return true;
 
-      const cached = localStorage.getItem("amiri_ttf_base64");
-      if (cached){
-        pdf.addFileToVFS("Amiri-Regular.ttf", cached);
-        pdf.addFont("Amiri-Regular.ttf", "Amiri", "normal");
-        return;
-      }
-
-const res = await fetch("./fonts/Amiri-Regular.ttf");
-      if(!res.ok) throw new Error("Arabic font not found: fonts/Amiri-Regular.ttf");
-      const buf = await res.arrayBuffer();
-
-      let binary = "";
-      const bytes = new Uint8Array(buf);
-      const chunk = 0x8000;
-      for (let i = 0; i < bytes.length; i += chunk) {
-        binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
-      }
-      const base64 = btoa(binary);
-
-      localStorage.setItem("amiri_ttf_base64", base64);
-
-      pdf.addFileToVFS("Amiri-Regular.ttf", base64);
+    // cached?
+    const cached = localStorage.getItem("amiri_ttf_base64");
+    if (cached){
+      pdf.addFileToVFS("Amiri-Regular.ttf", cached);
       pdf.addFont("Amiri-Regular.ttf", "Amiri", "normal");
+      return true;
     }
+
+    // try fetch (may fail on file:// or missing file)
+    const res = await fetch("fonts/Amiri-Regular.ttf");
+    if(!res.ok) return false;
+
+    const buf = await res.arrayBuffer();
+
+    // arrayBuffer -> base64
+    let binary = "";
+    const bytes = new Uint8Array(buf);
+    const chunk = 0x8000;
+    for (let i = 0; i < bytes.length; i += chunk) {
+      binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
+    }
+    const base64 = btoa(binary);
+
+    localStorage.setItem("amiri_ttf_base64", base64);
+
+    pdf.addFileToVFS("Amiri-Regular.ttf", base64);
+    pdf.addFont("Amiri-Regular.ttf", "Amiri", "normal");
+    return true;
+  }catch(e){
+    return false; // ✅ NO ERROR, just fallback
+  }
+}
+
 
     // ================= PDF (Front+Back pairing) =================
     downloadPdfBtn.addEventListener("click", generatePDF);
@@ -1184,7 +1195,7 @@ const res = await fetch("./fonts/Amiri-Regular.ttf");
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF("p","mm","a4");
 
-await loadArabicFont(pdf);
+const arabicOK = await loadArabicFontSafe(pdf);
 
         const pageWidth = 210;
         const pageHeight = 297;
