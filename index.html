@@ -1017,6 +1017,98 @@
       فين تزيد؟ زِد entries قبل السطر الأخير ];
     ========================================== */
     const RAW_ENTRIES = [
+        // ===== Pronomen / Artikel (Ergänzung) =====
+  { word:"irgendjemand", pos:"PRON", ar:"أي شخص", darija:"شي حد", de_example:"Irgendjemand ruft an.", darija_example:"شي حد عيط." },
+  { word:"irgendwer", pos:"PRON", ar:"شخص ما", darija:"شي واحد", de_example:"Irgendwer kommt.", darija_example:"شي واحد جا." },
+
+  // ===== Ausdruck =====
+  { word:"nach Übersee schicken", pos:"EXP", ar:"يرسل للخارج", darija:"يصيفط لبلاد بعيدة", de_example:"Ich schicke das Paket nach Übersee.", darija_example:"صيفطت الباكي لبلاد بعيدة." },
+
+  // ===== Universität / Studium – Nomen =====
+  { word:"Abiturdurchschnitt", pos:"N", ar:"معدل البكالوريا", darija:"معدل الباك", de_example:"Mein Abiturdurchschnitt ist gut.", darija_example:"معدل الباك ديالي مزيان." },
+  { word:"Abschluss", pos:"N", ar:"شهادة نهائية", darija:"الديبلوم", de_example:"Ich mache einen Abschluss.", darija_example:"خديت الديبلوم." },
+  { word:"Aufnahmeprüfung", pos:"N", ar:"امتحان قبول", darija:"كونكور", de_example:"Ich mache eine Aufnahmeprüfung.", darija_example:"درت كونكور." },
+  { word:"Auslandssemester", pos:"N", ar:"فصل خارجي", darija:"سميستر برا البلاد", de_example:"Ich mache ein Auslandssemester.", darija_example:"قريت سميستر برا البلاد." },
+  { word:"Regelstudienzeit", pos:"N", ar:"مدة قانونية", darija:"شحال خاص تقرا", de_example:"Die Regelstudienzeit ist drei Jahre.", darija_example:"خاصك تقرا ثلاثة سنين." },
+  { word:"Schwerpunkt", pos:"N", ar:"موضوع رئيسي", darija:"أهم حاجة", de_example:"Mein Schwerpunkt ist Medizin.", darija_example:"أهم حاجة عندي هي الطب." },
+  { word:"Sozialwissenschaft", pos:"N", ar:"علوم اجتماعية", darija:"علوم المجتمع", de_example:"Ich studiere Sozialwissenschaft.", darija_example:"كنقرا علوم المجتمع." },
+  { word:"Stoff", pos:"N", ar:"مادة دراسية", darija:"الدرس", de_example:"Der Stoff ist schwer.", darija_example:"الدرس صعيب." },
+  { word:"Studienabbruch", pos:"N", ar:"ترك الدراسة", darija:"حبس القراية", de_example:"Er macht einen Studienabbruch.", darija_example:"حبس القراية." },
+  { word:"Studienaussteiger", pos:"N", ar:"شخص ترك الدراسة", darija:"واحد حبّس القراية", de_example:"Er ist ein Studienaussteiger.", darija_example:"هو واحد حبّس القراية." },
+  { word:"Studienbedingungen", pos:"N", ar:"ظروف الدراسة", darija:"ظروف القراية", de_example:"Die Studienbedingungen sind gut.", darija_example:"ظروف القراية مزيانة." },
+
+  // ===== Universität – Nomen (Teil 2) =====
+  { word:"Fakultät", pos:"N", ar:"كلية جامعية", darija:"الكلية", de_example:"Die Fakultät ist groß.", darija_example:"الكلية كبيرة." },
+  { word:"Fernuniversität", pos:"N", ar:"جامعة عن بعد", darija:"جامعة أونلاين", de_example:"Ich studiere an der Fernuniversität.", darija_example:"كنقرا فجامعة أونلاين." },
+  { word:"Forschung", pos:"N", ar:"بحث علمي", darija:"البحث", de_example:"Die Forschung ist wichtig.", darija_example:"البحث مهم." },
+  { word:"Gehalt", pos:"N", ar:"راتب شهري", darija:"السالير", de_example:"Das Gehalt ist gut.", darija_example:"السالير مزيان." },
+  { word:"Theologie", pos:"N", ar:"علم لاهوت", darija:"علوم دينية", de_example:"Er studiert Theologie.", darija_example:"كيقرا علوم دينية." },
+  { word:"Vorstellung", pos:"N", ar:"فكرة معينة", darija:"فكرة", de_example:"Ich habe eine Vorstellung.", darija_example:"عندي فكرة." },
+  { word:"Zweifel", pos:"N", ar:"شك داخلي", darija:"شك", de_example:"Ich habe Zweifel.", darija_example:"عندي شك." },
+  { word:"Geisteswissenschaft", pos:"N", ar:"علوم إنسانية", darija:"علوم ديال الفكر", de_example:"Ich studiere Geisteswissenschaft.", darija_example:"كنقرا علوم ديال الفكر." },
+  { word:"Hauptfach", pos:"N", ar:"تخصص رئيسي", darija:"التخصص الرئيسي", de_example:"Mein Hauptfach ist Medizin.", darija_example:"التخصص الرئيسي ديالي هو الطب." },
+  { word:"Nebenfach", pos:"N", ar:"تخصص ثانوي", darija:"تخصص صغير", de_example:"Mein Nebenfach ist Englisch.", darija_example:"التخصص الصغير ديالي هو الإنجليزية." },
+  { word:"Hochschulabsolvent", pos:"N", ar:"خريج جامعة", darija:"واحد تخرج من الجامعة", de_example:"Er ist Hochschulabsolvent.", darija_example:"هو تخرج من الجامعة." },
+  { word:"Hochschullandschaft", pos:"N", ar:"نظام جامعي", darija:"الجامعات فبلاد", de_example:"Die Hochschullandschaft ist modern.", darija_example:"الجامعات فهاد البلاد متطورة." },
+  { word:"Hochschulreife", pos:"N", ar:"أهلية جامعية", darija:"حق تدخل الجامعة", de_example:"Ich habe die Hochschulreife.", darija_example:"عندي حق ندخل الجامعة." },
+  { word:"Hörsaal", pos:"N", ar:"قاعة محاضرات", darija:"قاعة كبيرة ديال الدرس", de_example:"Der Hörsaal ist voll.", darija_example:"القاعة عامرة." },
+  { word:"Ingenieurwissenschaft", pos:"N", ar:"علوم هندسية", darija:"الهندسة", de_example:"Er studiert Ingenieurwissenschaft.", darija_example:"كيقرا الهندسة." },
+  { word:"Kommilitone", pos:"N", ar:"زميل دراسة", darija:"صاحبي فالقراية", de_example:"Mein Kommilitone ist nett.", darija_example:"صاحبي فالقراية زوين." },
+  { word:"Konservatorium", pos:"N", ar:"معهد موسيقى", darija:"معهد ديال الموسيقى", de_example:"Sie studiert am Konservatorium.", darija_example:"كتقرا فمعهد الموسيقى." },
+
+  // ===== Universität – Nomen (Teil 3) =====
+  { word:"Latinum", pos:"N", ar:"شهادة لاتينية", darija:"دبلوم فاللاتينية", de_example:"Ich brauche das Latinum.", darija_example:"خاصني دبلوم فاللاتينية." },
+  { word:"Lateinkenntnisse", pos:"N", ar:"معرفة لاتينية", darija:"معرفة فاللاتينية", de_example:"Ich habe Lateinkenntnisse.", darija_example:"عندي معرفة فاللاتينية." },
+  { word:"Lehre", pos:"N", ar:"تعليم جامعي", darija:"التدريس", de_example:"Die Lehre ist gut.", darija_example:"التدريس مزيان." },
+  { word:"Lehrzeit", pos:"N", ar:"مدة تدريب", darija:"مدة التكوين", de_example:"Die Lehrzeit ist kurz.", darija_example:"مدة التكوين قصيرة." },
+  { word:"Mathematik", pos:"N", ar:"علم رياضيات", darija:"الرياضيات", de_example:"Ich studiere Mathematik.", darija_example:"كنقرا الرياضيات." },
+  { word:"Medizin", pos:"N", ar:"علم طب", darija:"الطب", de_example:"Er studiert Medizin.", darija_example:"كيقرا الطب." },
+  { word:"Nachweis", pos:"N", ar:"إثبات رسمي", darija:"ورقة تثبت", de_example:"Ich brauche einen Nachweis.", darija_example:"خاصني ورقة تثبت." },
+  { word:"Naturwissenschaft", pos:"N", ar:"علوم طبيعية", darija:"علوم الطبيعة", de_example:"Ich studiere Naturwissenschaft.", darija_example:"كنقرا علوم الطبيعة." },
+  { word:"Praxisbezug", pos:"N", ar:"علاقة عملية", darija:"علاقة بالتطبيق", de_example:"Der Kurs hat Praxisbezug.", darija_example:"الكورس عندو علاقة بالتطبيق." },
+  { word:"Promotionsstudium", pos:"N", ar:"دراسة دكتوراه", darija:"قراية الدكتوراه", de_example:"Er macht ein Promotionsstudium.", darija_example:"كيدير قراية الدكتوراه." },
+  { word:"Recht", pos:"N", ar:"علم قانون", darija:"القانون", de_example:"Sie studiert Recht.", darija_example:"كتقرا القانون." },
+  { word:"Rechtswissenschaft", pos:"N", ar:"علوم قانون", darija:"علوم القانون", de_example:"Er studiert Rechtswissenschaft.", darija_example:"كيقرا علوم القانون." },
+  { word:"Referent", pos:"N", ar:"محاضر رسمي", darija:"واحد كيعطي عرض", de_example:"Der Referent spricht.", darija_example:"اللي كيعطي العرض كيهدّر." },
+  { word:"Referentin", pos:"N", ar:"محاضِرة رسمية", darija:"وحدة كتعطي عرض", de_example:"Die Referentin spricht.", darija_example:"اللي كتعطي العرض كتهضر." },
+
+  // ===== Adverbien / Adjektive (Uni) =====
+  { word:"schwerpunkmäßig", pos:"ADV", ar:"بشكل رئيسي", darija:"بالتركيز على", de_example:"Ich arbeite schwerpunkmäßig im Büro.", darija_example:"خدام بالتركيز فالمكتب." },
+  { word:"wissenschaftlich", pos:"A", ar:"علمي دقيق", darija:"بطريقة علمية", de_example:"Die Arbeit ist wissenschaftlich.", darija_example:"الخدمة علمية." },
+
+  // ===== Universität – Verben =====
+  { word:"abbrechen (A)", pos:"V", ar:"يقطع شيئاً", darija:"يحبّس", de_example:"Er bricht das Studium ab.", darija_example:"حبّس القراية." },
+  { word:"absolvieren (A)", pos:"V", ar:"يتمّ شيئاً", darija:"يكمل", de_example:"Ich absolviere das Studium.", darija_example:"كملت القراية." },
+  { word:"anfertigen (A)", pos:"V", ar:"ينجز شيئاً", darija:"يوجّد", de_example:"Ich fertige die Arbeit an.", darija_example:"وجّدت الخدمة." },
+  { word:"aufnehmen (A)", pos:"V", ar:"يقبل شخصاً", darija:"يقبل", de_example:"Die Uni nimmt mich auf.", darija_example:"الجامعة قبلاتني." },
+  { word:"ablegen (A)", pos:"V", ar:"يجتاز امتحان", darija:"يدوز امتحان", de_example:"Ich lege die Prüfung ab.", darija_example:"دوزت الامتحان." },
+  { word:"durchziehen (ugs.)", pos:"V", ar:"يكمل للنهاية", darija:"يكمل حتى الآخر", de_example:"Ich ziehe das Studium durch.", darija_example:"كملت القراية حتى للآخر." },
+  { word:"abschließen (A)", pos:"V", ar:"ينهي شيئاً", darija:"يسالي", de_example:"Ich schließe das Studium ab.", darija_example:"ساليت القراية." },
+  { word:"sich beteiligen an + D", pos:"V", ar:"يشارك في", darija:"يشارك", de_example:"Ich beteilige mich am Projekt.", darija_example:"شاركت فالمشروع." },
+  { word:"einschreiben", pos:"V", ar:"يسجّل رسمياً", darija:"يسجّل", de_example:"Ich schreibe mich ein.", darija_example:"تسجلت." },
+  { word:"forschen", pos:"V", ar:"يبحث علمياً", darija:"يدير البحث", de_example:"Er forscht viel.", darija_example:"كيدير البحث بزاف." },
+  { word:"immatrikulieren", pos:"V", ar:"يسجّل جامعياً", darija:"يدخل رسمي للجامعة", de_example:"Ich immatrikuliere mich.", darija_example:"تسجلت فالجامعة." },
+  { word:"nachweisen (A)", pos:"V", ar:"يثبت شيئاً", darija:"يبيّن بورقة", de_example:"Ich weise das nach.", darija_example:"بيّنت بورقة." },
+  { word:"büffeln", pos:"V", ar:"يدرس بجد", darija:"يقرا بزاف", de_example:"Ich büffle für die Prüfung.", darija_example:"كنقرا بزاف للامتحان." },
+  { word:"promovieren", pos:"V", ar:"ينال دكتوراه", darija:"ياخذ الدكتوراه", de_example:"Er promoviert.", darija_example:"خدا الدكتوراه." },
+  { word:"erarbeiten (A)", pos:"V", ar:"ينجز بجهد", darija:"يخدم باش يحقق", de_example:"Ich erarbeite das Thema.", darija_example:"خدمْت على الموضوع." },
+  { word:"erhalten (A)", pos:"V", ar:"يحصل على", darija:"ياخذ", de_example:"Ich erhalte eine E-Mail.", darija_example:"توصلت بإيميل." },
+  { word:"sich erkundigen nach + D", pos:"V", ar:"يستفسر عن", darija:"يسول على", de_example:"Ich erkundige mich nach dem Kurs.", darija_example:"سولْت على الكورس." },
+  { word:"bleiben", pos:"V", ar:"يبقى في", darija:"يبقى", de_example:"Ich bleibe hier.", darija_example:"بقيت هنا." },
+  { word:"betragen (A)", pos:"V", ar:"يبلغ مقدار", darija:"يوصل لرقم", de_example:"Die Dauer beträgt drei Jahre.", darija_example:"المدة وصلات لثلاثة سنين." },
+
+  // ===== Adjektive (Uni) =====
+  { word:"überfüllt", pos:"A", ar:"ممتلئ جداً", darija:"عامر بزاف", de_example:"Der Hörsaal ist überfüllt.", darija_example:"القاعة عامرة بزاف." },
+  { word:"unbedingt", pos:"ADV", ar:"ضروري جداً", darija:"خاص بزاف", de_example:"Ich muss unbedingt lernen.", darija_example:"خاصني نقرا ضروري." },
+  { word:"veranlagt", pos:"A", ar:"موهوب بطبع", darija:"عندو الموهبة", de_example:"Er ist musikalisch veranlagt.", darija_example:"عندو موهبة فالموسيقى." },
+  { word:"wertvoll", pos:"A", ar:"قيّم مهم", darija:"مهم بزاف", de_example:"Das Wissen ist wertvoll.", darija_example:"المعرفة مهمة بزاف." },
+  { word:"wesentlich", pos:"A", ar:"أساسي مهم", darija:"مهم", de_example:"Das ist wesentlich.", darija_example:"هادا مهم." },
+  { word:"zahlreich", pos:"A", ar:"عدد كبير", darija:"بزاف", de_example:"Es gibt zahlreiche Studenten.", darija_example:"كاينين طلبة بزاف." },
+  { word:"zinslos", pos:"A", ar:"بدون فائدة", darija:"بلا فايدة", de_example:"Das Darlehen ist zinslos.", darija_example:"القرض بلا فايدة." },
+
+  // ===== Adjektive (Start) =====
+  { word:"abwechslungsreich", pos:"A", ar:"متنوع ممتع", darija:"فيه تنوع", de_example:"Der Kurs ist abwechslungsreich.", darija_example:"الكورس فيه تنوع." },
+
         // ===== Verben (Zusatz) =====
   { word:"verpassen (A)", pos:"V", ar:"يفوّت شيئاً", darija:"يضيّع", de_example:"Ich verpasse den Bus.", darija_example:"ضيّعت الطوبيس." },
   { word:"verschwinden", pos:"V", ar:"يختفي فجأة", darija:"يختافي", de_example:"Das Geld verschwindet.", darija_example:"الفلوس اختافاو." },
