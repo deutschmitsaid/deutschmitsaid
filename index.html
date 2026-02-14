@@ -896,1521 +896,205 @@
       /* خليه خاوي دابا: زِد A2 هنا من بعد */
     };
 
-    // ✅ القاموس الرئيسي: "QAMOS_B1"
-    // ⚠️ IMPORTANT: keys here are normalized (lowercase, without article)
-    const QAMOS_B1 = {
-      /* ========== B1 (Liechtenstein - Nomen) ========== */
-      "abgeordnete": {
-        pos:"N",
-        ar:"نائب برلماني",
-        darija:"نائب فـ البرلمان",
-        de_example:"Der Abgeordnete spricht.",
-        darija_example:"النائب كيهدّر."
-      },
-      "alpen": {
-        pos:"N",
-        ar:"جبال الألب",
-        darija:"جبال الألب",
-        de_example:"Die Alpen sind schön.",
-        darija_example:"جبال الألب زوينين."
-      },
-      "adel": {
-        pos:"N",
-        ar:"طبقة النبلاء",
-        darija:"عائلات كبار",
-        de_example:"Der Adel ist reich.",
-        darija_example:"العائلات الكبار عندهم الفلوس."
-      },
-      "erbmonarchie": {
-        pos:"N",
-        ar:"ملكية وراثية",
-        darija:"حكم بالوراثة",
-        de_example:"Liechtenstein ist eine Erbmonarchie.",
-        darija_example:"ليختنشتاين فيها حكم بالوراثة."
-      },
-      "fürst": {
-        pos:"N",
-        ar:"أمير حاكم",
-        darija:"الأمير",
-        de_example:"Der Fürst lebt im Schloss.",
-        darija_example:"الأمير ساكن فالقصر."
-      },
-      "fürstin": {
-        pos:"N",
-        ar:"أميرة حاكمة",
-        darija:"الأميرة",
-        de_example:"Die Fürstin ist beliebt.",
-        darija_example:"الأميرة محبوبة."
-      },
-      "herrschaft": {
-        pos:"N",
-        ar:"سلطة حكم",
-        darija:"الحكم",
-        de_example:"Die Herrschaft ist stark.",
-        darija_example:"الحكم قوي."
-      },
-      "bevölkerung": {
-        pos:"N",
-        ar:"عدد السكان",
-        darija:"الناس ديال البلاد",
-        de_example:"Die Bevölkerung ist klein.",
-        darija_example:"الناس ديال البلاد قلال."
-      },
-      "bundespräsident": {
-        pos:"N",
-        ar:"رئيس اتحادي",
-        darija:"الرئيس",
-        de_example:"Der Bundespräsident besucht das Land.",
-        darija_example:"الرئيس زار البلاد."
-      },
-      "drehort": {
-        pos:"N",
-        ar:"مكان تصوير",
-        darija:"بلاصة تصوير",
-        de_example:"Das ist ein Drehort.",
-        darija_example:"هادي بلاصة تصوير."
-      },
-      "einblick": {
-        pos:"N",
-        ar:"نظرة داخلية",
-        darija:"فكرة على الداخل",
-        de_example:"Ich bekomme einen Einblick.",
-        darija_example:"خديت فكرة على الداخل."
-      },
-      "einwohner": {
-        pos:"N",
-        ar:"ساكن مدينة",
-        darija:"واحد ساكن",
-        de_example:"Der Einwohner wohnt hier.",
-        darija_example:"هو ساكن هنا."
-      },
-      "einzelteil": {
-        pos:"N",
-        ar:"قطعة مفردة",
-        darija:"قطعة بوحدها",
-        de_example:"Das Einzelteil ist klein.",
-        darija_example:"القطعة صغيرة."
-      },
-      "geheimnis": {
-        pos:"N",
-        ar:"سر خفي",
-        darija:"سر",
-        de_example:"Das ist ein Geheimnis.",
-        darija_example:"هادا سر."
-      },
-      "handelsroute": {
-        pos:"N",
-        ar:"طريق تجارية",
-        darija:"طريق التجارة",
-        de_example:"Die Handelsroute ist alt.",
-        darija_example:"طريق التجارة قديمة."
-      },
-      "parlament": {
-        pos:"N",
-        ar:"مجلس نواب",
-        darija:"البرلمان",
-        de_example:"Das Parlament tagt heute.",
-        darija_example:"البرلمان مجتمع اليوم."
-      },
-      "schloss": {
-        pos:"N",
-        ar:"قصر ملكي",
-        darija:"قصر",
-        de_example:"Das Schloss ist groß.",
-        darija_example:"القصر كبير."
-      },
-      "hektik": {
-        pos:"N",
-        ar:"توتر سريع",
-        darija:"السرعة والقلق",
-        de_example:"In der Stadt gibt es Hektik.",
-        darija_example:"فالمدينة كاين القلق والسرعة."
-      },
-      "höhepunkt": {
-        pos:"N",
-        ar:"لحظة مهمة",
-        darija:"أهم لحظة",
-        de_example:"Das ist der Höhepunkt.",
-        darija_example:"هادي أهم لحظة."
-      },
-      "souveränität": {
-        pos:"N",
-        ar:"سيادة دولة",
-        darija:"استقلال البلاد",
-        de_example:"Die Souveränität ist wichtig.",
-        darija_example:"استقلال البلاد مهم."
-      },
-      "immobilie": {
-        pos:"N",
-        ar:"عقار ثابت",
-        darija:"دار ولا أرض",
-        de_example:"Er besitzt eine Immobilie.",
-        darija_example:"عندو دار ولا أرض."
-      },
-      "staat": {
-        pos:"N",
-        ar:"دولة مستقلة",
-        darija:"البلاد",
-        de_example:"Der Staat ist klein.",
-        darija_example:"البلاد صغيرة."
-      },
-      "inspiration": {
-        pos:"N",
-        ar:"فكرة ملهمة",
-        darija:"إلهام",
-        de_example:"Das ist eine Inspiration.",
-        darija_example:"هادي فكرة ملهمة."
-      },
-      "staatsoberhaupt": {
-        pos:"N",
-        ar:"رئيس الدولة",
-        darija:"راس الدولة",
-        de_example:"Das Staatsoberhaupt spricht.",
-        darija_example:"راس الدولة كيهدّر."
-      },
-      "knotenpunkt": {
-        pos:"N",
-        ar:"نقطة اتصال",
-        darija:"بلاصة كتجمع الطرق",
-        de_example:"Der Bahnhof ist ein Knotenpunkt.",
-        darija_example:"الگار محطة كتجمع الطرق."
-      },
-      "steuerparadies": {
-        pos:"N",
-        ar:"ملاذ ضريبي",
-        darija:"بلاد الضرائب قليلة",
-        de_example:"Liechtenstein ist ein Steuerparadies.",
-        darija_example:"ليختنشتاين فيها ضرائب قليلة."
-      },
-      "lage": {
-        pos:"N",
-        ar:"موقع جغرافي",
-        darija:"البلاصة",
-        de_example:"Die Lage ist gut.",
-        darija_example:"البلاصة مزيانة."
-      },
-      "währung": {
-        pos:"N",
-        ar:"عملة رسمية",
-        darija:"الفلوس ديال البلاد",
-        de_example:"Die Währung ist stabil.",
-        darija_example:"الفلوس ديال البلاد مستقرة."
-      },
-      "verein": {
-        pos:"N",
-        ar:"جمعية رسمية",
-        darija:"جمعية",
-        de_example:"Der Verein ist aktiv.",
-        darija_example:"الجمعية نشيطة."
-      },
-      "arbeitskraft": {
-        pos:"N",
-        ar:"قوة عمل",
-        darija:"يد عاملة",
-        de_example:"Die Arbeitskraft ist wichtig.",
-        darija_example:"اليد العاملة مهمة."
-      },
-      "dienstleistung": {
-        pos:"N",
-        ar:"خدمة مقدمة",
-        darija:"خدمة",
-        de_example:"Die Dienstleistung ist gut.",
-        darija_example:"الخدمة مزيانة."
-      },
-      "karrierechance": {
-        pos:"N",
-        ar:"فرصة مهنية",
-        darija:"فرصة فالخدمة",
-        de_example:"Das ist eine Karrierechance.",
-        darija_example:"هادي فرصة فالخدمة."
-      },
-      "kooperation": {
-        pos:"N",
-        ar:"تعاون مشترك",
-        darija:"تعاون",
-        de_example:"Die Kooperation ist gut.",
-        darija_example:"التعاون مزيان."
-      }
-      /* ======== ADDITIONS (paste below) ======== */
-      ,"messe": {
-        pos:"N",
-        ar:"معرض تجاري",
-        darija:"معرض",
-        de_example:"Die Messe ist groß.",
-        darija_example:"المعرض كبير."
-      }
-      ,"sektor": {
-        pos:"N",
-        ar:"قطاع اقتصادي",
-        darija:"قطاع",
-        de_example:"Der Sektor wächst.",
-        darija_example:"القطاع كيكبر."
-      }
-      ,"weltkonzern": {
-        pos:"N",
-        ar:"شركة عالمية",
-        darija:"شركة كبيرة عالمية",
-        de_example:"Das ist ein Weltkonzern.",
-        darija_example:"هادي شركة كبيرة عالمية."
-      }
-
-      ,"aufnahme": {
-        pos:"N",
-        ar:"قبول جامعي",
-        darija:"القبول",
-        de_example:"Die Aufnahme ist schwer.",
-        darija_example:"القبول صعيب."
-      }
-      ,"betreuungsverhaltnis": {
-        pos:"N",
-        ar:"نسبة الإشراف",
-        darija:"عدد الطلبة لكل أستاذ",
-        de_example:"Das Betreuungsverhältnis ist gut.",
-        darija_example:"عدد الطلبة لكل أستاذ مزيان."
-      }
-      ,"mindeststudiendauer": {
-        pos:"N",
-        ar:"مدة دراسة",
-        darija:"أقل مدة للقراية",
-        de_example:"Die Mindeststudiendauer ist drei Jahre.",
-        darija_example:"أقل مدة للقراية ثلاثة سنين."
-      }
-      ,"praxisorientierung": {
-        pos:"N",
-        ar:"توجّه عملي",
-        darija:"قراية تطبيقية",
-        de_example:"Die Praxisorientierung ist wichtig.",
-        darija_example:"القراية التطبيقية مهمة."
-      }
-      ,"spezialisierung": {
-        pos:"N",
-        ar:"تخصّص دراسي",
-        darija:"تخصّص",
-        de_example:"Ich mache eine Spezialisierung.",
-        darija_example:"درت تخصّص."
-      }
-      ,"studienbeginn": {
-        pos:"N",
-        ar:"بداية الدراسة",
-        darija:"أول العام الجامعي",
-        de_example:"Der Studienbeginn ist im Herbst.",
-        darija_example:"بداية القراية فالخريف."
-      }
-      ,"studiengebuhr": {
-        pos:"N",
-        ar:"رسوم دراسة",
-        darija:"فلوس القراية",
-        de_example:"Die Studiengebühr ist hoch.",
-        darija_example:"فلوس القراية طالعة."
-      }
-
-      ,"loipe": {
-        pos:"N",
-        ar:"مسار تزلج",
-        darija:"طريق ديال السكي",
-        de_example:"Die Loipe ist lang.",
-        darija_example:"طريق السكي طويلة."
-      }
-      ,"lift": {
-        pos:"N",
-        ar:"مصعد جبلي",
-        darija:"تلفريك",
-        de_example:"Der Lift ist offen.",
-        darija_example:"التلفريك محلول."
-      }
-      ,"mittelalter": {
-        pos:"N",
-        ar:"العصور الوسطى",
-        darija:"وقت قديم بزاف",
-        de_example:"Das Mittelalter war lang.",
-        darija_example:"هداك الوقت قديم بزاف."
-      }
-      ,"netzwerk": {
-        pos:"N",
-        ar:"شبكة علاقات",
-        darija:"شبكة",
-        de_example:"Ich habe ein Netzwerk.",
-        darija_example:"عندي شبكة ديال الناس."
-      }
-      ,"panorama": {
-        pos:"N",
-        ar:"منظر شامل",
-        darija:"منظر واسع",
-        de_example:"Das Panorama ist schön.",
-        darija_example:"المنظر واسع وزوين."
-      }
-      ,"prozess": {
-        pos:"N",
-        ar:"عملية تطوّر",
-        darija:"عملية",
-        de_example:"Der Prozess dauert lange.",
-        darija_example:"العملية خذات وقت."
-      }
-      ,"sage": {
-        pos:"N",
-        ar:"قصة قديمة",
-        darija:"حكاية قديمة",
-        de_example:"Die Sage ist interessant.",
-        darija_example:"الحكاية القديمة زوينة."
-      }
-      ,"schlitten": {
-        pos:"N",
-        ar:"مزلجة ثلج",
-        darija:"سلايد ديال الثلج",
-        de_example:"Das Kind fährt mit dem Schlitten.",
-        darija_example:"الدرّي كيلعب بالسلايد ديال الثلج."
-      }
-      ,"schneeschuh": {
-        pos:"N",
-        ar:"حذاء ثلجي",
-        darija:"سباط ديال الثلج",
-        de_example:"Der Schneeschuh ist neu.",
-        darija_example:"سباط الثلج جديد."
-      }
-      ,"skigebiet": {
-        pos:"N",
-        ar:"منطقة تزلج",
-        darija:"بلاصة السكي",
-        de_example:"Das Skigebiet ist groß.",
-        darija_example:"بلاصة السكي كبيرة."
-      }
-      ,"snowboard": {
-        pos:"N",
-        ar:"لوح تزلج",
-        darija:"سنوبورد",
-        de_example:"Das Snowboard ist modern.",
-        darija_example:"السنوبورد جديد."
-      }
-      ,"spitze": {
-        pos:"N",
-        ar:"قمة عالية",
-        darija:"راس الجبل",
-        de_example:"Die Spitze ist hoch.",
-        darija_example:"راس الجبل عالي."
-      }
-      ,"steinbock": {
-        pos:"N",
-        ar:"وعل جبلي",
-        darija:"ماعز الجبل",
-        de_example:"Der Steinbock lebt in den Alpen.",
-        darija_example:"ماعز الجبل عايش فالألب."
-      }
-      ,"strom": {
-        pos:"N",
-        ar:"تيار كهربائي",
-        darija:"الضو الكهربائي",
-        de_example:"Der Strom ist teuer.",
-        darija_example:"الضو الكهربائي غالي."
-      }
-      ,"ursprung": {
-        pos:"N",
-        ar:"أصل الشيء",
-        darija:"البداية",
-        de_example:"Der Ursprung ist alt.",
-        darija_example:"البداية قديمة."
-      }
-
-      /* Adjektive / Sonstiges */
-      ,"administrativ": {
-        pos:"A",
-        ar:"إداري رسمي",
-        darija:"إداري",
-        de_example:"Das Problem ist administrativ.",
-        darija_example:"المشكل إداري."
-      }
-      ,"ausgebaut": {
-        pos:"A",
-        ar:"مطوّر جيداً",
-        darija:"متطوّر",
-        de_example:"Das Netz ist ausgebaut.",
-        darija_example:"الشبكة متطوّرة."
-      }
-      ,"ausgeschildert": {
-        pos:"A",
-        ar:"مبيَّن بعلامات",
-        darija:"فيه لوحات",
-        de_example:"Der Weg ist ausgeschildert.",
-        darija_example:"الطريق فيها لوحات."
-      }
-      ,"eingebettet": {
-        pos:"A",
-        ar:"مدموج داخل",
-        darija:"داخل فـ",
-        de_example:"Das Dorf ist in den Bergen eingebettet.",
-        darija_example:"الدوار داخل فالجبال."
-      }
-      ,"erlebnisintensiv": {
-        pos:"A",
-        ar:"مليء بالتجارب",
-        darija:"فيه تجارب بزاف",
-        de_example:"Die Reise ist erlebnisintensiv.",
-        darija_example:"الرحلة فيها تجارب بزاف."
-      }
-      ,"erschlossen": {
-        pos:"A",
-        ar:"مفتوح للاستعمال",
-        darija:"محلول وموجد",
-        de_example:"Das Gebiet ist erschlossen.",
-        darija_example:"المنطقة محلولة وموجدة."
-      }
-      ,"generalistisch": {
-        pos:"A",
-        ar:"عام شامل",
-        darija:"عام",
-        de_example:"Der Kurs ist generalistisch.",
-        darija_example:"الكورس عام."
-      }
-      ,"geographisch": {
-        pos:"A",
-        ar:"جغرافي مكاني",
-        darija:"ديال الخريطة",
-        de_example:"Die Lage ist geographisch gut.",
-        darija_example:"البلاصة زوينة جغرافياً."
-      }
-      ,"hervorragend": {
-        pos:"A",
-        ar:"ممتاز جداً",
-        darija:"رائع",
-        de_example:"Das Essen ist hervorragend.",
-        darija_example:"الماكلة رائعة."
-      }
-      ,"innovativ": {
-        pos:"A",
-        ar:"حديث مبتكر",
-        darija:"جديد بفكرة",
-        de_example:"Die Idee ist innovativ.",
-        darija_example:"الفكرة جديدة."
-      }
-      ,"involviert": {
-        pos:"A",
-        ar:"منخرط مشارك",
-        darija:"داخل فشي حاجة",
-        de_example:"Er ist involviert.",
-        darija_example:"هو داخل فالموضوع."
-      }
-      ,"kreativ": {
-        pos:"A",
-        ar:"مبدع خلاّق",
-        darija:"عندو أفكار",
-        de_example:"Sie ist kreativ.",
-        darija_example:"عندها أفكار."
-      }
-      ,"kulinarisch": {
-        pos:"A",
-        ar:"متعلق بالأكل",
-        darija:"ديال الماكلة",
-        de_example:"Das Angebot ist kulinarisch gut.",
-        darija_example:"الأكل مزيان."
-      }
-      /* ======== ADDITIONS (paste below) ======== */
-
-      /* Adjektive */
-      ,"mittelalterlich": {
-        pos:"A",
-        ar:"من العصور",
-        darija:"قديم بزاف",
-        de_example:"Die Stadt ist mittelalterlich.",
-        darija_example:"المدينة قديمة بزاف."
-      }
-      ,"neutral": {
-        pos:"A",
-        ar:"محايد رسمي",
-        darija:"ما داخل فحتى جهة",
-        de_example:"Das Land ist neutral.",
-        darija_example:"البلاد ما داخلاش فحتى جهة."
-      }
-      ,"politisch": {
-        pos:"A",
-        ar:"متعلق بالسياسة",
-        darija:"ديال السياسة",
-        de_example:"Das Thema ist politisch.",
-        darija_example:"الموضوع ديال السياسة."
-      }
-      ,"rasant": {
-        pos:"A",
-        ar:"سريع جداً",
-        darija:"سريع بزاف",
-        de_example:"Die Entwicklung ist rasant.",
-        darija_example:"التطور سريع بزاف."
-      }
-      ,"reich": {
-        pos:"A",
-        ar:"غني مادياً",
-        darija:"عندو الفلوس",
-        de_example:"Er ist reich.",
-        darija_example:"عندو الفلوس."
-      }
-      ,"reichhaltig": {
-        pos:"A",
-        ar:"غني متنوع",
-        darija:"فيه بزاف",
-        de_example:"Das Essen ist reichhaltig.",
-        darija_example:"الماكلة فيها بزاف."
-      }
-      ,"saftig": {
-        pos:"A",
-        ar:"كثير العصير",
-        darija:"فيه الما",
-        de_example:"Das Fleisch ist saftig.",
-        darija_example:"اللحم فيه الما."
-      }
-      ,"sekundar": {
-        pos:"A",
-        ar:"ثانوي غير أساسي",
-        darija:"ماشي مهم بزاف",
-        de_example:"Das Problem ist sekundär.",
-        darija_example:"المشكل ماشي مهم بزاف."
-      }
-      ,"schneebedeckt": {
-        pos:"A",
-        ar:"مغطى بالثلج",
-        darija:"فيه الثلج",
-        de_example:"Der Berg ist schneebedeckt.",
-        darija_example:"الجبل فيه الثلج."
-      }
-      ,"spezifisch": {
-        pos:"A",
-        ar:"محدد خاص",
-        darija:"خاص",
-        de_example:"Das ist spezifisch.",
-        darija_example:"هادا خاص."
-      }
-      ,"strategisch": {
-        pos:"A",
-        ar:"استراتيجي مخطط",
-        darija:"مخطط مزيان",
-        de_example:"Das ist strategisch wichtig.",
-        darija_example:"هادا مهم بالتخطيط."
-      }
-      ,"tertiar": {
-        pos:"A",
-        ar:"قطاع ثالث",
-        darija:"المستوى الثالث",
-        de_example:"Das ist der tertiäre Sektor.",
-        darija_example:"هادا القطاع الثالث."
-      }
-      ,"vernetzt": {
-        pos:"A",
-        ar:"مترابط شبكياً",
-        darija:"مربوط بشبكة",
-        de_example:"Die Firma ist vernetzt.",
-        darija_example:"الشركة مربوطة بشبكة."
-      }
-      ,"verschneit": {
-        pos:"A",
-        ar:"مليء بالثلج",
-        darija:"معمّر بالثلج",
-        de_example:"Die Landschaft ist verschneit.",
-        darija_example:"البلاصة معمّرة بالثلج."
-      }
-      ,"zahlreich": {
-        pos:"A",
-        ar:"عدد كبير",
-        darija:"بزاف",
-        de_example:"Es gibt zahlreiche Touristen.",
-        darija_example:"كاينين سياح بزاف."
-      }
-      ,"malerisch": {
-        pos:"A",
-        ar:"جميل كلوحة",
-        darija:"زوين بحال تصويرة",
-        de_example:"Die Stadt ist malerisch.",
-        darija_example:"المدينة زوينة بحال تصويرة."
-      }
-
-      /* Sonstiges – Nomen / Pronomen */
-      ,"alm": {
-        pos:"N",
-        ar:"مزرعة جبلية",
-        darija:"بلاصة فالجبل",
-        de_example:"Die Alm ist hoch.",
-        darija_example:"البلاصة فالجبل عالية."
-      }
-      ,"aperitif": {
-        pos:"N",
-        ar:"مشروب فاتح",
-        darija:"شرب قبل الماكلة",
-        de_example:"Wir trinken einen Aperitif.",
-        darija_example:"شربنا قبل الماكلة."
-      }
-      ,"austausch": {
-        pos:"N",
-        ar:"تبادل خبرات",
-        darija:"تبادل",
-        de_example:"Der Austausch ist wichtig.",
-        darija_example:"التبادل مهم."
-      }
-      ,"badesachen": {
-        pos:"N",
-        ar:"ملابس سباحة",
-        darija:"حوايج البحر",
-        de_example:"Ich habe meine Badesachen.",
-        darija_example:"عندي حوايج البحر."
-      }
-      ,"berghutte": {
-        pos:"N",
-        ar:"كوخ جبلي",
-        darija:"دار صغيرة فالجبل",
-        de_example:"Die Berghütte ist klein.",
-        darija_example:"الدار الصغيرة فالجبل صغيرة."
-      }
-      ,"jedermann": {
-        pos:"PRO",
-        ar:"كل شخص",
-        darija:"أي واحد",
-        de_example:"Das ist für jedermann.",
-        darija_example:"هادا لأي واحد."
-      }
-
-      /* Stadtbesichtigung – Nomen */
-      ,"detektiv": {
-        pos:"N",
-        ar:"محقق خاص",
-        darija:"بوليسي خاص",
-        de_example:"Der Detektiv sucht den Mann.",
-        darija_example:"البوليسي الخاص كيقلّب على الراجل."
-      }
-      ,"anblick": {
-        pos:"N",
-        ar:"منظر مرئي",
-        darija:"المنظر",
-        de_example:"Der Anblick ist schön.",
-        darija_example:"المنظر زوين."
-      }
-      ,"dinner": {
-        pos:"N",
-        ar:"عشاء رسمي",
-        darija:"عشا",
-        de_example:"Wir essen Dinner.",
-        darija_example:"تعشّينا."
-      }
-      ,"silhouette": {
-        pos:"N",
-        ar:"ظل خارجي",
-        darija:"الشكل من بعيد",
-        de_example:"Ich sehe die Silhouette.",
-        darija_example:"كنشوف الشكل من بعيد."
-      }
-      ,"fahrstuhl": {
-        pos:"N",
-        ar:"مصعد كهربائي",
-        darija:"أسانسور",
-        de_example:"Der Fahrstuhl ist voll.",
-        darija_example:"الأسانسور عامر."
-      }
-      ,"anlage": {
-        pos:"N",
-        ar:"منشأة كبيرة",
-        darija:"مركّب",
-        de_example:"Die Anlage ist modern.",
-        darija_example:"المركّب جديد."
-      }
-      ,"brucke": {
-        pos:"N",
-        ar:"جسر مرتفع",
-        darija:"قنطرة",
-        de_example:"Die Brücke ist lang.",
-        darija_example:"القنطرة طويلة."
-      }
-      ,"landungsbrucke": {
-        pos:"N",
-        ar:"رصيف سفن",
-        darija:"بلاصة ترسو فيها البواخر",
-        de_example:"Das Schiff ist an der Landungsbrücke.",
-        darija_example:"الباطو فبلاصة الرسو."
-      }
-      ,"fassade": {
-        pos:"N",
-        ar:"واجهة مبنى",
-        darija:"الوجهة ديال الدار",
-        de_example:"Die Fassade ist alt.",
-        darija_example:"الوجهة قديمة."
-      }
-      ,"fontane": {
-        pos:"N",
-        ar:"نافورة ماء",
-        darija:"فونتان",
-        de_example:"Die Fontäne ist hoch.",
-        darija_example:"الفونتان طالعة."
-      }
-      ,"motiv": {
-        pos:"N",
-        ar:"موضوع صورة",
-        darija:"موضوع التصويرة",
-        de_example:"Das Motiv ist schön.",
-        darija_example:"موضوع التصويرة زوين."
-      }
-      ,"rundfahrt": {
-        pos:"N",
-        ar:"جولة سياحية",
-        darija:"دورة فالباطو ولا الطوبيس",
-        de_example:"Wir machen eine Rundfahrt.",
-        darija_example:"درنا دورة."
-      }
-      ,"rundflug": {
-        pos:"N",
-        ar:"جولة جوية",
-        darija:"دورة فالطّيارة",
-        de_example:"Wir machen einen Rundflug.",
-        darija_example:"درنا دورة فالطّيارة."
-      }
-
-      /* Stadtbesichtigung – Verben */
-      ,"erfordern": {
-        pos:"V",
-        ar:"يتطلّب شيئاً",
-        darija:"خاصو شي حاجة",
-        de_example:"Der Job erfordert Zeit.",
-        darija_example:"هاد الخدمة خاصها الوقت."
-      }
-      ,"erwischen": {
-        pos:"V",
-        ar:"يمسك شخصاً",
-        darija:"يشد شي حد",
-        de_example:"Die Polizei erwischt den Dieb.",
-        darija_example:"البوليس شدّ اللص."
-      }
-      ,"kalt erwischt werden": {
-        pos:"V",
-        ar:"يُفاجأ بشيء",
-        darija:"يتفاجأ",
-        de_example:"Er wird kalt erwischt.",
-        darija_example:"تفاجأ فجأة."
-      }
-      ,"fesseln": {
-        pos:"V",
-        ar:"يشدّ الانتباه",
-        darija:"يشدّ الواحد",
-        de_example:"Der Film fesselt mich.",
-        darija_example:"الفيلم شدّني."
-      }
-      ,"fliehen": {
-        pos:"V",
-        ar:"يهرب سريعاً",
-        darija:"يهرب",
-        de_example:"Der Mann flieht.",
-        darija_example:"الراجل هرب."
-      }
-      ,"konzentrieren an": {
-        pos:"V",
-        ar:"يتركّز في",
-        darija:"يكون مجموع فبلاصة",
-        de_example:"Das Leben konzentriert sich an einem Ort.",
-        darija_example:"الحياة مجموعة فبلاصة وحدة."
-      }
-      ,"kriegen": {
-        pos:"V",
-        ar:"يحصل على",
-        darija:"ياخذ",
-        de_example:"Ich kriege ein Geschenk.",
-        darija_example:"خديت كادو."
-      }
-      ,"niederschlagen": {
-        pos:"V",
-        ar:"يضرب بشدة",
-        darija:"يطيّح",
-        de_example:"Der Mann schlägt ihn nieder.",
-        darija_example:"طيّحو."
-      }
-      ,"orientieren": {
-        pos:"V",
-        ar:"يهتدي بشيء",
-        darija:"يتبع شي حاجة",
-        de_example:"Ich orientiere mich an der Karte.",
-        darija_example:"كنتبع الخريطة."
-      }
-      ,"orientiert sein an": {
-        pos:"V",
-        ar:"يكون موجّه نحو",
-        darija:"يكون تابع ل",
-        de_example:"Der Kurs ist an der Praxis orientiert.",
-        darija_example:"الكورس تابع للتطبيق."
-      }
-      ,"pragen": {
-        pos:"V",
-        ar:"يؤثر في",
-        darija:"يخلي أثر",
-        de_example:"Die Stadt prägt mich.",
-        darija_example:"المدينة خلات فيّ أثر."
-      }
-      ,"recht haben": {
-        pos:"V",
-        ar:"يكون على حق",
-        darija:"عندو الحق",
-        de_example:"Du hast recht.",
-        darija_example:"عندك الحق."
-      }
-      ,"retten": {
-        pos:"V",
-        ar:"ينقذ شخصاً",
-        darija:"ينجّي",
-        de_example:"Der Mann rettet das Kind.",
-        darija_example:"الراجل نجّى الدرّي."
-      }
-      ,"stoßen": {
-        pos:"V",
-        ar:"يصدم شيئاً",
-        darija:"يضرب فشي حاجة",
-        de_example:"Ich stoße gegen die Tür.",
-        darija_example:"ضربت فالباب."
-      }
-      ,"trennen": {
-        pos:"V",
-        ar:"يفصل شيئاً",
-        darija:"يفرّق",
-        de_example:"Ich trenne Papier und Plastik.",
-        darija_example:"فرّقت الورق والبلاستيك."
-      }
-      ,"treten": {
-        pos:"V",
-        ar:"يركل شيئاً",
-        darija:"يضرب برجلو",
-        de_example:"Er tritt den Ball.",
-        darija_example:"ضرب الكرة برجلو."
-      }
-      ,"unternehmen": {
-        pos:"V",
-        ar:"يقوم بشيء",
-        darija:"يدير شي حاجة",
-        de_example:"Wir unternehmen eine Reise.",
-        darija_example:"درنا رحلة."
-      }
-      ,"sich verlieben in": {
-        pos:"V",
-        ar:"يقع في الحب",
-        darija:"يتحب فـ",
-        de_example:"Ich verliebe mich in die Stadt.",
-        darija_example:"تحبّيت فالمدينة."
-      }
-      ,"verpassen": {
-        pos:"V",
-        ar:"يفوّت شيئاً",
-        darija:"يضيّع",
-        de_example:"Ich verpasse den Bus.",
-        darija_example:"ضيّعت الطوبيس."
-      }
-      ,"verschwinden": {
-        pos:"V",
-        ar:"يختفي فجأة",
-        darija:"يختافي",
-        de_example:"Das Geld verschwindet.",
-        darija_example:"الفلوس اختافاو."
-      }
-      ,"sich versorgen": {
-        pos:"V",
-        ar:"يعتني بنفسه",
-        darija:"يدبّر على راسو",
-        de_example:"Ich versorge mich selbst.",
-        darija_example:"كنْدبّر على راسي."
-      }
-      ,"weiterbringen": {
-        pos:"V",
-        ar:"يطوّر شخصاً",
-        darija:"يقدّم لقديم",
-        de_example:"Der Kurs bringt mich weiter.",
-        darija_example:"الكورس قدّمني."
-      }
-      ,"zuruckkommen": {
-        pos:"V",
-        ar:"يرجع من مكان",
-        darija:"يرجع",
-        de_example:"Ich komme zurück.",
-        darija_example:"رجعت."
-      }
-
-      /* Kunst – Nomen */
-      ,"schauspielhaus": {
-        pos:"N",
-        ar:"مسرح كبير",
-        darija:"مسرح",
-        de_example:"Das Schauspielhaus ist alt.",
-        darija_example:"المسرح قديم."
-      }
-      ,"faszination": {
-        pos:"N",
-        ar:"إعجاب قوي",
-        darija:"انبهار",
-        de_example:"Die Stadt hat Faszination.",
-        darija_example:"المدينة فيها انبهار."
-      }
-      ,"flache": {
-        pos:"N",
-        ar:"مساحة أرض",
-        darija:"مساحة",
-        de_example:"Die Fläche ist groß.",
-        darija_example:"المساحة كبيرة."
-      }
-      ,"flotte": {
-        pos:"N",
-        ar:"أسطول سفن",
-        darija:"مجموعة ديال البواخر",
-        de_example:"Die Flotte ist neu.",
-        darija_example:"مجموعة البواخر جديدة."
-      }
-      ,"form": {
-        pos:"N",
-        ar:"شكل خارجي",
-        darija:"الشكل",
-        de_example:"Die Form ist rund.",
-        darija_example:"الشكل مدوّر."
-      }
-      ,"fruhaufsteher": {
-        pos:"N",
-        ar:"شخص يستيقظ مبكراً",
-        darija:"واحد كيفيق بكري",
-        de_example:"Er ist ein Frühaufsteher.",
-        darija_example:"هو كيفيق بكري."
-      }
-      ,"gelander": {
-        pos:"N",
-        ar:"حاجز درج",
-        darija:"الحديدة ديال الدروج",
-        de_example:"Ich halte das Geländer.",
-        darija_example:"كنشد الحديدة ديال الدروج."
-      }
-      ,"genuss": {
-        pos:"N",
-        ar:"متعة كبيرة",
-        darija:"لذّة",
-        de_example:"Das Essen ist ein Genuss.",
-        darija_example:"الماكلة لذّة."
-      }
-      ,"gesicht": {
-        pos:"N",
-        ar:"وجه إنسان",
-        darija:"الوجه",
-        de_example:"Das Gesicht ist bekannt.",
-        darija_example:"الوجه معروف."
-      }
-      ,"hektar": {
-        pos:"N",
-        ar:"وحدة مساحة",
-        darija:"هكتار",
-        de_example:"Das Feld hat einen Hektar.",
-        darija_example:"الحقل فيه هكتار."
-      }
-      ,"interviewer": {
-        pos:"N",
-        ar:"شخص يجري مقابلة",
-        darija:"واحد كيدير إنترفيو",
-        de_example:"Der Interviewer stellt Fragen.",
-        darija_example:"اللي كيدير الإنترفيو كيسول."
-      }
-      ,"interviewerin": {
-        pos:"N",
-        ar:"امرأة تجري مقابلة",
-        darija:"وحدة كتدير إنترفيو",
-        de_example:"Die Interviewerin spricht.",
-        darija_example:"اللي كتدير الإنترفيو كتهضر."
-      }
-      ,"kranfuehrer": {
-        pos:"N",
-        ar:"سائق رافعة",
-        darija:"سواق الكران",
-        de_example:"Der Kranführer arbeitet.",
-        darija_example:"سواق الكران كيخدم."
-      }
-      ,"lowe": {
-        pos:"N",
-        ar:"حيوان أسد",
-        darija:"السبع",
-        de_example:"Der Löwe ist stark.",
-        darija_example:"السبع قوي."
-      }
-      ,"marktschreier": {
-        pos:"N",
-        ar:"بائع منادٍ",
-        darija:"واحد كيعيّط فالسوق",
-        de_example:"Der Marktschreier ruft laut.",
-        darija_example:"البائع كيغوّت فالسوق."
-      }
-      ,"menge": {
-        pos:"N",
-        ar:"عدد كبير",
-        darija:"بزاف ديال الناس",
-        de_example:"Eine Menge Leute kommt.",
-        darija_example:"جاو ناس بزاف."
-      }
-      ,"nahe": {
-        pos:"N",
-        ar:"مسافة قريبة",
-        darija:"قريب",
-        de_example:"Die Schule ist in der Nähe.",
-        darija_example:"المدرسة قريبة."
-      }
-      ,"niederlassung": {
-        pos:"N",
-        ar:"فرع شركة",
-        darija:"فرع",
-        de_example:"Die Firma hat eine Niederlassung.",
-        darija_example:"الشركة عندها فرع."
-      }
-      ,"orientierung": {
-        pos:"N",
-        ar:"معرفة الاتجاه",
-        darija:"تعرف فين تمشي",
-        de_example:"Ich verliere die Orientierung.",
-        darija_example:"ما عرفت فين نمشي."
-      }
-      ,"orientierungspunkt": {
-        pos:"N",
-        ar:"نقطة توجيه",
-        darija:"علامة باش تعرف الطريق",
-        de_example:"Der Turm ist ein Orientierungspunkt.",
-        darija_example:"البرج علامة باش تعرف الطريق."
-      }
-
-      /* Sonstiges – بداية */
-      ,"argument": {
-        pos:"N",
-        ar:"حجة منطقية",
-        darija:"سبب مقنع",
-        de_example:"Das Argument ist gut.",
-        darija_example:"السبب مقنع."
-      }
-      ,"barock": {
-        pos:"N",
-        ar:"فن قديم",
-        darija:"ستيل قديم",
-        de_example:"Das ist Barock.",
-        darija_example:"هادا ستيل قديم."
-      }
-      ,"bekanntheit": {
-        pos:"N",
-        ar:"شهرة واسعة",
-        darija:"معروفية",
-        de_example:"Die Stadt hat Bekanntheit.",
-        darija_example:"المدينة معروفة."
-      }
-      /* ======== ADDITIONS (paste below) ======== */
-
-      /* Nomen */
-      ,"branche": { pos:"N", ar:"مجال عمل", darija:"قطاع", de_example:"Die Branche wächst.", darija_example:"القطاع كيكبر." }
-      ,"container": { pos:"N", ar:"حاوية كبيرة", darija:"كونطينور", de_example:"Der Container ist voll.", darija_example:"الكونطينور عامر." }
-      ,"plattform": { pos:"N", ar:"منصة مرتفعة", darija:"بلاصة عالية", de_example:"Die Plattform ist voll.", darija_example:"البلاصة عامرة." }
-      ,"rundfunk": { pos:"N", ar:"إذاعة رسمية", darija:"الراديو", de_example:"Der Rundfunk sendet Nachrichten.", darija_example:"الراديو كيبث الأخبار." }
-      ,"schauspiel": { pos:"N", ar:"عرض مسرحي", darija:"عرض", de_example:"Das Schauspiel ist spannend.", darija_example:"العرض مشوّق." }
-      ,"darstellerin": { pos:"N", ar:"ممثلة مسرح", darija:"ممثلة", de_example:"Die Darstellerin spielt gut.", darija_example:"الممثلة كتدير مزيان." }
-      ,"darsteller": { pos:"N", ar:"ممثل مسرح", darija:"ممثل", de_example:"Der Darsteller spielt gut.", darija_example:"الممثل كيدير مزيان." }
-      ,"buhne": { pos:"N", ar:"منصة مسرح", darija:"ستاج", de_example:"Die Bühne ist groß.", darija_example:"الستاج كبير." }
-      ,"szene": { pos:"N", ar:"مشهد مسرحي", darija:"لقطة", de_example:"Die Szene ist kurz.", darija_example:"اللقطة قصيرة." }
-      ,"kapitel": { pos:"N", ar:"فصل كتاب", darija:"فصل", de_example:"Das Kapitel ist neu.", darija_example:"الفصل جديد." }
-      ,"musical": { pos:"N", ar:"مسرح غنائي", darija:"ميوزيكال", de_example:"Das Musical ist beliebt.", darija_example:"الميوزيكال محبوب." }
-      ,"sanger": { pos:"N", ar:"مغنّي صوت", darija:"مغني", de_example:"Der Sänger singt.", darija_example:"المغني كيغني." }
-      ,"stimme": { pos:"N", ar:"صوت إنسان", darija:"الصوت", de_example:"Die Stimme ist laut.", darija_example:"الصوت عالي." }
-      ,"trompete": { pos:"N", ar:"آلة نفخ", darija:"ترومبيت", de_example:"Die Trompete klingt schön.", darija_example:"الترومبيت كتدوي زوينة." }
-      ,"trompeter": { pos:"N", ar:"عازف ترومبيت", darija:"اللي كيعزف ترومبيت", de_example:"Der Trompeter spielt.", darija_example:"اللي كيعزف كيعزف." }
-      ,"blaser": { pos:"N", ar:"عازف نفخ", darija:"اللي كيعزف آلة نفخ", de_example:"Der Bläser spielt Musik.", darija_example:"اللي كيعزف كيدير الموسيقى." }
-
-      /* Verben */
-      ,"ausbilden": { pos:"V", ar:"يكوّن شخصاً", darija:"يدرّب", de_example:"Die Firma bildet Studenten aus.", darija_example:"الشركة كتدرّب الطلبة." }
-      ,"bedrohen": { pos:"V", ar:"يهدّد شخصاً", darija:"يخوّف", de_example:"Der Hund bedroht den Mann.", darija_example:"الكلب خوّف الراجل." }
-      ,"begleiten": { pos:"V", ar:"يرافق شخصاً", darija:"يمشي مع", de_example:"Ich begleite meine Freundin.", darija_example:"مشيت مع صاحبتي." }
-      ,"beschutzen": { pos:"V", ar:"يحمي شخصاً", darija:"يحمي", de_example:"Der Mann beschützt das Kind.", darija_example:"الراجل حمى الدرّي." }
-      ,"bewundern": { pos:"V", ar:"يعجب بشيء", darija:"يعجبو", de_example:"Ich bewundere die Stadt.", darija_example:"عجباتني المدينة." }
-      ,"bummeln": { pos:"V", ar:"يتجوّل ببطء", darija:"يدور بشوية", de_example:"Wir bummeln durch die Stadt.", darija_example:"درنا دورة بشوية فالمدينة." }
-      ,"besorgt sein": { pos:"V", ar:"يكون قلقاً", darija:"يكون خايف", de_example:"Ich bin besorgt.", darija_example:"أنا قلقان." }
-      ,"sich abwechseln": { pos:"V", ar:"يتناوب مع", darija:"يبدّل مع", de_example:"Wir wechseln uns ab.", darija_example:"تبدّلنا بيناتنا." }
-      ,"anrempeln": { pos:"V", ar:"يصدم شخصاً", darija:"يدفع شي حد", de_example:"Er rempelt mich an.", darija_example:"دفعني." }
-      ,"aufteilen": { pos:"V", ar:"يقسم شيئاً", darija:"يفرّق", de_example:"Wir teilen die Arbeit auf.", darija_example:"فرّقنا الخدمة." }
-      ,"einfallen": { pos:"V", ar:"تخطر فكرة", darija:"تجي فبالي", de_example:"Mir fällt eine Idee ein.", darija_example:"جاتني فكرة." }
-      ,"gehoren zu": { pos:"V", ar:"ينتمي إلى", darija:"تابع ل", de_example:"Das gehört zur Stadt.", darija_example:"هادا تابع للمدينة." }
-      ,"grenzen an": { pos:"V", ar:"يحدّ بشيء", darija:"حدّا", de_example:"Das Land grenzt an Österreich.", darija_example:"البلاد حدّا فالنمسا." }
-
-      /* Adverbien */
-      ,"draussen": { pos:"ADV", ar:"خارج البيت", darija:"برا", de_example:"Ich bin draußen.", darija_example:"أنا برا." }
-      ,"k.o.": { pos:"ADV", ar:"متعب جداً", darija:"عيان بزاف", de_example:"Ich bin k.o.", darija_example:"أنا عيان بزاف." }
-      ,"seit langem": { pos:"ADV", ar:"منذ زمن", darija:"من مدة", de_example:"Ich kenne ihn seit Langem.", darija_example:"كنعرفو من مدة." }
-      ,"fruhestens": { pos:"ADV", ar:"في أقرب وقت", darija:"أقل حاجة", de_example:"Ich komme frühestens um acht.", darija_example:"نجي أقل حاجة فالثمانية." }
-      ,"inzwischen": { pos:"ADV", ar:"في هذه الأثناء", darija:"فهاد الوقت", de_example:"Inzwischen ist es spät.", darija_example:"فهاد الوقت راه ولى الليل." }
-      ,"irgendwann": { pos:"ADV", ar:"في وقت ما", darija:"شي نهار", de_example:"Ich komme irgendwann.", darija_example:"نجي شي نهار." }
-      ,"irgendwo": { pos:"ADV", ar:"في مكان", darija:"شي بلاصة", de_example:"Ich bin irgendwo.", darija_example:"أنا فشي بلاصة." }
-      ,"irgendwoher": { pos:"ADV", ar:"من مكان", darija:"من شي بلاصة", de_example:"Er kommt irgendwoher.", darija_example:"جا من شي بلاصة." }
-      ,"irgendwohin": { pos:"ADV", ar:"إلى مكان", darija:"لشي بلاصة", de_example:"Ich gehe irgendwohin.", darija_example:"مشيت لشي بلاصة." }
-      ,"irgendwie": { pos:"ADV", ar:"بطريقة ما", darija:"شي طريقة", de_example:"Ich mache das irgendwie.", darija_example:"نديرها شي طريقة." }
-
-      /* Pronomen / Artikel */
-      ,"irgendein": { pos:"PRO", ar:"أي واحد", darija:"شي واحد", de_example:"Ich habe irgendein Problem.", darija_example:"عندي شي مشكل." }
-      ,"irgendetwas": { pos:"PRO", ar:"شيء ما", darija:"شي حاجة", de_example:"Ich brauche irgendetwas.", darija_example:"خاصني شي حاجة." }
-      ,"irgendwas": { pos:"PRO", ar:"شيء ما", darija:"شي حاجة", de_example:"Ich brauche irgendwas.", darija_example:"خاصني شي حاجة." }
-      ,"irgendjemand": { pos:"PRO", ar:"أي شخص", darija:"شي حد", de_example:"Irgendjemand ruft an.", darija_example:"شي حد عيط." }
-      ,"irgendwer": { pos:"PRO", ar:"شخص ما", darija:"شي واحد", de_example:"Irgendwer kommt.", darija_example:"شي واحد جا." }
-
-      /* Ausdruck */
-      ,"nach ubersee schicken": { pos:"PHR", ar:"يرسل للخارج", darija:"يصيفط لبلاد بعيدة", de_example:"Ich schicke das Paket nach Übersee.", darija_example:"صيفطت الباكي لبلاد بعيدة." }
-
-      /* Uni / Schule */
-      ,"abiturdurchschnitt": { pos:"N", ar:"معدل البكالوريا", darija:"معدل الباك", de_example:"Mein Abiturdurchschnitt ist gut.", darija_example:"معدل الباك ديالي مزيان." }
-      ,"abschluss": { pos:"N", ar:"شهادة نهائية", darija:"الديبلوم", de_example:"Ich mache einen Abschluss.", darija_example:"خديت الديبلوم." }
-
-      /* Post / Kommunikation – Nomen */
-      ,"absender": { pos:"N", ar:"مرسل رسالة", darija:"اللي صيفط", de_example:"Der Absender ist mein Freund.", darija_example:"اللي صيفط هو صاحبي." }
-      ,"auslandstarif": { pos:"N", ar:"تعريفة خارجية", darija:"ثمن خارج البلاد", de_example:"Der Auslandstarif ist teuer.", darija_example:"الثمن خارج البلاد غالي." }
-      ,"briefmarke": { pos:"N", ar:"طابع بريدي", darija:"تمبرا", de_example:"Ich kaufe eine Briefmarke.", darija_example:"شريت تمبرا." }
-      ,"einschreiben": { pos:"N", ar:"رسالة مسجلة", darija:"رسالة مضمونة", de_example:"Ich schicke ein Einschreiben.", darija_example:"صيفطت رسالة مضمونة." }
-      ,"empfanger": { pos:"N", ar:"مستلم رسالة", darija:"اللي غادي توصله", de_example:"Der Empfänger wohnt hier.", darija_example:"اللي غادي توصله ساكن هنا." }
-      ,"alarmzeichen": { pos:"N", ar:"إشارة خطر", darija:"علامة ديال الخطر", de_example:"Das ist ein Alarmzeichen.", darija_example:"هادي علامة ديال الخطر." }
-      ,"alter": { pos:"N", ar:"سن الشخص", darija:"العمر", de_example:"Das Alter ist wichtig.", darija_example:"العمر مهم." }
-      ,"begleitung": { pos:"N", ar:"مرافقة شخص", darija:"واحد يمشي معاك", de_example:"Ich habe eine Begleitung.", darija_example:"عندي شي حد ماشي معايا." }
-      ,"einschrankung": { pos:"N", ar:"حدّ معيّن", darija:"تقييد", de_example:"Es gibt eine Einschränkung.", darija_example:"كاين تقييد." }
-      ,"formular": { pos:"N", ar:"استمارة رسمية", darija:"ورقة تعمّر", de_example:"Ich fülle das Formular aus.", darija_example:"عمّرت الورقة." }
-      ,"gerat": { pos:"N", ar:"جهاز تقني", darija:"جهاز", de_example:"Das Gerät ist neu.", darija_example:"الجهاز جديد." }
-      ,"medienkompetenz": { pos:"N", ar:"مهارة إعلامية", darija:"تعرف تستعمل الإعلام", de_example:"Medienkompetenz ist wichtig.", darija_example:"خاص تعرف تستعمل الإعلام." }
-      ,"nachforschungsauftrag": { pos:"N", ar:"طلب تحقيق", darija:"طلب تقليب", de_example:"Ich mache einen Nachforschungsauftrag.", darija_example:"درت طلب تقليب." }
-      ,"freiheit": { pos:"N", ar:"حرية شخصية", darija:"الحرية", de_example:"Freiheit ist wichtig.", darija_example:"الحرية مهمة." }
-      ,"inland": { pos:"N", ar:"داخل البلد", darija:"داخل البلاد", de_example:"Das Paket bleibt im Inland.", darija_example:"الباكي بقى داخل البلاد." }
-      ,"paket": { pos:"N", ar:"طرد بريدي", darija:"باكي", de_example:"Ich schicke ein Paket.", darija_example:"صيفطت باكي." }
-      ,"packchen": { pos:"N", ar:"طرد صغير", darija:"باكي صغير", de_example:"Das Päckchen ist leicht.", darija_example:"الباكي الصغير خفيف." }
-      ,"paketschein": { pos:"N", ar:"وصل الطرد", darija:"ورقة الباكي", de_example:"Ich habe den Paketschein.", darija_example:"عندي ورقة الباكي." }
-
-      /* Post / Zoll – Nomen */
-      ,"katastrophe": { pos:"N", ar:"كارثة كبيرة", darija:"كارثة", de_example:"Das ist eine Katastrophe.", darija_example:"هادي كارثة." }
-      ,"kloster": { pos:"N", ar:"دير ديني", darija:"دير", de_example:"Das Kloster ist alt.", darija_example:"الدير قديم." }
-      ,"nonne": { pos:"N", ar:"راهبة دينية", darija:"راهبة", de_example:"Die Nonne betet.", darija_example:"الراهبة كتصلّي." }
-      ,"porto": { pos:"N", ar:"رسوم بريد", darija:"ثمن التوصيل", de_example:"Das Porto ist teuer.", darija_example:"ثمن التوصيل غالي." }
-      ,"postamt": { pos:"N", ar:"مكتب بريد", darija:"لا بوست", de_example:"Ich gehe zum Postamt.", darija_example:"مشيت لبوست." }
-      ,"mass": { pos:"N", ar:"مقدار معيّن", darija:"القياس", de_example:"Das Maß ist richtig.", darija_example:"القياس صحيح." }
-      ,"schulung": { pos:"N", ar:"تدريب رسمي", darija:"تكوين", de_example:"Die Schulung beginnt heute.", darija_example:"التكوين بدا اليوم." }
-      ,"postfiliale": { pos:"N", ar:"فرع بريد", darija:"فرع ديال لا بوست", de_example:"Die Postfiliale ist neu.", darija_example:"فرع لا بوست جديد." }
-      ,"schalter": { pos:"N", ar:"شباك خدمة", darija:"شباك", de_example:"Ich warte am Schalter.", darija_example:"كنتسنى فالشباك." }
-      ,"schneckenpost": { pos:"N", ar:"بريد بطيء", darija:"بريد بطيء بزاف", de_example:"Das kommt mit Schneckenpost.", darija_example:"جا بالبريد البطيء." }
-      ,"sendungsdauer": { pos:"N", ar:"مدة التوصيل", darija:"شحال كتدوم", de_example:"Die Sendungsdauer ist lang.", darija_example:"مدة التوصيل طويلة." }
-      ,"sendungsnummer": { pos:"N", ar:"رقم التتبع", darija:"نمرة التتبع", de_example:"Ich habe die Sendungsnummer.", darija_example:"عندي نمرة التتبع." }
-      ,"sendungsverfolgung": { pos:"N", ar:"تتبع الشحنة", darija:"تتبع الباكي", de_example:"Ich mache Sendungsverfolgung.", darija_example:"كنتتبع الباكي." }
-      ,"standardbrief": { pos:"N", ar:"رسالة عادية", darija:"رسالة عادية", de_example:"Ich schicke einen Standardbrief.", darija_example:"صيفطت رسالة عادية." }
-      ,"zoll": { pos:"N", ar:"جمارك رسمية", darija:"الديوانة", de_example:"Das Paket ist beim Zoll.", darija_example:"الباكي فالديوانة." }
-      ,"zollerklärung": { pos:"N", ar:"تصريح جمركي", darija:"ورقة الديوانة", de_example:"Ich fülle die Zollerklärung aus.", darija_example:"عمّرت ورقة الديوانة." }
-
-      /* Verben – Kommunikation */
-      ,"abgeben": { pos:"V", ar:"يسلّم شيئاً", darija:"يعطي", de_example:"Ich gebe das Paket ab.", darija_example:"عطيت الباكي." }
-      ,"abstimmen": { pos:"V", ar:"ينسّق مع", darija:"يتفاهم مع", de_example:"Ich stimme das mit dir ab.", darija_example:"تفاهمت معاك على هاد الشي." }
-      ,"achten auf": { pos:"V", ar:"ينتبه إلى", darija:"يرد البال ل", de_example:"Ich achte auf das Gewicht.", darija_example:"رديت البال للوزن." }
-      ,"sich auskennen": { pos:"V", ar:"يعرف جيداً", darija:"فاهم مزيان", de_example:"Ich kenne mich mit Medien aus.", darija_example:"فاهم مزيان فالإعلام." }
-      ,"chatten": { pos:"V", ar:"يتحدث كتابة", darija:"يشاتّي", de_example:"Ich chatte mit dir.", darija_example:"كنشاتّي معاك." }
-      ,"downloaden": { pos:"V", ar:"يحمل ملفاً", darija:"يحمّل", de_example:"Ich downloade das Video.", darija_example:"حمّلت الفيديو." }
-      ,"kommunizieren": { pos:"V", ar:"يتواصل مع", darija:"يتواصل", de_example:"Wir kommunizieren online.", darija_example:"كنتواصْلو أونلاين." }
-      ,"mailen": { pos:"V", ar:"يرسل بريداً", darija:"يصيفط إيميل", de_example:"Ich maile dir.", darija_example:"صيفطت ليك إيميل." }
-      ,"simsen": { pos:"V", ar:"يرسل رسالة", darija:"يصيفط مساج", de_example:"Ich simse dir.", darija_example:"صيفطت ليك مساج." }
-      ,"skypen": { pos:"V", ar:"يتكلم فيديو", darija:"يدير فيديو كول", de_example:"Wir skypen heute.", darija_example:"درنا فيديو كول اليوم." }
-      ,"surfen": { pos:"V", ar:"يتصفح الإنترنت", darija:"يدور فالأنترنت", de_example:"Ich surfe im Internet.", darija_example:"كنتدور فالأنترنت." }
-      ,"einsetzen": { pos:"V", ar:"يستخدم شيئاً", darija:"يستعمل", de_example:"Ich setze das Gerät ein.", darija_example:"استعملت الجهاز." }
-      ,"fehlen": { pos:"V", ar:"ينقص شيئاً", darija:"ناقص", de_example:"Mir fehlt das Formular.", darija_example:"ناقصني الفورمولير." }
-      ,"festlegen": { pos:"V", ar:"يحدّد شيئاً", darija:"يقرّر", de_example:"Wir legen den Termin fest.", darija_example:"حدّدنا الموعد." }
-      ,"ein gespräch führen": { pos:"V", ar:"يجري حوار", darija:"يهضر مع شي حد", de_example:"Wir führen ein Gespräch.", darija_example:"تهضرنا." }
-      ,"gelten für": { pos:"V", ar:"ينطبق على", darija:"كيسري على", de_example:"Das gilt für alle.", darija_example:"هادا كيسري على الجميع." }
-      ,"zustellen": { pos:"V", ar:"يوصّل طرداً", darija:"يوصّل", de_example:"Der Postbote stellt das Paket zu.", darija_example:"مول البوسطا وصّل الباكي." }
-
-      /* Adjektive */
-      ,"bestimmt": { pos:"A", ar:"مؤكد أكيد", darija:"أكيد", de_example:"Das ist bestimmt richtig.", darija_example:"هادا أكيد صحيح." }
-      ,"dringend": { pos:"A", ar:"ضروري حالاً", darija:"ضروري دابا", de_example:"Das ist dringend.", darija_example:"هادا ضروري دابا." }
-      ,"echt": { pos:"A", ar:"حقيقي أصلي", darija:"بصح", de_example:"Das ist echt.", darija_example:"هادا بصح." }
-      ,"fix": { pos:"A", ar:"سريع جداً", darija:"بسرعة", de_example:"Ich komme fix.", darija_example:"غادي نجي بسرعة." }
-      ,"notwendig": { pos:"A", ar:"ضروري لازم", darija:"خاصو يكون", de_example:"Das ist notwendig.", darija_example:"هادا خاصو يكون." }
-      ,"ordentlich": { pos:"A", ar:"منظم مرتب", darija:"منظم", de_example:"Das Zimmer ist ordentlich.", darija_example:"البيت منظم." }
-      ,"unordentlich": { pos:"A", ar:"غير مرتب", darija:"ما منظمش", de_example:"Das Zimmer ist unordentlich.", darija_example:"البيت ما منظمش." }
-      ,"rechtzeitig": { pos:"A", ar:"في الوقت", darija:"فبلاصتو", de_example:"Ich komme rechtzeitig.", darija_example:"جيت فبلاصتي." }
-      ,"streng": { pos:"A", ar:"صارم شديد", darija:"قاصح", de_example:"Der Lehrer ist streng.", darija_example:"الأستاذ قاصح." }
-      ,"unfair": { pos:"A", ar:"غير عادل", darija:"ماشي عادل", de_example:"Das ist unfair.", darija_example:"هادا ماشي عادل." }
-      ,"fair": { pos:"A", ar:"عادل منصف", darija:"عادل", de_example:"Das ist fair.", darija_example:"هادا عادل." }
-      ,"verzweifelt": { pos:"A", ar:"يائس جداً", darija:"ميؤوس", de_example:"Er ist verzweifelt.", darija_example:"هو ميؤوس." }
-      ,"weltweit": { pos:"A", ar:"في العالم", darija:"فالعالم كامل", de_example:"Das ist weltweit bekannt.", darija_example:"هادا معروف فالعالم كامل." }
-      /* ======== ADDITIONS (paste below) ======== */
-
-      /* Universität – Nomen (Teil 1) */
-      ,"aufnahmepruefung": { pos:"N", ar:"امتحان قبول", darija:"كونكور", de_example:"Ich mache eine Aufnahmeprüfung.", darija_example:"درت كونكور." }
-      ,"auslandssemester": { pos:"N", ar:"فصل خارجي", darija:"سميستر برا البلاد", de_example:"Ich mache ein Auslandssemester.", darija_example:"قريت سميستر برا البلاد." }
-      ,"regelstudienzeit": { pos:"N", ar:"مدة قانونية", darija:"شحال خاص تقرا", de_example:"Die Regelstudienzeit ist drei Jahre.", darija_example:"خاصك تقرا ثلاثة سنين." }
-      ,"schwerpunkt": { pos:"N", ar:"موضوع رئيسي", darija:"أهم حاجة", de_example:"Mein Schwerpunkt ist Medizin.", darija_example:"أهم حاجة عندي هي الطب." }
-      ,"sozialwissenschaft": { pos:"N", ar:"علوم اجتماعية", darija:"علوم المجتمع", de_example:"Ich studiere Sozialwissenschaft.", darija_example:"كنقرا علوم المجتمع." }
-      ,"stoff": { pos:"N", ar:"مادة دراسية", darija:"الدرس", de_example:"Der Stoff ist schwer.", darija_example:"الدرس صعيب." }
-      ,"studienabbruch": { pos:"N", ar:"ترك الدراسة", darija:"حبس القراية", de_example:"Er macht einen Studienabbruch.", darija_example:"حبس القراية." }
-      ,"studienaussteiger": { pos:"N", ar:"شخص ترك الدراسة", darija:"واحد حبّس القراية", de_example:"Er ist ein Studienaussteiger.", darija_example:"هو واحد حبّس القراية." }
-      ,"studienbedingungen": { pos:"N", ar:"ظروف الدراسة", darija:"ظروف القراية", de_example:"Die Studienbedingungen sind gut.", darija_example:"ظروف القراية مزيانة." }
-
-      /* Universität – Nomen (Teil 2) */
-      ,"fakultaet": { pos:"N", ar:"كلية جامعية", darija:"الكلية", de_example:"Die Fakultät ist groß.", darija_example:"الكلية كبيرة." }
-      ,"fernuniversitaet": { pos:"N", ar:"جامعة عن بعد", darija:"جامعة أونلاين", de_example:"Ich studiere an der Fernuniversität.", darija_example:"كنقرا فجامعة أونلاين." }
-      ,"forschung": { pos:"N", ar:"بحث علمي", darija:"البحث", de_example:"Die Forschung ist wichtig.", darija_example:"البحث مهم." }
-      ,"gehalt": { pos:"N", ar:"راتب شهري", darija:"السالير", de_example:"Das Gehalt ist gut.", darija_example:"السالير مزيان." }
-      ,"theologie": { pos:"N", ar:"علم لاهوت", darija:"علوم دينية", de_example:"Er studiert Theologie.", darija_example:"كيقرا علوم دينية." }
-      ,"vorstellung": { pos:"N", ar:"فكرة معينة", darija:"فكرة", de_example:"Ich habe eine Vorstellung.", darija_example:"عندي فكرة." }
-      ,"zweifel": { pos:"N", ar:"شك داخلي", darija:"شك", de_example:"Ich habe Zweifel.", darija_example:"عندي شك." }
-      ,"geisteswissenschaft": { pos:"N", ar:"علوم إنسانية", darija:"علوم ديال الفكر", de_example:"Ich studiere Geisteswissenschaft.", darija_example:"كنقرا علوم ديال الفكر." }
-      ,"hauptfach": { pos:"N", ar:"تخصص رئيسي", darija:"التخصص الرئيسي", de_example:"Mein Hauptfach ist Medizin.", darija_example:"التخصص الرئيسي ديالي هو الطب." }
-      ,"nebenfach": { pos:"N", ar:"تخصص ثانوي", darija:"تخصص صغير", de_example:"Mein Nebenfach ist Englisch.", darija_example:"التخصص الصغير ديالي هو الإنجليزية." }
-      ,"hochschulabsolvent": { pos:"N", ar:"خريج جامعة", darija:"واحد تخرج من الجامعة", de_example:"Er ist Hochschulabsolvent.", darija_example:"هو تخرج من الجامعة." }
-      ,"hochschullandschaft": { pos:"N", ar:"نظام جامعي", darija:"الجامعات فبلاد", de_example:"Die Hochschullandschaft ist modern.", darija_example:"الجامعات فهاد البلاد متطورة." }
-      ,"hochschulreife": { pos:"N", ar:"أهلية جامعية", darija:"حق تدخل الجامعة", de_example:"Ich habe die Hochschulreife.", darija_example:"عندي حق ندخل الجامعة." }
-      ,"hoersaal": { pos:"N", ar:"قاعة محاضرات", darija:"قاعة كبيرة ديال الدرس", de_example:"Der Hörsaal ist voll.", darija_example:"القاعة عامرة." }
-      ,"ingenieurwissenschaft": { pos:"N", ar:"علوم هندسية", darija:"الهندسة", de_example:"Er studiert Ingenieurwissenschaft.", darija_example:"كيقرا الهندسة." }
-      ,"kommilitone": { pos:"N", ar:"زميل دراسة", darija:"صاحبي فالقراية", de_example:"Mein Kommilitone ist nett.", darija_example:"صاحبي فالقراية زوين." }
-      ,"konservatorium": { pos:"N", ar:"معهد موسيقى", darija:"معهد ديال الموسيقى", de_example:"Sie studiert am Konservatorium.", darija_example:"كتقرا فمعهد الموسيقى." }
-
-      /* Universität – Nomen (Teil 3) */
-      ,"latinum": { pos:"N", ar:"شهادة لاتينية", darija:"دبلوم فاللاتينية", de_example:"Ich brauche das Latinum.", darija_example:"خاصني دبلوم فاللاتينية." }
-      ,"lateinkenntnisse": { pos:"N", ar:"معرفة لاتينية", darija:"معرفة فاللاتينية", de_example:"Ich habe Lateinkenntnisse.", darija_example:"عندي معرفة فاللاتينية." }
-      ,"lehre": { pos:"N", ar:"تعليم جامعي", darija:"التدريس", de_example:"Die Lehre ist gut.", darija_example:"التدريس مزيان." }
-      ,"lehrzeit": { pos:"N", ar:"مدة تدريب", darija:"مدة التكوين", de_example:"Die Lehrzeit ist kurz.", darija_example:"مدة التكوين قصيرة." }
-      ,"mathematik": { pos:"N", ar:"علم رياضيات", darija:"الرياضيات", de_example:"Ich studiere Mathematik.", darija_example:"كنقرا الرياضيات." }
-      ,"medizin": { pos:"N", ar:"علم طب", darija:"الطب", de_example:"Er studiert Medizin.", darija_example:"كيقرا الطب." }
-      ,"nachweis": { pos:"N", ar:"إثبات رسمي", darija:"ورقة تثبت", de_example:"Ich brauche einen Nachweis.", darija_example:"خاصني ورقة تثبت." }
-      ,"naturwissenschaft": { pos:"N", ar:"علوم طبيعية", darija:"علوم الطبيعة", de_example:"Ich studiere Naturwissenschaft.", darija_example:"كنقرا علوم الطبيعة." }
-      ,"praxisbezug": { pos:"N", ar:"علاقة عملية", darija:"علاقة بالتطبيق", de_example:"Der Kurs hat Praxisbezug.", darija_example:"الكورس عندو علاقة بالتطبيق." }
-      ,"promotionsstudium": { pos:"N", ar:"دراسة دكتوراه", darija:"قراية الدكتوراه", de_example:"Er macht ein Promotionsstudium.", darija_example:"كيدير قراية الدكتوراه." }
-      ,"recht": { pos:"N", ar:"علم قانون", darija:"القانون", de_example:"Sie studiert Recht.", darija_example:"كتقرا القانون." }
-      ,"rechtswissenschaft": { pos:"N", ar:"علوم قانون", darija:"علوم القانون", de_example:"Er studiert Rechtswissenschaft.", darija_example:"كيقرا علوم القانون." }
-      ,"referent": { pos:"N", ar:"محاضر رسمي", darija:"واحد كيعطي عرض", de_example:"Der Referent spricht.", darija_example:"اللي كيعطي العرض كيهدّر." }
-      ,"referentin": { pos:"N", ar:"محاضِرة رسمية", darija:"وحدة كتعطي عرض", de_example:"Die Referentin spricht.", darija_example:"اللي كتعطي العرض كتهضر." }
-      ,"schwerpunktsmaessig": { pos:"ADV", ar:"بشكل رئيسي", darija:"بالتركيز على", de_example:"Ich arbeite schwerpunkmäßig im Büro.", darija_example:"خدام بالتركيز فالمكتب." }
-      ,"wissenschaftlich": { pos:"A", ar:"علمي دقيق", darija:"بطريقة علمية", de_example:"Die Arbeit ist wissenschaftlich.", darija_example:"الخدمة علمية." }
-
-      /* Universität – Verben */
-      ,"abbrechen": { pos:"V", ar:"يقطع شيئاً", darija:"يحبّس", de_example:"Er bricht das Studium ab.", darija_example:"حبّس القراية." }
-      ,"absolvieren": { pos:"V", ar:"يتمّ شيئاً", darija:"يكمل", de_example:"Ich absolviere das Studium.", darija_example:"كملت القراية." }
-      ,"anfertigen": { pos:"V", ar:"ينجز شيئاً", darija:"يوجّد", de_example:"Ich fertige die Arbeit an.", darija_example:"وجّدت الخدمة." }
-      ,"aufnehmen": { pos:"V", ar:"يقبل شخصاً", darija:"يقبل", de_example:"Die Uni nimmt mich auf.", darija_example:"الجامعة قبلاتني." }
-      ,"ablegen": { pos:"V", ar:"يجتاز امتحان", darija:"يدوز امتحان", de_example:"Ich lege die Prüfung ab.", darija_example:"دوزت الامتحان." }
-      ,"durchziehen": { pos:"V", ar:"يكمل للنهاية", darija:"يكمل حتى الآخر", de_example:"Ich ziehe das Studium durch.", darija_example:"كملت القراية حتى للآخر." }
-      ,"abschliessen": { pos:"V", ar:"ينهي شيئاً", darija:"يسالي", de_example:"Ich schließe das Studium ab.", darija_example:"ساليت القراية." }
-      ,"sich beteiligen an": { pos:"V", ar:"يشارك في", darija:"يشارك", de_example:"Ich beteilige mich am Projekt.", darija_example:"شاركت فالمشروع." }
-      ,"einschreiben": { pos:"V", ar:"يسجّل رسمياً", darija:"يسجّل", de_example:"Ich schreibe mich ein.", darija_example:"تسجلت." }
-      ,"forschen": { pos:"V", ar:"يبحث علمياً", darija:"يدير البحث", de_example:"Er forscht viel.", darija_example:"كيدير البحث بزاف." }
-      ,"immatrikulieren": { pos:"V", ar:"يسجّل جامعياً", darija:"يدخل رسمي للجامعة", de_example:"Ich immatrikuliere mich.", darija_example:"تسجلت فالجامعة." }
-      ,"nachweisen": { pos:"V", ar:"يثبت شيئاً", darija:"يبيّن بورقة", de_example:"Ich weise das nach.", darija_example:"بيّنت بورقة." }
-      ,"bueffeln": { pos:"V", ar:"يدرس بجد", darija:"يقرا بزاف", de_example:"Ich büffle für die Prüfung.", darija_example:"كنقرا بزاف للامتحان." }
-      ,"promovieren": { pos:"V", ar:"ينال دكتوراه", darija:"ياخذ الدكتوراه", de_example:"Er promoviert.", darija_example:"خدا الدكتوراه." }
-      ,"erarbeiten": { pos:"V", ar:"ينجز بجهد", darija:"يخدم باش يحقق", de_example:"Ich erarbeite das Thema.", darija_example:"خدمْت على الموضوع." }
-      ,"erhalten": { pos:"V", ar:"يحصل على", darija:"ياخذ", de_example:"Ich erhalte eine E-Mail.", darija_example:"توصلت بإيميل." }
-      ,"sich erkundigen nach": { pos:"V", ar:"يستفسر عن", darija:"يسول على", de_example:"Ich erkundige mich nach dem Kurs.", darija_example:"سولْت على الكورس." }
-      ,"bleiben": { pos:"V", ar:"يبقى في", darija:"يبقى", de_example:"Ich bleibe hier.", darija_example:"بقيت هنا." }
-      ,"betragen": { pos:"V", ar:"يبلغ مقدار", darija:"يوصل لرقم", de_example:"Die Dauer beträgt drei Jahre.", darija_example:"المدة وصلات لثلاثة سنين." }
-
-      /* Arbeit & Beruf – Nomen */
-      ,"aufstiegschance": { pos:"N", ar:"فرصة ترقية", darija:"فرصة تطلع", de_example:"Das ist eine Aufstiegschance.", darija_example:"هادي فرصة تطلع." }
-      ,"azubi": { pos:"N", ar:"متدرّب مهني", darija:"واحد فالتكوين", de_example:"Der Azubi lernt viel.", darija_example:"المتدرّب كيتعلّم بزاف." }
-      ,"berufsaussicht": { pos:"N", ar:"آفاق مهنية", darija:"فرص فالخدمة", de_example:"Die Berufsaussicht ist gut.", darija_example:"فرص الخدمة مزيانة." }
-      ,"berufschance": { pos:"N", ar:"فرصة عمل", darija:"فرصة تخدم", de_example:"Ich habe eine Berufschance.", darija_example:"عندي فرصة نخدم." }
-      ,"berufsperspektive": { pos:"N", ar:"مستقبل مهني", darija:"المستقبل فالخدمة", de_example:"Die Berufsperspektive ist klar.", darija_example:"المستقبل فالخدمة واضح." }
-      ,"berufsschule": { pos:"N", ar:"مدرسة مهنية", darija:"مدرسة ديال الحرفة", de_example:"Er geht zur Berufsschule.", darija_example:"كيمشي لمدرسة ديال الحرفة." }
-      ,"betrieb": { pos:"N", ar:"شركة عمل", darija:"الشركة", de_example:"Der Betrieb ist groß.", darija_example:"الشركة كبيرة." }
-      ,"einkommen": { pos:"N", ar:"دخل شهري", darija:"الدخل", de_example:"Das Einkommen ist hoch.", darija_example:"الدخل كبير." }
-      ,"handwerk": { pos:"N", ar:"مهنة يدوية", darija:"الحرفة", de_example:"Er arbeitet im Handwerk.", darija_example:"كيخدم فالحرفة." }
-      ,"karosseriebauer": { pos:"N", ar:"ميكانيكي هيكل", darija:"ميكانيكي ديال الكاروسري", de_example:"Er ist Karosseriebauer.", darija_example:"هو ميكانيكي ديال الكاروسري." }
-      ,"meistertitel": { pos:"N", ar:"شهادة أستاذية", darija:"ديبلوم الميستر", de_example:"Er hat den Meistertitel.", darija_example:"عندو ديبلوم الميستر." }
-      ,"metallbauer": { pos:"N", ar:"عامل معادن", darija:"حدّاد", de_example:"Er ist Metallbauer.", darija_example:"هو حدّاد." }
-      ,"modellbauer": { pos:"N", ar:"صانع نماذج", darija:"كيصاوب الموديلات", de_example:"Er ist Modellbauer.", darija_example:"كيصاوب الموديلات." }
-
-      /* Arbeit & Beruf – Verben / Ausdrücke */
-      ,"karriere machen": { pos:"PHR", ar:"ينجح مهنياً", darija:"يدير كارير", de_example:"Er macht Karriere.", darija_example:"دار كارير." }
-      ,"eine karriere starten": { pos:"PHR", ar:"يبدأ مسار", darija:"يبدا كارير", de_example:"Sie startet eine Karriere.", darija_example:"بدات كارير." }
-      ,"ermoeglichen": { pos:"V", ar:"يتيح فرصة", darija:"يخلي ممكن", de_example:"Das Studium ermöglicht Karriere.", darija_example:"القراية كتخلي كارير ممكنة." }
-      ,"sich etablieren": { pos:"V", ar:"يثبت نفسه", darija:"يوقف على رجليه", de_example:"Er etabliert sich im Beruf.", darija_example:"وقف على رجليه فالخدمة." }
-      ,"horizont erweitern": { pos:"PHR", ar:"يوسّع أفقه", darija:"يوسّع تفكيره", de_example:"Reisen erweitert den Horizont.", darija_example:"السفر كيوسّع التفكير." }
-      ,"fuerchten": { pos:"V", ar:"يخاف شيئاً", darija:"يخاف", de_example:"Ich fürchte die Prüfung.", darija_example:"كنخاف من الامتحان." }
-      ,"kontakte knuepfen": { pos:"PHR", ar:"يبني علاقات", darija:"يدير علاقات", de_example:"Ich knüpfe Kontakte.", darija_example:"درت علاقات." }
-      ,"leiden": { pos:"V", ar:"يعاني من", darija:"كيتعذّب", de_example:"Er leidet viel.", darija_example:"كييعاني بزاف." }
-      ,"leiten": { pos:"V", ar:"يدير شيئاً", darija:"يسيّر", de_example:"Sie leitet die Firma.", darija_example:"كتسيّر الشركة." }
-      ,"nachholen": { pos:"V", ar:"يعوّض شيئاً", darija:"يعاود يدير", de_example:"Ich hole das nach.", darija_example:"عاودت درتو." }
-      ,"naehren": { pos:"V", ar:"يغذّي شيئاً", darija:"يغذّي", de_example:"Hoffnung nährt Mut.", darija_example:"الأمل كيغذّي الشجاعة." }
-      ,"sich nennen": { pos:"V", ar:"يسمّي نفسه", darija:"سميتو", de_example:"Ich nenne mich Ali.", darija_example:"سميتي علي." }
-      ,"reichen": { pos:"V", ar:"يكفي شيئاً", darija:"كافي", de_example:"Das Geld reicht.", darija_example:"الفلوس كافية." }
-      ,"sich umorientieren": { pos:"V", ar:"يغيّر الاتجاه", darija:"يبدّل الطريق", de_example:"Ich orientiere mich um.", darija_example:"بدّلت الطريق." }
-      ,"unterstuetzen": { pos:"V", ar:"يدعم شخصاً", darija:"يعاون", de_example:"Meine Eltern unterstützen mich.", darija_example:"والديّ كيعاونوني." }
-      ,"verdraengen": { pos:"V", ar:"يتجاهل شيئاً", darija:"يحيد من بالو", de_example:"Er verdrängt das Problem.", darija_example:"حيّد المشكل من بالو." }
-      ,"vereinbaren": { pos:"V", ar:"يتفق على", darija:"يتفاهم على", de_example:"Wir vereinbaren einen Termin.", darija_example:"تافقنا على موعد." }
-      ,"verlangen": { pos:"V", ar:"يطلب شيئاً", darija:"يطلب", de_example:"Die Firma verlangt Erfahrung.", darija_example:"الشركة كتطلب تجربة." }
-      ,"verlorengehen": { pos:"V", ar:"يضيع شيء", darija:"يضيع", de_example:"Das Dokument geht verloren.", darija_example:"الورقة ضاعت." }
-      ,"vermitteln": { pos:"V", ar:"يقدّم شيئاً", darija:"يوصّل الفكرة", de_example:"Der Lehrer vermittelt Wissen.", darija_example:"الأستاذ كيوصل المعرفة." }
-      ,"verschieben": { pos:"V", ar:"يؤجّل شيئاً", darija:"يأجل", de_example:"Wir verschieben den Termin.", darija_example:"أجّلنا الموعد." }
-      ,"verweisen auf": { pos:"V", ar:"يشير إلى", darija:"يشير ل", de_example:"Der Text verweist auf das Problem.", darija_example:"النص كيشير للمشكل." }
-
-      /* Adverb / Präposition / Redemittel */
-      ,"nebenbei": { pos:"ADV", ar:"في نفس الوقت", darija:"فـ نفس الوقت", de_example:"Ich arbeite und lerne nebenbei.", darija_example:"كنخدم ونقرا فـ نفس الوقت." }
-      ,"wegen": { pos:"PREP", ar:"بسبب", darija:"بسباب", de_example:"Wegen des Wetters bleibe ich zu Hause.", darija_example:"بسباب الشتا بقيت فالدار." }
-
-      ,"an der reihe sein": { pos:"PHR", ar:"يكون دوره", darija:"جا دورو", de_example:"Ich bin an der Reihe.", darija_example:"جا دوري." }
-      ,"in der regel": { pos:"PHR", ar:"عادةً غالباً", darija:"فالغالب", de_example:"In der Regel beginnt der Kurs um acht.", darija_example:"فالغالب الكورس كيبدا فالثمانية." }
-      ,"infrage kommen": { pos:"PHR", ar:"يكون ممكناً", darija:"يكون احتمال", de_example:"Das kommt nicht infrage.", darija_example:"هادا ما يمكنش." }
-      ,"vor der tuer stehen": { pos:"PHR", ar:"يكون قريباً", darija:"قريب يوقع", de_example:"Die Prüfung steht vor der Tür.", darija_example:"الامتحان قريب." }
-
-      ,"wer die wahl hat hat die qual": { pos:"PHR", ar:"كثرة الاختيار تعب", darija:"بزاف الاختيارات كتعيّي", de_example:"Wer die Wahl hat, hat die Qual.", darija_example:"ملي يكون عندك بزاف الاختيارات كتعيّى." }
-      ,"so ein quatsch": { pos:"PHR", ar:"هذا هراء", darija:"هاد الهضرة ما عندها معنى", de_example:"So ein Quatsch!", darija_example:"هاد الهضرة ما عندها معنى!" }
-      ,"das ist wirklich eine frechheit": { pos:"PHR", ar:"هذا وقاحة", darija:"هادي قلة الحياء", de_example:"Das ist wirklich eine Frechheit!", darija_example:"هادي قلة الحياء!" }
-      ,"das ist ja wohl die hoehe": { pos:"PHR", ar:"هذا مبالغ", darija:"هادي زادت بزاف", de_example:"Das ist ja wohl die Höhe!", darija_example:"هادي زادت بزاف!" }
-      ,"das ist wirklich aergerlich": { pos:"PHR", ar:"هذا مزعج", darija:"هادا كيقلّق", de_example:"Das ist wirklich ärgerlich!", darija_example:"هادا كيقلّق!" }
-      ,"das geht doch nicht": { pos:"PHR
-/* ======== ADDITIONS – Ehrenamt / Umwelt / Arbeit FINAL ======== */
-
-,"ehrenamt": { pos:"N", ar:"عمل تطوعي", darija:"خدمة بلا فلوس", de_example:"Er macht ein Ehrenamt.", darija_example:"كيدير خدمة بلا فلوس." }
-,"engagement": { pos:"N", ar:"التزام قوي", darija:"مشاركة قوية", de_example:"Sein Engagement ist groß.", darija_example:"المشاركة ديالو كبيرة." }
-,"schaf": { pos:"N", ar:"حيوان خروف", darija:"خروف", de_example:"Das Schaf ist weiß.", darija_example:"الخروف أبيض." }
-,"erwartung": { pos:"N", ar:"أمل انتظار", darija:"التوقع", de_example:"Die Erwartung ist hoch.", darija_example:"التوقع كبير." }
-,"scheune": { pos:"N", ar:"مخزن قش", darija:"مستودع ديال الزرع", de_example:"Die Scheune ist groß.", darija_example:"المستودع كبير." }
-,"stall": { pos:"N", ar:"إسطبل حيوانات", darija:"بلاصة ديال البهايم", de_example:"Die Kuh ist im Stall.", darija_example:"البقرة فالإسطبل." }
-,"feedback": { pos:"N", ar:"رأي راجع", darija:"رأي عليك", de_example:"Ich bekomme Feedback.", darija_example:"توصلت برأي عليا." }
-,"kompliment": { pos:"N", ar:"مدح جميل", darija:"كلمة زوينة", de_example:"Ich bekomme ein Kompliment.", darija_example:"قالو ليا كلمة زوينة." }
-,"korruption": { pos:"N", ar:"فساد مالي", darija:"الرشوة", de_example:"Korruption ist schlecht.", darija_example:"الرشوة خايبة." }
-,"tierzucht": { pos:"N", ar:"تربية حيوانات", darija:"تربية البهايم", de_example:"Die Tierzucht ist wichtig.", darija_example:"تربية البهايم مهمة." }
-,"freiwillige": { pos:"N", ar:"شخص متطوع", darija:"واحد متطوع", de_example:"Der Freiwillige hilft.", darija_example:"المتطوع كيعون." }
-,"helfer": { pos:"N", ar:"شخص مساعد", darija:"واحد كيعون", de_example:"Der Helfer arbeitet.", darija_example:"اللي كيعون كيخدم." }
-,"feuerwehr": { pos:"N", ar:"فرقة إطفاء", darija:"بومبيي", de_example:"Die Feuerwehr kommt.", darija_example:"جاو البومبيي." }
-,"mithilfe": { pos:"N", ar:"مساعدة بسيطة", darija:"تعاون", de_example:"Danke für die Mithilfe.", darija_example:"شكراً على التعاون." }
-
-,"weide": { pos:"N", ar:"مرعى أخضر", darija:"بلاصة كيرعاو فيها", de_example:"Die Kühe sind auf der Weide.", darija_example:"البقر فالبلاصة ديال الرعي." }
-,"wiese": { pos:"N", ar:"مرج أخضر", darija:"جنان فيه العشب", de_example:"Die Kinder spielen auf der Wiese.", darija_example:"الدراري كيلعبو فالجنان." }
-,"ziege": { pos:"N", ar:"حيوان ماعز", darija:"معزة", de_example:"Die Ziege frisst Gras.", darija_example:"المعزة كتاكل العشب." }
-,"vieh": { pos:"N", ar:"ماشية كثيرة", darija:"البهايم", de_example:"Das Vieh ist draußen.", darija_example:"البهايم برا." }
-,"landschaft": { pos:"N", ar:"طبيعة أرض", darija:"المنظر الطبيعي", de_example:"Die Landschaft ist schön.", darija_example:"المنظر الطبيعي زوين." }
-,"lebensart": { pos:"N", ar:"طريقة عيش", darija:"كيفاش كيعيشو", de_example:"Die Lebensart ist einfach.", darija_example:"كيفاش كيعيشو بسيطة." }
-,"luftverschmutzung": { pos:"N", ar:"تلوث هواء", darija:"وسخ فالهواء", de_example:"Luftverschmutzung ist schlecht.", darija_example:"الوسخ فالهواء خايب." }
-,"minderheit": { pos:"N", ar:"فئة قليلة", darija:"ناس قلال", de_example:"Eine Minderheit protestiert.", darija_example:"ناس قلال كيحتجو." }
-,"mindestalter": { pos:"N", ar:"سن أدنى", darija:"أقل عمر", de_example:"Das Mindestalter ist 18.", darija_example:"أقل عمر هو 18." }
-,"tauschprinzip": { pos:"N", ar:"مبدأ تبادل", darija:"تبادل بين الناس", de_example:"Das Tauschprinzip ist fair.", darija_example:"مبدأ التبادل عادل." }
-,"tierschtuzverein": { pos:"N", ar:"جمعية حماية", darija:"جمعية ديال الحيوانات", de_example:"Der Tierschutzverein hilft.", darija_example:"جمعية الحيوانات كتعاون." }
-,"unterkunft": { pos:"N", ar:"مكان سكن", darija:"بلاصة تنعس فيها", de_example:"Die Unterkunft ist einfach.", darija_example:"بلاصة النعاس بسيطة." }
-,"verpflegung": { pos:"N", ar:"أكل يومي", darija:"الماكلة", de_example:"Die Verpflegung ist gut.", darija_example:"الماكلة مزيانة." }
-,"volunteer": { pos:"N", ar:"متطوع أجنبي", darija:"واحد متطوع", de_example:"Der Volunteer arbeitet.", darija_example:"المتطوع كيخدم." }
-
-,"arbeitslosigkeit": { pos:"N", ar:"بطالة عامة", darija:"البطالة", de_example:"Die Arbeitslosigkeit ist hoch.", darija_example:"البطالة طالعة." }
-,"mitglied": { pos:"N", ar:"عضو مجموعة", darija:"عضو", de_example:"Ich bin Mitglied im Verein.", darija_example:"أنا عضو فالجمعية." }
-,"partei": { pos:"N", ar:"حزب سياسي", darija:"الحزب", de_example:"Er ist in einer Partei.", darija_example:"هو فحزب." }
-,"pflegeheim": { pos:"N", ar:"دار رعاية", darija:"دار العجزة", de_example:"Meine Oma ist im Pflegeheim.", darija_example:"جدّتي فدار العجزة." }
-,"sozialversicherung": { pos:"N", ar:"تأمين اجتماعي", darija:"الضمان الاجتماعي", de_example:"Die Sozialversicherung ist wichtig.", darija_example:"الضمان الاجتماعي مهم." }
-,"ungerechtigkeit": { pos:"N", ar:"ظلم واضح", darija:"الحݣرة", de_example:"Das ist Ungerechtigkeit.", darija_example:"هادي حݣرة." }
-
-,"arbeitgeber": { pos:"N", ar:"صاحب العمل", darija:"الباترون", de_example:"Der Arbeitgeber ist nett.", darija_example:"الباترون زوين." }
-,"arbeitgeberin": { pos:"N", ar:"صاحبة العمل", darija:"الباترونة", de_example:"Die Arbeitgeberin spricht.", darija_example:"الباترونة كتهضر." }
-,"arbeitnehmer": { pos:"N", ar:"عامل موظف", darija:"الخدام", de_example:"Der Arbeitnehmer arbeitet viel.", darija_example:"الخدام كيخدم بزاف." }
-,"arbeitnehmerin": { pos:"N", ar:"عاملة موظفة", darija:"الخدامة", de_example:"Die Arbeitnehmerin arbeitet hier.", darija_example:"الخدامة كتخدم هنا." }
-,"beschaeftigte": { pos:"N", ar:"شخص موظف", darija:"واحد خدام", de_example:"Die Beschäftigten sind hier.", darija_example:"الخدامين هنا." }
-,"verhaeltnis": { pos:"N", ar:"علاقة رسمية", darija:"العلاقة", de_example:"Das Verhältnis ist gut.", darija_example:"العلاقة مزيانة." }
-,"arbeitsverhaeltnis": { pos:"N", ar:"علاقة عمل", darija:"علاقة فالخدمة", de_example:"Das Arbeitsverhältnis ist neu.", darija_example:"العلاقة فالخدمة جديدة." }
-,"arbeitszeit": { pos:"N", ar:"وقت العمل", darija:"وقت الخدمة", de_example:"Die Arbeitszeit beginnt um acht.", darija_example:"وقت الخدمة كيبدا فالثمانية." }
-
-,"eventuell": { pos:"ADV", ar:"ربما احتمال", darija:"يمكن", de_example:"Ich komme eventuell später.", darija_example:"يمكن نجي من بعد." }
-,"schliesslich": { pos:"ADV", ar:"في النهاية", darija:"فالآخر", de_example:"Schließlich kommt er.", darija_example:"فالآخر جا." }
-,"zuerst": { pos:"ADV", ar:"أولاً بالبداية", darija:"فالأول", de_example:"Zuerst lerne ich.", darija_example:"فالأول نقرا." }
-/* ======== Arbeitgeber / Arbeitnehmer ======== */
-
-,"arbeitgeber": { pos:"N", ar:"صاحب العمل", darija:"الباترون", de_example:"Der Arbeitgeber ist nett.", darija_example:"الباترون زوين." }
-
-,"arbeitgeberin": { pos:"N", ar:"صاحبة العمل", darija:"الباترونة", de_example:"Die Arbeitgeberin spricht.", darija_example:"الباترونة كتهضر." }
-
-,"arbeitnehmer": { pos:"N", ar:"عامل موظف", darija:"الخدام", de_example:"Der Arbeitnehmer arbeitet viel.", darija_example:"الخدام كيخدم بزاف." }
-
-,"arbeitnehmerin": { pos:"N", ar:"عاملة موظفة", darija:"الخدامة", de_example:"Die Arbeitnehmerin arbeitet hier.", darija_example:"الخدامة كتخدم هنا." }
-
-,"beschaeftigte": { pos:"N", ar:"شخص موظف", darija:"واحد خدام", de_example:"Die Beschäftigten sind hier.", darija_example:"الخدامين هنا." }
-
-,"verhaeltnis": { pos:"N", ar:"علاقة رسمية", darija:"العلاقة", de_example:"Das Verhältnis ist gut.", darija_example:"العلاقة مزيانة." }
-
-,"arbeitsverhaeltnis": { pos:"N", ar:"علاقة عمل", darija:"علاقة فالخدمة", de_example:"Das Arbeitsverhältnis ist neu.", darija_example:"العلاقة فالخدمة جديدة." }
-
-,"arbeitszeit": { pos:"N", ar:"وقت العمل", darija:"وقت الخدمة", de_example:"Die Arbeitszeit beginnt um acht.", darija_example:"وقت الخدمة كيبدا فالثمانية." }
-
-,"kernarbeitszeit": { pos:"N", ar:"وقت أساسي", darija:"الوقت الرئيسي", de_example:"Die Kernarbeitszeit ist von neun bis drei.", darija_example:"الوقت الرئيسي من التسعود حتى الثلاثة." }
-
-,"arbeitsstelle": { pos:"N", ar:"منصب عمل", darija:"بلاصة الخدمة", de_example:"Ich habe eine neue Arbeitsstelle.", darija_example:"لقيت بلاصة خدمة جديدة." }
-
-/* ======== Firma / Vertrag ======== */
-
-,"geschaeftsfuehrung": { pos:"N", ar:"إدارة الشركة", darija:"الإدارة", de_example:"Die Geschäftsführung entscheidet.", darija_example:"الإدارة كتقرر." }
-
-,"verwaltung": { pos:"N", ar:"إدارة تنظيم", darija:"الإدارة", de_example:"Die Verwaltung ist groß.", darija_example:"الإدارة كبيرة." }
-
-,"hersteller": { pos:"N", ar:"شركة منتجة", darija:"اللي كيصاوب", de_example:"Der Hersteller produziert Autos.", darija_example:"اللي كيصاوب كيصاوب طوموبيلات." }
-
-,"institut": { pos:"N", ar:"معهد رسمي", darija:"معهد", de_example:"Das Institut ist neu.", darija_example:"المعهد جديد." }
-
-,"unternehmen": { pos:"N", ar:"شركة خاصة", darija:"الشركة", de_example:"Das Unternehmen wächst.", darija_example:"الشركة كتوسع." }
-
-,"werk": { pos:"N", ar:"مصنع إنتاج", darija:"المعمل", de_example:"Das Werk ist groß.", darija_example:"المعمل كبير." }
-
-,"geschaeftsleitung": { pos:"N", ar:"إدارة عليا", darija:"الإدارة الكبيرة", de_example:"Die Geschäftsleitung entscheidet.", darija_example:"الإدارة الكبيرة كتقرر." }
-
-,"prozess": { pos:"N", ar:"عملية منظمة", darija:"العملية", de_example:"Der Prozess ist langsam.", darija_example:"العملية بطيئة." }
-
-,"physiker": { pos:"N", ar:"عالم فيزياء", darija:"عالم ديال الفيزياء", de_example:"Der Physiker arbeitet im Labor.", darija_example:"عالم الفيزياء كيخدم فالمختبر." }
-
-,"physikerin": { pos:"N", ar:"عالمة فيزياء", darija:"عالمة ديال الفيزياء", de_example:"Die Physikerin forscht.", darija_example:"عالمة الفيزياء كتدير البحث." }
-
-,"lohn": { pos:"N", ar:"أجر يومي", darija:"الخلاص", de_example:"Der Lohn ist niedrig.", darija_example:"الخلاص قليل." }
-
-,"gehalt": { pos:"N", ar:"راتب شهري", darija:"السالير", de_example:"Das Gehalt ist gut.", darija_example:"السالير مزيان." }
-
-,"kuendigung": { pos:"N", ar:"إنهاء عقد", darija:"الطرد", de_example:"Ich bekomme eine Kündigung.", darija_example:"توصلت بالطرد." }
-
-,"frist": { pos:"N", ar:"مدة محددة", darija:"المدة", de_example:"Die Frist ist kurz.", darija_example:"المدة قصيرة." }
-
-,"kuendigungsfrist": { pos:"N", ar:"مدة إنهاء", darija:"مدة الطرد", de_example:"Die Kündigungsfrist beträgt zwei Wochen.", darija_example:"مدة الطرد جوج سيمانات." }
-
-,"paragraph": { pos:"N", ar:"مادة قانون", darija:"بند قانوني", de_example:"Der Paragraph ist wichtig.", darija_example:"البند القانوني مهم." }
-
-,"gmbh": { pos:"N", ar:"شركة محدودة", darija:"شركة محدودة المسؤولية", de_example:"Das ist eine GmbH.", darija_example:"هادي شركة محدودة المسؤولية." }
-
-,"wartung": { pos:"N", ar:"صيانة دورية", darija:"الصيانة", de_example:"Die Wartung ist wichtig.", darija_example:"الصيانة مهمة." }
-
-,"anspruch": { pos:"N", ar:"حق قانوني", darija:"الحق", de_example:"Ich habe Anspruch auf Urlaub.", darija_example:"عندي الحق فالعطلة." }
-
-,"antrag": { pos:"N", ar:"طلب رسمي", darija:"طلب", de_example:"Ich stelle einen Antrag.", darija_example:"درت طلب." }
-
-,"urlaubsantrag": { pos:"N", ar:"طلب عطلة", darija:"طلب الكونجي", de_example:"Ich stelle einen Urlaubsantrag.", darija_example:"درت طلب الكونجي." }
-
-,"brille": { pos:"N", ar:"نظارة طبية", darija:"النضاضر", de_example:"Ich trage eine Brille.", darija_example:"كنلبس النضاضر." }
-
-,"passwort": { pos:"N", ar:"كلمة سر", darija:"الموطو دُ باس", de_example:"Das Passwort ist geheim.", darija_example:"الموطو دُ باس سري." }
-
-/* ======== Technik ======== */
-
-,"technik": { pos:"N", ar:"مجال تقني", darija:"التقنية", de_example:"Die Technik ist modern.", darija_example:"التقنية حديثة." }
-
-,"technologie": { pos:"N", ar:"تقنية حديثة", darija:"التكنولوجيا", de_example:"Die Technologie entwickelt sich.", darija_example:"التكنولوجيا كتتطور." }
-
-,"informationstechnik": { pos:"N", ar:"تقنية معلومات", darija:"تقنيات الإعلام", de_example:"Er arbeitet in der Informationstechnik.", darija_example:"كيخدم فتقنيات الإعلام." }
-
-,"mikrosystemtechnik": { pos:"N", ar:"تقنية أنظمة دقيقة", darija:"تقنية دقيقة بزاف", de_example:"Das ist Mikrosystemtechnik.", darija_example:"هادي تقنية دقيقة بزاف." }
-/* ======== Religion (Fortsetzung) ======== */
-
-,"hindufrau": { pos:"N", ar:"امرأة هندوسية", darija:"هندوسية", de_example:"Sie ist Hindufrau.", darija_example:"هي هندوسية." }
-
-,"hinduistisch": { pos:"ADJ", ar:"متعلق بالهندوسية", darija:"هندوسي", de_example:"Das Fest ist hinduistisch.", darija_example:"العيد هندوسي." }
-
-,"judentum": { pos:"N", ar:"ديانة يهودية", darija:"اليهودية", de_example:"Das Judentum ist alt.", darija_example:"اليهودية قديمة." }
-
-,"jude": { pos:"N", ar:"رجل يهودي", darija:"يهودي", de_example:"Er ist Jude.", darija_example:"هو يهودي." }
-
-,"juedin": { pos:"N", ar:"امرأة يهودية", darija:"يهودية", de_example:"Sie ist Jüdin.", darija_example:"هي يهودية." }
-
-,"juedisch": { pos:"ADJ", ar:"متعلق باليهودية", darija:"يهودي", de_example:"Das ist jüdisch.", darija_example:"هادا يهودي." }
-
-,"synagoge": { pos:"N", ar:"معبد يهودي", darija:"سيناغوغ", de_example:"Die Synagoge ist alt.", darija_example:"السيناغوغ قديمة." }
-
-,"buddhismus": { pos:"N", ar:"ديانة بوذية", darija:"البوذية", de_example:"Der Buddhismus ist friedlich.", darija_example:"البوذية مسالمة." }
-
-,"buddhist": { pos:"N", ar:"رجل بوذي", darija:"بوذي", de_example:"Er ist Buddhist.", darija_example:"هو بوذي." }
-
-,"buddhistin": { pos:"N", ar:"امرأة بوذية", darija:"بوذية", de_example:"Sie ist Buddhistin.", darija_example:"هي بوذية." }
-
-,"buddhistisch": { pos:"ADJ", ar:"متعلق بالبوذية", darija:"بوذي", de_example:"Das Tempel ist buddhistisch.", darija_example:"المعبد بوذي." }
-
-,"tempel": { pos:"N", ar:"معبد ديني", darija:"المعبد", de_example:"Der Tempel ist schön.", darija_example:"المعبد زوين." }
-
-,"christentum": { pos:"N", ar:"ديانة مسيحية", darija:"المسيحية", de_example:"Das Christentum ist alt.", darija_example:"المسيحية قديمة." }
-
-,"christ": { pos:"N", ar:"رجل مسيحي", darija:"مسيحي", de_example:"Er ist Christ.", darija_example:"هو مسيحي." }
-
-,"christin": { pos:"N", ar:"امرأة مسيحية", darija:"مسيحية", de_example:"Sie ist Christin.", darija_example:"هي مسيحية." }
-
-,"protestant": { pos:"N", ar:"مسيحي بروتستانتي", darija:"بروتستانتي", de_example:"Er ist Protestant.", darija_example:"هو بروتستانتي." }
-
-,"protestantin": { pos:"N", ar:"امرأة بروتستانتية", darija:"بروتستانتية", de_example:"Sie ist Protestantin.", darija_example:"هي بروتستانتية." }
-
-      /* ===========================================================
-         ✅ زِد الكلمات الجاية هنا (غير لسّق…)
-         مثال:
-         ,"wort": {pos:"N", ar:"...", darija:"...", de_example:"...", darija_example:"..."}
-         =========================================================== */
+   /* ===============================
+   QAMOS ENGINE (Clean + Search + Suggest)
+   - No meaning changes
+   - Dedupe keeps FIRST occurrence
+   - Solves same-word different POS (e.g., unternehmen N/V)
+================================ */
+
+function normalizeStr(s){
+  return (s ?? "")
+    .toString()
+    .trim()
+    .toLowerCase()
+    // German umlauts & ß for robust search
+    .replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/ß/g,"ss")
+    // remove accents if any (safe)
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+}
+
+function makeIdKey(word, pos){
+  // keep your original key by default,
+  // but if same word appears with different POS, we split safely:
+  // e.g. "unternehmen|V" => "unternehmen__v"
+  const w = normalizeStr(word);
+  const p = normalizeStr(pos);
+  if(!p) return w;
+  return `${w}__${p}`;
+}
+
+function safeEntry(entry){
+  // minimal validation to avoid broken objects
+  if(!entry || typeof entry !== "object") return null;
+  if(!entry.word) return null;
+  // keep POS as you wrote it, but also store normalized POS
+  const pos = entry.pos ?? "";
+  return {
+    word: entry.word,
+    pos,
+    pos_norm: normalizeStr(pos),
+    ar: entry.ar ?? "",
+    darija: entry.darija ?? "",
+    de_example: entry.de_example ?? "",
+    darija_example: entry.darija_example ?? ""
+  };
+}
+
+function buildQamos(entries){
+  const dict = {};
+  const meta = {
+    duplicates: [],     // [{key, kept, dropped}]
+    collisions: [],     // same "word" different POS => auto split keys
+    invalid: []         // entries missing fields
+  };
+
+  // Track by raw normalized word (without pos) to detect collisions
+  const seenWordPos = new Map(); // wordNorm -> Set(posNorm)
+
+  for(const raw of entries){
+    const e = safeEntry(raw);
+    if(!e){
+      meta.invalid.push(raw);
+      continue;
+    }
+
+    const wordNorm = normalizeStr(e.word);
+    const posNorm  = e.pos_norm || "";
+
+    if(!seenWordPos.has(wordNorm)) seenWordPos.set(wordNorm, new Set());
+    const set = seenWordPos.get(wordNorm);
+    const beforeSize = set.size;
+    set.add(posNorm);
+
+    // If same word appears with different POS, we split keys automatically
+    if(beforeSize > 0 && set.size > beforeSize){
+      meta.collisions.push({ word: e.word, pos: e.pos });
+    }
+
+    const key = makeIdKey(e.word, e.pos); // safe unique key
+    if(dict[key]){
+      // duplicate exact same key -> keep FIRST, drop new
+      meta.duplicates.push({ key, kept: dict[key], dropped: e });
+      continue;
+    }
+    dict[key] = {
+      pos: e.pos,              // keep exactly
+      ar: e.ar,
+      darija: e.darija,
+      de_example: e.de_example,
+      darija_example: e.darija_example
     };
+  }
+
+  return { dict, meta };
+}
+
+function createSearchIndex(dict){
+  const items = Object.entries(dict).map(([key, val]) => {
+    const word = key.split("__")[0]; // normalized key base
+    const pos  = val.pos || "";
+    const hay = normalizeStr([
+      word, pos, val.ar, val.darija, val.de_example, val.darija_example
+    ].join(" | "));
+    return { key, val, hay };
+  });
+  return items;
+}
+
+function searchQamos(index, query, limit=25){
+  const q = normalizeStr(query);
+  if(!q) return [];
+
+  // scoring: startsWith > includes
+  const results = [];
+  for(const it of index){
+    let score = 0;
+    if(it.hay.startsWith(q)) score += 100;
+    if(it.hay.includes(q)) score += 50;
+
+    // bonus if exact word match (key base)
+    const base = it.key.split("__")[0];
+    if(base === q) score += 120;
+    else if(base.startsWith(q)) score += 80;
+
+    if(score > 0) results.push({ score, ...it });
+  }
+  results.sort((a,b)=> b.score - a.score);
+  return results.slice(0, limit).map(r => ({
+    key: r.key,
+    pos: r.val.pos,
+    ar: r.val.ar,
+    darija: r.val.darija,
+    de_example: r.val.de_example,
+    darija_example: r.val.darija_example
+  }));
+}
+
+function suggestQamos(index, prefix, limit=10){
+  const p = normalizeStr(prefix);
+  if(!p) return [];
+
+  const seen = new Set();
+  const out = [];
+
+  for(const it of index){
+    const base = it.key.split("__")[0];
+    if(base.startsWith(p) && !seen.has(base)){
+      seen.add(base);
+      out.push(base);
+      if(out.length >= limit) break;
+    }
+  }
+  return out;
+}
+
+/* ==========================================
+   ✅ HERE: PASTE YOUR ENTRIES AS ARRAY
+   (No edits to your meanings/translations)
+========================================== */
+
+// مثال صغير فقط باش تفهم:
+// const RAW_ENTRIES = [
+//   { word:"arbeitgeber", pos:"N", ar:"صاحب العمل", darija:"الباترون", de_example:"Der Arbeitgeber ist nett.", darija_example:"الباترون زوين." },
+//   { word:"unternehmen", pos:"N", ar:"شركة خاصة", darija:"الشركة", de_example:"Das Unternehmen wächst.", darija_example:"الشركة كتوسع." },
+//   { word:"unternehmen", pos:"V", ar:"يقوم بشيء", darija:"يدير شي حاجة", de_example:"Wir unternehmen eine Reise.", darija_example:"درنا رحلة." },
+// ];
+
+const RAW_ENTRIES = [
+  // ⬇️⬇️ لصّق هنا entries ديالك كاملين كما هما (word/pos/ar/darija/de_example/darija_example)
+];
+
+/* ==========================================
+   BUILD + INDEX
+========================================== */
+const { dict: QAMOS_B1, meta: QAMOS_META } = buildQamos(RAW_ENTRIES);
+const QAMOS_INDEX = createSearchIndex(QAMOS_B1);
+
+/* ==========================================
+   ✅ API YOU USE IN YOUR UI
+========================================== */
+// Search results
+function qamosSearch(q){ return searchQamos(QAMOS_INDEX, q, 30); }
+
+// Suggestions
+function qamosSuggest(prefix){ return suggestQamos(QAMOS_INDEX, prefix, 10); }
+
+// Debug: duplicates/collisions/invalid
+function qamosReport(){
+  return {
+    total_entries_input: RAW_ENTRIES.length,
+    total_unique_keys: Object.keys(QAMOS_B1).length,
+    duplicates_dropped: QAMOS_META.duplicates.length,
+    collisions_detected: QAMOS_META.collisions.length,
+    invalid_entries: QAMOS_META.invalid.length,
+    // Uncomment if you want to see full details:
+    // duplicates: QAMOS_META.duplicates,
+    // collisions: QAMOS_META.collisions,
+    // invalid: QAMOS_META.invalid
+  };
+}
+;
 
     // ✅ keep your old mini word-to-darija translator DICT (for fallback translation)
     const DICT = {
