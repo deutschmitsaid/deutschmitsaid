@@ -1017,6 +1017,62 @@
       فين تزيد؟ زِد entries قبل السطر الأخير ];
     ========================================== */
     const RAW_ENTRIES = [
+        // ===== Migration – Gesetz / Absicherung / Einreise =====
+  { word:"Gesetz", pos:"N", ar:"قانون رسمي", darija:"القانون", de_example:"Das Gesetz ist streng.", darija_example:"القانون قاسح." },
+  { word:"Auslandstätige/r", pos:"N", ar:"عامل بالخارج", darija:"خدام برا البلاد", de_example:"Er ist als Auslandstätiger tätig.", darija_example:"هو خدام برا البلاد." },
+  { word:"Absicherung", pos:"N", ar:"ضمان حماية", darija:"الحماية", de_example:"Die Absicherung ist wichtig.", darija_example:"الحماية مهمة." },
+  { word:"Absicht", pos:"N", ar:"نية هدف", darija:"النية", de_example:"Ich habe die Absicht auszuwandern.", darija_example:"عندي النية نهاجر." },
+  { word:"Armut", pos:"N", ar:"فقر شديد", darija:"الفقر", de_example:"Armut ist ein Problem.", darija_example:"الفقر مشكل." },
+  { word:"Aussicht", pos:"N", ar:"فرصة أمل", darija:"الفرصة", de_example:"Die Aussicht ist gut.", darija_example:"الفرصة مزيانة." },
+  { word:"Einreise", pos:"N", ar:"دخول بلد", darija:"الدخول للبلاد", de_example:"Die Einreise ist erlaubt.", darija_example:"الدخول للبلاد مسموح." },
+  { word:"Ausreise", pos:"N", ar:"خروج بلد", darija:"الخروج من البلاد", de_example:"Die Ausreise ist geplant.", darija_example:"الخروج من البلاد مخطط." },
+
+  // ===== Migration – Heimat & Flucht =====
+  { word:"Flüchtling", pos:"N", ar:"لاجئ هارب", darija:"لاجئ", de_example:"Der Flüchtling sucht Schutz.", darija_example:"اللاجئ كيقلب على الحماية." },
+  { word:"Geflüchtete/r", pos:"N", ar:"شخص لاجئ", darija:"واحد لاجئ", de_example:"Die Geflüchteten kommen an.", darija_example:"اللاجئين وصلو." },
+  { word:"Heimat", pos:"N", ar:"وطن أصلي", darija:"البلاد ديالي", de_example:"Die Heimat ist wichtig.", darija_example:"البلاد ديالي مهمة." },
+  { word:"Heimatland", pos:"N", ar:"البلد الأصلي", darija:"البلاد الأصلية", de_example:"Er verlässt sein Heimatland.", darija_example:"خلا البلاد الأصلية ديالو." },
+  { word:"Heimweh", pos:"N", ar:"شوق للوطن", darija:"التوحّش", de_example:"Ich habe Heimweh.", darija_example:"متوحّش البلاد." },
+  { word:"Heimweh haben nach + D", pos:"V", ar:"يشتاق إلى", darija:"يتوحّش", de_example:"Ich habe Heimweh nach Marokko.", darija_example:"متوحّش المغرب." },
+  { word:"Rückkehr", pos:"N", ar:"رجوع للوطن", darija:"الرجوع", de_example:"Die Rückkehr ist geplant.", darija_example:"الرجوع مخطط." },
+  { word:"Rückkehrer", pos:"N", ar:"شخص عائد", darija:"اللي رجع", de_example:"Der Rückkehrer sucht Arbeit.", darija_example:"اللي رجع كيقلب على خدمة." },
+  { word:"Rückkehrerin", pos:"N", ar:"امرأة عائدة", darija:"اللي رجعات", de_example:"Die Rückkehrerin lebt hier.", darija_example:"اللي رجعات ساكنة هنا." },
+  { word:"zurückkehren", pos:"V", ar:"يعود للوطن", darija:"يرجع", de_example:"Er kehrt zurück.", darija_example:"رجع." },
+  { word:"weiterwandern", pos:"V", ar:"يواصل الهجرة", darija:"يكمل الهجرة", de_example:"Sie wandert weiter.", darija_example:"كمّلات الهجرة." },
+  { word:"Drittland", pos:"N", ar:"دولة ثالثة", darija:"بلاد أخرى", de_example:"Er reist in ein Drittland.", darija_example:"سافر لبلاد أخرى." },
+  { word:"Zielland", pos:"N", ar:"بلد الهدف", darija:"البلاد اللي غادي ليها", de_example:"Deutschland ist sein Zielland.", darija_example:"ألمانيا هي البلاد اللي غادي ليها." },
+  { word:"Überlegung", pos:"N", ar:"تفكير قرار", darija:"التفكير", de_example:"Die Überlegung ist wichtig.", darija_example:"التفكير مهم." },
+  { word:"Umstand", pos:"N", ar:"ظرف وضع", darija:"الحالة", de_example:"Die Umstände sind schwer.", darija_example:"الحالة صعيبة." },
+  { word:"Vermutung", pos:"N", ar:"تخمين احتمال", darija:"تخمين", de_example:"Das ist nur eine Vermutung.", darija_example:"غير تخمين." },
+  { word:"Zukunftsplan", pos:"N", ar:"خطة مستقبل", darija:"خطة للمستقبل", de_example:"Ich habe einen Zukunftsplan.", darija_example:"عندي خطة للمستقبل." },
+  { word:"Klima", pos:"N", ar:"مناخ جو", darija:"الطقس", de_example:"Das Klima ist kalt.", darija_example:"الطقس بارد." },
+  { word:"Lebenshaltungskosten", pos:"N", ar:"تكاليف المعيشة", darija:"مصاريف العيش", de_example:"Die Lebenshaltungskosten sind hoch.", darija_example:"مصاريف العيش طالعة." },
+
+  // ===== Migration – Arbeit und Beruf =====
+  { word:"Experte", pos:"N", ar:"خبير مختص", darija:"خبير", de_example:"Er ist Experte.", darija_example:"هو خبير." },
+  { word:"Fachkraft", pos:"N", ar:"عامل مؤهل", darija:"واحد مكوَّن", de_example:"Deutschland braucht Fachkräfte.", darija_example:"ألمانيا محتاجة ناس مكوَّنين." },
+  { word:"Gewerbe", pos:"N", ar:"نشاط تجاري", darija:"تجارة صغيرة", de_example:"Er hat ein Gewerbe.", darija_example:"عندو تجارة صغيرة." },
+  { word:"Gastgewerbe", pos:"N", ar:"قطاع الضيافة", darija:"مجال المطاعم والفنادق", de_example:"Er arbeitet im Gastgewerbe.", darija_example:"كيخدم فمجال المطاعم والفنادق." },
+  { word:"Koch", pos:"N", ar:"طباخ محترف", darija:"الطيّاب", de_example:"Der Koch arbeitet hier.", darija_example:"الطيّاب كيخدم هنا." },
+  { word:"Lehrgang", pos:"N", ar:"دورة تعليمية", darija:"دورة تكوين", de_example:"Ich mache einen Lehrgang.", darija_example:"درت دورة تكوين." },
+  { word:"Aufbaulehrgang", pos:"N", ar:"دورة متقدمة", darija:"دورة مكملة", de_example:"Er macht einen Aufbaulehrgang.", darija_example:"دار دورة مكملة." },
+  { word:"beruflich", pos:"A", ar:"مهني عملي", darija:"ديال الخدمة", de_example:"Ich reise beruflich.", darija_example:"سافرت على قبل الخدمة." },
+  { word:"Niveau", pos:"N", ar:"مستوى جودة", darija:"المستوى", de_example:"Das Niveau ist hoch.", darija_example:"المستوى طالع." },
+  { word:"Lohnniveau", pos:"N", ar:"مستوى الأجور", darija:"مستوى الخلاص", de_example:"Das Lohnniveau ist hoch.", darija_example:"مستوى الخلاص طالع." },
+  { word:"Risiko", pos:"N", ar:"خطر احتمال", darija:"الريسك", de_example:"Das Risiko ist groß.", darija_example:"الريسك كبير." },
+  { word:"Entscheidung", pos:"N", ar:"قرار مهم", darija:"القرار", de_example:"Ich treffe eine Entscheidung.", darija_example:"درت القرار." },
+  { word:"Erlaubnis", pos:"N", ar:"إذن رسمي", darija:"الرخصة", de_example:"Ich habe eine Erlaubnis.", darija_example:"عندي الرخصة." },
+  { word:"Zuversicht", pos:"N", ar:"ثقة أمل", darija:"الثقة", de_example:"Ich habe Zuversicht.", darija_example:"عندي الثقة." },
+
+  // ===== Migration – Adjektive =====
+  { word:"bürokratisch", pos:"A", ar:"إداري معقّد", darija:"فيه الوراق بزاف", de_example:"Der Prozess ist bürokratisch.", darija_example:"العملية فيها الوراق بزاف." },
+  { word:"festgefahren", pos:"A", ar:"جامد صعب", darija:"عالق", de_example:"Die Situation ist festgefahren.", darija_example:"الحالة عالقة." },
+  { word:"konkret", pos:"A", ar:"واضح محدد", darija:"واضح", de_example:"Ich habe einen konkreten Plan.", darija_example:"عندي خطة واضحة." },
+  { word:"mobil", pos:"A", ar:"قابل للحركة", darija:"يقدر يتحرك", de_example:"Er ist mobil.", darija_example:"يقدر يتحرك." },
+  { word:"relativ", pos:"A", ar:"نسبي تقريبي", darija:"تقريباً", de_example:"Das ist relativ gut.", darija_example:"هادا تقريباً مزيان." },
+  { word:"speziell", pos:"A", ar:"خاص معين", darija:"خاص", de_example:"Das ist speziell für dich.", darija_example:"هادا خاص بيك." },
+  { word:"umfassend", pos:"A", ar:"شامل كامل", darija:"شامل", de_example:"Der Kurs ist umfassend.", darija_example:"الكورس شامل." },
+
         // ===== Religion – Ergänzung =====
   { word:"Protestantin", pos:"N", ar:"امرأة بروتستانتية", darija:"بروتستانتية", de_example:"Sie ist Protestantin.", darija_example:"هي بروتستانتية." },
 
