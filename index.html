@@ -1017,6 +1017,90 @@
       فين تزيد؟ زِد entries قبل السطر الأخير ];
     ========================================== */
     const RAW_ENTRIES = [
+        // ===== Nomen (ثلج/جبال) =====
+  { word:"Schlitten", pos:"N", ar:"مزلجة ثلج", darija:"سلايد ديال الثلج", de_example:"Das Kind fährt mit dem Schlitten.", darija_example:"الدرّي كيلعب بالسلايد ديال الثلج." },
+  { word:"Schneeschuh", pos:"N", ar:"حذاء ثلجي", darija:"سباط ديال الثلج", de_example:"Der Schneeschuh ist neu.", darija_example:"سباط الثلج جديد." },
+  { word:"Skigebiet", pos:"N", ar:"منطقة تزلج", darija:"بلاصة السكي", de_example:"Das Skigebiet ist groß.", darija_example:"بلاصة السكي كبيرة." },
+  { word:"Snowboard", pos:"N", ar:"لوح تزلج", darija:"سنوبورد", de_example:"Das Snowboard ist modern.", darija_example:"السنوبورد جديد." },
+  { word:"Spitze", pos:"N", ar:"قمة عالية", darija:"راس الجبل", de_example:"Die Spitze ist hoch.", darija_example:"راس الجبل عالي." },
+  { word:"Steinbock", pos:"N", ar:"وعل جبلي", darija:"ماعز الجبل", de_example:"Der Steinbock lebt in den Alpen.", darija_example:"ماعز الجبل عايش فالألب." },
+  { word:"Strom", pos:"N", ar:"تيار كهربائي", darija:"الضو الكهربائي", de_example:"Der Strom ist teuer.", darija_example:"الضو الكهربائي غالي." },
+  { word:"Ursprung", pos:"N", ar:"أصل الشيء", darija:"البداية", de_example:"Der Ursprung ist alt.", darija_example:"البداية قديمة." },
+
+  // ===== Adjektive =====
+  { word:"administrativ", pos:"A", ar:"إداري رسمي", darija:"إداري", de_example:"Das Problem ist administrativ.", darija_example:"المشكل إداري." },
+  { word:"ausgebaut", pos:"A", ar:"مطوّر جيداً", darija:"متطوّر", de_example:"Das Netz ist ausgebaut.", darija_example:"الشبكة متطوّرة." },
+  { word:"ausgeschildert", pos:"A", ar:"مبيَّن بعلامات", darija:"فيه لوحات", de_example:"Der Weg ist ausgeschildert.", darija_example:"الطريق فيها لوحات." },
+  { word:"eingebettet", pos:"A", ar:"مدموج داخل", darija:"داخل فـ", de_example:"Das Dorf ist in den Bergen eingebettet.", darija_example:"الدوار داخل فالجبال." },
+  { word:"erlebnisintensiv", pos:"A", ar:"مليء بالتجارب", darija:"فيه تجارب بزاف", de_example:"Die Reise ist erlebnisintensiv.", darija_example:"الرحلة فيها تجارب بزاف." },
+  { word:"erschlossen", pos:"A", ar:"مفتوح للاستعمال", darija:"محلول وموجد", de_example:"Das Gebiet ist erschlossen.", darija_example:"المنطقة محلولة وموجدة." },
+  { word:"generalistisch", pos:"A", ar:"عام شامل", darija:"عام", de_example:"Der Kurs ist generalistisch.", darija_example:"الكورس عام." },
+  { word:"geographisch", pos:"A", ar:"جغرافي مكاني", darija:"ديال الخريطة", de_example:"Die Lage ist geographisch gut.", darija_example:"البلاصة زوينة جغرافياً." },
+  { word:"hervorragend", pos:"A", ar:"ممتاز جداً", darija:"رائع", de_example:"Das Essen ist hervorragend.", darija_example:"الماكلة رائعة." },
+  { word:"innovativ", pos:"A", ar:"حديث مبتكر", darija:"جديد بفكرة", de_example:"Die Idee ist innovativ.", darija_example:"الفكرة جديدة." },
+  { word:"involviert", pos:"A", ar:"منخرط مشارك", darija:"داخل فشي حاجة", de_example:"Er ist involviert.", darija_example:"هو داخل فالموضوع." },
+  { word:"kreativ", pos:"A", ar:"مبدع خلاّق", darija:"عندو أفكار", de_example:"Sie ist kreativ.", darija_example:"عندها أفكار." },
+  { word:"kulinarisch", pos:"A", ar:"متعلق بالأكل", darija:"ديال الماكلة", de_example:"Das Angebot ist kulinarisch gut.", darija_example:"الأكل مزيان." },
+  { word:"mittelalterlich", pos:"A", ar:"من العصور", darija:"قديم بزاف", de_example:"Die Stadt ist mittelalterlich.", darija_example:"المدينة قديمة بزاف." },
+  { word:"neutral", pos:"A", ar:"محايد رسمي", darija:"ما داخل فحتى جهة", de_example:"Das Land ist neutral.", darija_example:"البلاد ما داخلاش فحتى جهة." },
+  { word:"politisch", pos:"A", ar:"متعلق بالسياسة", darija:"ديال السياسة", de_example:"Das Thema ist politisch.", darija_example:"الموضوع ديال السياسة." },
+  { word:"rasant", pos:"A", ar:"سريع جداً", darija:"سريع بزاف", de_example:"Die Entwicklung ist rasant.", darija_example:"التطور سريع بزاف." },
+  { word:"reich", pos:"A", ar:"غني مادياً", darija:"عندو الفلوس", de_example:"Er ist reich.", darija_example:"عندو الفلوس." },
+  { word:"reichhaltig", pos:"A", ar:"غني متنوع", darija:"فيه بزاف", de_example:"Das Essen ist reichhaltig.", darija_example:"الماكلة فيها بزاف." },
+  { word:"saftig", pos:"A", ar:"كثير العصير", darija:"فيه الما", de_example:"Das Fleisch ist saftig.", darija_example:"اللحم فيه الما." },
+  { word:"sekundär", pos:"A", ar:"ثانوي غير أساسي", darija:"ماشي مهم بزاف", de_example:"Das Problem ist sekundär.", darija_example:"المشكل ماشي مهم بزاف." },
+  { word:"schneebedeckt", pos:"A", ar:"مغطى بالثلج", darija:"فيه الثلج", de_example:"Der Berg ist schneebedeckt.", darija_example:"الجبل فيه الثلج." },
+  { word:"spezifisch", pos:"A", ar:"محدد خاص", darija:"خاص", de_example:"Das ist spezifisch.", darija_example:"هادا خاص." },
+  { word:"strategisch", pos:"A", ar:"استراتيجي مخطط", darija:"مخطط مزيان", de_example:"Das ist strategisch wichtig.", darija_example:"هادا مهم بالتخطيط." },
+  { word:"tertiär", pos:"A", ar:"قطاع ثالث", darija:"المستوى الثالث", de_example:"Das ist der tertiäre Sektor.", darija_example:"هادا القطاع الثالث." },
+  { word:"vernetzt", pos:"A", ar:"مترابط شبكياً", darija:"مربوط بشبكة", de_example:"Die Firma ist vernetzt.", darija_example:"الشركة مربوطة بشبكة." },
+  { word:"verschneit", pos:"A", ar:"مليء بالثلج", darija:"معمّر بالثلج", de_example:"Die Landschaft ist verschneit.", darija_example:"البلاصة معمّرة بالثلج." },
+  { word:"zahlreich", pos:"A", ar:"عدد كبير", darija:"بزاف", de_example:"Es gibt zahlreiche Touristen.", darija_example:"كاينين سياح بزاف." },
+
+  // ===== Sonstiges – Nomen =====
+  { word:"Alm", pos:"N", ar:"مزرعة جبلية", darija:"بلاصة فالجبل", de_example:"Die Alm ist hoch.", darija_example:"البلاصة فالجبل عالية." },
+  { word:"Aperitif", pos:"N", ar:"مشروب فاتح", darija:"شرب قبل الماكلة", de_example:"Wir trinken einen Aperitif.", darija_example:"شربنا قبل الماكلة." },
+  { word:"Austausch", pos:"N", ar:"تبادل خبرات", darija:"تبادل", de_example:"Der Austausch ist wichtig.", darija_example:"التبادل مهم." },
+  { word:"Badesachen", pos:"N", ar:"ملابس سباحة", darija:"حوايج البحر", de_example:"Ich habe meine Badesachen.", darija_example:"عندي حوايج البحر." },
+  { word:"Berghütte", pos:"N", ar:"كوخ جبلي", darija:"دار صغيرة فالجبل", de_example:"Die Berghütte ist klein.", darija_example:"الدار الصغيرة فالجبل صغيرة." },
+
+  // ===== Pronomen / Artikel + Stadtbesichtigung (Nomen/Adj) =====
+  { word:"jedermann", pos:"PRON", ar:"كل شخص", darija:"أي واحد", de_example:"Das ist für jedermann.", darija_example:"هادا لأي واحد." },
+  { word:"Detektiv", pos:"N", ar:"محقق خاص", darija:"بوليسي خاص", de_example:"Der Detektiv sucht den Mann.", darija_example:"البوليسي الخاص كيقلّب على الراجل." },
+  { word:"Anblick", pos:"N", ar:"منظر مرئي", darija:"المنظر", de_example:"Der Anblick ist schön.", darija_example:"المنظر زوين." },
+  { word:"Dinner", pos:"N", ar:"عشاء رسمي", darija:"عشا", de_example:"Wir essen Dinner.", darija_example:"تعشّينا." },
+  { word:"Silhouette", pos:"N", ar:"ظل خارجي", darija:"الشكل من بعيد", de_example:"Ich sehe die Silhouette.", darija_example:"كنشوف الشكل من بعيد." },
+  { word:"Fahrstuhl", pos:"N", ar:"مصعد كهربائي", darija:"أسانسور", de_example:"Der Fahrstuhl ist voll.", darija_example:"الأسانسور عامر." },
+  { word:"Anlage", pos:"N", ar:"منشأة كبيرة", darija:"مركّب", de_example:"Die Anlage ist modern.", darija_example:"المركّب جديد." },
+  { word:"Brücke", pos:"N", ar:"جسر مرتفع", darija:"قنطرة", de_example:"Die Brücke ist lang.", darija_example:"القنطرة طويلة." },
+  { word:"Landungsbrücke", pos:"N", ar:"رصيف سفن", darija:"بلاصة ترسو فيها البواخر", de_example:"Das Schiff ist an der Landungsbrücke.", darija_example:"الباطو فبلاصة الرسو." },
+  { word:"Fassade", pos:"N", ar:"واجهة مبنى", darija:"الوجهة ديال الدار", de_example:"Die Fassade ist alt.", darija_example:"الوجهة قديمة." },
+  { word:"Fontäne", pos:"N", ar:"نافورة ماء", darija:"فونتان", de_example:"Die Fontäne ist hoch.", darija_example:"الفونتان طالعة." },
+  { word:"Motiv", pos:"N", ar:"موضوع صورة", darija:"موضوع التصويرة", de_example:"Das Motiv ist schön.", darija_example:"موضوع التصويرة زوين." },
+  { word:"Rundfahrt", pos:"N", ar:"جولة سياحية", darija:"دورة فالباطو ولا الطوبيس", de_example:"Wir machen eine Rundfahrt.", darija_example:"درنا دورة." },
+  { word:"Rundflug", pos:"N", ar:"جولة جوية", darija:"دورة فالطّيارة", de_example:"Wir machen einen Rundflug.", darija_example:"درنا دورة فالطّيارة." },
+  { word:"malerisch", pos:"A", ar:"جميل كلوحة", darija:"زوين بحال تصويرة", de_example:"Die Stadt ist malerisch.", darija_example:"المدينة زوينة بحال تصويرة." },
+
+  // ===== Verben – Stadtbesichtigung =====
+  { word:"erfordern (A)", pos:"V", ar:"يتطلّب شيئاً", darija:"خاصو شي حاجة", de_example:"Der Job erfordert Zeit.", darija_example:"هاد الخدمة خاصها الوقت." },
+  { word:"erwischen (A)", pos:"V", ar:"يمسك شخصاً", darija:"يشد شي حد", de_example:"Die Polizei erwischt den Dieb.", darija_example:"البوليس شدّ اللص." },
+  { word:"(kalt) erwischt werden", pos:"V", ar:"يُفاجأ بشيء", darija:"يتفاجأ", de_example:"Er wird kalt erwischt.", darija_example:"تفاجأ فجأة." },
+  { word:"fesseln (A)", pos:"V", ar:"يشدّ الانتباه", darija:"يشدّ الواحد", de_example:"Der Film fesselt mich.", darija_example:"الفيلم شدّني." },
+  { word:"fliehen", pos:"V", ar:"يهرب سريعاً", darija:"يهرب", de_example:"Der Mann flieht.", darija_example:"الراجل هرب." },
+  { word:"konzentrieren an + D", pos:"V", ar:"يتركّز في", darija:"يكون مجموع فبلاصة", de_example:"Das Leben konzentriert sich an einem Ort.", darija_example:"الحياة مجموعة فبلاصة وحدة." },
+  { word:"kriegen (ugs.)", pos:"V", ar:"يحصل على", darija:"ياخذ", de_example:"Ich kriege ein Geschenk.", darija_example:"خديت كادو." },
+  { word:"niederschlagen", pos:"V", ar:"يضرب بشدة", darija:"يطيّح", de_example:"Der Mann schlägt ihn nieder.", darija_example:"طيّحو." },
+  { word:"orientieren, sich an + D", pos:"V", ar:"يهتدي بشيء", darija:"يتبع شي حاجة", de_example:"Ich orientiere mich an der Karte.", darija_example:"كنتبع الخريطة." },
+  { word:"orientiert sein an + D", pos:"V", ar:"يكون موجّه نحو", darija:"يكون تابع ل", de_example:"Der Kurs ist an der Praxis orientiert.", darija_example:"الكورس تابع للتطبيق." },
+  { word:"prägen (A)", pos:"V", ar:"يؤثر في", darija:"يخلي أثر", de_example:"Die Stadt prägt mich.", darija_example:"المدينة خلات فيّ أثر." },
+  { word:"recht haben", pos:"V", ar:"يكون على حق", darija:"عندو الحق", de_example:"Du hast recht.", darija_example:"عندك الحق." },
+  { word:"retten (A)", pos:"V", ar:"ينقذ شخصاً", darija:"ينجّي", de_example:"Der Mann rettet das Kind.", darija_example:"الراجل نجّى الدرّي." },
+  { word:"stoßen", pos:"V", ar:"يصدم شيئاً", darija:"يضرب فشي حاجة", de_example:"Ich stoße gegen die Tür.", darija_example:"ضربت فالباب." },
+  { word:"trennen (A)", pos:"V", ar:"يفصل شيئاً", darija:"يفرّق", de_example:"Ich trenne Papier und Plastik.", darija_example:"فرّقت الورق والبلاستيك." },
+  { word:"treten", pos:"V", ar:"يركل شيئاً", darija:"يضرب برجلو", de_example:"Er tritt den Ball.", darija_example:"ضرب الكرة برجلو." },
+  { word:"sich verlieben in + A", pos:"V", ar:"يقع في الحب", darija:"يتحب فـ", de_example:"Ich verliebe mich in die Stadt.", darija_example:"تحبّيت فالمدينة." },
+  { word:"verpassen (A)", pos:"V", ar:"يفوّت شيئاً", darija:"يضيّع", de_example:"Ich verpasse den Bus.", darija_example:"ضيّعت الطوبيس." },
+
       // ===== Nomen =====
       { word:"Abgeordnete", pos:"N", ar:"نائب برلماني", darija:"نائب فـ البرلمان", de_example:"Der Abgeordnete spricht.", darija_example:"النائب كيهدّر." },
       { word:"Alpen", pos:"N", ar:"جبال الألب", darija:"جبال الألب", de_example:"Die Alpen sind schön.", darija_example:"جبال الألب زوينين." },
@@ -1093,62 +1177,7 @@
       { word:"Panorama", pos:"N", ar:"منظر شامل", darija:"منظر واسع", de_example:"Das Panorama ist schön.", darija_example:"المنظر واسع وزوين." },
       { word:"Prozess", pos:"N", ar:"عملية تطوّر", darija:"عملية", de_example:"Der Prozess dauert lange.", darija_example:"العملية خذات وقت." },
       { word:"Sage", pos:"N", ar:"قصة قديمة", darija:"حكاية قديمة", de_example:"Die Sage ist interessant.", darija_example:"الحكاية القديمة زوينة." }
-     // ===== Nomen (ثلج/جبال) =====
-  { word:"Schlitten", pos:"N", ar:"مزلجة ثلج", darija:"سلايد ديال الثلج", de_example:"Das Kind fährt mit dem Schlitten.", darija_example:"الدرّي كيلعب بالسلايد ديال الثلج." },
-  { word:"Schneeschuh", pos:"N", ar:"حذاء ثلجي", darija:"سباط ديال الثلج", de_example:"Der Schneeschuh ist neu.", darija_example:"سباط الثلج جديد." },
-  { word:"Skigebiet", pos:"N", ar:"منطقة تزلج", darija:"بلاصة السكي", de_example:"Das Skigebiet ist groß.", darija_example:"بلاصة السكي كبيرة." },
-  { word:"Snowboard", pos:"N", ar:"لوح تزلج", darija:"سنوبورد", de_example:"Das Snowboard ist modern.", darija_example:"السنوبورد جديد." },
-  { word:"Spitze", pos:"N", ar:"قمة عالية", darija:"راس الجبل", de_example:"Die Spitze ist hoch.", darija_example:"راس الجبل عالي." },
-  { word:"Steinbock", pos:"N", ar:"وعل جبلي", darija:"ماعز الجبل", de_example:"Der Steinbock lebt in den Alpen.", darija_example:"ماعز الجبل عايش فالألب." },
-  { word:"Strom", pos:"N", ar:"تيار كهربائي", darija:"الضو الكهربائي", de_example:"Der Strom ist teuer.", darija_example:"الضو الكهربائي غالي." },
-  { word:"Ursprung", pos:"N", ar:"أصل الشيء", darija:"البداية", de_example:"Der Ursprung ist alt.", darija_example:"البداية قديمة." },
-
-  // ===== Adjektive =====
-  { word:"administrativ", pos:"A", ar:"إداري رسمي", darija:"إداري", de_example:"Das Problem ist administrativ.", darija_example:"المشكل إداري." },
-  { word:"ausgebaut", pos:"A", ar:"مطوّر جيداً", darija:"متطوّر", de_example:"Das Netz ist ausgebaut.", darija_example:"الشبكة متطوّرة." },
-  { word:"ausgeschildert", pos:"A", ar:"مبيَّن بعلامات", darija:"فيه لوحات", de_example:"Der Weg ist ausgeschildert.", darija_example:"الطريق فيها لوحات." },
-  { word:"eingebettet", pos:"A", ar:"مدموج داخل", darija:"داخل فـ", de_example:"Das Dorf ist in den Bergen eingebettet.", darija_example:"الدوار داخل فالجبال." },
-  { word:"erlebnisintensiv", pos:"A", ar:"مليء بالتجارب", darija:"فيه تجارب بزاف", de_example:"Die Reise ist erlebnisintensiv.", darija_example:"الرحلة فيها تجارب بزاف." },
-  { word:"erschlossen", pos:"A", ar:"مفتوح للاستعمال", darija:"محلول وموجد", de_example:"Das Gebiet ist erschlossen.", darija_example:"المنطقة محلولة وموجدة." },
-  { word:"generalistisch", pos:"A", ar:"عام شامل", darija:"عام", de_example:"Der Kurs ist generalistisch.", darija_example:"الكورس عام." },
-  { word:"geographisch", pos:"A", ar:"جغرافي مكاني", darija:"ديال الخريطة", de_example:"Die Lage ist geographisch gut.", darija_example:"البلاصة زوينة جغرافياً." },
-  { word:"hervorragend", pos:"A", ar:"ممتاز جداً", darija:"رائع", de_example:"Das Essen ist hervorragend.", darija_example:"الماكلة رائعة." },
-  { word:"innovativ", pos:"A", ar:"حديث مبتكر", darija:"جديد بفكرة", de_example:"Die Idee ist innovativ.", darija_example:"الفكرة جديدة." },
-  { word:"involviert", pos:"A", ar:"منخرط مشارك", darija:"داخل فشي حاجة", de_example:"Er ist involviert.", darija_example:"هو داخل فالموضوع." },
-  { word:"kreativ", pos:"A", ar:"مبدع خلاّق", darija:"عندو أفكار", de_example:"Sie ist kreativ.", darija_example:"عندها أفكار." },
-  { word:"kulinarisch", pos:"A", ar:"متعلق بالأكل", darija:"ديال الماكلة", de_example:"Das Angebot ist kulinarisch gut.", darija_example:"الأكل مزيان." },
-  { word:"mittelalterlich", pos:"A", ar:"من العصور", darija:"قديم بزاف", de_example:"Die Stadt ist mittelalterlich.", darija_example:"المدينة قديمة بزاف." },
-  { word:"neutral", pos:"A", ar:"محايد رسمي", darija:"ما داخل فحتى جهة", de_example:"Das Land ist neutral.", darija_example:"البلاد ما داخلاش فحتى جهة." },
-  { word:"politisch", pos:"A", ar:"متعلق بالسياسة", darija:"ديال السياسة", de_example:"Das Thema ist politisch.", darija_example:"الموضوع ديال السياسة." },
-  { word:"rasant", pos:"A", ar:"سريع جداً", darija:"سريع بزاف", de_example:"Die Entwicklung ist rasant.", darija_example:"التطور سريع بزاف." },
-  { word:"reich", pos:"A", ar:"غني مادياً", darija:"عندو الفلوس", de_example:"Er ist reich.", darija_example:"عندو الفلوس." },
-  { word:"reichhaltig", pos:"A", ar:"غني متنوع", darija:"فيه بزاف", de_example:"Das Essen ist reichhaltig.", darija_example:"الماكلة فيها بزاف." },
-  { word:"saftig", pos:"A", ar:"كثير العصير", darija:"فيه الما", de_example:"Das Fleisch ist saftig.", darija_example:"اللحم فيه الما." },
-  { word:"sekundär", pos:"A", ar:"ثانوي غير أساسي", darija:"ماشي مهم بزاف", de_example:"Das Problem ist sekundär.", darija_example:"المشكل ماشي مهم بزاف." },
-  { word:"schneebedeckt", pos:"A", ar:"مغطى بالثلج", darija:"فيه الثلج", de_example:"Der Berg ist schneebedeckt.", darija_example:"الجبل فيه الثلج." },
-  { word:"spezifisch", pos:"A", ar:"محدد خاص", darija:"خاص", de_example:"Das ist spezifisch.", darija_example:"هادا خاص." },
-  { word:"strategisch", pos:"A", ar:"استراتيجي مخطط", darija:"مخطط مزيان", de_example:"Das ist strategisch wichtig.", darija_example:"هادا مهم بالتخطيط." },
-  { word:"tertiär", pos:"A", ar:"قطاع ثالث", darija:"المستوى الثالث", de_example:"Das ist der tertiäre Sektor.", darija_example:"هادا القطاع الثالث." },
-  { word:"vernetzt", pos:"A", ar:"مترابط شبكياً", darija:"مربوط بشبكة", de_example:"Die Firma ist vernetzt.", darija_example:"الشركة مربوطة بشبكة." },
-  { word:"verschneit", pos:"A", ar:"مليء بالثلج", darija:"معمّر بالثلج", de_example:"Die Landschaft ist verschneit.", darija_example:"البلاصة معمّرة بالثلج." },
-  { word:"zahlreich", pos:"A", ar:"عدد كبير", darija:"بزاف", de_example:"Es gibt zahlreiche Touristen.", darija_example:"كاينين سياح بزاف." },
-
-  // ===== Sonstiges – Nomen =====
-  { word:"Alm", pos:"N", ar:"مزرعة جبلية", darija:"بلاصة فالجبل", de_example:"Die Alm ist hoch.", darija_example:"البلاصة فالجبل عالية." },
-  { word:"Aperitif", pos:"N", ar:"مشروب فاتح", darija:"شرب قبل الماكلة", de_example:"Wir trinken einen Aperitif.", darija_example:"شربنا قبل الماكلة." },
-  { word:"Austausch", pos:"N", ar:"تبادل خبرات", darija:"تبادل", de_example:"Der Austausch ist wichtig.", darija_example:"التبادل مهم." },
-  { word:"Badesachen", pos:"N", ar:"ملابس سباحة", darija:"حوايج البحر", de_example:"Ich habe meine Badesachen.", darija_example:"عندي حوايج البحر." },
-  { word:"Berghütte", pos:"N", ar:"كوخ جبلي", darija:"دار صغيرة فالجبل", de_example:"Die Berghütte ist klein.", darija_example:"الدار الصغيرة فالجبل صغيرة." },
-
-  // ===== Pronomen / Artikel + Stadtbesichtigung (Nomen/Adj) =====
-  { word:"jedermann", pos:"PRON", ar:"كل شخص", darija:"أي واحد", de_example:"Das ist für jedermann.", darija_example:"هادا لأي واحد." },
-  { word:"Detektiv", pos:"N", ar:"محقق خاص", darija:"بوليسي خاص", de_example:"Der Detektiv sucht den Mann.", darija_example:"البوليسي الخاص كيقلّب على الراجل." },
-  { word:"Anblick", pos:"N", ar:"منظر مرئي", darija:"المنظر", de_example:"Der Anblick ist schön.", darija_example:"المنظر زوين." },
-  { word:"Dinner", pos:"N", ar:"عشاء رسمي", darija:"عشا", de_example:"Wir essen Dinner.", darija_example:"تعشّينا." },
-  { word:"Silhouette", pos:"N", ar:"ظل خارجي", darija:"الشكل من بعيد", de_example:"Ich sehe die Silhouette.", darija_example:"كنشوف الشكل من بعيد." },
-  { word:"Fahrstuhl", pos:"N", ar:"مصعد كهربائي", darija:"أسانسور", de_example:"Der Fahrstuhl ist voll.", darija_example:"الأسان
-
-    ];
+     ];
 
     /* ==========================================
       BUILD + INDEX
