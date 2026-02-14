@@ -1018,6 +1018,80 @@
     ========================================== */
     const RAW_ENTRIES = [
         // =========================
+  // Verkehr – Nomen (Zusatz)
+  // =========================
+  { word:"Verkehrszeichen", pos:"N", ar:"علامة مرور", darija:"بلاكة ديال الطريق", de_example:"Das Verkehrszeichen ist wichtig.", darija_example:"بلاكة الطريق مهمة." },
+  { word:"Vorfahrt", pos:"N", ar:"أولوية مرور", darija:"حق المرور", de_example:"Er hat Vorfahrt.", darija_example:"عندو حق المرور." },
+
+  // =========================
+  // Verkehr – Nomen (Teil 2)
+  // =========================
+  { word:"Kreuzung", pos:"N", ar:"تقاطع طرق", darija:"الكروازي", de_example:"An der Kreuzung ist eine Ampel.", darija_example:"فالكروازي كاين السينيال." },
+  { word:"Kurve", pos:"N", ar:"منعطف طريق", darija:"الفيراج", de_example:"Die Kurve ist gefährlich.", darija_example:"الفيراج خطير." },
+  { word:"Leitplanke", pos:"N", ar:"حاجز جانبي", darija:"الحديدة فالطريق", de_example:"Das Auto fährt gegen die Leitplanke.", darija_example:"الطوموبيل ضربات فالحديدة ديال الطريق." },
+  { word:"Landstraße", pos:"N", ar:"طريق ريفي", darija:"طريق خارج المدينة", de_example:"Wir fahren auf der Landstraße.", darija_example:"كنسوقو فطريق خارج المدينة." },
+  { word:"Mitfahrgelegenheit", pos:"N", ar:"فرصة ركوب", darija:"توصيلة مع شي حد", de_example:"Ich suche eine Mitfahrgelegenheit.", darija_example:"كنقلب على توصيلة." },
+  { word:"Pendler", pos:"N", ar:"مسافر يومي", darija:"اللي كيمشي ويرجع للخدمة", de_example:"Der Pendler fährt jeden Tag.", darija_example:"كيمشي ويرجع كل نهار." },
+  { word:"Radweg", pos:"N", ar:"مسار دراجات", darija:"طريق ديال البيكالة", de_example:"Der Radweg ist neu.", darija_example:"طريق البيكالة جديد." },
+  { word:"Semesterticket", pos:"N", ar:"تذكرة فصل", darija:"تيكي ديال السميستر", de_example:"Ich habe ein Semesterticket.", darija_example:"عندي تيكي ديال السميستر." },
+  { word:"Stau", pos:"N", ar:"ازدحام سير", darija:"الزحام", de_example:"Es gibt einen Stau.", darija_example:"كاين الزحام." },
+  { word:"Tempo", pos:"N", ar:"سرعة محددة", darija:"السرعة", de_example:"Das Tempo ist 50.", darija_example:"السرعة 50." },
+  { word:"Tunnel", pos:"N", ar:"نفق طريق", darija:"تونيل", de_example:"Das Auto fährt durch den Tunnel.", darija_example:"الطوموبيل دازت من التونيل." },
+  { word:"Überholmanöver", pos:"N", ar:"عملية تجاوز", darija:"دوزان على شي حد", de_example:"Das Überholmanöver ist gefährlich.", darija_example:"دوزان على شي حد خطير." },
+  { word:"Unfall", pos:"N", ar:"حادث طريق", darija:"حادثة", de_example:"Es gibt einen Unfall.", darija_example:"كاينة حادثة." },
+  { word:"Verkehr", pos:"N", ar:"حركة مرور", darija:"السير", de_example:"Der Verkehr ist stark.", darija_example:"السير قوي." },
+  { word:"Verkehrsregel", pos:"N", ar:"قانون مرور", darija:"قانون السير", de_example:"Ich kenne die Verkehrsregeln.", darija_example:"كنعرف قانون السير." },
+  { word:"Verkehrsmittel", pos:"N", ar:"وسيلة نقل", darija:"وسيلة نقل", de_example:"Das Verkehrsmittel ist schnell.", darija_example:"وسيلة النقل سريعة." },
+
+  // =========================
+  // Verkehr – Verben
+  // =========================
+  { word:"abbiegen", pos:"V", ar:"ينعطف يميناً", darija:"يدور", de_example:"Ich biege links ab.", darija_example:"درت ليسار." },
+  { word:"anfahren", pos:"V", ar:"ينطلق بالمركبة", darija:"يبدا يسوق", de_example:"Das Auto fährt an.", darija_example:"الطوموبيل بدات تسوق." },
+  { word:"anhalten", pos:"V", ar:"يتوقف فجأة", darija:"يوقف", de_example:"Das Auto hält an.", darija_example:"الطوموبيل وقفات." },
+  { word:"blinken", pos:"V", ar:"يشير بالضوء", darija:"يشعل السينيال", de_example:"Er blinkt rechts.", darija_example:"شعّل السينيال ديال اليمين." },
+  { word:"bremsen", pos:"V", ar:"يضغط المكابح", darija:"يفريني", de_example:"Ich bremse schnell.", darija_example:"فرينيت بسرعة." },
+  { word:"hupen", pos:"V", ar:"يضغط البوق", darija:"يضرب الكلاكسون", de_example:"Er hupt laut.", darija_example:"ضرب الكلاكسون بقوة." },
+  { word:"lenken / steuern", pos:"V", ar:"يوجّه المركبة", darija:"يسيّر", de_example:"Ich lenke das Auto.", darija_example:"كنسيّر الطوموبيل." },
+  { word:"beschleunigen", pos:"V", ar:"يزيد السرعة", darija:"يسرّع", de_example:"Das Auto beschleunigt.", darija_example:"الطوموبيل سرّعات." },
+  { word:"pendeln", pos:"V", ar:"يسافر يومياً", darija:"يمشي ويرجع", de_example:"Er pendelt zur Arbeit.", darija_example:"كيمشي ويرجع للخدمة." },
+  { word:"ausweichen", pos:"V", ar:"يتفادى شيئاً", darija:"يهرب من شي حاجة", de_example:"Er weicht dem Auto aus.", darija_example:"تفادى الطوموبيل." },
+  { word:"ausrutschen", pos:"V", ar:"ينزلق فجأة", darija:"تزلق", de_example:"Er rutscht auf der Straße aus.", darija_example:"تزلق فالطريق." },
+  { word:"zusammenstoßen", pos:"V", ar:"يصطدم بشيء", darija:"يتصادم", de_example:"Zwei Autos stoßen zusammen.", darija_example:"جوج طوموبيلات تصادمو." },
+  { word:"wenden", pos:"V", ar:"يدير نصف دورة", darija:"يدور ويرجع", de_example:"Er wendet das Auto.", darija_example:"دار دورة بالطوموبيل." },
+  { word:"verunglücken", pos:"V", ar:"يتعرّض لحادث", darija:"يطيح فحادثة", de_example:"Er verunglückt.", darija_example:"طاح فحادثة." },
+  { word:"sich verhalten", pos:"V", ar:"يتصرف بطريقة", darija:"يتصرّف", de_example:"Er verhält sich ruhig.", darija_example:"تصرّف بهدوء." },
+
+  // =========================
+  // Verkehr & Alltag – Verben (Sonstiges)
+  // =========================
+  { word:"sich gewöhnen an + A", pos:"V", ar:"يعتاد على", darija:"يولّف", de_example:"Ich gewöhne mich an das Auto.", darija_example:"ولفت الطوموبيل." },
+  { word:"gründen", pos:"V", ar:"يؤسس شيئاً", darija:"يأسس", de_example:"Er gründet eine Firma.", darija_example:"أسّس شركة." },
+  { word:"halten von + D", pos:"V", ar:"يرى رأياً", darija:"شنو رأيك ف", de_example:"Was hältst du von dem Auto?", darija_example:"شنو رأيك فهاد الطوموبيل؟" },
+  { word:"lagern", pos:"V", ar:"يخزّن شيئاً", darija:"يخزّن", de_example:"Wir lagern das Benzin.", darija_example:"خزّنا البنزين." },
+  { word:"sich langweilen", pos:"V", ar:"يملّ كثيراً", darija:"يملّ", de_example:"Ich langweile mich.", darija_example:"مليت." },
+  { word:"sich leisten", pos:"V", ar:"يستطيع دفع", darija:"يقدر يخلّص", de_example:"Ich leiste mir ein Auto.", darija_example:"قدرت نشري طوموبيل." },
+  { word:"in Betrieb nehmen", pos:"V", ar:"يشغّل جهازاً", darija:"يشعل", de_example:"Wir nehmen die Maschine in Betrieb.", darija_example:"شعلنا الماكينة." },
+  { word:"Rücksicht nehmen auf + A", pos:"V", ar:"يراعي شيئاً", darija:"يردّ البال ل", de_example:"Nimm Rücksicht auf Kinder.", darija_example:"ردّ البال للدراري." },
+  { word:"passieren", pos:"V", ar:"يحدث أمر", darija:"يوقع", de_example:"Was ist passiert?", darija_example:"شنو وقع؟" },
+  { word:"schonen", pos:"V", ar:"يحافظ على", darija:"ما يضرّش", de_example:"Schone dein Auto.", darija_example:"ما تضرّش الطوموبيل." },
+  { word:"schulen", pos:"V", ar:"يدرّب شخصاً", darija:"يكوّن", de_example:"Die Firma schult Mitarbeiter.", darija_example:"الشركة كتكوّن الخدامين." },
+  { word:"sperren", pos:"V", ar:"يغلق طريقاً", darija:"يسدّ", de_example:"Die Polizei sperrt die Straße.", darija_example:"البوليس سدّ الطريق." },
+  { word:"stattfinden", pos:"V", ar:"يُقام حدث", darija:"يتدار", de_example:"Das Treffen findet statt.", darija_example:"اللقاء تدار." },
+  { word:"zur Verfügung stehen", pos:"V", ar:"يكون متاحاً", darija:"يكون موجود", de_example:"Das Auto steht zur Verfügung.", darija_example:"الطوموبيل موجودة." },
+  { word:"stilllegen", pos:"V", ar:"يوقف تشغيل", darija:"يوقف", de_example:"Die Firma legt das Werk still.", darija_example:"الشركة وقفات المعمل." },
+  { word:"töten", pos:"V", ar:"يقتل شخصاً", darija:"يقتل", de_example:"Der Unfall tötet Menschen.", darija_example:"الحادثة قتلات ناس." },
+  { word:"sich verletzen", pos:"V", ar:"يصاب شخص", darija:"يتصاب", de_example:"Er verletzt sich.", darija_example:"تصاب." },
+  { word:"verursachen", pos:"V", ar:"يسبب شيئاً", darija:"يسبب", de_example:"Der Unfall verursacht Schaden.", darija_example:"الحادثة سبّبات ضرر." },
+  { word:"verzichten auf + A", pos:"V", ar:"يتخلّى عن", darija:"يحيد منو", de_example:"Ich verzichte auf das Auto.", darija_example:"حيّدت الطوموبيل." },
+  { word:"vorhaben", pos:"V", ar:"ينوي شيئاً", darija:"ناوي يدير", de_example:"Ich habe etwas vor.", darija_example:"ناوي ندير شي حاجة." },
+
+  // =========================
+  // Präposition
+  // =========================
+  { word:"dank + G", pos:"PRÄP", ar:"بفضل شيء", darija:"بفضل", de_example:"Dank deiner Hilfe schaffe ich das.", darija_example:"بفضل مساعدتك قدرت نديرها." },
+
+        // =========================
   // Migration – Adjektive (Rest)
   // =========================
   { word:"weitreichend", pos:"A", ar:"بعيد التأثير", darija:"تأثير كبير", de_example:"Die Entscheidung ist weitreichend.", darija_example:"القرار عندو تأثير كبير." },
