@@ -1017,6 +1017,96 @@
       فين تزيد؟ زِد entries قبل السطر الأخير ];
     ========================================== */
     const RAW_ENTRIES = [
+        // ===== Religion – Ergänzung =====
+  { word:"Protestantin", pos:"N", ar:"امرأة بروتستانتية", darija:"بروتستانتية", de_example:"Sie ist Protestantin.", darija_example:"هي بروتستانتية." },
+
+  // ===== Geschichte – Mauerfall / Wiedervereinigung =====
+  { word:"Mauerfall", pos:"N", ar:"سقوط الجدار", darija:"طيحان الحيط", de_example:"Der Mauerfall war 1989.", darija_example:"طيحان الحيط كان فـ 1989." },
+  { word:"Wende", pos:"N", ar:"تحوّل سياسي", darija:"التغيير الكبير", de_example:"Die Wende verändert das Land.", darija_example:"التغيير الكبير بدّل البلاد." },
+  { word:"Vereinigung", pos:"N", ar:"اتحاد رسمي", darija:"التوحيد", de_example:"Die Vereinigung ist wichtig.", darija_example:"التوحيد مهم." },
+  { word:"Wiedervereinigung", pos:"N", ar:"إعادة توحيد", darija:"رجوع التوحيد", de_example:"Die Wiedervereinigung war 1990.", darija_example:"رجوع التوحيد كان فـ 1990." },
+  { word:"vereinigen (A)", pos:"V", ar:"يوحّد شيئاً", darija:"يجمع", de_example:"Sie vereinigen die Länder.", darija_example:"جمعو البلاد." },
+  { word:"wiedervereinigen (A)", pos:"V", ar:"يعيد توحيد", darija:"يرجّع يجمع", de_example:"Deutschland vereinigt sich wieder.", darija_example:"ألمانيا رجعات تجمّعات." },
+  { word:"Bundestag", pos:"N", ar:"برلمان اتحادي", darija:"البرلمان", de_example:"Der Bundestag entscheidet.", darija_example:"البرلمان كيقرّر." },
+
+  // ===== Literatur – Nomen =====
+  { word:"Erzählung", pos:"N", ar:"قصة قصيرة", darija:"حكاية", de_example:"Die Erzählung ist spannend.", darija_example:"الحكاية مشوّقة." },
+  { word:"Galerie", pos:"N", ar:"معرض فني", darija:"غاليري", de_example:"Die Galerie ist groß.", darija_example:"الغاليري كبيرة." },
+  { word:"Graffito", pos:"N", ar:"رسم جداري", darija:"رسمة فالحيط", de_example:"Das Graffito ist bunt.", darija_example:"الرسمة فالحيط ملوّنة." },
+  { word:"Graffiti", pos:"N", ar:"رسومات جدارية", darija:"رسومات فالحيط", de_example:"Die Graffiti sind schön.", darija_example:"الرسومات فالحيط زوينة." },
+  { word:"Imbiss", pos:"N", ar:"مطعم صغير", darija:"سناك", de_example:"Wir essen im Imbiss.", darija_example:"كلّينا فالسناك." },
+  { word:"Jahrzehnt", pos:"N", ar:"عشر سنوات", darija:"عشرة سنين", de_example:"Ein Jahrzehnt ist lang.", darija_example:"عشرة سنين مدة طويلة." },
+  { word:"Kindergarten", pos:"N", ar:"روضة أطفال", darija:"الگارديان", de_example:"Das Kind geht in den Kindergarten.", darija_example:"الدرّي مشى للگارديان." },
+  { word:"Konsument", pos:"N", ar:"مستهلك شخص", darija:"اللي كيشرّي", de_example:"Der Konsument kauft viel.", darija_example:"اللي كيشرّي كيشرّي بزاف." },
+  { word:"Konsumentin", pos:"N", ar:"مستهلكة امرأة", darija:"اللي كتشرّي", de_example:"Die Konsumentin kauft Brot.", darija_example:"اللي كتشرّي شرات الخبز." },
+  { word:"Nobelpreis", pos:"N", ar:"جائزة نوبل", darija:"نوبل", de_example:"Er bekommt den Nobelpreis.", darija_example:"خدا جائزة نوبل." },
+  { word:"Nobelpreisträger", pos:"N", ar:"فائز نوبل", darija:"اللي ربح نوبل", de_example:"Der Nobelpreisträger spricht.", darija_example:"اللي ربح نوبل كيهدّر." },
+  { word:"Nobelpreisträgerin", pos:"N", ar:"فائزة نوبل", darija:"اللي ربحت نوبل", de_example:"Die Nobelpreisträgerin kommt.", darija_example:"اللي ربحت نوبل جات." },
+  { word:"Figur", pos:"N", ar:"شخصية قصة", darija:"شخصية", de_example:"Die Figur ist wichtig.", darija_example:"الشخصية مهمة." },
+  { word:"Hauptfigur", pos:"N", ar:"شخصية رئيسية", darija:"الشخصية الرئيسية", de_example:"Die Hauptfigur ist stark.", darija_example:"الشخصية الرئيسية قوية." },
+  { word:"Lektüre", pos:"N", ar:"نص للقراءة", darija:"نص نقراوه", de_example:"Die Lektüre ist interessant.", darija_example:"النص زوين." },
+  { word:"Vorstadt", pos:"N", ar:"ضاحية مدينة", darija:"حي بعيد", de_example:"Er wohnt in der Vorstadt.", darija_example:"ساكن فحي بعيد." },
+  { word:"Wahrheit", pos:"N", ar:"حقيقة واضحة", darija:"الحقيقة", de_example:"Die Wahrheit ist wichtig.", darija_example:"الحقيقة مهمة." },
+
+  // ===== Verben – Geschichte/Literatur/Berlin =====
+  { word:"boomen", pos:"V", ar:"يزدهر بقوة", darija:"طالع بزاف", de_example:"Die Wirtschaft boomt.", darija_example:"الاقتصاد طالع بزاف." },
+  { word:"sich einbilden", pos:"V", ar:"يتوهّم شيئاً", darija:"يتخيّل براسو", de_example:"Er bildet sich etwas ein.", darija_example:"كيتهيّأ ليه شي حاجة." },
+  { word:"einmauern (A)", pos:"V", ar:"يحيط بجدار", darija:"يسوّر", de_example:"Sie mauern das Haus ein.", darija_example:"سوّرو الدار." },
+  { word:"einwandern", pos:"V", ar:"يهاجر إلى", darija:"يهاجر", de_example:"Viele Menschen wandern ein.", darija_example:"بزاف ديال الناس كيهاجرو." },
+  { word:"krönen (A)", pos:"V", ar:"يتوّج شخصاً", darija:"يدير ليه التاج", de_example:"Man krönt den König.", darija_example:"دارو التاج للملك." },
+  { word:"fangen (A)", pos:"V", ar:"يمسك شيئاً", darija:"يشد", de_example:"Die Polizei fängt den Mann.", darija_example:"البوليس شدّ الراجل." },
+  { word:"umkommen", pos:"V", ar:"يموت حادثاً", darija:"يموت فحادثة", de_example:"Viele Menschen kommen um.", darija_example:"بزاف ديال الناس ماتو." },
+  { word:"gelten als + N", pos:"V", ar:"يُعتبر كـ", darija:"كيتحسب بحال", de_example:"Berlin gilt als modern.", darija_example:"برلين كيتحسب حديثة." },
+  { word:"herrschen", pos:"V", ar:"يسود وضع", darija:"كاين", de_example:"Es herrscht Ruhe.", darija_example:"كاين الهدوء." },
+  { word:"herumlaufen / rumlaufen", pos:"V", ar:"يتجول حول", darija:"يدور", de_example:"Die Kinder laufen herum.", darija_example:"الدراري كيدورو." },
+  { word:"hochlegen (A)", pos:"V", ar:"يرفع شيئاً", darija:"يطلع", de_example:"Er legt die Füße hoch.", darija_example:"طلّع رجليه." },
+  { word:"lüften (A)", pos:"V", ar:"يهوّي غرفة", darija:"يحل الشباك", de_example:"Ich lüfte das Zimmer.", darija_example:"حلّيت الشباك." },
+  { word:"mitsingen", pos:"V", ar:"يغني مع", darija:"يغني معاه", de_example:"Ich singe mit.", darija_example:"غنيت معاه." },
+  { word:"renovieren (A)", pos:"V", ar:"يجدّد شيئاً", darija:"يرمّم", de_example:"Sie renovieren das Haus.", darija_example:"رمّمو الدار." },
+  { word:"relaxen", pos:"V", ar:"يسترخي قليلاً", darija:"يرتاح", de_example:"Ich relaxe zu Hause.", darija_example:"كنرتاح فالدار." },
+  { word:"sprühen (A)", pos:"V", ar:"يرش شيئاً", darija:"يرش", de_example:"Er sprüht Farbe.", darija_example:"رشّ الصباغة." },
+  { word:"tarnen (A)", pos:"V", ar:"يخفّي شيئاً", darija:"يغطّي باش مايبانش", de_example:"Er tarnt das Auto.", darija_example:"غطّى الطوموبيل باش مايبانش." },
+  { word:"umbauen (A)", pos:"V", ar:"يعيد بناء", darija:"يبدّل فالبناء", de_example:"Sie bauen das Haus um.", darija_example:"بدّلو فالدار." },
+  { word:"verbergen (A)", pos:"V", ar:"يخفي شيئاً", darija:"يخبي", de_example:"Er verbirgt die Wahrheit.", darija_example:"خبّى الحقيقة." },
+  { word:"verhelfen zu + D", pos:"V", ar:"يساعد على", darija:"يعاون باش يوصل ل", de_example:"Das Studium verhilft zu Erfolg.", darija_example:"القراية كتعاون باش توصل للنجاح." },
+  { word:"verschlagen nach + D", pos:"V", ar:"يُنقل إلى", darija:"تهزّ لمكان", de_example:"Er wird nach Berlin verschlagen.", darija_example:"تهزّ لبرلين." },
+  { word:"vervielfachen (A)", pos:"V", ar:"يضاعف شيئاً", darija:"يكثّر", de_example:"Die Firma vervielfacht den Gewinn.", darija_example:"الشركة كثّرات الربح." },
+  { word:"verwildern", pos:"V", ar:"يصبح برياً", darija:"يولي خايب", de_example:"Der Garten verwildert.", darija_example:"الجردة ولات خايبة." },
+  { word:"vorbeifahren", pos:"V", ar:"يمرّ بسيارة", darija:"يدوز بالطوموبيل", de_example:"Er fährt am Haus vorbei.", darija_example:"داز بالطوموبيل حدّ الدار." },
+  { word:"wiedererkennen (A)", pos:"V", ar:"يتعرّف مجدداً", darija:"يعاود يعرف", de_example:"Ich erkenne ihn wieder.", darija_example:"عاودت عرفتو." },
+  { word:"zementieren (A)", pos:"V", ar:"يثبّت بالإسمنت", darija:"يصبّ السيمان", de_example:"Sie zementieren die Wand.", darija_example:"صبّو السيمان فالحائط." },
+
+  // ===== Adjektive =====
+  { word:"augenscheinlich", pos:"A", ar:"واضح ظاهرياً", darija:"باين", de_example:"Das Problem ist augenscheinlich.", darija_example:"المشكل باين." },
+  { word:"bemerkenswert", pos:"A", ar:"جدير بالملاحظة", darija:"كيستاهل", de_example:"Das ist bemerkenswert.", darija_example:"هاد الشي كيستاهل." },
+  { word:"chaotisch", pos:"A", ar:"غير منظّم", darija:"عشوائي", de_example:"Die Stadt ist chaotisch.", darija_example:"المدينة عشوائية." },
+  { word:"eifrig", pos:"A", ar:"نشيط مجتهد", darija:"خدام بزاف", de_example:"Er lernt eifrig.", darija_example:"كيقرا بزاف." },
+  { word:"einheimisch", pos:"A", ar:"محلي أصلي", darija:"من البلاد", de_example:"Das ist einheimisches Essen.", darija_example:"هادي ماكلة من البلاد." },
+  { word:"geheimnisvoll", pos:"A", ar:"غامض سري", darija:"غامض", de_example:"Der Ort ist geheimnisvoll.", darija_example:"البلاصة غامضة." },
+  { word:"geistig", pos:"A", ar:"عقلي فكري", darija:"ديال العقل", de_example:"Er ist geistig stark.", darija_example:"هو قوي فالعقل." },
+  { word:"identisch", pos:"A", ar:"مطابق تماماً", darija:"نفس الشي", de_example:"Die Texte sind identisch.", darija_example:"النصوص نفس الشي." },
+  { word:"rasch", pos:"A", ar:"سريع جداً", darija:"بسرعة", de_example:"Er kommt rasch.", darija_example:"جا بسرعة." },
+  { word:"sehenswert", pos:"A", ar:"يستحق المشاهدة", darija:"خاصو يتشاف", de_example:"Berlin ist sehenswert.", darija_example:"برلين خاصها تتشاف." },
+  { word:"sogenannt", pos:"A", ar:"ما يُسمّى", darija:"اللي كيتسمّى", de_example:"Das ist die sogenannte Lösung.", darija_example:"هادا اللي كيتسمّى الحل." },
+  { word:"spontan", pos:"A", ar:"عفوي مفاجئ", darija:"بلا تخطيط", de_example:"Er kommt spontan.", darija_example:"جا بلا تخطيط." },
+  { word:"tatsächlich", pos:"A", ar:"فعلاً حقاً", darija:"فعلاً", de_example:"Das ist tatsächlich wahr.", darija_example:"هادا فعلاً صحيح." },
+  { word:"tolerant", pos:"A", ar:"متسامح منفتح", darija:"متسامح", de_example:"Er ist tolerant.", darija_example:"هو متسامح." },
+  { word:"unverfälscht", pos:"A", ar:"أصلي غير مزيف", darija:"أصلي", de_example:"Das ist unverfälscht.", darija_example:"هادا أصلي." },
+  { word:"vorstellbar", pos:"A", ar:"قابل للتصوّر", darija:"ممكن يتخيّل", de_example:"Das ist vorstellbar.", darija_example:"هادا ممكن يتخيّل." },
+
+  // ===== Adverb =====
+  { word:"rund (= ca.)", pos:"ADV", ar:"تقريباً حوالي", darija:"تقريباً", de_example:"Das kostet rund 100 Euro.", darija_example:"كيتكلّف تقريباً 100 أورو." },
+
+  // ===== Redemittel =====
+  { word:"im Folgenden", pos:"PHRASE", ar:"فيما يلي", darija:"دابا غادي نشوفو", de_example:"Im Folgenden sehen wir die Regeln.", darija_example:"دابا غادي نشوفو القوانين." },
+  { word:"vor Kurzem", pos:"ADV", ar:"منذ وقت قصير", darija:"مؤخراً", de_example:"Ich war vor Kurzem in Berlin.", darija_example:"كنت مؤخراً فبرلين." },
+  { word:"so tun, als ob", pos:"PHRASE", ar:"يتظاهر كأن", darija:"يدير بحال", de_example:"Er tut so, als ob er krank wäre.", darija_example:"دار بحال إلى هو مريض." },
+
+  // ===== Präpositionen =====
+  { word:"innerhalb + G", pos:"PREP", ar:"داخل مدة", darija:"داخل", de_example:"Innerhalb eines Jahres lerne ich Deutsch.", darija_example:"داخل عام نتعلم الألمانية." },
+  { word:"mitten in + D/A", pos:"PREP", ar:"في وسط", darija:"فوسط", de_example:"Er steht mitten in der Stadt.", darija_example:"واقف فوسط المدينة." },
+  { word:"während + G (ugs. D)", pos:"PREP", ar:"أثناء خلال", darija:"فاش", de_example:"Während des Krieges war es schwer.", darija_example:"فاش كانت الحرب كان صعيب." },
+
       { word:"Protestantin", pos:"N", ar:"امرأة بروتستانتية", darija:"بروتستانتية", de_example:"Sie ist Protestantin.", darija_example:"هي بروتستانتية." },
 
 { word:"katholisch", pos:"A", ar:"متعلق بالكاثوليك", darija:"كاثوليكي", de_example:"Er ist katholisch.", darija_example:"هو كاثوليكي." },
