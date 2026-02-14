@@ -2891,53 +2891,64 @@
     }
     window.addEventListener('DOMContentLoaded', init);
   </script>
-  <!-- 🔽 Social Footer -->
+  <!-- 🔽 Social Footer – Deutsch mit Said -->
 <div class="said-social">
+  
+  <!-- Instagram -->
   <a href="https://www.instagram.com/saidaiadi?igsh=MWVldzB2OXNvMWwzaQ==" target="_blank" rel="noopener" aria-label="Instagram">
     <svg viewBox="0 0 24 24">
       <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm-5 4a6 6 0 1 1 0 12 6 6 0 0 1 0-12zm0 2a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm6.2-.9a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0z"/>
     </svg>
   </a>
 
+  <!-- TikTok -->
   <a href="https://www.tiktok.com/@saidaiadii?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener" aria-label="TikTok">
     <svg viewBox="0 0 24 24">
       <path d="M16.5 3c.6 2.6 2.2 4.2 4.8 4.6v3.1c-1.7 0-3.3-.5-4.8-1.4v6.3c0 3.6-2.9 6.4-6.4 6.4S3.7 19.2 3.7 15.6s2.9-6.4 6.4-6.4c.5 0 1 .1 1.5.2v3.4c-.5-.3-1-.4-1.5-.4-1.8 0-3.2 1.4-3.2 3.2S8.3 18.8 10.1 18.8s3.2-1.4 3.2-3.2V3h3.2z"/>
     </svg>
   </a>
+
 </div>
 
 <style>
 .said-social{
   display:flex;
   justify-content:center;
-  gap:16px;
-  padding:30px 0;
+  gap:18px;
+  padding:40px 0;
 }
 
 .said-social a{
-  width:50px;
-  height:50px;
+  width:52px;
+  height:52px;
   display:flex;
   align-items:center;
   justify-content:center;
-  border-radius:15px;
-  background:#111;
-  border:1px solid rgba(255,255,255,0.1);
-  transition:0.25s ease;
+  border-radius:16px;
+  background:#0f1412;
+  border:1px solid rgba(255,255,255,0.08);
+  transition:all 0.3s ease;
+  backdrop-filter:blur(6px);
 }
 
 .said-social a:hover{
   transform:translateY(-4px);
-  background:#1c1c1c;
   border-color:#2e5e3a;
+  box-shadow:0 0 15px rgba(46,94,58,0.45);
 }
 
 .said-social svg{
-  width:24px;
-  height:24px;
+  width:26px;
+  height:26px;
   fill:white;
+  transition:0.3s ease;
+}
+
+.said-social a:hover svg{
+  fill:#3e7a4b;
 }
 </style>
+
 
 </body>
 </html>
