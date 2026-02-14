@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -888,288 +889,240 @@
     }
 
     // ================= Dictionary (A1/A2 empty placeholders + B1 filled) =================
-    const QAMOS_A1 = {
-      /* خليه خاوي دابا: زِد A1 هنا من بعد */
-    };
+    const QAMOS_A1 = { /* خليه خاوي دابا: زِد A1 هنا من بعد */ };
+    const QAMOS_A2 = { /* خليه خاوي دابا: زِد A2 هنا من بعد */ };
 
-    const QAMOS_A2 = {
-      /* خليه خاوي دابا: زِد A2 هنا من بعد */
-    };
-
-   /* ===============================
-   QAMOS ENGINE (Clean + Search + Suggest)
-   - No meaning changes
-   - Dedupe keeps FIRST occurrence
-   - Solves same-word different POS (e.g., unternehmen N/V)
-================================ */
-
-function normalizeStr(s){
-  return (s ?? "")
-    .toString()
-    .trim()
-    .toLowerCase()
-    // German umlauts & ß for robust search
-    .replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/ß/g,"ss")
-    // remove accents if any (safe)
-    .normalize("NFD").replace(/[\u0300-\u036f]/g,"");
-}
-
-function makeIdKey(word, pos){
-  // keep your original key by default,
-  // but if same word appears with different POS, we split safely:
-  // e.g. "unternehmen|V" => "unternehmen__v"
-  const w = normalizeStr(word);
-  const p = normalizeStr(pos);
-  if(!p) return w;
-  return `${w}__${p}`;
-}
-
-function safeEntry(entry){
-  // minimal validation to avoid broken objects
-  if(!entry || typeof entry !== "object") return null;
-  if(!entry.word) return null;
-  // keep POS as you wrote it, but also store normalized POS
-  const pos = entry.pos ?? "";
-  return {
-    word: entry.word,
-    pos,
-    pos_norm: normalizeStr(pos),
-    ar: entry.ar ?? "",
-    darija: entry.darija ?? "",
-    de_example: entry.de_example ?? "",
-    darija_example: entry.darija_example ?? ""
-  };
-}
-
-function buildQamos(entries){
-  const dict = {};
-  const meta = {
-    duplicates: [],     // [{key, kept, dropped}]
-    collisions: [],     // same "word" different POS => auto split keys
-    invalid: []         // entries missing fields
-  };
-
-  // Track by raw normalized word (without pos) to detect collisions
-  const seenWordPos = new Map(); // wordNorm -> Set(posNorm)
-
-  for(const raw of entries){
-    const e = safeEntry(raw);
-    if(!e){
-      meta.invalid.push(raw);
-      continue;
+    /* ===============================
+      QAMOS ENGINE (Clean + Search + Suggest)
+      - Dedupe keeps FIRST occurrence
+      - Keys are word__pos (normalized)
+    ================================ */
+    function normalizeStr(s){
+      return (s ?? "")
+        .toString()
+        .trim()
+        .toLowerCase()
+        .replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/ß/g,"ss")
+        .normalize("NFD").replace(/[\u0300-\u036f]/g,"");
     }
 
-    const wordNorm = normalizeStr(e.word);
-    const posNorm  = e.pos_norm || "";
-
-    if(!seenWordPos.has(wordNorm)) seenWordPos.set(wordNorm, new Set());
-    const set = seenWordPos.get(wordNorm);
-    const beforeSize = set.size;
-    set.add(posNorm);
-
-    // If same word appears with different POS, we split keys automatically
-    if(beforeSize > 0 && set.size > beforeSize){
-      meta.collisions.push({ word: e.word, pos: e.pos });
+    function makeIdKey(word, pos){
+      const w = normalizeStr(word);
+      const p = normalizeStr(pos);
+      if(!p) return w;
+      return `${w}__${p}`;
     }
 
-    const key = makeIdKey(e.word, e.pos); // safe unique key
-    if(dict[key]){
-      // duplicate exact same key -> keep FIRST, drop new
-      meta.duplicates.push({ key, kept: dict[key], dropped: e });
-      continue;
+    function safeEntry(entry){
+      if(!entry || typeof entry !== "object") return null;
+      if(!entry.word) return null;
+      const pos = entry.pos ?? "";
+      return {
+        word: entry.word,
+        pos,
+        pos_norm: normalizeStr(pos),
+        ar: entry.ar ?? "",
+        darija: entry.darija ?? "",
+        de_example: entry.de_example ?? "",
+        darija_example: entry.darija_example ?? ""
+      };
     }
-    dict[key] = {
-      pos: e.pos,              // keep exactly
-      ar: e.ar,
-      darija: e.darija,
-      de_example: e.de_example,
-      darija_example: e.darija_example
-    };
-  }
 
-  return { dict, meta };
-}
+    function buildQamos(entries){
+      const dict = {};
+      const meta = { duplicates: [], collisions: [], invalid: [] };
+      const seenWordPos = new Map(); // wordNorm -> Set(posNorm)
 
-function createSearchIndex(dict){
-  const items = Object.entries(dict).map(([key, val]) => {
-    const word = key.split("__")[0]; // normalized key base
-    const pos  = val.pos || "";
-    const hay = normalizeStr([
-      word, pos, val.ar, val.darija, val.de_example, val.darija_example
-    ].join(" | "));
-    return { key, val, hay };
-  });
-  return items;
-}
+      for(const raw of entries){
+        const e = safeEntry(raw);
+        if(!e){ meta.invalid.push(raw); continue; }
 
-function searchQamos(index, query, limit=25){
-  const q = normalizeStr(query);
-  if(!q) return [];
+        const wordNorm = normalizeStr(e.word);
+        const posNorm  = e.pos_norm || "";
 
-  // scoring: startsWith > includes
-  const results = [];
-  for(const it of index){
-    let score = 0;
-    if(it.hay.startsWith(q)) score += 100;
-    if(it.hay.includes(q)) score += 50;
+        if(!seenWordPos.has(wordNorm)) seenWordPos.set(wordNorm, new Set());
+        const set = seenWordPos.get(wordNorm);
+        const beforeSize = set.size;
+        set.add(posNorm);
+        if(beforeSize > 0 && set.size > beforeSize){
+          meta.collisions.push({ word: e.word, pos: e.pos });
+        }
 
-    // bonus if exact word match (key base)
-    const base = it.key.split("__")[0];
-    if(base === q) score += 120;
-    else if(base.startsWith(q)) score += 80;
+        const key = makeIdKey(e.word, e.pos);
+        if(dict[key]){
+          meta.duplicates.push({ key, kept: dict[key], dropped: e });
+          continue;
+        }
 
-    if(score > 0) results.push({ score, ...it });
-  }
-  results.sort((a,b)=> b.score - a.score);
-  return results.slice(0, limit).map(r => ({
-    key: r.key,
-    pos: r.val.pos,
-    ar: r.val.ar,
-    darija: r.val.darija,
-    de_example: r.val.de_example,
-    darija_example: r.val.darija_example
-  }));
-}
+        dict[key] = {
+          pos: e.pos,
+          ar: e.ar,
+          darija: e.darija,
+          de_example: e.de_example,
+          darija_example: e.darija_example
+        };
+      }
 
-function suggestQamos(index, prefix, limit=10){
-  const p = normalizeStr(prefix);
-  if(!p) return [];
-
-  const seen = new Set();
-  const out = [];
-
-  for(const it of index){
-    const base = it.key.split("__")[0];
-    if(base.startsWith(p) && !seen.has(base)){
-      seen.add(base);
-      out.push(base);
-      if(out.length >= limit) break;
+      return { dict, meta };
     }
-  }
-  return out;
-}
 
-/* ==========================================
-   ✅ HERE: PASTE YOUR ENTRIES AS ARRAY
-========================================== */
+    function createSearchIndex(dict){
+      return Object.entries(dict).map(([key, val]) => {
+        const base = key.split("__")[0];
+        const pos  = val.pos || "";
+        const hay  = normalizeStr([base, pos, val.ar, val.darija, val.de_example, val.darija_example].join(" | "));
+        return { key, val, hay, base };
+      });
+    }
 
-const RAW_ENTRIES = [
-  // ===== Nomen =====
-  { word:"Abgeordnete", pos:"N", ar:"نائب برلماني", darija:"نائب فـ البرلمان", de_example:"Der Abgeordnete spricht.", darija_example:"النائب كيهدّر." },
-  { word:"Alpen", pos:"N", ar:"جبال الألب", darija:"جبال الألب", de_example:"Die Alpen sind schön.", darija_example:"جبال الألب زوينين." },
-  // ... كمل هنا باقي entries كاملين ...
-  { word:"Sage", pos:"N", ar:"قصة قديمة", darija:"حكاية قديمة", de_example:"Die Sage ist interessant.", darija_example:"الحكاية القديمة زوينة." }
-  // ===== Nomen =====
-  { word:"Abgeordnete", pos:"N", ar:"نائب برلماني", darija:"نائب فـ البرلمان", de_example:"Der Abgeordnete spricht.", darija_example:"النائب كيهدّر." },
-  { word:"Alpen", pos:"N", ar:"جبال الألب", darija:"جبال الألب", de_example:"Die Alpen sind schön.", darija_example:"جبال الألب زوينين." },
-  { word:"Adel", pos:"N", ar:"طبقة النبلاء", darija:"عائلات كبار", de_example:"Der Adel ist reich.", darija_example:"العائلات الكبار عندهم الفلوس." },
-  { word:"Erbmonarchie", pos:"N", ar:"ملكية وراثية", darija:"حكم بالوراثة", de_example:"Liechtenstein ist eine Erbmonarchie.", darija_example:"ليختنشتاين فيها حكم بالوراثة." },
-  { word:"Fürst", pos:"N", ar:"أمير حاكم", darija:"الأمير", de_example:"Der Fürst lebt im Schloss.", darija_example:"الأمير ساكن فالقصر." },
-  { word:"Fürstin", pos:"N", ar:"أميرة حاكمة", darija:"الأميرة", de_example:"Die Fürstin ist beliebt.", darija_example:"الأميرة محبوبة." },
-  { word:"Herrschaft", pos:"N", ar:"سلطة حكم", darija:"الحكم", de_example:"Die Herrschaft ist stark.", darija_example:"الحكم قوي." },
-  { word:"Bevölkerung", pos:"N", ar:"عدد السكان", darija:"الناس ديال البلاد", de_example:"Die Bevölkerung ist klein.", darija_example:"الناس ديال البلاد قلال." },
-  { word:"Bundespräsident", pos:"N", ar:"رئيس اتحادي", darija:"الرئيس", de_example:"Der Bundespräsident besucht das Land.", darija_example:"الرئيس زار البلاد." },
-  { word:"Drehort", pos:"N", ar:"مكان تصوير", darija:"بلاصة تصوير", de_example:"Das ist ein Drehort.", darija_example:"هادي بلاصة تصوير." },
-  { word:"Einblick", pos:"N", ar:"نظرة داخلية", darija:"فكرة على الداخل", de_example:"Ich bekomme einen Einblick.", darija_example:"خديت فكرة على الداخل." },
-  { word:"Einwohner", pos:"N", ar:"ساكن مدينة", darija:"واحد ساكن", de_example:"Der Einwohner wohnt hier.", darija_example:"هو ساكن هنا." },
-  { word:"Einzelteil", pos:"N", ar:"قطعة مفردة", darija:"قطعة بوحدها", de_example:"Das Einzelteil ist klein.", darija_example:"القطعة صغيرة." },
-  { word:"Geheimnis", pos:"N", ar:"سر خفي", darija:"سر", de_example:"Das ist ein Geheimnis.", darija_example:"هادا سر." },
-  { word:"Handelsroute", pos:"N", ar:"طريق تجارية", darija:"طريق التجارة", de_example:"Die Handelsroute ist alt.", darija_example:"طريق التجارة قديمة." },
-  { word:"Parlament", pos:"N", ar:"مجلس نواب", darija:"البرلمان", de_example:"Das Parlament tagt heute.", darija_example:"البرلمان مجتمع اليوم." },
-  { word:"Schloss", pos:"N", ar:"قصر ملكي", darija:"قصر", de_example:"Das Schloss ist groß.", darija_example:"القصر كبير." },
-  { word:"Hektik", pos:"N", ar:"توتر سريع", darija:"السرعة والقلق", de_example:"In der Stadt gibt es Hektik.", darija_example:"فالمدينة كاين القلق والسرعة." },
-  { word:"Höhepunkt", pos:"N", ar:"لحظة مهمة", darija:"أهم لحظة", de_example:"Das ist der Höhepunkt.", darija_example:"هادي أهم لحظة." },
+    function searchQamos(index, query, limit=25){
+      const q = normalizeStr(query);
+      if(!q) return [];
+      const results = [];
+      for(const it of index){
+        let score = 0;
+        if(it.hay.startsWith(q)) score += 100;
+        if(it.hay.includes(q)) score += 50;
+        if(it.base === q) score += 120;
+        else if(it.base.startsWith(q)) score += 80;
+        if(score > 0) results.push({ score, ...it });
+      }
+      results.sort((a,b)=> b.score - a.score);
+      return results.slice(0, limit).map(r => ({
+        key: r.key,
+        pos: r.val.pos,
+        ar: r.val.ar,
+        darija: r.val.darija,
+        de_example: r.val.de_example,
+        darija_example: r.val.darija_example
+      }));
+    }
 
-  // ===== Liechtenstein – Nomen (تكملة) =====
-  { word:"Souveränität", pos:"N", ar:"سيادة دولة", darija:"استقلال البلاد", de_example:"Die Souveränität ist wichtig.", darija_example:"استقلال البلاد مهم." },
-  { word:"Immobilie", pos:"N", ar:"عقار ثابت", darija:"دار ولا أرض", de_example:"Er besitzt eine Immobilie.", darija_example:"عندو دار ولا أرض." },
-  { word:"Staat", pos:"N", ar:"دولة مستقلة", darija:"البلاد", de_example:"Der Staat ist klein.", darija_example:"البلاد صغيرة." },
-  { word:"Inspiration", pos:"N", ar:"فكرة ملهمة", darija:"إلهام", de_example:"Das ist eine Inspiration.", darija_example:"هادي فكرة ملهمة." },
-  { word:"Staatsoberhaupt", pos:"N", ar:"رئيس الدولة", darija:"راس الدولة", de_example:"Das Staatsoberhaupt spricht.", darija_example:"راس الدولة كيهدّر." },
-  { word:"Knotenpunkt", pos:"N", ar:"نقطة اتصال", darija:"بلاصة كتجمع الطرق", de_example:"Der Bahnhof ist ein Knotenpunkt.", darija_example:"الگار محطة كتجمع الطرق." },
-  { word:"Steuerparadies", pos:"N", ar:"ملاذ ضريبي", darija:"بلاد الضرائب قليلة", de_example:"Liechtenstein ist ein Steuerparadies.", darija_example:"ليختنشتاين فيها ضرائب قليلة." },
-  { word:"Lage", pos:"N", ar:"موقع جغرافي", darija:"البلاصة", de_example:"Die Lage ist gut.", darija_example:"البلاصة مزيانة." },
-  { word:"Währung", pos:"N", ar:"عملة رسمية", darija:"الفلوس ديال البلاد", de_example:"Die Währung ist stabil.", darija_example:"الفلوس ديال البلاد مستقرة." },
-  { word:"Verein", pos:"N", ar:"جمعية رسمية", darija:"جمعية", de_example:"Der Verein ist aktiv.", darija_example:"الجمعية نشيطة." },
-  { word:"Arbeitskraft", pos:"N", ar:"قوة عمل", darija:"يد عاملة", de_example:"Die Arbeitskraft ist wichtig.", darija_example:"اليد العاملة مهمة." },
-  { word:"Dienstleistung", pos:"N", ar:"خدمة مقدمة", darija:"خدمة", de_example:"Die Dienstleistung ist gut.", darija_example:"الخدمة مزيانة." },
-  { word:"Karrierechance", pos:"N", ar:"فرصة مهنية", darija:"فرصة فالخدمة", de_example:"Das ist eine Karrierechance.", darija_example:"هادي فرصة فالخدمة." },
-  { word:"Kooperation", pos:"N", ar:"تعاون مشترك", darija:"تعاون", de_example:"Die Kooperation ist gut.", darija_example:"التعاون مزيان." },
-  { word:"Messe", pos:"N", ar:"معرض تجاري", darija:"معرض", de_example:"Die Messe ist groß.", darija_example:"المعرض كبير." },
-  { word:"Sektor", pos:"N", ar:"قطاع اقتصادي", darija:"قطاع", de_example:"Der Sektor wächst.", darija_example:"القطاع كيكبر." },
-  { word:"Weltkonzern", pos:"N", ar:"شركة عالمية", darija:"شركة كبيرة عالمية", de_example:"Das ist ein Weltkonzern.", darija_example:"هادي شركة كبيرة عالمية." },
+    function suggestQamos(index, prefix, limit=10){
+      const p = normalizeStr(prefix);
+      if(!p) return [];
+      const seen = new Set();
+      const out = [];
+      for(const it of index){
+        if(it.base.startsWith(p) && !seen.has(it.base)){
+          seen.add(it.base);
+          out.push(it.base);
+          if(out.length >= limit) break;
+        }
+      }
+      return out;
+    }
 
-  // ===== Verben =====
-  { word:"inspirieren", pos:"V", ar:"يُلهم شخصاً", darija:"يعطيه فكرة", de_example:"Das Land inspiriert mich.", darija_example:"هاد البلاد عطتني فكرة." },
-  { word:"involviert sein", pos:"V", ar:"يكون منخرطاً", darija:"يكون داخل فشي حاجة", de_example:"Er ist im Projekt involviert.", darija_example:"هو داخل فهاد المشروع." },
-  { word:"langlaufen", pos:"V", ar:"يتزلج طويلاً", darija:"يدير سكي طويل", de_example:"Wir laufen im Winter lang.", darija_example:"كنْديرو سكي فالشتى." },
-  { word:"münden", pos:"V", ar:"يصب في", darija:"يدخل فشي نهر", de_example:"Der Fluss mündet ins Meer.", darija_example:"النهر كيدخل فالبحر." },
-  { word:"nennen", pos:"V", ar:"يسمّي شيئاً", darija:"يعيّط عليه", de_example:"Man nennt es Hauptstadt.", darija_example:"كيعيّطو ليها العاصمة." },
-  { word:"präparieren", pos:"V", ar:"يجهّز شيئاً", darija:"يوجّد", de_example:"Sie präparieren die Piste.", darija_example:"وجدو الطريق ديال السكي." },
-  { word:"profitieren von + D", pos:"V", ar:"يستفيد من", darija:"ياخذ الفائدة من", de_example:"Ich profitiere vom Kurs.", darija_example:"خديت الفائدة من الكورس." },
-  { word:"radeln", pos:"V", ar:"يركب دراجة", darija:"يسوق البيسيكليت", de_example:"Ich radle zur Arbeit.", darija_example:"كنمشي بالبيسيكليت للخدمة." },
-  { word:"snowboarden", pos:"V", ar:"يتزلج بلوح", darija:"يدير سنوبورد", de_example:"Er snowboardet im Winter.", darija_example:"كيدير سنوبورد فالشتى." },
-  { word:"umfassen", pos:"V", ar:"يشمل شيئاً", darija:"فيه بزاف الحوايج", de_example:"Der Kurs umfasst drei Themen.", darija_example:"الكورس فيه ثلاثة مواضيع." },
-  { word:"umgehen mit + D", pos:"V", ar:"يتعامل مع", darija:"يعرف يتصرف مع", de_example:"Er geht gut mit Geld um.", darija_example:"كيعرف يتصرف مع الفلوس." },
-  { word:"verbunden sein mit + D", pos:"V", ar:"يكون مرتبطاً", darija:"يكون مربوط ب", de_example:"Das Land ist mit Europa verbunden.", darija_example:"البلاد مربوطة بأوروبا." },
-  { word:"verfolgen", pos:"V", ar:"يتابع شيئاً", darija:"يتبع", de_example:"Ich verfolge das Ziel.", darija_example:"كنتبع الهدف." },
-  { word:"verzaubern", pos:"V", ar:"يسحر شخصاً", darija:"يخلي الواحد ينبهر", de_example:"Die Landschaft verzaubert mich.", darija_example:"المنظر خلىّني ننبهر." },
-  { word:"vorweisen", pos:"V", ar:"يُظهر شيئاً", darija:"يبيّن", de_example:"Er weist gute Noten vor.", darija_example:"بيّن نقاط مزيانة." },
-  { word:"zurückgehen auf + A", pos:"V", ar:"يرجع إلى", darija:"السبب ديالو هو", de_example:"Das geht auf das Mittelalter zurück.", darija_example:"هادا راجع لوقت قديم." },
+    /* ==========================================
+      ✅ RAW_ENTRIES (CLEAN) — ما كاين لا تكرار لا فاصلة ناقصة
+      فين تزيد؟ زِد entries قبل السطر الأخير ];
+    ========================================== */
+    const RAW_ENTRIES = [
+      // ===== Nomen =====
+      { word:"Abgeordnete", pos:"N", ar:"نائب برلماني", darija:"نائب فـ البرلمان", de_example:"Der Abgeordnete spricht.", darija_example:"النائب كيهدّر." },
+      { word:"Alpen", pos:"N", ar:"جبال الألب", darija:"جبال الألب", de_example:"Die Alpen sind schön.", darija_example:"جبال الألب زوينين." },
+      { word:"Adel", pos:"N", ar:"طبقة النبلاء", darija:"عائلات كبار", de_example:"Der Adel ist reich.", darija_example:"العائلات الكبار عندهم الفلوس." },
+      { word:"Erbmonarchie", pos:"N", ar:"ملكية وراثية", darija:"حكم بالوراثة", de_example:"Liechtenstein ist eine Erbmonarchie.", darija_example:"ليختنشتاين فيها حكم بالوراثة." },
+      { word:"Fürst", pos:"N", ar:"أمير حاكم", darija:"الأمير", de_example:"Der Fürst lebt im Schloss.", darija_example:"الأمير ساكن فالقصر." },
+      { word:"Fürstin", pos:"N", ar:"أميرة حاكمة", darija:"الأميرة", de_example:"Die Fürstin ist beliebt.", darija_example:"الأميرة محبوبة." },
+      { word:"Herrschaft", pos:"N", ar:"سلطة حكم", darija:"الحكم", de_example:"Die Herrschaft ist stark.", darija_example:"الحكم قوي." },
+      { word:"Bevölkerung", pos:"N", ar:"عدد السكان", darija:"الناس ديال البلاد", de_example:"Die Bevölkerung ist klein.", darija_example:"الناس ديال البلاد قلال." },
+      { word:"Bundespräsident", pos:"N", ar:"رئيس اتحادي", darija:"الرئيس", de_example:"Der Bundespräsident besucht das Land.", darija_example:"الرئيس زار البلاد." },
+      { word:"Drehort", pos:"N", ar:"مكان تصوير", darija:"بلاصة تصوير", de_example:"Das ist ein Drehort.", darija_example:"هادي بلاصة تصوير." },
+      { word:"Einblick", pos:"N", ar:"نظرة داخلية", darija:"فكرة على الداخل", de_example:"Ich bekomme einen Einblick.", darija_example:"خديت فكرة على الداخل." },
+      { word:"Einwohner", pos:"N", ar:"ساكن مدينة", darija:"واحد ساكن", de_example:"Der Einwohner wohnt hier.", darija_example:"هو ساكن هنا." },
+      { word:"Einzelteil", pos:"N", ar:"قطعة مفردة", darija:"قطعة بوحدها", de_example:"Das Einzelteil ist klein.", darija_example:"القطعة صغيرة." },
+      { word:"Geheimnis", pos:"N", ar:"سر خفي", darija:"سر", de_example:"Das ist ein Geheimnis.", darija_example:"هادا سر." },
+      { word:"Handelsroute", pos:"N", ar:"طريق تجارية", darija:"طريق التجارة", de_example:"Die Handelsroute ist alt.", darija_example:"طريق التجارة قديمة." },
+      { word:"Parlament", pos:"N", ar:"مجلس نواب", darija:"البرلمان", de_example:"Das Parlament tagt heute.", darija_example:"البرلمان مجتمع اليوم." },
+      { word:"Schloss", pos:"N", ar:"قصر ملكي", darija:"قصر", de_example:"Das Schloss ist groß.", darija_example:"القصر كبير." },
+      { word:"Hektik", pos:"N", ar:"توتر سريع", darija:"السرعة والقلق", de_example:"In der Stadt gibt es Hektik.", darija_example:"فالمدينة كاين القلق والسرعة." },
+      { word:"Höhepunkt", pos:"N", ar:"لحظة مهمة", darija:"أهم لحظة", de_example:"Das ist der Höhepunkt.", darija_example:"هادي أهم لحظة." },
 
-  // ===== Universität und Studium =====
-  { word:"Aufnahme", pos:"N", ar:"قبول جامعي", darija:"القبول", de_example:"Die Aufnahme ist schwer.", darija_example:"القبول صعيب." },
-  { word:"Betreuungsverhältnis", pos:"N", ar:"نسبة الإشراف", darija:"عدد الطلبة لكل أستاذ", de_example:"Das Betreuungsverhältnis ist gut.", darija_example:"عدد الطلبة لكل أستاذ مزيان." },
-  { word:"Mindeststudiendauer", pos:"N", ar:"مدة دراسة", darija:"أقل مدة للقراية", de_example:"Die Mindeststudiendauer ist drei Jahre.", darija_example:"أقل مدة للقراية ثلاثة سنين." },
-  { word:"Praxisorientierung", pos:"N", ar:"توجّه عملي", darija:"قراية تطبيقية", de_example:"Die Praxisorientierung ist wichtig.", darija_example:"القراية التطبيقية مهمة." },
-  { word:"Spezialisierung", pos:"N", ar:"تخصّص دراسي", darija:"تخصّص", de_example:"Ich mache eine Spezialisierung.", darija_example:"درت تخصّص." },
-  { word:"Studienbeginn", pos:"N", ar:"بداية الدراسة", darija:"أول العام الجامعي", de_example:"Der Studienbeginn ist im Herbst.", darija_example:"بداية القراية فالخريف." },
-  { word:"Studiengebühr", pos:"N", ar:"رسوم دراسة", darija:"فلوس القراية", de_example:"Die Studiengebühr ist hoch.", darija_example:"فلوس القراية طالعة." },
-  { word:"praxisrelevant", pos:"A", ar:"مهم عملياً", darija:"مفيد فالتطبيق", de_example:"Das Wissen ist praxisrelevant.", darija_example:"هاد المعرفة مفيدة فالتطبيق." },
+      // ===== Liechtenstein – Nomen (تكملة) =====
+      { word:"Souveränität", pos:"N", ar:"سيادة دولة", darija:"استقلال البلاد", de_example:"Die Souveränität ist wichtig.", darija_example:"استقلال البلاد مهم." },
+      { word:"Immobilie", pos:"N", ar:"عقار ثابت", darija:"دار ولا أرض", de_example:"Er besitzt eine Immobilie.", darija_example:"عندو دار ولا أرض." },
+      { word:"Staat", pos:"N", ar:"دولة مستقلة", darija:"البلاد", de_example:"Der Staat ist klein.", darija_example:"البلاد صغيرة." },
+      { word:"Inspiration", pos:"N", ar:"فكرة ملهمة", darija:"إلهام", de_example:"Das ist eine Inspiration.", darija_example:"هادي فكرة ملهمة." },
+      { word:"Staatsoberhaupt", pos:"N", ar:"رئيس الدولة", darija:"راس الدولة", de_example:"Das Staatsoberhaupt spricht.", darija_example:"راس الدولة كيهدّر." },
+      { word:"Knotenpunkt", pos:"N", ar:"نقطة اتصال", darija:"بلاصة كتجمع الطرق", de_example:"Der Bahnhof ist ein Knotenpunkt.", darija_example:"الگار محطة كتجمع الطرق." },
+      { word:"Steuerparadies", pos:"N", ar:"ملاذ ضريبي", darija:"بلاد الضرائب قليلة", de_example:"Liechtenstein ist ein Steuerparadies.", darija_example:"ليختنشتاين فيها ضرائب قليلة." },
+      { word:"Lage", pos:"N", ar:"موقع جغرافي", darija:"البلاصة", de_example:"Die Lage ist gut.", darija_example:"البلاصة مزيانة." },
+      { word:"Währung", pos:"N", ar:"عملة رسمية", darija:"الفلوس ديال البلاد", de_example:"Die Währung ist stabil.", darija_example:"الفلوس ديال البلاد مستقرة." },
+      { word:"Verein", pos:"N", ar:"جمعية رسمية", darija:"جمعية", de_example:"Der Verein ist aktiv.", darija_example:"الجمعية نشيطة." },
+      { word:"Arbeitskraft", pos:"N", ar:"قوة عمل", darija:"يد عاملة", de_example:"Die Arbeitskraft ist wichtig.", darija_example:"اليد العاملة مهمة." },
+      { word:"Dienstleistung", pos:"N", ar:"خدمة مقدمة", darija:"خدمة", de_example:"Die Dienstleistung ist gut.", darija_example:"الخدمة مزيانة." },
+      { word:"Karrierechance", pos:"N", ar:"فرصة مهنية", darija:"فرصة فالخدمة", de_example:"Das ist eine Karrierechance.", darija_example:"هادي فرصة فالخدمة." },
+      { word:"Kooperation", pos:"N", ar:"تعاون مشترك", darija:"تعاون", de_example:"Die Kooperation ist gut.", darija_example:"التعاون مزيان." },
+      { word:"Messe", pos:"N", ar:"معرض تجاري", darija:"معرض", de_example:"Die Messe ist groß.", darija_example:"المعرض كبير." },
+      { word:"Sektor", pos:"N", ar:"قطاع اقتصادي", darija:"قطاع", de_example:"Der Sektor wächst.", darija_example:"القطاع كيكبر." },
+      { word:"Weltkonzern", pos:"N", ar:"شركة عالمية", darija:"شركة كبيرة عالمية", de_example:"Das ist ein Weltkonzern.", darija_example:"هادي شركة كبيرة عالمية." },
 
-  // ===== Arbeit und Beruf (جبال / سياحة) =====
-  { word:"(Langlauf)Loipe", pos:"N", ar:"مسار تزلج", darija:"طريق ديال السكي", de_example:"Die Loipe ist lang.", darija_example:"طريق السكي طويلة." },
-  { word:"Lift", pos:"N", ar:"مصعد جبلي", darija:"تلفريك", de_example:"Der Lift ist offen.", darija_example:"التلفريك محلول." },
-  { word:"Mittelalter", pos:"N", ar:"العصور الوسطى", darija:"وقت قديم بزاف", de_example:"Das Mittelalter war lang.", darija_example:"هداك الوقت قديم بزاف." },
-  { word:"Netzwerk", pos:"N", ar:"شبكة علاقات", darija:"شبكة", de_example:"Ich habe ein Netzwerk.", darija_example:"عندي شبكة ديال الناس." },
-  { word:"Panorama", pos:"N", ar:"منظر شامل", darija:"منظر واسع", de_example:"Das Panorama ist schön.", darija_example:"المنظر واسع وزوين." },
-  { word:"Prozess", pos:"N", ar:"عملية تطوّر", darija:"عملية", de_example:"Der Prozess dauert lange.", darija_example:"العملية خذات وقت." },
-  { word:"Sage", pos:"N", ar:"قصة قديمة", darija:"حكاية قديمة", de_example:"Die Sage ist interessant.", darija_example:"الحكاية القديمة زوينة." },
-  
-  ];
+      // ===== Verben =====
+      { word:"inspirieren", pos:"V", ar:"يُلهم شخصاً", darija:"يعطيه فكرة", de_example:"Das Land inspiriert mich.", darija_example:"هاد البلاد عطتني فكرة." },
+      { word:"involviert sein", pos:"V", ar:"يكون منخرطاً", darija:"يكون داخل فشي حاجة", de_example:"Er ist im Projekt involviert.", darija_example:"هو داخل فهاد المشروع." },
+      { word:"langlaufen", pos:"V", ar:"يتزلج طويلاً", darija:"يدير سكي طويل", de_example:"Wir laufen im Winter lang.", darija_example:"كنْديرو سكي فالشتى." },
+      { word:"münden", pos:"V", ar:"يصب في", darija:"يدخل فشي نهر", de_example:"Der Fluss mündet ins Meer.", darija_example:"النهر كيدخل فالبحر." },
+      { word:"nennen", pos:"V", ar:"يسمّي شيئاً", darija:"يعيّط عليه", de_example:"Man nennt es Hauptstadt.", darija_example:"كيعيّطو ليها العاصمة." },
+      { word:"präparieren", pos:"V", ar:"يجهّز شيئاً", darija:"يوجّد", de_example:"Sie präparieren die Piste.", darija_example:"وجدو الطريق ديال السكي." },
+      { word:"profitieren von + D", pos:"V", ar:"يستفيد من", darija:"ياخذ الفائدة من", de_example:"Ich profitiere vom Kurs.", darija_example:"خديت الفائدة من الكورس." },
+      { word:"radeln", pos:"V", ar:"يركب دراجة", darija:"يسوق البيسيكليت", de_example:"Ich radle zur Arbeit.", darija_example:"كنمشي بالبيسيكليت للخدمة." },
+      { word:"snowboarden", pos:"V", ar:"يتزلج بلوح", darija:"يدير سنوبورد", de_example:"Er snowboardet im Winter.", darija_example:"كيدير سنوبورد فالشتى." },
+      { word:"umfassen", pos:"V", ar:"يشمل شيئاً", darija:"فيه بزاف الحوايج", de_example:"Der Kurs umfasst drei Themen.", darija_example:"الكورس فيه ثلاثة مواضيع." },
+      { word:"umgehen mit + D", pos:"V", ar:"يتعامل مع", darija:"يعرف يتصرف مع", de_example:"Er geht gut mit Geld um.", darija_example:"كيعرف يتصرف مع الفلوس." },
+      { word:"verbunden sein mit + D", pos:"V", ar:"يكون مرتبطاً", darija:"يكون مربوط ب", de_example:"Das Land ist mit Europa verbunden.", darija_example:"البلاد مربوطة بأوروبا." },
+      { word:"verfolgen", pos:"V", ar:"يتابع شيئاً", darija:"يتبع", de_example:"Ich verfolge das Ziel.", darija_example:"كنتبع الهدف." },
+      { word:"verzaubern", pos:"V", ar:"يسحر شخصاً", darija:"يخلي الواحد ينبهر", de_example:"Die Landschaft verzaubert mich.", darija_example:"المنظر خلىّني ننبهر." },
+      { word:"vorweisen", pos:"V", ar:"يُظهر شيئاً", darija:"يبيّن", de_example:"Er weist gute Noten vor.", darija_example:"بيّن نقاط مزيانة." },
+      { word:"zurückgehen auf + A", pos:"V", ar:"يرجع إلى", darija:"السبب ديالو هو", de_example:"Das geht auf das Mittelalter zurück.", darija_example:"هادا راجع لوقت قديم." },
 
+      // ===== Universität und Studium =====
+      { word:"Aufnahme", pos:"N", ar:"قبول جامعي", darija:"القبول", de_example:"Die Aufnahme ist schwer.", darija_example:"القبول صعيب." },
+      { word:"Betreuungsverhältnis", pos:"N", ar:"نسبة الإشراف", darija:"عدد الطلبة لكل أستاذ", de_example:"Das Betreuungsverhältnis ist gut.", darija_example:"عدد الطلبة لكل أستاذ مزيان." },
+      { word:"Mindeststudiendauer", pos:"N", ar:"مدة دراسة", darija:"أقل مدة للقراية", de_example:"Die Mindeststudiendauer ist drei Jahre.", darija_example:"أقل مدة للقراية ثلاثة سنين." },
+      { word:"Praxisorientierung", pos:"N", ar:"توجّه عملي", darija:"قراية تطبيقية", de_example:"Die Praxisorientierung ist wichtig.", darija_example:"القراية التطبيقية مهمة." },
+      { word:"Spezialisierung", pos:"N", ar:"تخصّص دراسي", darija:"تخصّص", de_example:"Ich mache eine Spezialisierung.", darija_example:"درت تخصّص." },
+      { word:"Studienbeginn", pos:"N", ar:"بداية الدراسة", darija:"أول العام الجامعي", de_example:"Der Studienbeginn ist im Herbst.", darija_example:"بداية القراية فالخريف." },
+      { word:"Studiengebühr", pos:"N", ar:"رسوم دراسة", darija:"فلوس القراية", de_example:"Die Studiengebühr ist hoch.", darija_example:"فلوس القراية طالعة." },
+      { word:"praxisrelevant", pos:"A", ar:"مهم عملياً", darija:"مفيد فالتطبيق", de_example:"Das Wissen ist praxisrelevant.", darija_example:"هاد المعرفة مفيدة فالتطبيق." },
 
-/* ==========================================
-   BUILD + INDEX
-========================================== */
-const { dict: QAMOS_B1, meta: QAMOS_META } = buildQamos(RAW_ENTRIES);
-const QAMOS_INDEX = createSearchIndex(QAMOS_B1);
+      // ===== Arbeit und Beruf (جبال / سياحة) =====
+      { word:"(Langlauf)Loipe", pos:"N", ar:"مسار تزلج", darija:"طريق ديال السكي", de_example:"Die Loipe ist lang.", darija_example:"طريق السكي طويلة." },
+      { word:"Lift", pos:"N", ar:"مصعد جبلي", darija:"تلفريك", de_example:"Der Lift ist offen.", darija_example:"التلفريك محلول." },
+      { word:"Mittelalter", pos:"N", ar:"العصور الوسطى", darija:"وقت قديم بزاف", de_example:"Das Mittelalter war lang.", darija_example:"هداك الوقت قديم بزاف." },
+      { word:"Netzwerk", pos:"N", ar:"شبكة علاقات", darija:"شبكة", de_example:"Ich habe ein Netzwerk.", darija_example:"عندي شبكة ديال الناس." },
+      { word:"Panorama", pos:"N", ar:"منظر شامل", darija:"منظر واسع", de_example:"Das Panorama ist schön.", darija_example:"المنظر واسع وزوين." },
+      { word:"Prozess", pos:"N", ar:"عملية تطوّر", darija:"عملية", de_example:"Der Prozess dauert lange.", darija_example:"العملية خذات وقت." },
+      { word:"Sage", pos:"N", ar:"قصة قديمة", darija:"حكاية قديمة", de_example:"Die Sage ist interessant.", darija_example:"الحكاية القديمة زوينة." }
+    ];
 
+    /* ==========================================
+      BUILD + INDEX
+    ========================================== */
+    const { dict: QAMOS_B1, meta: QAMOS_META } = buildQamos(RAW_ENTRIES);
+    const QAMOS_INDEX = createSearchIndex(QAMOS_B1);
 
-/* ==========================================
-   ✅ API YOU USE IN YOUR UI
-========================================== */
-// Search results
-function qamosSearch(q){ return searchQamos(QAMOS_INDEX, q, 30); }
+    // ✅ build quick base-word map (so lookup works even if keys are word__pos)
+    const QAMOS_B1_BYWORD = (function(){
+      const map = Object.create(null);
+      for(const it of QAMOS_INDEX){
+        if(!map[it.base]) map[it.base] = it.val; // keep FIRST
+      }
+      return map;
+    })();
 
-// Suggestions
-function qamosSuggest(prefix){ return suggestQamos(QAMOS_INDEX, prefix, 10); }
+    function qamosSearch(q){ return searchQamos(QAMOS_INDEX, q, 30); }
+    function qamosSuggest(prefix){ return suggestQamos(QAMOS_INDEX, prefix, 10); }
 
-// Debug: duplicates/collisions/invalid
-function qamosReport(){
-  return {
-    total_entries_input: RAW_ENTRIES.length,
-    total_unique_keys: Object.keys(QAMOS_B1).length,
-    duplicates_dropped: QAMOS_META.duplicates.length,
-    collisions_detected: QAMOS_META.collisions.length,
-    invalid_entries: QAMOS_META.invalid.length,
-    // Uncomment if you want to see full details:
-    // duplicates: QAMOS_META.duplicates,
-    // collisions: QAMOS_META.collisions,
-    // invalid: QAMOS_META.invalid
-  };
-}
-;
+    function qamosReport(){
+      return {
+        total_entries_input: RAW_ENTRIES.length,
+        total_unique_keys: Object.keys(QAMOS_B1).length,
+        duplicates_dropped: QAMOS_META.duplicates.length,
+        collisions_detected: QAMOS_META.collisions.length,
+        invalid_entries: QAMOS_META.invalid.length
+      };
+    }
 
     // ✅ keep your old mini word-to-darija translator DICT (for fallback translation)
     const DICT = {
@@ -1253,12 +1206,9 @@ function qamosReport(){
         .normalize("NFD").replace(/[\u0300-\u036f]/g,"");
     }
 
-    // ✅ improved article stripping (supports der/die, der/die/das, etc.)
     function stripArticleIfAny(w){
       let s = normalizeWord(w);
-      // remove combos like "der/die" or "der/die/das"
       s = s.replace(/^(der\/die\/das|der\/die|die\/der\/das|die\/der|das\/der\/die|das\/der|das\/die)\s+/,'');
-      // remove single article
       s = s.replace(/^(der|die|das)\s+/, '');
       return s.trim();
     }
@@ -1268,23 +1218,20 @@ function qamosReport(){
       return DICT[w] || null;
     }
 
-    // ✅ B1 lookup (tries multiple key variants)
+    // ✅ B1 lookup (FIXED): works with word__pos keys via QAMOS_B1_BYWORD
     function lookupB1(wordRaw){
       const raw = String(wordRaw||"").trim();
       if(!raw) return null;
 
       const norm1 = normalizeWord(raw);
       const norm2 = stripArticleIfAny(raw);
-
-      // also try to remove "der/die" within the typed word like "der/die Abgeordnete"
       const norm3 = norm1.replace(/^der\/die\/das\s+/,'').replace(/^der\/die\s+/,'').replace(/^der\s+|^die\s+|^das\s+/,'').trim();
-
       const tries = [norm1, norm2, norm3].filter(Boolean);
 
       for(const t of tries){
-        if(QAMOS_B1[t]) return QAMOS_B1[t];
+        const base = normalizeStr(t);
+        if(QAMOS_B1_BYWORD[base]) return QAMOS_B1_BYWORD[base];
       }
-      // last try: if user typed with article and you stored without, we already handle via stripArticleIfAny
       return null;
     }
 
@@ -1361,10 +1308,14 @@ function qamosReport(){
       if (!Array.isArray(boxes)) boxes = [];
       if (boxes.length < settings.numBoxes){
         for (let i=boxes.length; i<settings.numBoxes; i++){
-          boxes.push({ word:'', example:'', posOverride:'', note:'' });
+          boxes.push({ word:'', example:'', posOverride:'', note:'', darijaExampleB1:'' });
         }
       } else if (boxes.length > settings.numBoxes){
         boxes = boxes.slice(0, settings.numBoxes);
+      }
+      // ensure fields exist
+      for (let i=0; i<boxes.length; i++){
+        boxes[i].darijaExampleB1 = boxes[i].darijaExampleB1 || '';
       }
     }
 
@@ -1438,21 +1389,17 @@ function qamosReport(){
         return;
       }
 
-      // set POS override automatically from B1 if present
       if(b1.pos && !boxes[index].posOverride){
         boxes[index].posOverride = b1.pos;
       }
 
-      // fill example (front) with B1 example
       if(b1.de_example){
         exTA.value = b1.de_example;
         boxes[index].example = b1.de_example;
       }
 
-      // store a hidden field on box for darija example from B1 (used on back + pdf)
       boxes[index].darijaExampleB1 = b1.darija_example || "";
 
-      // render + fit
       autoFitTextarea(wordTA, 11, 18);
       autoFitTextarea(exTA, 11, 14);
       if(renderBack) renderBack();
@@ -1568,7 +1515,6 @@ function qamosReport(){
         const word = wordTA.value;
         const posO = boxes[index].posOverride || '';
 
-        // Prefer B1 meanings if available, else fallback to old DICT
         const b1 = lookupB1(word);
         let arTxt = '';
         let darTxt = '';
@@ -1584,7 +1530,6 @@ function qamosReport(){
           darTxt = t.dar ? t.dar : '';
         }
 
-        // POS badge
         const posFinal = (posO || posFromB1 || guessPOS(word)) || '';
         const posName = (posFinal === 'V') ? 'Verb' : (posFinal === 'N') ? 'Nomen' : (posFinal === 'A') ? 'Adjektiv' : '—';
         posBadge.textContent = posName + (boxes[index].posOverride ? ' (fix)' : '');
@@ -1592,7 +1537,6 @@ function qamosReport(){
         arCenter.textContent = arTxt;
         darSide.textContent = darTxt ? ('دارجة: ' + darTxt) : '';
 
-        // Example Darija: Prefer B1 example translation (if exists), else fallback to auto-translate of front example
         const ex = exTA.value || '';
         const b1DarEx = (boxes[index].darijaExampleB1 || '').trim();
         const darEx = b1DarEx ? b1DarEx : (ex ? translateSentenceDarija(ex) : '');
@@ -1615,16 +1559,14 @@ function qamosReport(){
 
       wordTA.addEventListener('input', () => {
         boxes[index].word = wordTA.value;
-        // when user edits the word, clear B1 darija example cache (to avoid mismatch)
-        boxes[index].darijaExampleB1 = boxes[index].darijaExampleB1 || '';
         autoFitTextarea(wordTA, 11, 18);
+        // keep darijaExampleB1 only if user used Auto B1; otherwise leave as-is
         renderBack();
         saveToStorage();
       });
 
       exTA.addEventListener('input', () => {
         boxes[index].example = exTA.value;
-        // if user edits example manually, keep B1 darija example only if it exists; otherwise fallback will translate
         autoFitTextarea(exTA, 11, 14);
         renderBack();
         saveToStorage();
@@ -1728,22 +1670,16 @@ function qamosReport(){
     downloadPdfBtn.addEventListener("click", downloadAsPdf);
 
     function calcPdfLayout(cols, showMeta){
-      // A4 mm
       const pageW = 210, pageH = 297;
-      const pad = 10;                 // matches #pdfStage padding (mm)
-      const innerW = pageW - 2*pad;   // 190
-      const innerH = pageH - 2*pad;   // 277
+      const pad = 10;
+      const innerW = pageW - 2*pad;
+      const innerH = pageH - 2*pad;
 
-      const gap = 4;                  // mm (grid gap)
+      const gap = 4;
       const safeCols = Math.min(Math.max(1, cols), 4);
-
-      // stable header height in mm
       const headerH = showMeta ? 22 : 12;
 
-      // box size from width
       const box = (innerW - gap*(safeCols - 1)) / safeCols;
-
-      // rows that fit vertically
       const rows = Math.max(1, Math.floor((innerH - headerH) / (box + gap)));
       const perPage = safeCols * rows;
 
@@ -1811,7 +1747,6 @@ function qamosReport(){
           inner.appendChild(ex);
 
         } else {
-          // prefer B1 meanings if exist
           const b1 = lookupB1(d.word);
           const arText = b1 ? (b1.ar || "") : (getWordTranslations(d.word, d.posOverride).ar || "");
           const darText = b1 ? (b1.darija || "") : (getWordTranslations(d.word, d.posOverride).dar || "");
@@ -1978,3 +1913,4 @@ function qamosReport(){
   </script>
 </body>
 </html>
+```
