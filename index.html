@@ -1017,6 +1017,95 @@
       فين تزيد؟ زِد entries قبل السطر الأخير ];
     ========================================== */
     const RAW_ENTRIES = [
+        // =========================
+  // Migration – Adjektive (Rest)
+  // =========================
+  { word:"weitreichend", pos:"A", ar:"بعيد التأثير", darija:"تأثير كبير", de_example:"Die Entscheidung ist weitreichend.", darija_example:"القرار عندو تأثير كبير." },
+  { word:"willig", pos:"A", ar:"مستعد راغب", darija:"باغي يدير", de_example:"Er ist willig zu helfen.", darija_example:"باغي يعاون." },
+  { word:"binational", pos:"A", ar:"مزدوج الجنسية", darija:"عندو جوج جنسيات", de_example:"Sie ist binational.", darija_example:"عندها جوج جنسيات." },
+
+  // =========================
+  // Migration – Verben
+  // =========================
+  { word:"gelingen", pos:"V", ar:"ينجح أمر", darija:"ينجح", de_example:"Die Prüfung gelingt ihm.", darija_example:"الامتحان نجح ليه." },
+  { word:"halten für + A / Adjektiv", pos:"V", ar:"يعتبر شيئاً", darija:"كيشوفو بحال", de_example:"Ich halte das für gut.", darija_example:"كنشوف هاد الشي مزيان." },
+  { word:"liefern", pos:"V", ar:"يسلّم شيئاً", darija:"يوصّل", de_example:"Die Firma liefert die Ware.", darija_example:"الشركة وصلات السلعة." },
+  { word:"Mut machen", pos:"V", ar:"يشجّع شخصاً", darija:"يعطي الشجاعة", de_example:"Der Lehrer macht mir Mut.", darija_example:"الأستاذ عطاني الشجاعة." },
+  { word:"sich reizen", pos:"V", ar:"يتحفّز لشيء", darija:"يتحمّس", de_example:"Das reizt mich.", darija_example:"هادا حمّسني." },
+  { word:"(Fragen) stellen", pos:"V", ar:"يطرح سؤالاً", darija:"يسول", de_example:"Ich stelle eine Frage.", darija_example:"سولت سؤال." },
+  { word:"willig sein", pos:"V", ar:"يكون راغباً", darija:"يكون باغي", de_example:"Er ist willig zu helfen.", darija_example:"هو باغي يعاون." },
+  { word:"vermissen", pos:"V", ar:"يشتاق لشيء", darija:"يتوحّش", de_example:"Ich vermisse meine Familie.", darija_example:"متوحّش عائلتي." },
+  { word:"vermitteln", pos:"V", ar:"يوفّر فرصة", darija:"يلقى ليه", de_example:"Die Agentur vermittelt Arbeit.", darija_example:"الوكالة لقات ليه خدمة." },
+  { word:"weiterarbeiten", pos:"V", ar:"يواصل العمل", darija:"يكمل الخدمة", de_example:"Ich arbeite weiter.", darija_example:"كمّلت الخدمة." },
+  { word:"weitergehen", pos:"V", ar:"يستمر الأمر", darija:"يكمل", de_example:"Das Leben geht weiter.", darija_example:"الحياة كتكمل." },
+  { word:"aufklären", pos:"V", ar:"يوضّح شيئاً", darija:"يشرح", de_example:"Der Lehrer klärt uns auf.", darija_example:"الأستاذ شرح لينا." },
+  { word:"in Auftrag geben", pos:"V", ar:"يكلّف بعمل", darija:"يعطي الخدمة لشي حد", de_example:"Die Firma gibt das Projekt in Auftrag.", darija_example:"الشركة عطات المشروع لشي حد يخدمو." },
+  { word:"erbauen", pos:"V", ar:"يبني شيئاً", darija:"يبني", de_example:"Sie erbauen ein Haus.", darija_example:"بناو دار." },
+  { word:"sich erhoffen", pos:"V", ar:"يأمل شيئاً", darija:"يتمنى", de_example:"Ich erhoffe mir Erfolg.", darija_example:"كنتمنا النجاح." },
+  { word:"gelangen zu + D", pos:"V", ar:"يصل إلى", darija:"يوصل ل", de_example:"Er gelangt zu einer Lösung.", darija_example:"وصل لحل." },
+
+  // =========================
+  // Migration – Adverbien
+  // =========================
+  { word:"anfangs", pos:"ADV", ar:"في البداية", darija:"فالأول", de_example:"Anfangs war es schwer.", darija_example:"فالأول كان صعيب." },
+  { word:"einst", pos:"ADV", ar:"سابقاً قديماً", darija:"زمان", de_example:"Er war einst arm.", darija_example:"كان زمان فقير." },
+  { word:"woanders", pos:"ADV", ar:"في مكان آخر", darija:"فبلاصة أخرى", de_example:"Ich wohne woanders.", darija_example:"ساكن فبلاصة أخرى." },
+
+  // =========================
+  // Migration – Präpositionen
+  // =========================
+  { word:"per", pos:"PRÄP", ar:"عن طريق", darija:"عن طريق", de_example:"Ich schicke das per Post.", darija_example:"صيفطتو عن طريق البريد." },
+  { word:"via", pos:"PRÄP", ar:"عبر طريق", darija:"عبر", de_example:"Ich reise via Paris.", darija_example:"سافرت عبر باريس." },
+
+  // =========================
+  // Migration – Modalpartikeln
+  // =========================
+  { word:"schon", pos:"MODALP", ar:"بالفعل سابقاً", darija:"راه", de_example:"Ich bin schon hier.", darija_example:"راه أنا هنا." },
+  { word:"wohl", pos:"MODALP", ar:"غالباً ربما", darija:"يمكن", de_example:"Er kommt wohl später.", darija_example:"يمكن يجي من بعد." },
+
+  // =========================
+  // Verkehr – Nomen (Teil 1)
+  // =========================
+  { word:"Gangschaltung", pos:"N", ar:"ناقل السرعات", darija:"لفيتاس", de_example:"Die Gangschaltung ist kaputt.", darija_example:"لفيتاس خاسرة." },
+  { word:"Gaspedal", pos:"N", ar:"دواسة الوقود", darija:"بيدال ديال لغاز", de_example:"Ich drücke das Gaspedal.", darija_example:"ضغطت على بيدال ديال لغاز." },
+  { word:"Abgase", pos:"PL", ar:"غازات عادم", darija:"دخان ديال الطوموبيل", de_example:"Autos machen Abgase.", darija_example:"الطوموبيلات كيديرو دخان." },
+  { word:"Ampel", pos:"N", ar:"إشارة مرور", darija:"السينيال", de_example:"Die Ampel ist rot.", darija_example:"السينيال حمر." },
+  { word:"Fahrer", pos:"N", ar:"سائق مركبة", darija:"الشوفور", de_example:"Der Fahrer fährt schnell.", darija_example:"الشوفور كيسوق بسرعة." },
+  { word:"Werkstatt", pos:"N", ar:"ورشة إصلاح", darija:"كاراج", de_example:"Das Auto ist in der Werkstatt.", darija_example:"الطوموبيل فالكاراج." },
+  { word:"Wert", pos:"N", ar:"قيمة شيء", darija:"القيمة", de_example:"Das Auto hat viel Wert.", darija_example:"الطوموبيل عندها قيمة." },
+  { word:"Fahrbahn", pos:"N", ar:"مسار طريق", darija:"الطريق ديال السير", de_example:"Die Fahrbahn ist nass.", darija_example:"الطريق ديال السير مبلولة." },
+  { word:"Gegenfahrbahn", pos:"N", ar:"المسار المعاكس", darija:"الطريق اللي جاية مقابل", de_example:"Er fährt auf der Gegenfahrbahn.", darija_example:"كيسوق فالمسار المعاكس." },
+  { word:"Hupe", pos:"N", ar:"بوق سيارة", darija:"الكلاكسون", de_example:"Er benutzt die Hupe.", darija_example:"ضرب الكلاكسون." },
+  { word:"Kraftstoff", pos:"N", ar:"وقود مركبة", darija:"المازوط / البنزين", de_example:"Das Auto braucht Kraftstoff.", darija_example:"الطوموبيل خاصها الوقود." },
+  { word:"Kupplung", pos:"N", ar:"قابض السرعة", darija:"لامبرياج", de_example:"Ich trete die Kupplung.", darija_example:"ضغطت على لامبرياج." },
+  { word:"Lenkrad", pos:"N", ar:"مقود سيارة", darija:"الفولان", de_example:"Ich halte das Lenkrad.", darija_example:"شديت الفولان." },
+  { word:"Motor", pos:"N", ar:"محرّك سيارة", darija:"الموتور", de_example:"Der Motor ist laut.", darija_example:"الموتور صوّتو طالع." },
+  { word:"Fahrzeug", pos:"N", ar:"مركبة نقل", darija:"وسيلة نقل", de_example:"Das Fahrzeug ist neu.", darija_example:"وسيلة النقل جديدة." },
+  { word:"Fußgänger", pos:"N", ar:"مشاة طريق", darija:"اللي ماشي على رجليه", de_example:"Der Fußgänger wartet.", darija_example:"اللي ماشي على رجليه كيستنى." },
+  { word:"Führerschein", pos:"N", ar:"رخصة سياقة", darija:"بيرمي", de_example:"Ich habe einen Führerschein.", darija_example:"عندي بيرمي." },
+  { word:"Geschwindigkeit", pos:"N", ar:"سرعة حركة", darija:"السرعة", de_example:"Die Geschwindigkeit ist hoch.", darija_example:"السرعة طالعة." },
+  { word:"Sicherheitsgurt", pos:"N", ar:"حزام أمان", darija:"سيفتي بيلت", de_example:"Ich trage den Sicherheitsgurt.", darija_example:"لبست سيفتي بيلت." },
+
+  // =========================
+  // Verkehr – Nomen (Teil 2)
+  // =========================
+  { word:"Kreuzung", pos:"N", ar:"تقاطع طرق", darija:"الكروازي", de_example:"An der Kreuzung ist eine Ampel.", darija_example:"فالكروازي كاين السينيال." },
+  { word:"Kurve", pos:"N", ar:"منعطف طريق", darija:"الفيراج", de_example:"Die Kurve ist gefährlich.", darija_example:"الفيراج خطير." },
+  { word:"Leitplanke", pos:"N", ar:"حاجز جانبي", darija:"الحديدة فالطريق", de_example:"Das Auto fährt gegen die Leitplanke.", darija_example:"الطوموبيل ضربات فالحديدة ديال الطريق." },
+  { word:"Landstraße", pos:"N", ar:"طريق ريفي", darija:"طريق خارج المدينة", de_example:"Wir fahren auf der Landstraße.", darija_example:"كنسوقو فطريق خارج المدينة." },
+  { word:"Mitfahrgelegenheit", pos:"N", ar:"فرصة ركوب", darija:"توصيلة مع شي حد", de_example:"Ich suche eine Mitfahrgelegenheit.", darija_example:"كنقلب على توصيلة." },
+  { word:"Pendler", pos:"N", ar:"مسافر يومي", darija:"اللي كيمشي ويرجع للخدمة", de_example:"Der Pendler fährt jeden Tag.", darija_example:"كيمشي ويرجع كل نهار." },
+  { word:"Radweg", pos:"N", ar:"مسار دراجات", darija:"طريق ديال البيكالة", de_example:"Der Radweg ist neu.", darija_example:"طريق البيكالة جديد." },
+  { word:"Semesterticket", pos:"N", ar:"تذكرة فصل", darija:"تيكي ديال السميستر", de_example:"Ich habe ein Semesterticket.", darija_example:"عندي تيكي ديال السميستر." },
+  { word:"Stau", pos:"N", ar:"ازدحام سير", darija:"الزحام", de_example:"Es gibt einen Stau.", darija_example:"كاين الزحام." },
+  { word:"Tempo", pos:"N", ar:"سرعة محددة", darija:"السرعة", de_example:"Das Tempo ist 50.", darija_example:"السرعة 50." },
+  { word:"Tunnel", pos:"N", ar:"نفق طريق", darija:"تونيل", de_example:"Das Auto fährt durch den Tunnel.", darija_example:"الطوموبيل دازت من التونيل." },
+  { word:"Überholmanöver", pos:"N", ar:"عملية تجاوز", darija:"دوزان على شي حد", de_example:"Das Überholmanöver ist gefährlich.", darija_example:"دوزان على شي حد خطير." },
+  { word:"Unfall", pos:"N", ar:"حادث طريق", darija:"حادثة", de_example:"Es gibt einen Unfall.", darija_example:"كاينة حادثة." },
+  { word:"Verkehr", pos:"N", ar:"حركة مرور", darija:"السير", de_example:"Der Verkehr ist stark.", darija_example:"السير قوي." },
+  { word:"Verkehrsregel", pos:"N", ar:"قانون مرور", darija:"قانون السير", de_example:"Ich kenne die Verkehrsregeln.", darija_example:"كنعرف قانون السير." },
+  { word:"Verkehrsmittel", pos:"N", ar:"وسيلة نقل", darija:"وسيلة نقل", de_example:"Das Verkehrsmittel ist schnell.", darija_example:"وسيلة النقل سريعة." },
+
         // ===== Migration – Gesetz / Absicherung / Einreise =====
   { word:"Gesetz", pos:"N", ar:"قانون رسمي", darija:"القانون", de_example:"Das Gesetz ist streng.", darija_example:"القانون قاسح." },
   { word:"Auslandstätige/r", pos:"N", ar:"عامل بالخارج", darija:"خدام برا البلاد", de_example:"Er ist als Auslandstätiger tätig.", darija_example:"هو خدام برا البلاد." },
