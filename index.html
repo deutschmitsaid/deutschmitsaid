@@ -2529,7 +2529,7 @@
         const ex = exTA.value || '';
         const b1DarEx = (boxes[index].darijaExampleB1 || '').trim();
         const darEx = b1DarEx ? b1DarEx : (ex ? translateSentenceDarija(ex) : '');
-        darExample.textContent = darEx ? ('مثال (دارجة): ' + darEx) : '';
+        darExample.textContent = darEx ? ('مثال : ' + darEx) : '';
       }
 
       posBadge.addEventListener('click', () => {
