@@ -2489,8 +2489,12 @@
       noteTA.value = data.note || '';
       noteTA.rows = 4;
 
-      const darExample = document.createElement('div');
-      darExample.className = 'darijaExample';
+      const darExample = document.createElement('textarea');
+darExample.className = 'noteInput';          // نفس ستايل note باش يبقى نقي
+darExample.placeholder = 'مثال بالدارجة… (كتب هنا أو استعمل Automatik)';
+darExample.rows = 2;
+darExample.value = (data.darijaExample || '');
+
 
       noteWrap.appendChild(noteLabel);
       noteWrap.appendChild(noteTA);
