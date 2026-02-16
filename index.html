@@ -922,18 +922,21 @@
     }
 
     function safeEntry(entry){
-      if(!entry || typeof entry !== "object") return null;
-      if(!entry.word) return null;
-      const pos = entry.pos ?? "";
-      return {
-        word: entry.word,
-        pos,
-        pos_norm: normalizeStr(pos),
-        ar: entry.ar ?? "",
-        darija: entry.darija ?? "",
-        de_example: entry.de_example ?? "",
-        darija_example: entry.darija_example ?? ""
-      };
+  if(!entry || typeof entry !== "object") return null;
+  if(!entry.word) return null;
+
+  const pos = entry.pos ?? "";
+
+  return {
+    word: entry.word,
+    pos,
+    pos_norm: normalizeStr(pos),
+    ar: entry.ar ?? "",
+    darija: entry.darija ?? "",
+    de_example: entry.de_example ?? "",
+    ar_example: entry.ar_example ?? "",     // ⬅️ ضفنا هادي
+    darija_example: entry.darija_example ?? ""
+  };
     }
 
     function buildQamos(entries){
