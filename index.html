@@ -2434,8 +2434,8 @@
       const autoBtn = document.createElement('button');
       autoBtn.className = 'autoBtn';
       autoBtn.type = 'button';
-      autoBtn.textContent = '⚙ Automatik ';
-      autoBtn.title = 'Auto fill from B1 dictionary';
+      autoBtn.textContent = '⚙ Automatik';
+      autoBtn.title = 'Generate All Automatically';
 
       exHeader.appendChild(exLabel);
       exHeader.appendChild(autoBtn);
@@ -2446,7 +2446,7 @@
 
       const exTA = document.createElement('textarea');
       exTA.className = 'explainInput';
-      exTA.placeholder = 'z.B. Ich gehe heute nach Hause.';
+      exTA.placeholder = 'Bitte hier dein Beispiel schreiben....';
       exTA.value = data.example || '';
       exTA.rows = 5;
 
@@ -2481,7 +2481,7 @@
 
       const noteLabel = document.createElement('div');
       noteLabel.className = 'noteLabel';
-      noteLabel.textContent = '✍️ شرحك هنا / ملاحظة:';
+      noteLabel.textContent = 'شرحك هنا / ملاحظة:';
 
       const noteTA = document.createElement('textarea');
       noteTA.className = 'noteInput';
