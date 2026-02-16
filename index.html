@@ -921,22 +921,24 @@
       return `${w}__${p}`;
     }
 
-    function safeEntry(entry){
-  if(!entry || typeof entry !== "object") return null;
-  if(!entry.word) return null;
+    function getExample(entry, manualExample, lang){
+  const manual = (manualExample || "").trim();
 
-  const pos = entry.pos ?? "";
+  // 1️⃣ manual ديال المستخدم هو الأول
+  if(manual) return manual;
 
-  return {
-    word: entry.word,
-    pos,
-    pos_norm: normalizeStr(pos),
-    ar: entry.ar ?? "",
-    darija: entry.darija ?? "",
-    de_example: entry.de_example ?? "",
-    ar_example: entry.ar_example ?? "",     // ⬅️ ضفنا هادي
-    darija_example: entry.darija_example ?? ""
-  };
+  // 2️⃣ حسب اللغة
+  if(lang === "de") {
+    return entry.de_example || "";
+  }
+
+  if(lang === "ar") {
+    return entry.darija_example || entry.ar_example || "";
+  }
+
+  return "";
+}
+
     }
 
     function buildQamos(entries){
