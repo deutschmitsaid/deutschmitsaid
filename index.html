@@ -921,23 +921,19 @@
       return `${w}__${p}`;
     }
 
-    function getExample(entry, manualExample, lang){
-  const manual = (manualExample || "").trim();
-
-  // 1️⃣ manual ديال المستخدم هو الأول
-  if(manual) return manual;
-
-  // 2️⃣ حسب اللغة
-  if(lang === "de") {
-    return entry.de_example || "";
-  }
-
-  if(lang === "ar") {
-    return entry.darija_example || entry.ar_example || "";
-  }
-
-  return "";
-
+    function safeEntry(entry){
+      if(!entry || typeof entry !== "object") return null;
+      if(!entry.word) return null;
+      const pos = entry.pos ?? "";
+      return {
+        word: entry.word,
+        pos,
+        pos_norm: normalizeStr(pos),
+        ar: entry.ar ?? "",
+        darija: entry.darija ?? "",
+        de_example: entry.de_example ?? "",
+        darija_example: entry.darija_example ?? ""
+      };
     }
 
     function buildQamos(entries){
