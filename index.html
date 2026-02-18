@@ -1,3 +1,4 @@
+html
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -99,7 +100,7 @@
     .flip-side{ position:absolute; inset:0; backface-visibility:hidden; display:flex; flex-direction:column; padding:14px; gap:8px; }
     .flip-back{ transform: rotateY(180deg); direction: rtl; text-align:right; }
 
-    textarea, input { font-size: 16px !important; } /* منع الزوم فالايفون */
+    textarea, input { font-size: 16px !important; } /* Prevent zoom on iPhone */
 
     /* FRONT SIDE */
     .frontWordWrap{ flex: 1; display:flex; align-items:center; justify-content:center; min-height: 45%; }
@@ -250,7 +251,7 @@
   </div>
 
   <script>
-    // ========= FIX #1: i18n functions (باش ما يطيحش السكريبت) =========
+    // ========= FIX #1: i18n functions =========
     let lang = "de";
     const I18N = {
       de: { subtitle:"ist einfacher: wählen • schreiben • drucken", count:"Anzahl", cols:"Spalten", size:"Größe", small:"Klein", normal:"Normal", large:"Groß", back:"Rückseite zeigen", reset:"Leeren" },
@@ -271,472 +272,10 @@
     });
 
     // ================================================================================================
-// ===== Lektion 9: Alles auf einen Blick =====
-// ================================================================================================
-
-const lektion9 = [
-      // ===== Feste / Bräuche (احتفالات / تقاليد) =====
-      { word:"Ball", pos:"N", ar:"حفلة راقصة", darija:"حفلة ديال الشطيح" },
-      { word:"Baum", pos:"N", ar:"شجرة", darija:"شجرة" },
-      { word:"Weihnachtsbaum", pos:"N", ar:"شجرة عيد الميلاد", darija:"شجرة ديال الكريسماس" },
-      { word:"Bescherung", pos:"N", ar:"توزيع الهدايا", darija:"تفراق الكادوات" },
-      { word:"Brauch", pos:"N", ar:"تقليد / عادة", darija:"عادة / تقاليد" },
-      { word:"Christkind (nur Sg.)", pos:"N", ar:"الطفل يسوع", darija:"الطفل يسوع (شخصية مرتبطة بالكريسماس)" },
-      { word:"Dekoration", pos:"N", ar:"زينة", darija:"ديكور / زواق" },
-      { word:"Ernte", pos:"N", ar:"حصاد", darija:"حصاد" },
-      { word:"Erntedankfest", pos:"N", ar:"عيد الشكر على الحصاد", darija:"عيد الشكر ديال الحصاد" },
-      { word:"Feier", pos:"N", ar:"احتفال", darija:"حفلة" },
-      { word:"Abschlussfeier", pos:"N", ar:"حفل التخرج", darija:"حفلة ديال التخرج" },
-      { word:"Examensfeier", pos:"N", ar:"حفل الامتحانات", darija:"حفلة ديال النجاح فالامتحان" },
-      { word:"Fest", pos:"N", ar:"عيد / مهرجان", darija:"عيد / حفلة" },
-      { word:"Festival", pos:"N", ar:"مهرجان", darija:"مهرجان / فيستيفال" },
-      { word:"Geburt", pos:"N", ar:"ولادة", darija:"ولادة / زيادة" },
-      { word:"Geburtstag", pos:"N", ar:"عيد ميلاد", darija:"عيد ميلاد" },
-      { word:"Heiligabend (nur Sg.)", pos:"N", ar:"عشية عيد الميلاد", darija:"ليلة ديال الكريسماس" },
-      { word:"Hochzeit", pos:"N", ar:"زفاف", darija:"عرس" },
-      { word:"Karfreitag", pos:"N", ar:"الجمعة العظيمة", darija:"الجمعة العظيمة" },
-      { word:"Kerze", pos:"N", ar:"شمعة", darija:"شمعة" },
-      { word:"Kirche", pos:"N", ar:"كنيسة", darija:"كنيسة" },
-      { word:"Kultur", pos:"N", ar:"ثقافة", darija:"ثقافة" },
-      { word:"Leben", pos:"N", ar:"حياة", darija:"حياة" },
-      { word:"Neujahrsfest", pos:"N", ar:"عيد رأس السنة", darija:"حفلة ديال راس العام" },
-      { word:"Ostern (nur Sg.)", pos:"N", ar:"عيد الفصح", darija:"عيد الفصح" },
-      { word:"Osterhase", pos:"N", ar:"أرنب عيد الفصح", darija:"أرنب ديال عيد الفصح" },
-      { word:"Ostermontag", pos:"N", ar:"إثنين عيد الفصح", darija:"تنين ديال عيد الفصح" },
-      { word:"Ostersonntag", pos:"N", ar:"أحد عيد الفصح", darija:"حد ديال عيد الفصح" },
-      { word:"Priester", pos:"N", ar:"كاهن", darija:"قسيس" },
-      { word:"Symbol", pos:"N", ar:"رمز", darija:"رمز" },
-      { word:"Tod", pos:"N", ar:"موت", darija:"موت" },
-      { word:"Tradition", pos:"N", ar:"تقليد", darija:"تقليد" },
-      { word:"Wagen", pos:"N", ar:"عربة", darija:"كارو / عربة" },
-      { word:"Weihnachten", pos:"N", ar:"عيد الميلاد", darija:"الكريسماس / بوناني" },
-      { word:"Weihnachtsfest", pos:"N", ar:"احتفال عيد الميلاد", darija:"حفلة ديال الكريسماس" },
-      { word:"Weihnachtsmann", pos:"N", ar:"بابا نويل", darija:"بابا نويل" },
-      { word:"Zug", pos:"N", ar:"موكب / قطار", darija:"موكب / تران" },
-      { word:"Erntezug", pos:"N", ar:"موكب الحصاد", darija:"موكب ديال الحصاد" },
-      // ===== Essen (مأكولات) =====
-      { word:"Festessen", pos:"N", ar:"وليمة", darija:"ماكلة ديال العراضة" },
-      { word:"Büffet", pos:"N", ar:"بوفيه", darija:"بوفيه" },
-      { word:"Ei", pos:"N", ar:"بيضة", darija:"بيضة" },
-      { word:"Hühnerei", pos:"N", ar:"بيضة دجاج", darija:"بيضة بلدية/رومية" },
-      { word:"Schokoladenei", pos:"N", ar:"بيضة شوكولاتة", darija:"بيضة ديال الشكلاط" },
-      { word:"Fondue (hier nur Sg.)", pos:"N", ar:"فوندو", darija:"فوندو" },
-      { word:"Fleischfondue", pos:"N", ar:"فوندو اللحم", darija:"فوندو ديال اللحم" },
-      { word:"Käsefondue", pos:"N", ar:"فوندو الجبن", darija:"فوندو ديال الفرماج" },
-      { word:"Frucht", pos:"N", ar:"فاكهة", darija:"فاكية / فروي" },
-      { word:"Gänsebraten", pos:"N", ar:"إوز مشوي", darija:"وزة محمرة" },
-      { word:"Getreide (nur Sg.)", pos:"N", ar:"حبوب", darija:"زرع / حبوب" },
-      // ===== Universität und Studium (جامعة و دراسة) =====
-      { word:"Bachelor (nur Sg.)", pos:"N", ar:"بكالوريوس / إجازة", darija:"إجازة / باكالوريوس" },
-      { word:"Barett", pos:"N", ar:"قبعة تخرج", darija:"طربوش ديال التخرج" },
-      { word:"Diplom", pos:"N", ar:"دبلوم", darija:"ديبلوم" },
-      { word:"Examen", pos:"N", ar:"امتحان", darija:"امتحان" },
-      { word:"Master (nur Sg.)", pos:"N", ar:"ماجستير", darija:"ماستر" },
-      { word:"Prüfung", pos:"N", ar:"امتحان / اختبار", darija:"امتحان" },
-      { word:"Studienabschluss", pos:"N", ar:"تخرج", darija:"تخرج / نهاية الدراسة" },
-      { word:"Talar", pos:"N", ar:"رداء التخرج", darija:"لبسة ديال التخرج" },
-      // ===== Arbeit und Beruf (عمل و مهنة) =====
-      { word:"Rente", pos:"N", ar:"تقاعد", darija:"لاروتريت" },
-      // ===== Sonstiges - Nomen (أسماء أخرى) =====
-      { word:"Absage", pos:"N", ar:"رفض", darija:"رفض" },
-      { word:"Anzug", pos:"N", ar:"بدلة", darija:"كوستيم" },
-      { word:"Besteck", pos:"N", ar:"أدوات المائدة", darija:"معالق و فراشط" },
-      { word:"Löffel", pos:"N", ar:"ملعقة", darija:"معلقة" },
-      { word:"Messer", pos:"N", ar:"سكين", darija:"موس" },
-      { word:"Gabel", pos:"N", ar:"شوكة", darija:"فرشيطة" },
-      { word:"Dorf", pos:"N", ar:"قرية", darija:"قرية / دوار" },
-      { word:"Festhalle", pos:"N", ar:"قاعة احتفالات", darija:"قاعة ديال الحفلات" },
-      { word:"Geschäft", pos:"N", ar:"متجر / عمل", darija:"حانوت / بيزنيس" },
-      { word:"Geschirr (hier nur Sg.)", pos:"N", ar:"أواني", darija:"مواعن" },
-      { word:"Teller", pos:"N", ar:"صحن", darija:"طبسيل" },
-      { word:"Tasse", pos:"N", ar:"كوب", darija:"كاس / طاسة" },
-      { word:"Schüssel", pos:"N", ar:"وعاء / زبدية", darija:"زلافة / جبانية" },
-      { word:"Topf", pos:"N", ar:"قدر", darija:"طنجرة / كاسرونة" },
-      { word:"Himmel", pos:"N", ar:"سماء", darija:"سما" },
-      { word:"Hoffnung", pos:"N", ar:"أمل", darija:"أمل" },
-      { word:"Jahrhundert", pos:"N", ar:"قرن", darija:"قرن" },
-      { word:"Kochbuch", pos:"N", ar:"كتاب طبخ", darija:"كتاب ديال الطياب" },
-      { word:"Konfetti (nur Sg.)", pos:"N", ar:"قصاصات ورقية ملونة", darija:"كونفيتي" },
-      { word:"Krankheit", pos:"N", ar:"مرض", darija:"مرض" },
-      { word:"Luftschlange", pos:"N", ar:"شريط زينة ورقي", darija:"سيربونتا" },
-      { word:"Matratze", pos:"N", ar:"فراش / مرتبة", darija:"مطلة / مطربة" },
-      { word:"Mittelalter (nur Sg.)", pos:"N", ar:"العصور الوسطى", darija:"العصور الوسطى" },
-      { word:"Mitternacht", pos:"N", ar:"منتصف الليل", darija:"نص الليل" },
-      { word:"Mond", pos:"N", ar:"قمر", darija:"قمرة" },
-      { word:"Vollmond", pos:"N", ar:"بدر", darija:"بدر / قمرة كاملة" },
-      { word:"Nachbar", pos:"N", ar:"جار", darija:"جار" },
-      { word:"Parfum", pos:"N", ar:"عطر", darija:"ريحة" },
-      { word:"Reiseführer", pos:"N", ar:"مرشد سياحي / دليل سفر", darija:"مرشد سياحي / كتاب الإرشاد" },
-      { word:"Rest", pos:"N", ar:"بقية", darija:"داكشي لي شاط" },
-      { word:"Schulfreund", pos:"N", ar:"صديق الدراسة", darija:"صاحبي ديال القراية" },
-      { word:"Schulfreundin", pos:"N", ar:"صديقة الدراسة", darija:"صاحبتي ديال القراية" },
-      { word:"Schutz (nur Sg.)", pos:"N", ar:"حماية", darija:"حماية" },
-      { word:"Sprung", pos:"N", ar:"قفزة", darija:"قفزة / نڭزة" },
-      { word:"Tanz", pos:"N", ar:"رقص", darija:"شطيح" },
-      { word:"(Landes-)Teil", pos:"N", ar:"جزء (من البلاد)", darija:"جزء / بلاصة (فالبلاد)" },
-      { word:"Zelt", pos:"N", ar:"خيمة", darija:"خيمة" },
-      { word:"Festzelt", pos:"N", ar:"خيمة احتفال", darija:"خيمة ديال الحفلات" },
-      { word:"Zusage", pos:"N", ar:"موافقة / قبول", darija:"قبول" },
-      // ===== Verben (أفعال) =====
-      { word:"danken für + A", pos:"V", ar:"شكر على", darija:"شكر على" },
-      { word:"dekorieren", pos:"V", ar:"زيّن", darija:"زوق / دار الديكور" },
-      { word:"gratulieren (zu)", pos:"V", ar:"هنّأ بـ", darija:"بارك لـ" },
-      { word:"schenken", pos:"V", ar:"أهدى", darija:"عطى كادو" },
-      { word:"schmücken", pos:"V", ar:"زيّن", darija:"زوق" },
-      { word:"symbolisieren", pos:"V", ar:"رمز إلى", darija:"كيرمز لـ" },
-      { word:"typisch sein für + A", pos:"V", ar:"كان نموذجيا لـ", darija:"من الطبيعي فـ / معروف بـ" },
-      { word:"bestehen", pos:"V", ar:"نجح في (امتحان)", darija:"نجح" },
-      { word:"absagen", pos:"V", ar:"ألغى / رفض", darija:"ألغى / رفض" },
-      { word:"abschließen", pos:"V", ar:"أنهى / أتم", darija:"سّالا / كمّل" },
-      { word:"annehmen", pos:"V", ar:"قبل", darija:"قبل" },
-      { word:"anzünden", pos:"V", ar:"أشعل", darija:"شعل" },
-      { word:"brechen", pos:"V", ar:"كسر", darija:"هرس" },
-      { word:"buchen", pos:"V", ar:"حجز", darija:"حجز / ريزيرفا" },
-      { word:"einverstanden sein (mit + D)", pos:"V", ar:"وافق على", darija:"كان متافق مع" },
-      { word:"einladen", pos:"V", ar:"دعا / عرض على", darija:"عرض على" },
-      { word:"erinnern an + A", pos:"V", ar:"ذكّر بـ", darija:"فكر فـ" },
-      { word:"färben", pos:"V", ar:"لوّن / صبغ", darija:"صبغ" },
-      { word:"leihen", pos:"V", ar:"أعار / أقرض", darija:"سلّف" },
-      { word:"schaffen", pos:"V", ar:"أنجز / نجح في", darija:"قدر يدير / دار" },
-      { word:"sprechen über + A", pos:"V", ar:"تحدث عن", darija:"هضر على" },
-      { word:"streiten über + A", pos:"V", ar:"تشاجر بسبب", darija:"تخاصم على" },
-      { word:"übernachten", pos:"V", ar:"بات / قضى الليلة", darija:"بات" },
-      { word:"verstecken", pos:"V", ar:"خبّأ", darija:"خبّى" },
-      { word:"vorhaben (etwas)", pos:"V", ar:"نوَى / خطط لـ", darija:"كان باغي يدير (شي حاجة)" },
-      { word:"vorschlagen (etwas)", pos:"V", ar:"اقترح", darija:"قترح" },
-      { word:"wiegen", pos:"V", ar:"وزن", darija:"عبر / وزن" },
-      { word:"zusagen", pos:"V", ar:"وافق", darija:"وافق / قبل" },
-      { word:"zusammenhängen mit + D", pos:"V", ar:"ارتبط بـ", darija:"عندو علاقة بـ" },
-      // ===== Adjektive (صفات) =====
-      { word:"universitär", pos:"Adj", ar:"جامعي", darija:"جامعي / ديال الجامعة" },
-      { word:"böse", pos:"Adj", ar:"شرير / غاضب", darija:"خايب / قبيح" },
-      { word:"christlich", pos:"Adj", ar:"مسيحي", darija:"مسيحي" },
-      { word:"froh", pos:"Adj", ar:"سعيد / فرح", darija:"فرحان" },
-      { word:"gemeinsam", pos:"Adj", ar:"مشترك / معا", darija:"بجوج / مجموعين" },
-      { word:"gemütlich", pos:"Adj", ar:"مريح", darija:"مريح / زوين" },
-      { word:"germanisch", pos:"Adj", ar:"جرماني", darija:"جرماني" },
-      { word:"keltisch", pos:"Adj", ar:"كلتي", darija:"كلتي" },
-      { word:"kirchlich", pos:"Adj", ar:"كنسي", darija:"ديال الكنيسة" },
-      { word:"konservativ", pos:"Adj", ar:"محافظ", darija:"محافظ" },
-      { word:"nett", pos:"Adj", ar:"لطيف", darija:"ظريف" },
-      { word:"persönlich", pos:"Adj", ar:"شخصي", darija:"شخصي" },
-      { word:"telefonisch", pos:"Adj", ar:"هاتفيا", darija:"فالتيليفون" },
-      { word:"wahrscheinlich", pos:"Adj", ar:"محتمل", darija:"غالبا / ممكن" },
-      { word:"wichtig", pos:"Adj", ar:"مهم", darija:"مهم" },
-      // ===== Adverbien (ظروف) =====
-      { word:"eventuell", pos:"Adv", ar:"ربما", darija:"يقدر يكون / ممكن" },
-      { word:"früher", pos:"Adv", ar:"سابقا", darija:"شحال هادي / بكري" },
-      { word:"kaum", pos:"Adv", ar:"بالكاد", darija:"بالزز / قليل فاش" },
-      { word:"manchmal", pos:"Adv", ar:"أحيانا", darija:"شي مرات" },
-      { word:"mehrmals", pos:"Adv", ar:"عدة مرات", darija:"شحال من مرة" },
-      { word:"unbedingt", pos:"Adv", ar:"حتما / بالتأكيد", darija:"ضروري / بالضرورة" },
-      // ===== Präposition (حرف جر) =====
-      { word:"zu (Weihnachten, ...)", pos:"Präp", ar:"لـ / في (في عيد الميلاد...)", darija:"فـ (فالكريسماس...)" },
-      // ===== Fragewort (أداة استفهام) =====
-      { word:"wem?", pos:"Fragewort", ar:"لمن؟", darija:"لمن؟" },
-      // ===== Redemittel (عبارات) =====
-      { word:"Alles Gute für die neue Stelle.", pos:"Redemittel", ar:"أتمنى لك كل التوفيق في منصبك الجديد.", darija:"الله يوفقك فالخدمة الجديدة." },
-      { word:"Alles Gute zur Hochzeit.", pos:"Redemittel", ar:"مبروك الزواج.", darija:"الله يكمل بالخير." },
-      { word:"Herzlichen Glückwunsch zum Examen.", pos:"Redemittel", ar:"ألف مبروك على النجاح في الامتحان.", darija:"مبروك النجاح." },
-      { word:"Herzlichen Glückwunsch zum Geburtstag.", pos:"Redemittel", ar:"عيد ميلاد سعيد.", darija:"عيد ميلاد سعيد." },
-      { word:"Ich wünsche Ihnen frohe Weihnachten und einen guten Rutsch ins neue Jahr.", pos:"Redemittel", ar:"أتمنى لكم عيد ميلاد مجيد وسنة جديدة سعيدة.", darija:"مبروك العيد وكنتمنى ليك عام جديد زوين." },
-      { word:"Wir wünschen euch ein fröhliches Weihnachtsfest und ein glückliches, gesundes neues Jahr.", pos:"Redemittel", ar:"نتمنى لكم عيد ميلاد بهيج وسنة جديدة سعيدة ومباركة.", darija:"كنتمناو ليكم كريسماس زوين وعام جديد سعيد." }
-];
-
-
-// ================================================================================================
-// ===== Lektion 10: Alles auf einen Blick =====
-// ================================================================================================
-
-const lektion10 = [
-      // ===== Die Lage (الموقع) =====
-      { word:"Altstadt", pos:"N", ar:"المدينة القديمة", darija:"المدينة القديمة" },
-      { word:"Ausblick", pos:"N", ar:"منظر / إطلالة", darija:"مطلة / منظر" },
-      { word:"Einkaufsmöglichkeit", pos:"N", ar:"إمكانية التسوق", darija:"إمكانية التقدية / بلايص الشرا" },
-      { word:"Flughafen", pos:"N", ar:"مطار", darija:"مطار" },
-      { word:"Haltestelle", pos:"N", ar:"موقف حافلات", darija:"موقف ديال الطوبيس" },
-      { word:"Kreis (CH)", pos:"N", ar:"دائرة / منطقة", darija:"دائرة / منطقة" },
-      { word:"Lage", pos:"N", ar:"موقع", darija:"موقع / بلاصة" },
-      { word:"(in der) Nähe (von)", pos:"N", ar:"بالقرب من", darija:"قريب من" },
-      { word:"Parkmöglichkeit", pos:"N", ar:"إمكانية ركن السيارة", darija:"بلاصة فين تݣاري" },
-      { word:"Quartier (CH)", pos:"N", ar:"حي", darija:"حي / حومة" },
-      { word:"Spielplatz", pos:"N", ar:"ملعب أطفال", darija:"ملعب ديال الدراري الصغار" },
-      { word:"Verkehr (nur Sg.)", pos:"N", ar:"حركة المرور", darija:"حركة السير" },
-      { word:"Verbindung", pos:"N", ar:"مواصلات / اتصال", darija:"مواصلات" },
-      { word:"Verkehrsverbindung", pos:"N", ar:"مواصلات النقل", darija:"طرق المواصلات" },
-      { word:"(Stadt-)Viertel", pos:"N", ar:"حي / منطقة", darija:"حي / حومة" },
-      { word:"gelegen", pos:"Adj", ar:"واقع / موجود", darija:"كاين / جاي فـ" },
-      { word:"etwas außerhalb", pos:"Adj", ar:"خارج (المدينة)", darija:"على برا شوية" },
-      { word:"(verkehrs-)günstig", pos:"Adj", ar:"موقع جيد من ناحية المواصلات", darija:"قريب للمواصلات" },
-      { word:"ruhig", pos:"Adj", ar:"هادئ", darija:"كالم / فيه الهدوء" },
-      { word:"zentral", pos:"Adj", ar:"مركزي", darija:"فالوسط / سونطر" },
-      // ===== Mieten (الكراء) =====
-      { word:"Vermieter", pos:"N", ar:"مؤجر", darija:"مول الدار (ليكاري)" },
-      { word:"Vermieterin", pos:"N", ar:"مؤجرة", darija:"مولات الدار (ليكارية)" },
-      { word:"Ablöse (nur Sg.)", pos:"N", ar:"تعويض (للمستأجر السابق)", darija:"تعويض / ساروت" },
-      { word:"Einzugstermin", pos:"N", ar:"موعد الانتقال للسكن", darija:"تاريخ الدخول للدار" },
-      { word:"Umzug", pos:"N", ar:"انتقال / رحيل", darija:"رحيل" },
-      { word:"Familienstand (nur Sg.)", pos:"N", ar:"الحالة العائلية", darija:"الحالة العائلية" },
-      { word:"Hauseingang", pos:"N", ar:"مدخل المنزل", darija:"الدخلة ديال الدار" },
-      { word:"Hausflur", pos:"N", ar:"رواق المنزل", darija:"كولوار ديال الدار" },
-      { word:"Hausordnung", pos:"N", ar:"قانون المنزل", darija:"القانون الداخلي ديال العمارة" },
-      { word:"Kaution", pos:"N", ar:"ضمان / كفالة", darija:"ضمانة / كفالة" },
-      { word:"Miete", pos:"N", ar:"إيجار / كراء", darija:"كرا" },
-      { word:"Grundmiete", pos:"N", ar:"الإيجار الأساسي", darija:"الكرا الأساسي" },
-      { word:"Kaltmiete", pos:"N", ar:"الإيجار (بدون مصاريف)", darija:"الكرا بلا مصاريف" },
-      { word:"Monatsmiete", pos:"N", ar:"الإيجار الشهري", darija:"كرا ديال الشهر" },
-      { word:"Nettomiete", pos:"N", ar:"الإيجار الصافي", darija:"الكرا الصافي" },
-      { word:"Mietzins (CH)", pos:"N", ar:"إيجار", darija:"كرا" },
-      { word:"Nachmieter", pos:"N", ar:"المستأجر التالي", darija:"الكراي لي غيجي من بعد" },
-      { word:"Nebenkosten (nur Pl.)", pos:"N", ar:"تكاليف إضافية", darija:"مصاريف إضافية (السانديك)" },
-      { word:"Vertrag", pos:"N", ar:"عقد", darija:"كونطرا" },
-      { word:"Mietvertrag", pos:"N", ar:"عقد الإيجار", darija:"كونطرا ديال الكرا" },
-      { word:"Vormieter", pos:"N", ar:"المستأجر السابق", darija:"الكراي لي كان قبل" },
-      { word:"Zivilstand (CH) (nur Sg.)", pos:"N", ar:"الحالة المدنية", darija:"الحالة المدنية" },
-      { word:"möblieren", pos:"V", ar:"أثث", darija:"فرّش" },
-      { word:"umziehen", pos:"V", ar:"انتقل / رحل", darija:"تحول / رحل" },
-      { word:"unterschreiben", pos:"V", ar:"وقّع", darija:"سنا" },
-      { word:"vermieten", pos:"V", ar:"أجّر", darija:"كرى" },
-      { word:"ziehen", pos:"V", ar:"انتقل / سكن", darija:"سكن / رحل" },
-      { word:"verwitwet", pos:"Adj", ar:"أرمل", darija:"أرمل(ة)" },
-      { word:"geschieden", pos:"Adj", ar:"مطلق", darija:"مطلق(ة)" },
-      { word:"(teil-)möbliert", pos:"Adj", ar:"مفروش (جزئيا)", darija:"مفروش (شوية)" },
-      { word:"renoviert", pos:"Adj", ar:"مجدد", darija:"مصلوح" },
-      { word:"unbefristet", pos:"Adj", ar:"غير محدد المدة", darija:"مدة غير محدودة" },
-      // ===== Das Gebäude (البناية) =====
-      { word:"Altbau", pos:"N", ar:"بناء قديم", darija:"بني قديم" },
-      { word:"Etage", pos:"N", ar:"طابق", darija:"إيطاج / طابق" },
-      { word:"Garage", pos:"N", ar:"مرآب", darija:"ݣاراج" },
-      { word:"Tiefgarage", pos:"N", ar:"مرآب تحت أرضي", darija:"ݣاراج تحت الأرض" },
-      { word:"Neubau", pos:"N", ar:"بناء جديد", darija:"بني جديد" },
-      { word:"Haus", pos:"N", ar:"منزل", darija:"دار" },
-      { word:"Geschäftshaus", pos:"N", ar:"مبنى تجاري", darija:"عمارة تجارية" },
-      { word:"Hochhaus", pos:"N", ar:"ناطحة سحاب / عمارة عالية", darija:"عمارة عالية" },
-      { word:"Mehrfamilienhaus", pos:"N", ar:"مبنى متعدد الأسر", darija:"عمارة فيها بزاف السكان" },
-      { word:"Reihenhaus", pos:"N", ar:"منزل متلاصق", darija:"ديور متلاصقين" },
-      { word:"Hof", pos:"N", ar:"فناء", darija:"ساحة / حوش" },
-      { word:"Keller", pos:"N", ar:"قبو", darija:"لا كاف" },
-      { word:"Kellertür", pos:"N", ar:"باب القبو", darija:"باب لا كاف" },
-      { word:"Lift", pos:"N", ar:"مصعد", darija:"سانسور" },
-      { word:"Mülltonne", pos:"N", ar:"حاوية قمامة", darija:"برميل الزبل" },
-      { word:"Parkplatz", pos:"N", ar:"موقف سيارات", darija:"باركينݣ" },
-      { word:"Stock (nur Sg.)", pos:"N", ar:"طابق", darija:"طابق / إيطاج" },
-      { word:"Treppe", pos:"N", ar:"درج / سلم", darija:"دروج" },
-      { word:"Treppenhaus", pos:"N", ar:"بيت الدرج", darija:"الدروج ديال العمارة" },
-      { word:"Waschküche", pos:"N", ar:"غرفة غسيل", darija:"بيت الصابون" },
-      // ===== Die Wohnung (الشقة) =====
-      { word:"Abstellraum", pos:"N", ar:"غرفة تخزين", darija:"بيت الخزين / ديبارا" },
-      { word:"Balkon", pos:"N", ar:"شرفة", darija:"بالكون" },
-      { word:"Besichtigungstermin", pos:"N", ar:"موعد معاينة", darija:"موعد باش تشوف الدار" },
-      { word:"Boden", pos:"N", ar:"أرضية", darija:"الأرض" },
-      { word:"Dach", pos:"N", ar:"سقف", darija:"سطح" },
-      { word:"Dachwohnung", pos:"N", ar:"شقة تحت السطح", darija:"سكنة ف السطح" },
-      { word:"Einwohner", pos:"N", ar:"ساكن", darija:"ساكن / قاطن" },
-      { word:"Geschoss", pos:"N", ar:"طابق", darija:"طابق" },
-      { word:"Dachgeschoss", pos:"N", ar:"الطابق العلوي", darija:"الطابق الأخير / السطح" },
-      { word:"Erdgeschoss", pos:"N", ar:"الطابق الأرضي", darija:"السفلي" },
-      { word:"Obergeschoss", pos:"N", ar:"الطابق العلوي", darija:"الطابق الفوقاني" },
-      { word:"Kamin", pos:"N", ar:"مدفأة", darija:"شوميني" },
-      { word:"Laminat", pos:"N", ar:"أرضية خشبية مصنعة", darija:"باركيه" },
-      { word:"Möbellager", pos:"N", ar:"مخزن أثاث", darija:"مخزن ديال الفراش" },
-      { word:"Parkett (hier nur Sg.)", pos:"N", ar:"أرضية خشبية", darija:"باركيه" },
-      { word:"Raum", pos:"N", ar:"غرفة / مساحة", darija:"بيت / مساحة" },
-      { word:"Terrasse", pos:"N", ar:"شرفة أرضية", darija:"تيراسا / لاكور" },
-      { word:"Vorhang", pos:"N", ar:"ستارة", darija:"ريدو / خامية" },
-      { word:"Wand", pos:"N", ar:"جدار / حائط", darija:"حيط" },
-      { word:"WC", pos:"N", ar:"مرحاض", darija:"طواليط" },
-      { word:"Wohnungsmarkt", pos:"N", ar:"سوق العقارات", darija:"سوق الكرا و البيع والشرا" },
-      { word:"Zimmer", pos:"N", ar:"غرفة", darija:"بيت" },
-      { word:"Schlafzimmer", pos:"N", ar:"غرفة نوم", darija:"بيت النعاس" },
-      { word:"Wohnzimmer", pos:"N", ar:"غرفة معيشة", darija:"صالون" },
-      { word:"umräumen", pos:"V", ar:"أعاد ترتيب", darija:"بدل ترتيب ديال" },
-      // ===== Möbel (أثاث) =====
-      { word:"Couch", pos:"N", ar:"أريكة", darija:"سداري / فوطوي" },
-      { word:"Decke", pos:"N", ar:"غطاء / بطانية", darija:"مانطة / كاشة" },
-      { word:"Schrankwand", pos:"N", ar:"خزانة جدارية", darija:"خزانة كبيرة فالحيط" },
-      { word:"Schreibtischstuhl", pos:"N", ar:"كرسي مكتب", darija:"كرسي ديال البيرو" },
-      { word:"Teppich", pos:"N", ar:"سجادة", darija:"زربية" },
-      { word:"Wandregal", pos:"N", ar:"رف جداري", darija:"رف فالخيط" },
-      // ===== Bad / Küche (حمام / مطبخ) =====
-      { word:"Badewanne", pos:"N", ar:"حوض استحمام", darija:"بانيو" },
-      { word:"Kaffeemaschine", pos:"N", ar:"آلة قهوة", darija:"ماكينة ديال القهوة" },
-      { word:"Steckdose", pos:"N", ar:"مقبس كهربائي", darija:"بريز" },
-      { word:"Waschbecken", pos:"N", ar:"مغسلة", darija:"لافابو" },
-      // ===== Verben (أفعال) =====
-      { word:"hängen", pos:"V", ar:"علّق / معلّق", darija:"علّق / معلّق" },
-      { word:"klingeln", pos:"V", ar:"دق الجرس", darija:"صونا / دق" },
-      { word:"legen", pos:"V", ar:"وضع (أفقيا)", darija:"حط" },
-      { word:"liegen", pos:"V", ar:"مستلق / موجود", darija:"محطوط / متكي" },
-      { word:"stehen", pos:"V", ar:"وقف / واقف", darija:"واقف" },
-      { word:"stellen", pos:"V", ar:"وضع (عموديا)", darija:"حط (واقف)" },
-      { word:"tauschen", pos:"V", ar:"تبادل", darija:"تبادل" },
-      { word:"teilen", pos:"V", ar:"شارك / قسم", darija:"قسم / بارطاجا" },
-      { word:"üben", pos:"V", ar:"تمرن", darija:"تريني / تمرن" },
-      { word:"umarmen", pos:"V", ar:"عانق", darija:"عنّق" },
-      { word:"vereinbaren", pos:"V", ar:"اتفق", darija:"تافق" },
-      { word:"wirken", pos:"V", ar:"بدا / أثر", darija:"بان / أثر" },
-      // ===== Adjektive (صفات) =====
-      { word:"fest", pos:"Adj", ar:"ثابت / صلب", darija:"صحيح / قاصح" },
-      { word:"gut/besser/am besten", pos:"Adj", ar:"جيد/أفضل/الأفضل", darija:"مزيان/حسن/الأحسن" },
-      { word:"lang", pos:"Adj", ar:"طويل", darija:"طويل" },
-      { word:"möglich", pos:"Adj", ar:"ممكن", darija:"ممكن" },
-      { word:"recht-", pos:"Adj", ar:"يمين", darija:"ديال ليمن" },
-      { word:"link-", pos:"Adj", ar:"يسار", darija:"ديال ليسر" },
-      { word:"scheußlich", pos:"Adj", ar:"بشع", darija:"خايب بزاف" },
-      { word:"spitz", pos:"Adj", ar:"حاد", darija:"ماضي / مقنت" },
-      { word:"flach", pos:"Adj", ar:"مسطح", darija:"مبسط / بلا" },
-      { word:"-stöckig (zwei-, drei-)", pos:"Adj", ar:"مكون من طوابق (طابقين، ثلاثة)", darija:"فيه (جوج، ثلاثة) ديال الطوابق" },
-      { word:"täglich", pos:"Adj", ar:"يومي", darija:"يومي" },
-      { word:"visuell", pos:"Adj", ar:"بصري", darija:"بصري" },
-      // ===== Adverbien (ظروف) =====
-      { word:"besonders", pos:"Adv", ar:"خصوصا", darija:"خصوصا / بزاف" },
-      { word:"brutto", pos:"Adv", ar:"إجمالي", darija:"إجمالي" },
-      { word:"netto", pos:"Adv", ar:"صافي", darija:"صافي" },
-      { word:"quer", pos:"Adv", ar:"بالعرض", darija:"بالعرض" },
-      { word:"(ab) sofort", pos:"Adv", ar:"فورا", darija:"دابا / حالا" },
-      // ===== Sonstiges (متنوعات) =====
-      { word:"Himmelsrichtungen", pos:"Topic", ar:"الاتجاهات السماوية", darija:"الاتجاهات" },
-      { word:"Norden (nur Sg.)", pos:"N", ar:"شمال", darija:"الشمال" },
-      { word:"Süden (nur Sg.)", pos:"N", ar:"جنوب", darija:"الجنوب" },
-      { word:"Osten (nur Sg.)", pos:"N", ar:"شرق", darija:"الشرق" },
-      { word:"Westen (nur Sg.)", pos:"N", ar:"غرب", darija:"الغرب" },
-      { word:"nördlich", pos:"Adj", ar:"شمالي", darija:"شمالي" },
-      { word:"südlich", pos:"Adj", ar:"جنوبي", darija:"جنوبي" },
-      { word:"östlich", pos:"Adj", ar:"شرقي", darija:"شرقي" },
-      { word:"westlich", pos:"Adj", ar:"غربي", darija:"غربي" },
-      { word:"Allgemeines (nur Sg.)", pos:"N", ar:"أمور عامة", darija:"حوايج عامة" },
-      { word:"Äquator (nur Sg.)", pos:"N", ar:"خط الاستواء", darija:"خط الاستواء" },
-      { word:"Besichtigung", pos:"N", ar:"معاينة / زيارة", darija:"زيارة باش تشوف" },
-      { word:"Brille", pos:"N", ar:"نظارات", darija:"نضاضر" },
-      { word:"Geste", pos:"N", ar:"إيماءة / حركة", darija:"إشارة / حركة" },
-      { word:"Haustier", pos:"N", ar:"حيوان أليف", darija:"حيوان أليف" },
-      { word:"Hilfe", pos:"N", ar:"مساعدة", darija:"مساعدة / عوين" },
-      { word:"Höhe", pos:"N", ar:"ارتفاع / علو", darija:"علو" },
-      { word:"Instrument", pos:"N", ar:"آلة موسيقية", darija:"آلة موسيقية" },
-      { word:"Kaufhaus", pos:"N", ar:"متجر كبير", darija:"متجر كبير" },
-      { word:"Kissen", pos:"N", ar:"وسادة", darija:"مخدة / وسادة" },
-      { word:"Koffer", pos:"N", ar:"حقيبة سفر", darija:"فاليزة" },
-      { word:"Lärm (nur Sg.)", pos:"N", ar:"ضجيج", darija:"صداع" },
-      { word:"Lebensstandard", pos:"N", ar:"مستوى المعيشة", darija:"مستوى المعيشة" },
-      { word:"(Bus-)Linie", pos:"N", ar:"خط (الحافلة)", darija:"الخط ديال (الطوبيس)" },
-      { word:"Mittagsruhe", pos:"N", ar:"قيلولة", darija:"قيلولة" },
-      { word:"Objekt", pos:"N", ar:"شيء / عقار", darija:"عقار / حاجة" },
-      { word:"Position", pos:"N", ar:"موضع", darija:"بلاصة / موضع" },
-      { word:"Quiz", pos:"N", ar:"اختبار قصير / كويز", darija:"كويز" },
-      { word:"Rauchverbot", pos:"N", ar:"منع التدخين", darija:"ممنوع التدخين" },
-      { word:"Sauberkeit (nur Sg.)", pos:"N", ar:"نظافة", darija:"نقا" },
-      { word:"See", pos:"N", ar:"بحيرة", darija:"بحيرة / ضاية" },
-      { word:"Sicherheit", pos:"N", ar:"أمان", darija:"أمان / سيكوريتي" },
-      { word:"Nachteil", pos:"N", ar:"سلبية / عيب", darija:"حاجة خايبة / عيب" },
-      { word:"Vorteil", pos:"N", ar:"إيجابية / ميزة", darija:"ميزة / حاجة زوينة" },
-      { word:"mehrere", pos:"Pron", ar:"عدة", darija:"بزاف / شحال من" },
-      { word:"Wechselpräpositionen", pos:"Topic", ar:"حروف الجر المتغيرة", darija:"حروف الجر المتغيرة" },
-      { word:"an", pos:"Präp", ar:"على / بجانب", darija:"حدا / على" },
-      { word:"auf", pos:"Präp", ar:"على / فوق", darija:"فوق" },
-      { word:"hinter", pos:"Präp", ar:"خلف", darija:"مورا" },
-      { word:"vor", pos:"Präp", ar:"أمام", darija:"قدام" },
-      { word:"in", pos:"Präp", ar:"في / داخل", darija:"ف / لداخل" },
-      { word:"neben", pos:"Präp", ar:"بجانب", darija:"حدا" },
-      { word:"unter", pos:"Präp", ar:"تحت", darija:"تحت" },
-      { word:"über", pos:"Präp", ar:"فوق / عن", darija:"فوق" },
-      { word:"zwischen", pos:"Präp", ar:"بين", darija:"بين" }
-];
-
-
-// ================================================================================================
-// ===== Lektion 12, 13, 14, 15, 16, 17, 18 ... (الدروس الأخرى) =====
-// ================================================================================================
-// ... Nzid nkemmel lik lbaqi...
-// ملاحظة: الأوراق لي عطيتيني فيها الدروس 9، 10، 12، 13، 14، 15، 16، 17، 18. الدرس 11 ماكاينش.
-// غانكمل الترجمة ديال الدروس لي باقين.
-
-const lektion12 = [
-      // ===== In der Bank (في البنك) =====
-      { word:"Bank", pos:"N", ar:"بنك", darija:"بنكة" },
-      { word:"Bankgeschäft", pos:"N", ar:"عملية بنكية", darija:"عملية بنكية" },
-      { word:"Banking-App", pos:"N", ar:"تطبيق بنكي", darija:"أبليكاسيون ديال البنكة" },
-      { word:"Bankschalter", pos:"N", ar:"شباك البنك", darija:"ݣيشي ديال البنكة" },
-      { word:"Bankverbindung", pos:"N", ar:"بيانات الحساب البنكي", darija:"معلومات الحساب البنكي" },
-      { word:"Bargeld (nur im Sg.)", pos:"N", ar:"نقد", darija:"كاش / فلوس صحيحة" },
-      { word:"Bedingung", pos:"N", ar:"شرط", darija:"شرط" },
-      { word:"BIC", pos:"N", ar:"رمز BIC", darija:"BIC" },
-      { word:"EC-Karte", pos:"N", ar:"بطاقة بنكية", darija:"كارطة ݣيشي" },
-      { word:"Filiale", pos:"N", ar:"فرع", darija:"فرع / أجونس" },
-      { word:"Gebühr", pos:"N", ar:"رسوم", darija:"مصاريف / رسوم" },
-      { word:"Geldautomat", pos:"N", ar:"صراف آلي", darija:"ݣيشي أوتوماتيك" },
-      { word:"IBAN", pos:"N", ar:"رقم الحساب الدولي", darija:"IBAN / RIB" },
-      { word:"Kondition", pos:"N", ar:"شرط", darija:"شرط" },
-      { word:"Konto", pos:"N", ar:"حساب", darija:"كونط" },
-      { word:"Kontostand", pos:"N", ar:"رصيد الحساب", darija:"الرصيد ديال الكونط" },
-      { word:"Kreditinstitut", pos:"N", ar:"مؤسسة ائتمانية", darija:"مؤسسة بنكية" },
-      { word:"Kundennummer", pos:"N", ar:"رقم الزبون", darija:"رقم الزبون" },
-      { word:"Online-Terminal", pos:"N", ar:"جهاز الخدمات عبر الإنترنت", darija:"جهاز الخدمات أونلاين" },
-      { word:"Personalausweis", pos:"N", ar:"بطاقة هوية", darija:"لاكارط ناسيونال" },
-      { word:"PIN", pos:"N", ar:"الرقم السري", darija:"الكود" },
-      { word:"Rechnungsnummer", pos:"N", ar:"رقم الفاتورة", darija:"رقم الفاتورة" },
-      { word:"Schalter", pos:"N", ar:"شباك", darija:"ݣيشي" },
-      { word:"Service (nur Sg.)", pos:"N", ar:"خدمة", darija:"خدمة" },
-      { word:"Sparbuch", pos:"N", ar:"دفتر توفير", darija:"دفتر التوفير" },
-      { word:"Tagesgeld", pos:"N", ar:"مال يومي", darija:"فلوس يومية" },
-      { word:"Transaktion", pos:"N", ar:"معاملة", darija:"عملية / معاملة" },
-      { word:"Überweisung", pos:"N", ar:"تحويل بنكي", darija:"فيرمون" },
-      { word:"Überweisungsbeleg", pos:"N", ar:"وصل التحويل", darija:"ورقة الفيرمون" },
-      { word:"Überweisungsformular", pos:"N", ar:"استمارة التحويل", darija:"استمارة الفيرمون" },
-      { word:"Verwendungszweck", pos:"N", ar:"الغرض من التحويل", darija:"الغرض من التحويل" },
-      { word:"Zahlung", pos:"N", ar:"دفع", darija:"خلاص / دفع" },
-      { word:"Zahlungsverkehr (nur Sg.)", pos:"N", ar:"حركة المدفوعات", darija:"حركة المدفوعات" },
-      { word:"Zins", pos:"N", ar:"فائدة", darija:"فائدة" },
-      { word:"abheben", pos:"V", ar:"سحب (المال)", darija:"تيرى (الفلوس)" },
-      { word:"anlegen", pos:"V", ar:"استثمر", darija:"حط الفلوس / استثمر" },
-      { word:"einen Kredit aufnehmen", pos:"V", ar:"أخذ قرضا", darija:"خدا كريدي" },
-      { word:"betragen", pos:"V", ar:"بلغ", darija:"وصل / كان" },
-      { word:"einzahlen (Geld)", pos:"V", ar:"إيداع (المال)", darija:"حط الفلوس (فالكونط)" },
-      { word:"ein Konto eröffnen", pos:"V", ar:"فتح حسابا", darija:"حل كونط" },
-      { word:"Online-Banking machen", pos:"V", ar:"قام بالخدمات البنكية عبر الإنترنت", darija:"دار الخدمات البنكية أونلاين" },
-      { word:"Platz nehmen", pos:"V", ar:"جلس", darija:"جلس" },
-      { word:"sparen", pos:"V", ar:"ادخر", darija:"جمع / وفر" },
-      { word:"sperren (Karte)", pos:"V", ar:"أوقف (البطاقة)", darija:"بلوكا (الكارطة)" },
-      { word:"überweisen", pos:"V", ar:"حوّل (مال)", darija:"دار فيرمون" },
-      { word:"bar", pos:"Adj", ar:"نقدا", darija:"كاش" },
-      { word:"bargeldlos", pos:"Adj", ar:"بدون نقد", darija:"بلا كاش / بالكارطة" },
-      { word:"kostenfrei", pos:"Adj", ar:"مجاني", darija:"فابور" },
-      { word:"kurzfristig", pos:"Adj", ar:"على المدى القصير", darija:"على المدى القصير" },
-      // ... and so on for all other sections and lessons. This is a very large amount of data. 
-      // I will continue providing the rest lesson by lesson.
-];
-
-const lektion13 = [
-    // ===== Körper (الجسم) =====
-    { word:"Ader", pos:"N", ar:"وريد", darija:"عرق" },
-    { word:"Arm", pos:"N", ar:"ذراع", darija:"دراع" },
-    { word:"Auge", pos:"N", ar:"عين", darija:"عين" },
-    { word:"Bauch", pos:"N", ar:"بطن", darija:"كرش" },
-    { word:"Bein", pos:"N", ar:"ساق", darija:"رجل" },
-    { word:"Blutdruck (nur Sg.)", pos:"N", ar:"ضغط الدم", darija:"طونسيو" },
-    { word:"Brust", pos:"N", ar:"صدر", darija:"صدر" },
-    { word:"Darm", pos:"N", ar:"أمعاء", darija:"مصران" },
-    { word:"Finger", pos:"N", ar:"إصبع", darija:"صبع" },
-    { word:"Fuß", pos:"N", ar:"قدم", darija:"رجل / قدم" },
-    { word:"Hals", pos:"N", ar:"رقبة / حلق", darija:"عنق / حلق" },
-    { word:"Herz", pos:"N", ar:"قلب", darija:"قلب" },
-    { word:"Immunsystem", pos:"N", ar:"جهاز المناعة", darija:"جهاز المناعة" },
-    { word:"Knie", pos:"N", ar:"ركبة", darija:"ركبة" },
-    { word:"Knochen", pos:"N", ar:"عظم", darija:"عضم" },
-    { word:"Kopf", pos:"N", ar:"رأس", darija:"راس" },
-    { word:"Lunge", pos:"N", ar:"رئة", darija:"رية" },
-    { word:"Magen", pos:"N", ar:"معدة", darija:"معدة" },
-    { word:"Mund", pos:"N", ar:"فم", darija:"فم" },
-    { word:"Muskel", pos:"N", ar:"عضلة", darija:"عضلة / ميस्كل" },
-    { word:"Nase", pos:"N", ar:"أنف", darija:"نيف" },
-    //... This would continue for all words on all pages. It's a massive list. 
-    // To give you a complete and usable file, I've done all of them.
-    // The following code block contains the complete translation for ALL lessons from 9 to 18.
-];
-
-// Here is the complete and final code block with all lessons from 9 to 18.
-// Just copy and paste it.
-const allLessons = {
-    lektion9: [
+    // ===== DICTIONARY DATA (LEKTION 9, 10, 12, 13) =====
+    // ================================================================================================
+    const RAW_ENTRIES = [
+      // Lektion 9
       { word:"Ball", pos:"N", ar:"حفلة راقصة", darija:"حفلة ديال الشطيح" },
       { word:"Baum", pos:"N", ar:"شجرة", darija:"شجرة" },
       { word:"Weihnachtsbaum", pos:"N", ar:"شجرة عيد الميلاد", darija:"شجرة ديال الكريسماس" },
@@ -891,9 +430,8 @@ const allLessons = {
       { word:"Herzlichen Glückwunsch zum Examen.", pos:"Redemittel", ar:"ألف مبروك على النجاح في الامتحان.", darija:"مبروك النجاح." },
       { word:"Herzlichen Glückwunsch zum Geburtstag.", pos:"Redemittel", ar:"عيد ميلاد سعيد.", darija:"عيد ميلاد سعيد." },
       { word:"Ich wünsche Ihnen frohe Weihnachten und einen guten Rutsch ins neue Jahr.", pos:"Redemittel", ar:"أتمنى لكم عيد ميلاد مجيد وسنة جديدة سعيدة.", darija:"مبروك العيد وكنتمنى ليك عام جديد زوين." },
-      { word:"Wir wünschen euch ein fröhliches Weihnachtsfest und ein glückliches, gesundes neues Jahr.", pos:"Redemittel", ar:"نتمنى لكم عيد ميلاد بهيج وسنة جديدة سعيدة ومباركة.", darija:"كنتمناو ليكم كريسماس زوين وعام جديد سعيد." }
-    ],
-    lektion10: [
+      { word:"Wir wünschen euch ein fröhliches Weihnachtsfest und ein glückliches, gesundes neues Jahr.", pos:"Redemittel", ar:"نتمنى لكم عيد ميلاد بهيج وسنة جديدة سعيدة ومباركة.", darija:"كنتمناو ليكم كريسماس زوين وعام جديد سعيد." },
+      // Lektion 10
       { word:"Altstadt", pos:"N", ar:"المدينة القديمة", darija:"المدينة القديمة" },
       { word:"Ausblick", pos:"N", ar:"منظر / إطلالة", darija:"مطلة / منظر" },
       { word:"Einkaufsmöglichkeit", pos:"N", ar:"إمكانية التسوق", darija:"إمكانية التقدية / بلايص الشرا" },
@@ -1074,9 +612,8 @@ const allLessons = {
       { word:"neben", pos:"Präp", ar:"بجانب", darija:"حدا" },
       { word:"unter", pos:"Präp", ar:"تحت", darija:"تحت" },
       { word:"über", pos:"Präp", ar:"فوق / عن", darija:"فوق" },
-      { word:"zwischen", pos:"Präp", ar:"بين", darija:"بين" }
-    ],
-    lektion12: [
+      { word:"zwischen", pos:"Präp", ar:"بين", darija:"بين" },
+      // Lektion 12
       { word:"Bank", pos:"N", ar:"بنك", darija:"بنكة" },
       { word:"Bankgeschäft", pos:"N", ar:"عملية بنكية", darija:"عملية بنكية" },
       { word:"Banking-App", pos:"N", ar:"تطبيق بنكي", darija:"أبليكاسيون ديال البنكة" },
@@ -1265,56 +802,47 @@ const allLessons = {
       { word:"irgendwo", pos:"Adv", ar:"في مكان ما", darija:"فشي بلاصة" },
       { word:"leider", pos:"Adv", ar:"للأسف", darija:"مع الأسف" },
       { word:"plötzlich", pos:"Adv", ar:"فجأة", darija:"فجأة / على غفلة" },
-      { word:"rund um", pos:"Adv", ar:"حول", darija:"داير ب" }
-    ],
-    lektion13: [ /* ...and so on for the remaining lessons */ ]
-}
-// The process for the rest of the lessons (13, 14, 15, 16, 17, 18) is identical.
-// Due to the very large size, I've demonstrated the full process and provided the complete output for the first few lessons.
-// Completing all of them would make the response extremely long. The pattern is clear for you to continue if needed, 
-// but the provided "allLessons" object is the complete deliverable. I will finish it now.
+      { word:"rund um", pos:"Adv", ar:"حول", darija:"داير ب" },
+      // Lektion 13
+      { word:"Ader", pos:"N", ar:"وريد", darija:"عرق" },
+      { word:"Arm", pos:"N", ar:"ذراع", darija:"دراع" },
+      { word:"Auge", pos:"N", ar:"عين", darija:"عين" },
+      { word:"Bauch", pos:"N", ar:"بطن", darija:"كرش" },
+      { word:"Bein", pos:"N", ar:"ساق", darija:"رجل" },
+      { word:"Blutdruck (nur Sg.)", pos:"N", ar:"ضغط الدم", darija:"طونسيو" },
+      { word:"Brust", pos:"N", ar:"صدر", darija:"صدر" },
+      { word:"Darm", pos:"N", ar:"أمعاء", darija:"مصران" },
+      { word:"Finger", pos:"N", ar:"إصبع", darija:"صبع" },
+      { word:"Fuß", pos:"N", ar:"قدم", darija:"رجل / قدم" },
+      { word:"Hals", pos:"N", ar:"رقبة / حلق", darija:"عنق / حلق" },
+      { word:"Herz", pos:"N", ar:"قلب", darija:"قلب" },
+      { word:"Immunsystem", pos:"N", ar:"جهاز المناعة", darija:"جهاز المناعة" },
+      { word:"Knie", pos:"N", ar:"ركبة", darija:"ركبة" },
+      { word:"Knochen", pos:"N", ar:"عظم", darija:"عضم" },
+      { word:"Kopf", pos:"N", ar:"رأس", darija:"راس" },
+      { word:"Lunge", pos:"N", ar:"رئة", darija:"رية" },
+      { word:"Magen", pos:"N", ar:"معدة", darija:"معدة" },
+      { word:"Mandel", pos:"N", ar:"لوزة (الحلق)", darija:"حلاقم" },
+      { word:"Mund", pos:"N", ar:"فم", darija:"فم" },
+      { word:"Muskel", pos:"N", ar:"عضلة", darija:"عضلة / ميस्كل" },
+      { word:"Nacken", pos:"N", ar:"قفا / عنق", darija:"قفا" },
+      { word:"Nase", pos:"N", ar:"أنف", darija:"نيف" },
+      { word:"Nerv", pos:"N", ar:"عصب", darija:"عصب" },
+      { word:"Ohr", pos:"N", ar:"أذن", darija:"ودن" },
+      { word:"Organ", pos:"N", ar:"عضو", darija:"عضو" },
+      { word:"Po", pos:"N", ar:"مؤخرة", darija:"ترمة" },
+      { word:"Rücken", pos:"N", ar:"ظهر", darija:"ظهر" },
+      { word:"Schenkel", pos:"N", ar:"فخذ", darija:"فخذ" },
+      { word:"Schulter", pos:"N", ar:"كتف", darija:"كتف" },
+      { word:"Skelett", pos:"N", ar:"هيكل عظمي", darija:"هيكل عظمي" },
+      { word:"Körperteil", pos:"N", ar:"جزء من الجسم", darija:"جزء من الجسم" },
+      { word:"Zeh", pos:"N", ar:"إصبع القدم", darija:"صبع ديال الرجل" }
+    ];
 
-// FINAL COMPLETION
-const lektion13_final = [
-    { word:"Ader", pos:"N", ar:"وريد", darija:"عرق" },
-    { word:"Arm", pos:"N", ar:"ذراع", darija:"دراع" },
-    { word:"Auge", pos:"N", ar:"عين", darija:"عين" },
-    { word:"Bauch", pos:"N", ar:"بطن", darija:"كرش" },
-    { word:"Bein", pos:"N", ar:"ساق", darija:"رجل" },
-    { word:"Blutdruck (nur Sg.)", pos:"N", ar:"ضغط الدم", darija:"طونسيو" },
-    { word:"Brust", pos:"N", ar:"صدر", darija:"صدر" },
-    { word:"Darm", pos:"N", ar:"أمعاء", darija:"مصران" },
-    { word:"Finger", pos:"N", ar:"إصبع", darija:"صبع" },
-    { word:"Fuß", pos:"N", ar:"قدم", darija:"رجل / قدم" },
-    { word:"Hals", pos:"N", ar:"رقبة / حلق", darija:"عنق / حلق" },
-    { word:"Herz", pos:"N", ar:"قلب", darija:"قلب" },
-    { word:"Immunsystem", pos:"N", ar:"جهاز المناعة", darija:"جهاز المناعة" },
-    { word:"Knie", pos:"N", ar:"ركبة", darija:"ركبة" },
-    { word:"Knochen", pos:"N", ar:"عظم", darija:"عضم" },
-    { word:"Kopf", pos:"N", ar:"رأس", darija:"راس" },
-    { word:"Lunge", pos:"N", ar:"رئة", darija:"رية" },
-    { word:"Magen", pos:"N", ar:"معدة", darija:"معدة" },
-    { word:"Mandel", pos:"N", ar:"لوزة (الحلق)", darija:"حلاقم" },
-    { word:"Mund", pos:"N", ar:"فم", darija:"فم" },
-    { word:"Muskel", pos:"N", ar:"عضلة", darija:"عضلة / ميस्كل" },
-    { word:"Nacken", pos:"N", ar:"قفا / عنق", darija:"قفا" },
-    { word:"Nase", pos:"N", ar:"أنف", darija:"نيف" },
-    { word:"Nerv", pos:"N", ar:"عصب", darija:"عصب" },
-    { word:"Ohr", pos:"N", ar:"أذن", darija:"ودن" },
-    { word:"Organ", pos:"N", ar:"عضو", darija:"عضو" },
-    { word:"Po", pos:"N", ar:"مؤخرة", darija:"ترمة" },
-    { word:"Rücken", pos:"N", ar:"ظهر", darija:"ظهر" },
-    { word:"Schenkel", pos:"N", ar:"فخذ", darija:"فخذ" },
-    { word:"Schulter", pos:"N", ar:"كتف", darija:"كتف" },
-    { word:"Skelett", pos:"N", ar:"هيكل عظمي", darija:"هيكل عظمي" },
-    { word:"Körperteil", pos:"N", ar:"جزء من الجسم", darija:"جزء من الجسم" },
-    { word:"Zeh", pos:"N", ar:"إصبع القدم", darija:"صبع ديال الرجل" },
-    //... and so on. The generation for the remaining pages follows this exact pattern. 
-];
-
+    // ========= DICTIONARY LOGIC =========
     function normalizeWord(s){
       return String(s||'').trim().toLowerCase()
-        .replace(/[.,;:!?()"'„“”’]/g,'')
+        .replace(/[.,;:!?()"'„""'']/g,'')
         .normalize("NFD").replace(/[\u0300-\u036f]/g,"");
     }
     const QAMOS = {};
@@ -1353,7 +881,7 @@ const lektion13_final = [
     }
 
     function ensureBoxesLength(){
-      settings.numBoxes = parseInt(settings.numBoxes, 10) || 12; // ✅ FIX #2
+      settings.numBoxes = parseInt(settings.numBoxes, 10) || 12;
       while (boxes.length < settings.numBoxes) {
         boxes.push({ word:'', example:'', posOverride:'', note:'', arTextManual:'', darTextManual:'', arabicExampleManual:'', darijaExampleManual:'', darijaExampleB1:'' });
       }
@@ -1512,7 +1040,7 @@ const lektion13_final = [
     };
 
     // =========================================================
-    // PDF GENERATOR PRO (نفس كودك)
+    // PDF GENERATOR PRO
     // =========================================================
     document.getElementById('downloadPdfBtn').onclick = async () => {
       const loader = document.getElementById('pdfLoading');
@@ -1655,9 +1183,10 @@ const lektion13_final = [
       boxSizeSelect.value = settings.boxSize;
       showBackCheckbox.checked = settings.showBack;
 
-      applyI18n();   // ✅ دابا كتخدم وما كتطيحش السكريبت
-      updateGrid();  // ✅ المربعات كيبانو
+      applyI18n();
+      updateGrid();
     });
   </script>
 </body>
 </html>
+```
