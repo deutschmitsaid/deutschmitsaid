@@ -23,6 +23,7 @@
       --shadow: 0 16px 60px rgba(0,0,0,0.45);
       --glass1: rgba(255,255,255,0.10); --glass2: rgba(255,255,255,0.06);
       --wa:#25D366; --waDark:#0b5a46;
+      --blue-grad: linear-gradient(90deg, #2563eb, #3b82f6); /* لون زر Wortschatz */
       --box-h: 260px;
     }
 
@@ -34,7 +35,7 @@
       overflow-x:hidden; -webkit-text-size-adjust: 100%;
     }
 
-    /* aura effect */
+    /* Aura effect */
     body::before{
       content:""; position: fixed; inset: -35%; z-index: -2; pointer-events:none;
       background:
@@ -61,17 +62,14 @@
     .topActions{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end; flex: 1 1 300px; }
     .pill{ display:flex; align-items:center; gap:10px; padding:10px; border-radius: 999px; background: rgba(0,0,0,0.16); border: 1px solid rgba(255,255,255,0.12); flex-wrap: wrap; width: 100%; }
     .pill input{ padding:10px 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.14); outline:none; background: rgba(0,0,0,0.24); color: var(--ink); font-size: 14px; font-weight: 800; flex: 1 1 120px; min-width: 80px; }
-    .pill input:focus{ border-color: rgba(62,122,75,0.70); box-shadow: 0 0 0 4px rgba(62,122,75,0.18); }
-
+    
     /* ---------- STICKY CONTROLS ---------- */
     #controls{
-      position: sticky; top: 10px;
-      z-index: 100;
+      position: sticky; top: 10px; z-index: 100;
       display:flex; flex-wrap:wrap; gap:12px; padding:16px; border-radius: 18px; justify-content:center; align-items: center;
       background: linear-gradient(180deg, rgba(30, 35, 33, 0.85), rgba(15, 20, 18, 0.95));
       border: 1px solid rgba(255,255,255,0.15); backdrop-filter: blur(16px); box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-      width: 100%;
-      transition: all 0.3s ease;
+      width: 100%; transition: all 0.3s ease;
     }
     .control-group{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:center; }
     .control-group label{ font-weight: 900; font-size: 14px; color: rgba(234,242,238,0.92); }
@@ -81,15 +79,10 @@
     .btn:active{ transform: scale(0.95); }
     .btnPrimary{ background: linear-gradient(90deg, var(--brg), var(--moss2)); color:#EAF2EE; box-shadow: 0 8px 20px rgba(0,66,37,0.35); }
     .btnDanger{ background: linear-gradient(90deg, #9b2222, #b45309); color:#fff; box-shadow: 0 8px 20px rgba(0,0,0,0.35); }
-
-    @media (max-width: 600px) {
-      #controls { padding: 10px; gap: 8px; }
-      select, input[type="range"] { padding: 6px 10px; font-size: 13px; }
-      .btn { padding: 8px 12px; font-size: 13px; }
-      .control-group label { font-size: 13px; }
-    }
-
-    #debug{ text-align:center; font-size: 14px; color: rgba(234,242,238,0.82); font-weight: 900; margin: 0; }
+    
+    /* ✅ زر Wortschatz الجديد */
+    .btnVocab{ background: var(--blue-grad); color: white; box-shadow: 0 8px 20px rgba(37,99,235,0.4); border: 1px solid rgba(255,255,255,0.2); }
+    .btnVocab:hover { box-shadow: 0 12px 30px rgba(37,99,235,0.6); transform: translateY(-1px); }
 
     /* ---------- GRID ---------- */
     #grid{ display:grid; gap: 16px; width: 100%; background: transparent; padding-bottom: 50px; }
@@ -99,7 +92,7 @@
     .flip-side{ position:absolute; inset:0; backface-visibility:hidden; display:flex; flex-direction:column; padding:14px; gap:8px; }
     .flip-back{ transform: rotateY(180deg); direction: rtl; text-align:right; }
 
-    textarea, input { font-size: 16px !important; } /* Prevent zoom on iPhone */
+    textarea, input { font-size: 16px !important; }
 
     /* FRONT SIDE */
     .frontWordWrap{ flex: 1; display:flex; align-items:center; justify-content:center; min-height: 45%; }
@@ -139,9 +132,7 @@
     #waInput{ flex:1; border-radius: 20px; border: 1px solid #ccc; padding: 12px 16px; outline:none; font-weight: 800; font-size: 15px;}
     #waSend{ border:none; border-radius: 20px; padding: 0 20px; background: var(--wa); color:#fff; font-weight: 900; cursor:pointer; }
 
-    /* =========================================================
-       PDF STAGE
-       ========================================================= */
+    /* PDF STAGE */
     #pdfStage{
       position: absolute; left: -9999px; top: 0;
       width: 210mm; height: 297mm; padding: 12mm;
@@ -152,7 +143,6 @@
     .pdfBigTitle{ margin:0; text-align:center; font-weight: 900; font-size: 18px; color:#0B5A36; line-height: 1.2; }
     .pdfMeta{ display:flex; justify-content:space-between; gap: 6mm; font-size: 11px; font-weight: 900; margin-top: 5mm; }
     .pdfMeta span{ border: 1px solid rgba(0,0,0,0.14); border-radius: 999px; padding: 2.5mm 4mm; background: rgba(0,0,0,0.02); }
-
     .pdfGrid{ display: grid; gap: var(--pdfGap); grid-template-columns: repeat(var(--pdfCols), var(--pdfBoxW)); grid-auto-rows: var(--pdfBoxH); width: 100%; }
     .pdfCard{ width: var(--pdfBoxW); height: var(--pdfBoxH); background: #fff; border: 1px solid rgba(0,0,0,0.25); border-radius: 14px; overflow: hidden; }
     .pdfCard.empty { border: none; background: transparent; }
@@ -165,10 +155,25 @@
     .pdfDar{ direction: rtl; text-align: right; font-weight: 700; font-size: 13px; line-height: 1.5; color: #333; white-space: pre-wrap; }
     .pdfNote{ direction: rtl; text-align: right; font-size: 12px; line-height: 1.4; font-family: "Amiri", Arial, sans-serif; color: #444; white-space: pre-wrap; }
 
-    /* Loading Overlay */
+    /* Loading */
     #pdfLoading { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 99999; display: none; align-items: center; justify-content: center; flex-direction: column; color: white; font-weight: 900; font-size: 20px; backdrop-filter: blur(5px); }
     .spinner { border: 4px solid rgba(255,255,255,0.3); border-top: 4px solid #25D366; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin-bottom: 15px; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    /* ✅ MODAL (للوورتشاتز) */
+    #vocabModal{ position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 10000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
+    #vocabModal.open{ display: flex; }
+    .vocabPanel{ background: linear-gradient(180deg, #1a1d1b, #0f1412); border-radius: 20px; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto; padding: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.15); animation: popUp 0.3s ease; }
+    .vocabHeader{ display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; }
+    .vocabTitle{ font-size: 20px; font-weight: 900; color: #d7f7e6; }
+    .vocabClose{ background: rgba(255,255,255,0.1); border: none; color: white; width: 36px; height: 36px; border-radius: 50%; font-size: 20px; cursor: pointer; transition: 0.2s; }
+    .vocabClose:hover{ background: rgba(255,255,255,0.2); }
+    .vocabList{ display: flex; flex-direction: column; gap: 8px; }
+    .vocabItem{ padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; cursor: pointer; transition: all 0.2s; display: flex; justify-content: space-between; align-items: center; }
+    .vocabItem:hover{ background: rgba(37,99,235,0.2); border-color: rgba(37,99,235,0.5); transform: translateX(5px); }
+    .vocabItemName{ font-weight: 900; color: #EAF2EE; font-size: 15px; }
+    .vocabItemCount{ font-size: 12px; opacity: 0.7; background: rgba(0,0,0,0.3); padding: 2px 8px; border-radius: 10px; }
+
   </style>
 </head>
 <body>
@@ -194,14 +199,15 @@
       </div>
     </div>
 
+    <!-- ✅ CONTROLS (مع زر Wortschatz) -->
     <div id="controls">
       <div class="control-group">
-        <label data-i18n="count">Anzahl</label>
+        <label>Anzahl</label>
         <input type="range" id="numBoxes" min="1" max="200" value="12" step="1" style="max-width: 100px;">
         <span id="numBoxesValue" style="font-weight:900; width: 24px; color:white;">12</span>
       </div>
       <div class="control-group">
-        <label data-i18n="cols">Spalten</label>
+        <label>Spalten</label>
         <select id="columns">
           <option value="1">1</option>
           <option value="2">2</option>
@@ -210,20 +216,24 @@
         </select>
       </div>
       <div class="control-group">
-        <label data-i18n="size">Größe</label>
+        <label>Größe</label>
         <select id="boxSize">
-          <option value="small" data-i18n="small">Klein</option>
-          <option value="normal" selected data-i18n="normal">Normal</option>
-          <option value="large" data-i18n="large">Groß</option>
+          <option value="small">Klein</option>
+          <option value="normal" selected>Normal</option>
+          <option value="large">Groß</option>
         </select>
       </div>
       <div class="control-group" style="margin: 0 5px;">
         <label style="cursor:pointer; display:flex; align-items:center; gap:5px;">
           <input type="checkbox" id="showBack" style="width:18px; height:18px;">
-          <span data-i18n="back">Rückseite zeigen</span>
+          <span>Rückseite zeigen</span>
         </label>
       </div>
-      <button class="btn btnDanger" id="resetBtn" type="button" data-i18n="reset">Leeren</button>
+      
+      <!-- ✅ الزر الجديد -->
+      <button class="btn btnVocab" id="vocabBtn" type="button">📚 Wortschatz</button>
+      
+      <button class="btn btnDanger" id="resetBtn" type="button">Leeren</button>
       <button class="btn btnPrimary" id="downloadPdfBtn" type="button">PDF</button>
     </div>
 
@@ -232,6 +242,19 @@
   </div>
 
   <div id="pdfStage" aria-hidden="true"></div>
+
+  <!-- ✅ Modal Wortschatz -->
+  <div id="vocabModal">
+    <div class="vocabPanel">
+      <div class="vocabHeader">
+        <div class="vocabTitle">Lektion wählen</div>
+        <button class="vocabClose" id="closeVocabModal">×</button>
+      </div>
+      <div class="vocabList" id="vocabListContainer">
+        <!-- هنا غادي يبانو الدروس -->
+      </div>
+    </div>
+  </div>
 
   <button id="waBtn" aria-label="WhatsApp">
     <svg viewBox="0 0 32 32"><path d="M19.11 17.25c-.27-.14-1.6-.79-1.85-.88-.25-.09-.43-.14-.62.14-.18.27-.71.88-.87 1.06-.16.18-.32.21-.59.07-.27-.14-1.16-.43-2.21-1.36-.82-.73-1.38-1.63-1.54-1.9-.16-.27-.02-.42.12-.56.12-.12.27-.32.41-.48.14-.16.18-.27.27-.46.09-.18.05-.34-.02-.48-.07-.14-.62-1.5-.85-2.06-.22-.53-.45-.46-.62-.47h-.53c-.18 0-.48.07-.73.34-.25.27-.96.94-.96 2.29 0 1.35.99 2.65 1.13 2.83.14.18 1.95 2.97 4.73 4.17.66.29 1.18.46 1.58.59.66.21 1.26.18 1.74.11.53-.08 1.6-.65 1.83-1.27.23-.62.23-1.15.16-1.27-.07-.12-.25-.18-.52-.32zM16 3C9.38 3 4 8.38 4 15c0 2.11.55 4.17 1.6 5.99L4 29l8.21-1.56A11.92 11.92 0 0 0 16 27c6.62 0 12-5.38 12-12S22.62 3 16 3zm0 21.7c-1.94 0-3.83-.52-5.47-1.5l-.39-.23-4.87.93.93-4.74-.25-.41A9.69 9.69 0 0 1 6.3 15C6.3 9.64 10.64 5.3 16 5.3S25.7 9.64 25.7 15 21.36 24.7 16 24.7z"/></svg>
@@ -250,19 +273,6 @@
   </div>
 
   <script>
-    // ========= FIX #1: i18n functions =========
-    let lang = "de";
-    const I18N = {
-      de: { subtitle:"ist einfacher: wählen • schreiben • drucken", count:"Anzahl", cols:"Spalten", size:"Größe", small:"Klein", normal:"Normal", large:"Groß", back:"Rückseite zeigen", reset:"Leeren" },
-      en: { subtitle:"made easy: choose • write • print",          count:"Count",  cols:"Columns", size:"Size",   small:"Small", normal:"Normal", large:"Large", back:"Show back side",        reset:"Clear" }
-    };
-    function applyI18n(){
-      document.querySelectorAll("[data-i18n]").forEach(el=>{
-        const k = el.getAttribute("data-i18n");
-        if (I18N[lang] && I18N[lang][k]) el.textContent = I18N[lang][k];
-      });
-    }
-
     // ========= الحماية =========
     document.addEventListener('contextmenu', e => e.preventDefault());
     document.addEventListener('keydown', (e) => {
@@ -271,584 +281,41 @@
     });
 
     // ================================================================================================
-    // ===== DICTIONARY DATA (LEKTION 9, 10, 12, 13) =====
+    // ✅ 1. WORTSCHATZ DATENBANK (هنا فين تزيد الدروس)
     // ================================================================================================
-    const RAW_ENTRIES = [
-      // Lektion 9
-      { word:"Ball", pos:"N", ar:"حفلة راقصة", darija:"حفلة ديال الشطيح" },
-      { word:"Baum", pos:"N", ar:"شجرة", darija:"شجرة" },
-      { word:"Weihnachtsbaum", pos:"N", ar:"شجرة عيد الميلاد", darija:"شجرة ديال الكريسماس" },
-      { word:"Bescherung", pos:"N", ar:"توزيع الهدايا", darija:"تفراق الكادوات" },
-      { word:"Brauch", pos:"N", ar:"تقليد / عادة", darija:"عادة / تقاليد" },
-      { word:"Christkind (nur Sg.)", pos:"N", ar:"الطفل يسوع", darija:"الطفل يسوع (شخصية مرتبطة بالكريسماس)" },
-      { word:"Dekoration", pos:"N", ar:"زينة", darija:"ديكور / زواق" },
-      { word:"Ernte", pos:"N", ar:"حصاد", darija:"حصاد" },
-      { word:"Erntedankfest", pos:"N", ar:"عيد الشكر على الحصاد", darija:"عيد الشكر ديال الحصاد" },
-      { word:"Feier", pos:"N", ar:"احتفال", darija:"حفلة" },
-      { word:"Abschlussfeier", pos:"N", ar:"حفل التخرج", darija:"حفلة ديال التخرج" },
-      { word:"Examensfeier", pos:"N", ar:"حفل الامتحانات", darija:"حفلة ديال النجاح فالامتحان" },
-      { word:"Fest", pos:"N", ar:"عيد / مهرجان", darija:"عيد / حفلة" },
-      { word:"Festival", pos:"N", ar:"مهرجان", darija:"مهرجان / فيستيفال" },
-      { word:"Geburt", pos:"N", ar:"ولادة", darija:"ولادة / زيادة" },
-      { word:"Geburtstag", pos:"N", ar:"عيد ميلاد", darija:"عيد ميلاد" },
-      { word:"Heiligabend (nur Sg.)", pos:"N", ar:"عشية عيد الميلاد", darija:"ليلة ديال الكريسماس" },
-      { word:"Hochzeit", pos:"N", ar:"زفاف", darija:"عرس" },
-      { word:"Karfreitag", pos:"N", ar:"الجمعة العظيمة", darija:"الجمعة العظيمة" },
-      { word:"Kerze", pos:"N", ar:"شمعة", darija:"شمعة" },
-      { word:"Kirche", pos:"N", ar:"كنيسة", darija:"كنيسة" },
-      { word:"Kultur", pos:"N", ar:"ثقافة", darija:"ثقافة" },
-      { word:"Leben", pos:"N", ar:"حياة", darija:"حياة" },
-      { word:"Neujahrsfest", pos:"N", ar:"عيد رأس السنة", darija:"حفلة ديال راس العام" },
-      { word:"Ostern (nur Sg.)", pos:"N", ar:"عيد الفصح", darija:"عيد الفصح" },
-      { word:"Osterhase", pos:"N", ar:"أرنب عيد الفصح", darija:"أرنب ديال عيد الفصح" },
-      { word:"Ostermontag", pos:"N", ar:"إثنين عيد الفصح", darija:"تنين ديال عيد الفصح" },
-      { word:"Ostersonntag", pos:"N", ar:"أحد عيد الفصح", darija:"حد ديال عيد الفصح" },
-      { word:"Priester", pos:"N", ar:"كاهن", darija:"قسيس" },
-      { word:"Symbol", pos:"N", ar:"رمز", darija:"رمز" },
-      { word:"Tod", pos:"N", ar:"موت", darija:"موت" },
-      { word:"Tradition", pos:"N", ar:"تقليد", darija:"تقليد" },
-      { word:"Wagen", pos:"N", ar:"عربة", darija:"كارو / عربة" },
-      { word:"Weihnachten", pos:"N", ar:"عيد الميلاد", darija:"الكريسماس / بوناني" },
-      { word:"Weihnachtsfest", pos:"N", ar:"احتفال عيد الميلاد", darija:"حفلة ديال الكريسماس" },
-      { word:"Weihnachtsmann", pos:"N", ar:"بابا نويل", darija:"بابا نويل" },
-      { word:"Zug", pos:"N", ar:"موكب / قطار", darija:"موكب / تران" },
-      { word:"Erntezug", pos:"N", ar:"موكب الحصاد", darija:"موكب ديال الحصاد" },
-      { word:"danken für + A", pos:"V", ar:"شكر على", darija:"شكر على" },
-      { word:"dekorieren", pos:"V", ar:"زيّن", darija:"زوق / دار الديكور" },
-      { word:"gratulieren (zu)", pos:"V", ar:"هنّأ بـ", darija:"بارك لـ" },
-      { word:"schenken", pos:"V", ar:"أهدى", darija:"عطى كادو" },
-      { word:"schmücken", pos:"V", ar:"زيّن", darija:"زوق" },
-      { word:"symbolisieren", pos:"V", ar:"رمز إلى", darija:"كيرمز لـ" },
-      { word:"typisch sein für + A", pos:"V", ar:"كان نموذجيا لـ", darija:"من الطبيعي فـ / معروف بـ" },
-      { word:"Festessen", pos:"N", ar:"وليمة", darija:"ماكلة ديال العراضة" },
-      { word:"Büffet", pos:"N", ar:"بوفيه", darija:"بوفيه" },
-      { word:"Ei", pos:"N", ar:"بيضة", darija:"بيضة" },
-      { word:"Hühnerei", pos:"N", ar:"بيضة دجاج", darija:"بيضة بلدية/رومية" },
-      { word:"Schokoladenei", pos:"N", ar:"بيضة شوكولاتة", darija:"بيضة ديال الشكلاط" },
-      { word:"Fondue (hier nur Sg.)", pos:"N", ar:"فوندو", darija:"فوندو" },
-      { word:"Fleischfondue", pos:"N", ar:"فوندو اللحم", darija:"فوندو ديال اللحم" },
-      { word:"Käsefondue", pos:"N", ar:"فوندو الجبن", darija:"فوندو ديال الفرماج" },
-      { word:"Frucht", pos:"N", ar:"فاكهة", darija:"فاكية / فروي" },
-      { word:"Gänsebraten", pos:"N", ar:"إوز مشوي", darija:"وزة محمرة" },
-      { word:"Getreide (nur Sg.)", pos:"N", ar:"حبوب", darija:"زرع / حبوب" },
-      { word:"Bachelor (nur Sg.)", pos:"N", ar:"بكالوريوس / إجازة", darija:"إجازة / باكالوريوس" },
-      { word:"Barett", pos:"N", ar:"قبعة تخرج", darija:"طربوش ديال التخرج" },
-      { word:"Diplom", pos:"N", ar:"دبلوم", darija:"ديبلوم" },
-      { word:"Examen", pos:"N", ar:"امتحان", darija:"امتحان" },
-      { word:"Master (nur Sg.)", pos:"N", ar:"ماجستير", darija:"ماستر" },
-      { word:"Prüfung", pos:"N", ar:"امتحان / اختبار", darija:"امتحان" },
-      { word:"Studienabschluss", pos:"N", ar:"تخرج", darija:"تخرج / نهاية الدراسة" },
-      { word:"Talar", pos:"N", ar:"رداء التخرج", darija:"لبسة ديال التخرج" },
-      { word:"bestehen", pos:"V", ar:"نجح في (امتحان)", darija:"نجح" },
-      { word:"universitär", pos:"Adj", ar:"جامعي", darija:"جامعي / ديال الجامعة" },
-      { word:"Rente", pos:"N", ar:"تقاعد", darija:"لاروتريت" },
-      { word:"Absage", pos:"N", ar:"رفض", darija:"رفض" },
-      { word:"Anzug", pos:"N", ar:"بدلة", darija:"كوستيم" },
-      { word:"Besteck", pos:"N", ar:"أدوات المائدة", darija:"معالق و فراشط" },
-      { word:"Löffel", pos:"N", ar:"ملعقة", darija:"معلقة" },
-      { word:"Messer", pos:"N", ar:"سكين", darija:"موس" },
-      { word:"Gabel", pos:"N", ar:"شوكة", darija:"فرشيطة" },
-      { word:"Dorf", pos:"N", ar:"قرية", darija:"قرية / دوار" },
-      { word:"Festhalle", pos:"N", ar:"قاعة احتفالات", darija:"قاعة ديال الحفلات" },
-      { word:"Geschäft", pos:"N", ar:"متجر / عمل", darija:"حانوت / بيزنيس" },
-      { word:"Geschirr (hier nur Sg.)", pos:"N", ar:"أواني", darija:"مواعن" },
-      { word:"Teller", pos:"N", ar:"صحن", darija:"طبسيل" },
-      { word:"Tasse", pos:"N", ar:"كوب", darija:"كاس / طاسة" },
-      { word:"Schüssel", pos:"N", ar:"وعاء / زبدية", darija:"زلافة / جبانية" },
-      { word:"Topf", pos:"N", ar:"قدر", darija:"طنجرة / كاسرونة" },
-      { word:"Himmel", pos:"N", ar:"سماء", darija:"سما" },
-      { word:"Hoffnung", pos:"N", ar:"أمل", darija:"أمل" },
-      { word:"Jahrhundert", pos:"N", ar:"قرن", darija:"قرن" },
-      { word:"Kochbuch", pos:"N", ar:"كتاب طبخ", darija:"كتاب ديال الطياب" },
-      { word:"Konfetti (nur Sg.)", pos:"N", ar:"قصاصات ورقية ملونة", darija:"كونفيتي" },
-      { word:"Krankheit", pos:"N", ar:"مرض", darija:"مرض" },
-      { word:"Luftschlange", pos:"N", ar:"شريط زينة ورقي", darija:"سيربونتا" },
-      { word:"Matratze", pos:"N", ar:"فراش / مرتبة", darija:"مطلة / مطربة" },
-      { word:"Mittelalter (nur Sg.)", pos:"N", ar:"العصور الوسطى", darija:"العصور الوسطى" },
-      { word:"Mitternacht", pos:"N", ar:"منتصف الليل", darija:"نص الليل" },
-      { word:"Mond", pos:"N", ar:"قمر", darija:"قمرة" },
-      { word:"Vollmond", pos:"N", ar:"بدر", darija:"بدر / قمرة كاملة" },
-      { word:"Nachbar", pos:"N", ar:"جار", darija:"جار" },
-      { word:"Parfum", pos:"N", ar:"عطر", darija:"ريحة" },
-      { word:"Reiseführer", pos:"N", ar:"مرشد سياحي / دليل سفر", darija:"مرشد سياحي / كتاب الإرشاد" },
-      { word:"Rest", pos:"N", ar:"بقية", darija:"داكشي لي شاط" },
-      { word:"Schulfreund", pos:"N", ar:"صديق الدراسة", darija:"صاحبي ديال القراية" },
-      { word:"Schulfreundin", pos:"N", ar:"صديقة الدراسة", darija:"صاحبتي ديال القراية" },
-      { word:"Schutz (nur Sg.)", pos:"N", ar:"حماية", darija:"حماية" },
-      { word:"Sprung", pos:"N", ar:"قفزة", darija:"قفزة / نڭزة" },
-      { word:"Tanz", pos:"N", ar:"رقص", darija:"شطيح" },
-      { word:"(Landes-)Teil", pos:"N", ar:"جزء (من البلاد)", darija:"جزء / بلاصة (فالبلاد)" },
-      { word:"Zelt", pos:"N", ar:"خيمة", darija:"خيمة" },
-      { word:"Festzelt", pos:"N", ar:"خيمة احتفال", darija:"خيمة ديال الحفلات" },
-      { word:"Zusage", pos:"N", ar:"موافقة / قبول", darija:"قبول" },
-      { word:"absagen", pos:"V", ar:"ألغى / رفض", darija:"ألغى / رفض" },
-      { word:"abschließen", pos:"V", ar:"أنهى / أتم", darija:"سّالا / كمّل" },
-      { word:"annehmen", pos:"V", ar:"قبل", darija:"قبل" },
-      { word:"anzünden", pos:"V", ar:"أشعل", darija:"شعل" },
-      { word:"brechen", pos:"V", ar:"كسر", darija:"هرس" },
-      { word:"buchen", pos:"V", ar:"حجز", darija:"حجز / ريزيرفا" },
-      { word:"einverstanden sein (mit + D)", pos:"V", ar:"وافق على", darija:"كان متافق مع" },
-      { word:"einladen", pos:"V", ar:"دعا / عرض على", darija:"عرض على" },
-      { word:"erinnern an + A", pos:"V", ar:"ذكّر بـ", darija:"فكر فـ" },
-      { word:"färben", pos:"V", ar:"لوّن / صبغ", darija:"صبغ" },
-      { word:"leihen", pos:"V", ar:"أعار / أقرض", darija:"سلّف" },
-      { word:"schaffen", pos:"V", ar:"أنجز / نجح في", darija:"قدر يدير / دار" },
-      { word:"sprechen über + A", pos:"V", ar:"تحدث عن", darija:"هضر على" },
-      { word:"streiten über + A", pos:"V", ar:"تشاجر بسبب", darija:"تخاصم على" },
-      { word:"übernachten", pos:"V", ar:"بات / قضى الليلة", darija:"بات" },
-      { word:"verstecken", pos:"V", ar:"خبّأ", darija:"خبّى" },
-      { word:"vorhaben (etwas)", pos:"V", ar:"نوَى / خطط لـ", darija:"كان باغي يدير (شي حاجة)" },
-      { word:"vorschlagen (etwas)", pos:"V", ar:"اقترح", darija:"قترح" },
-      { word:"wiegen", pos:"V", ar:"وزن", darija:"عبر / وزن" },
-      { word:"zusagen", pos:"V", ar:"وافق", darija:"وافق / قبل" },
-      { word:"zusammenhängen mit + D", pos:"V", ar:"ارتبط بـ", darija:"عندو علاقة بـ" },
-      { word:"böse", pos:"Adj", ar:"شرير / غاضب", darija:"خايب / قبيح" },
-      { word:"christlich", pos:"Adj", ar:"مسيحي", darija:"مسيحي" },
-      { word:"froh", pos:"Adj", ar:"سعيد / فرح", darija:"فرحان" },
-      { word:"gemeinsam", pos:"Adj", ar:"مشترك / معا", darija:"بجوج / مجموعين" },
-      { word:"gemütlich", pos:"Adj", ar:"مريح", darija:"مريح / زوين" },
-      { word:"germanisch", pos:"Adj", ar:"جرماني", darija:"جرماني" },
-      { word:"keltisch", pos:"Adj", ar:"كلتي", darija:"كلتي" },
-      { word:"kirchlich", pos:"Adj", ar:"كنسي", darija:"ديال الكنيسة" },
-      { word:"konservativ", pos:"Adj", ar:"محافظ", darija:"محافظ" },
-      { word:"nett", pos:"Adj", ar:"لطيف", darija:"ظريف" },
-      { word:"persönlich", pos:"Adj", ar:"شخصي", darija:"شخصي" },
-      { word:"telefonisch", pos:"Adj", ar:"هاتفيا", darija:"فالتيليفون" },
-      { word:"wahrscheinlich", pos:"Adj", ar:"محتمل", darija:"غالبا / ممكن" },
-      { word:"wichtig", pos:"Adj", ar:"مهم", darija:"مهم" },
-      { word:"eventuell", pos:"Adv", ar:"ربما", darija:"يقدر يكون / ممكن" },
-      { word:"früher", pos:"Adv", ar:"سابقا", darija:"شحال هادي / بكري" },
-      { word:"kaum", pos:"Adv", ar:"بالكاد", darija:"بالزز / قليل فاش" },
-      { word:"manchmal", pos:"Adv", ar:"أحيانا", darija:"شي مرات" },
-      { word:"mehrmals", pos:"Adv", ar:"عدة مرات", darija:"شحال من مرة" },
-      { word:"unbedingt", pos:"Adv", ar:"حتما / بالتأكيد", darija:"ضروري / بالضرورة" },
-      { word:"zu (Weihnachten, ...)", pos:"Präp", ar:"لـ / في (في عيد الميلاد...)", darija:"فـ (فالكريسماس...)" },
-      { word:"wem?", pos:"Fragewort", ar:"لمن؟", darija:"لمن؟" },
-      { word:"Alles Gute für die neue Stelle.", pos:"Redemittel", ar:"أتمنى لك كل التوفيق في منصبك الجديد.", darija:"الله يوفقك فالخدمة الجديدة." },
-      { word:"Alles Gute zur Hochzeit.", pos:"Redemittel", ar:"مبروك الزواج.", darija:"الله يكمل بالخير." },
-      { word:"Herzlichen Glückwunsch zum Examen.", pos:"Redemittel", ar:"ألف مبروك على النجاح في الامتحان.", darija:"مبروك النجاح." },
-      { word:"Herzlichen Glückwunsch zum Geburtstag.", pos:"Redemittel", ar:"عيد ميلاد سعيد.", darija:"عيد ميلاد سعيد." },
-      { word:"Ich wünsche Ihnen frohe Weihnachten und einen guten Rutsch ins neue Jahr.", pos:"Redemittel", ar:"أتمنى لكم عيد ميلاد مجيد وسنة جديدة سعيدة.", darija:"مبروك العيد وكنتمنى ليك عام جديد زوين." },
-      { word:"Wir wünschen euch ein fröhliches Weihnachtsfest und ein glückliches, gesundes neues Jahr.", pos:"Redemittel", ar:"نتمنى لكم عيد ميلاد بهيج وسنة جديدة سعيدة ومباركة.", darija:"كنتمناو ليكم كريسماس زوين وعام جديد سعيد." },
-      // Lektion 10
-      { word:"Altstadt", pos:"N", ar:"المدينة القديمة", darija:"المدينة القديمة" },
-      { word:"Ausblick", pos:"N", ar:"منظر / إطلالة", darija:"مطلة / منظر" },
-      { word:"Einkaufsmöglichkeit", pos:"N", ar:"إمكانية التسوق", darija:"إمكانية التقدية / بلايص الشرا" },
-      { word:"Flughafen", pos:"N", ar:"مطار", darija:"مطار" },
-      { word:"Haltestelle", pos:"N", ar:"موقف حافلات", darija:"موقف ديال الطوبيس" },
-      { word:"Kreis (CH)", pos:"N", ar:"دائرة / منطقة", darija:"دائرة / منطقة" },
-      { word:"Lage", pos:"N", ar:"موقع", darija:"موقع / بلاصة" },
-      { word:"(in der) Nähe (von)", pos:"N", ar:"بالقرب من", darija:"قريب من" },
-      { word:"Parkmöglichkeit", pos:"N", ar:"إمكانية ركن السيارة", darija:"بلاصة فين تݣاري" },
-      { word:"Quartier (CH)", pos:"N", ar:"حي", darija:"حي / حومة" },
-      { word:"Spielplatz", pos:"N", ar:"ملعب أطفال", darija:"ملعب ديال الدراري الصغار" },
-      { word:"Verkehr (nur Sg.)", pos:"N", ar:"حركة المرور", darija:"حركة السير" },
-      { word:"Verbindung", pos:"N", ar:"مواصلات / اتصال", darija:"مواصلات" },
-      { word:"Verkehrsverbindung", pos:"N", ar:"مواصلات النقل", darija:"طرق المواصلات" },
-      { word:"(Stadt-)Viertel", pos:"N", ar:"حي / منطقة", darija:"حي / حومة" },
-      { word:"gelegen", pos:"Adj", ar:"واقع / موجود", darija:"كاين / جاي فـ" },
-      { word:"etwas außerhalb", pos:"Adj", ar:"خارج (المدينة)", darija:"على برا شوية" },
-      { word:"(verkehrs-)günstig", pos:"Adj", ar:"موقع جيد من ناحية المواصلات", darija:"قريب للمواصلات" },
-      { word:"ruhig", pos:"Adj", ar:"هادئ", darija:"كالم / فيه الهدوء" },
-      { word:"zentral", pos:"Adj", ar:"مركزي", darija:"فالوسط / سونطر" },
-      { word:"Vermieter", pos:"N", ar:"مؤجر", darija:"مول الدار (ليكاري)" },
-      { word:"Vermieterin", pos:"N", ar:"مؤجرة", darija:"مولات الدار (ليكارية)" },
-      { word:"Ablöse (nur Sg.)", pos:"N", ar:"تعويض (للمستأجر السابق)", darija:"تعويض / ساروت" },
-      { word:"Einzugstermin", pos:"N", ar:"موعد الانتقال للسكن", darija:"تاريخ الدخول للدار" },
-      { word:"Umzug", pos:"N", ar:"انتقال / رحيل", darija:"رحيل" },
-      { word:"Familienstand (nur Sg.)", pos:"N", ar:"الحالة العائلية", darija:"الحالة العائلية" },
-      { word:"Hauseingang", pos:"N", ar:"مدخل المنزل", darija:"الدخلة ديال الدار" },
-      { word:"Hausflur", pos:"N", ar:"رواق المنزل", darija:"كولوار ديال الدار" },
-      { word:"Hausordnung", pos:"N", ar:"قانون المنزل", darija:"القانون الداخلي ديال العمارة" },
-      { word:"Kaution", pos:"N", ar:"ضمان / كفالة", darija:"ضمانة / كفالة" },
-      { word:"Miete", pos:"N", ar:"إيجار / كراء", darija:"كرا" },
-      { word:"Basismiete (CH)", pos:"N", ar:"الإيجار الأساسي", darija:"الكرا الأساسي" },
-      { word:"Grundmiete", pos:"N", ar:"الإيجار الأساسي", darija:"الكرا الأساسي" },
-      { word:"Kaltmiete", pos:"N", ar:"الإيجار (بدون مصاريف)", darija:"الكرا بلا مصاريف" },
-      { word:"Monatsmiete", pos:"N", ar:"الإيجار الشهري", darija:"كرا ديال الشهر" },
-      { word:"Nettomiete", pos:"N", ar:"الإيجار الصافي", darija:"الكرا الصافي" },
-      { word:"Mietzins (CH)", pos:"N", ar:"إيجار", darija:"كرا" },
-      { word:"Nachmieter", pos:"N", ar:"المستأجر التالي", darija:"الكراي لي غيجي من بعد" },
-      { word:"Nebenkosten (nur Pl.)", pos:"N", ar:"تكاليف إضافية", darija:"مصاريف إضافية (السانديك)" },
-      { word:"Vertrag", pos:"N", ar:"عقد", darija:"كونطرا" },
-      { word:"Mietvertrag", pos:"N", ar:"عقد الإيجار", darija:"كونطرا ديال الكرا" },
-      { word:"Vormieter", pos:"N", ar:"المستأجر السابق", darija:"الكراي لي كان قبل" },
-      { word:"Vormieterin", pos:"N", ar:"المستأجرة السابقة", darija:"الكراية لي كانت قبل" },
-      { word:"möblieren", pos:"V", ar:"أثث", darija:"فرّش" },
-      { word:"umziehen", pos:"V", ar:"انتقل / رحل", darija:"تحول / رحل" },
-      { word:"unterschreiben", pos:"V", ar:"وقّع", darija:"سنا" },
-      { word:"Zivilstand (CH) (nur Sg.)", pos:"N", ar:"الحالة المدنية", darija:"الحالة المدنية" },
-      { word:"verwitwet", pos:"Adj", ar:"أرمل", darija:"أرمل(ة)" },
-      { word:"geschieden", pos:"Adj", ar:"مطلق", darija:"مطلق(ة)" },
-      { word:"(teil-)möbliert", pos:"Adj", ar:"مفروش (جزئيا)", darija:"مفروش (شوية)" },
-      { word:"renoviert", pos:"Adj", ar:"مجدد", darija:"مصلوح" },
-      { word:"unbefristet", pos:"Adj", ar:"غير محدد المدة", darija:"مدة غير محدودة" },
-      { word:"Altbau", pos:"N", ar:"بناء قديم", darija:"بني قديم" },
-      { word:"Etage", pos:"N", ar:"طابق", darija:"إيطاج / طابق" },
-      { word:"Garage", pos:"N", ar:"مرآب", darija:"ݣاراج" },
-      { word:"Tiefgarage", pos:"N", ar:"مرآب تحت أرضي", darija:"ݣاراج تحت الأرض" },
-      { word:"Neubau", pos:"N", ar:"بناء جديد", darija:"بني جديد" },
-      { word:"Haus", pos:"N", ar:"منزل", darija:"دار" },
-      { word:"Geschäftshaus", pos:"N", ar:"مبنى تجاري", darija:"عمارة تجارية" },
-      { word:"Hochhaus", pos:"N", ar:"ناطحة سحاب / عمارة عالية", darija:"عمارة عالية" },
-      { word:"Mehrfamilienhaus", pos:"N", ar:"مبنى متعدد الأسر", darija:"عمارة فيها بزاف السكان" },
-      { word:"Reihenhaus", pos:"N", ar:"منزل متلاصق", darija:"ديور متلاصقين" },
-      { word:"Hof", pos:"N", ar:"فناء", darija:"ساحة / حوش" },
-      { word:"Keller", pos:"N", ar:"قبو", darija:"لا كاف" },
-      { word:"Kellertür", pos:"N", ar:"باب القبو", darija:"باب لا كاف" },
-      { word:"Lift", pos:"N", ar:"مصعد", darija:"سانسور" },
-      { word:"Mülltonne", pos:"N", ar:"حاوية قمامة", darija:"برميل الزبل" },
-      { word:"Parkplatz", pos:"N", ar:"موقف سيارات", darija:"باركينݣ" },
-      { word:"Stock (nur Sg.)", pos:"N", ar:"طابق", darija:"طابق / إيطاج" },
-      { word:"Treppe", pos:"N", ar:"درج / سلم", darija:"دروج" },
-      { word:"Treppenhaus", pos:"N", ar:"بيت الدرج", darija:"الدروج ديال العمارة" },
-      { word:"Waschküche", pos:"N", ar:"غرفة غسيل", darija:"بيت الصابون" },
-      { word:"Abstellraum", pos:"N", ar:"غرفة تخزين", darija:"بيت الخزين / ديبارا" },
-      { word:"Balkon", pos:"N", ar:"شرفة", darija:"بالكون" },
-      { word:"Besichtigungstermin", pos:"N", ar:"موعد معاينة", darija:"موعد باش تشوف الدار" },
-      { word:"Boden", pos:"N", ar:"أرضية", darija:"الأرض" },
-      { word:"Dach", pos:"N", ar:"سقف", darija:"سطح" },
-      { word:"Dachwohnung", pos:"N", ar:"شقة تحت السطح", darija:"سكنة ف السطح" },
-      { word:"Einzugstermin", pos:"N", ar:"موعد الانتقال", darija:"موعد الدخول" },
-      { word:"Geschoss", pos:"N", ar:"طابق", darija:"طابق" },
-      { word:"Dachgeschoss", pos:"N", ar:"الطابق العلوي", darija:"الطابق الأخير / السطح" },
-      { word:"Erdgeschoss", pos:"N", ar:"الطابق الأرضي", darija:"السفلي" },
-      { word:"Obergeschoss", pos:"N", ar:"الطابق العلوي", darija:"الطابق الفوقاني" },
-      { word:"Kamin", pos:"N", ar:"مدفأة", darija:"شوميني" },
-      { word:"Laminat", pos:"N", ar:"أرضية خشبية مصنعة", darija:"باركيه" },
-      { word:"Möbellager", pos:"N", ar:"مخزن أثاث", darija:"مخزن ديال الفراش" },
-      { word:"Parkett (hier nur Sg.)", pos:"N", ar:"أرضية خشبية", darija:"باركيه" },
-      { word:"Raum", pos:"N", ar:"غرفة / مساحة", darija:"بيت / مساحة" },
-      { word:"Terrasse", pos:"N", ar:"شرفة أرضية", darija:"تيراسا / لاكور" },
-      { word:"Vorhang", pos:"N", ar:"ستارة", darija:"ريدو / خامية" },
-      { word:"Wand", pos:"N", ar:"جدار / حائط", darija:"حيط" },
-      { word:"WC", pos:"N", ar:"مرحاض", darija:"طواليط" },
-      { word:"Wohnungsmarkt", pos:"N", ar:"سوق العقارات", darija:"سوق الكرا و البيع والشرا" },
-      { word:"Zimmer", pos:"N", ar:"غرفة", darija:"بيت" },
-      { word:"Schlafzimmer", pos:"N", ar:"غرفة نوم", darija:"بيت النعاس" },
-      { word:"Wohnzimmer", pos:"N", ar:"غرفة معيشة", darija:"صالون" },
-      { word:"umräumen", pos:"V", ar:"أعاد ترتيب", darija:"بدل ترتيب ديال" },
-      { word:"vermieten", pos:"V", ar:"أجّر", darija:"كرى" },
-      { word:"ziehen", pos:"V", ar:"انتقل / سكن", darija:"سكن / رحل" },
-      { word:"Couch", pos:"N", ar:"أريكة", darija:"سداري / فوطوي" },
-      { word:"Decke", pos:"N", ar:"غطاء / بطانية", darija:"مانطة / كاشة" },
-      { word:"Schrankwand", pos:"N", ar:"خزانة جدارية", darija:"خزانة كبيرة فالحيط" },
-      { word:"Schreibtischstuhl", pos:"N", ar:"كرسي مكتب", darija:"كرسي ديال البيرو" },
-      { word:"Teppich", pos:"N", ar:"سجادة", darija:"زربية" },
-      { word:"Wandregal", pos:"N", ar:"رف جداري", darija:"رف فالخيط" },
-      { word:"Badewanne", pos:"N", ar:"حوض استحمام", darija:"بانيو" },
-      { word:"Kaffeemaschine", pos:"N", ar:"آلة قهوة", darija:"ماكينة ديال القهوة" },
-      { word:"Steckdose", pos:"N", ar:"مقبس كهربائي", darija:"بريز" },
-      { word:"Waschbecken", pos:"N", ar:"مغسلة", darija:"لافابو" },
-      { word:"Norden (nur Sg.)", pos:"N", ar:"شمال", darija:"الشمال" },
-      { word:"Süden (nur Sg.)", pos:"N", ar:"جنوب", darija:"الجنوب" },
-      { word:"Osten (nur Sg.)", pos:"N", ar:"شرق", darija:"الشرق" },
-      { word:"Westen (nur Sg.)", pos:"N", ar:"غرب", darija:"الغرب" },
-      { word:"nördlich", pos:"Adj", ar:"شمالي", darija:"شمالي" },
-      { word:"südlich", pos:"Adj", ar:"جنوبي", darija:"جنوبي" },
-      { word:"östlich", pos:"Adj", ar:"شرقي", darija:"شرقي" },
-      { word:"westlich", pos:"Adj", ar:"غربي", darija:"غربي" },
-      { word:"Allgemeines (nur Sg.)", pos:"N", ar:"أمور عامة", darija:"حوايج عامة" },
-      { word:"Äquator (nur Sg.)", pos:"N", ar:"خط الاستواء", darija:"خط الاستواء" },
-      { word:"Besichtigung", pos:"N", ar:"معاينة / زيارة", darija:"زيارة باش تشوف" },
-      { word:"Brille", pos:"N", ar:"نظارات", darija:"نضاضر" },
-      { word:"Geste", pos:"N", ar:"إيماءة / حركة", darija:"إشارة / حركة" },
-      { word:"Haustier", pos:"N", ar:"حيوان أليف", darija:"حيوان أليف" },
-      { word:"Hilfe", pos:"N", ar:"مساعدة", darija:"مساعدة / عوين" },
-      { word:"Höhe", pos:"N", ar:"ارتفاع / علو", darija:"علو" },
-      { word:"Instrument", pos:"N", ar:"آلة موسيقية", darija:"آلة موسيقية" },
-      { word:"Kaufhaus", pos:"N", ar:"متجر كبير", darija:"متجر كبير" },
-      { word:"Kissen", pos:"N", ar:"وسادة", darija:"مخدة / وسادة" },
-      { word:"Koffer", pos:"N", ar:"حقيبة سفر", darija:"فاليزة" },
-      { word:"Lärm (nur Sg.)", pos:"N", ar:"ضجيج", darija:"صداع" },
-      { word:"Lebensstandard", pos:"N", ar:"مستوى المعيشة", darija:"مستوى المعيشة" },
-      { word:"(Bus-)Linie", pos:"N", ar:"خط (الحافلة)", darija:"الخط ديال (الطوبيس)" },
-      { word:"Mittagsruhe", pos:"N", ar:"قيلولة", darija:"قيلولة" },
-      { word:"Objekt", pos:"N", ar:"شيء / عقار", darija:"عقار / حاجة" },
-      { word:"Position", pos:"N", ar:"موضع", darija:"بلاصة / موضع" },
-      { word:"Quiz", pos:"N", ar:"اختبار قصير / كويز", darija:"كويز" },
-      { word:"Rauchverbot", pos:"N", ar:"منع التدخين", darija:"ممنوع التدخين" },
-      { word:"Sauberkeit (nur Sg.)", pos:"N", ar:"نظافة", darija:"نقا" },
-      { word:"See", pos:"N", ar:"بحيرة", darija:"بحيرة / ضاية" },
-      { word:"Sicherheit", pos:"N", ar:"أمان", darija:"أمان / سيكوريتي" },
-      { word:"Nachteil", pos:"N", ar:"سلبية / عيب", darija:"حاجة خايبة / عيب" },
-      { word:"Vorteil", pos:"N", ar:"إيجابية / ميزة", darija:"ميزة / حاجة زوينة" },
-      { word:"hängen", pos:"V", ar:"علّق / معلّق", darija:"علّق / معلّق" },
-      { word:"klingeln", pos:"V", ar:"دق الجرس", darija:"صونا / دق" },
-      { word:"legen", pos:"V", ar:"وضع (أفقيا)", darija:"حط" },
-      { word:"liegen", pos:"V", ar:"مستلق / موجود", darija:"محطوط / متكي" },
-      { word:"stehen", pos:"V", ar:"وقف / واقف", darija:"واقف" },
-      { word:"stellen", pos:"V", ar:"وضع (عموديا)", darija:"حط (واقف)" },
-      { word:"tauschen", pos:"V", ar:"تبادل", darija:"تبادل" },
-      { word:"teilen", pos:"V", ar:"شارك / قسم", darija:"قسم / بارطاجا" },
-      { word:"üben", pos:"V", ar:"تمرن", darija:"تريني / تمرن" },
-      { word:"umarmen", pos:"V", ar:"عانق", darija:"عنّق" },
-      { word:"vereinbaren", pos:"V", ar:"اتفق", darija:"تافق" },
-      { word:"wirken", pos:"V", ar:"بدا / أثر", darija:"بان / أثر" },
-      { word:"fest", pos:"Adj", ar:"ثابت / صلب", darija:"صحيح / قاصح" },
-      { word:"gut/besser/am besten", pos:"Adj", ar:"جيد/أفضل/الأفضل", darija:"مزيان/حسن/الأحسن" },
-      { word:"lang", pos:"Adj", ar:"طويل", darija:"طويل" },
-      { word:"möglich", pos:"Adj", ar:"ممكن", darija:"ممكن" },
-      { word:"recht- (-er, -es, -e)", pos:"Adj", ar:"يمين", darija:"ديال ليمن" },
-      { word:"link- (-er, -es, -e)", pos:"Adj", ar:"يسار", darija:"ديال ليسر" },
-      { word:"scheußlich", pos:"Adj", ar:"بشع", darija:"خايب بزاف" },
-      { word:"spitz", pos:"Adj", ar:"حاد", darija:"ماضي / مقنت" },
-      { word:"flach", pos:"Adj", ar:"مسطح", darija:"مبسط / بلا" },
-      { word:"-stöckig (zwei-, dreistöckig)", pos:"Adj", ar:"مكون من طوابق (طابقين، ثلاثة)", darija:"فيه (جوج، ثلاثة) ديال الطوابق" },
-      { word:"täglich", pos:"Adj", ar:"يومي", darija:"يومي" },
-      { word:"visuell", pos:"Adj", ar:"بصري", darija:"بصري" },
-      { word:"besonders", pos:"Adv", ar:"خصوصا", darija:"خصوصا / بزاف" },
-      { word:"brutto", pos:"Adv", ar:"إجمالي", darija:"إجمالي" },
-      { word:"netto", pos:"Adv", ar:"صافي", darija:"صافي" },
-      { word:"quer", pos:"Adv", ar:"بالعرض", darija:"بالعرض" },
-      { word:"(ab) sofort", pos:"Adv", ar:"فورا", darija:"دابا / حالا" },
-      { word:"mehrere", pos:"Pron", ar:"عدة", darija:"بزاف / شحال من" },
-      { word:"an", pos:"Präp", ar:"على / بجانب", darija:"حدا / على" },
-      { word:"auf", pos:"Präp", ar:"على / فوق", darija:"فوق" },
-      { word:"hinter", pos:"Präp", ar:"خلف", darija:"مورا" },
-      { word:"vor", pos:"Präp", ar:"أمام", darija:"قدام" },
-      { word:"in", pos:"Präp", ar:"في / داخل", darija:"ف / لداخل" },
-      { word:"neben", pos:"Präp", ar:"بجانب", darija:"حدا" },
-      { word:"unter", pos:"Präp", ar:"تحت", darija:"تحت" },
-      { word:"über", pos:"Präp", ar:"فوق / عن", darija:"فوق" },
-      { word:"zwischen", pos:"Präp", ar:"بين", darija:"بين" },
-      // Lektion 12
-      { word:"Bank", pos:"N", ar:"بنك", darija:"بنكة" },
-      { word:"Bankgeschäft", pos:"N", ar:"عملية بنكية", darija:"عملية بنكية" },
-      { word:"Banking-App", pos:"N", ar:"تطبيق بنكي", darija:"أبليكاسيون ديال البنكة" },
-      { word:"Bankschalter", pos:"N", ar:"شباك البنك", darija:"ݣيشي ديال البنكة" },
-      { word:"Bankverbindung", pos:"N", ar:"بيانات الحساب البنكي", darija:"معلومات الحساب البنكي" },
-      { word:"Bargeld (nur im Sg.)", pos:"N", ar:"نقد", darija:"كاش / فلوس صحيحة" },
-      { word:"Bedingung", pos:"N", ar:"شرط", darija:"شرط" },
-      { word:"BIC", pos:"N", ar:"رمز BIC", darija:"BIC" },
-      { word:"EC-Karte", pos:"N", ar:"بطاقة بنكية", darija:"كارطة ݣيشي" },
-      { word:"Filiale", pos:"N", ar:"فرع", darija:"فرع / أجونس" },
-      { word:"Gebühr", pos:"N", ar:"رسوم", darija:"مصاريف / رسوم" },
-      { word:"Geldautomat", pos:"N", ar:"صراف آلي", darija:"ݣيشي أوتوماتيك" },
-      { word:"IBAN", pos:"N", ar:"رقم الحساب الدولي", darija:"IBAN / RIB" },
-      { word:"Kondition", pos:"N", ar:"شرط", darija:"شرط" },
-      { word:"Konto", pos:"N", ar:"حساب", darija:"كونط" },
-      { word:"Girokonto", pos:"N", ar:"حساب جاري", darija:"كونط جاري" },
-      { word:"Sparkonto", pos:"N", ar:"حساب توفير", darija:"كونط ديال التوفير" },
-      { word:"Festgeldkonto", pos:"N", ar:"حساب لأجل", darija:"كونط مجمد" },
-      { word:"Kontostand", pos:"N", ar:"رصيد الحساب", darija:"الرصيد ديال الكونط" },
-      { word:"Kreditinstitut", pos:"N", ar:"مؤسسة ائتمانية", darija:"مؤسسة بنكية" },
-      { word:"Kundennummer", pos:"N", ar:"رقم الزبون", darija:"رقم الزبون" },
-      { word:"Online-Terminal", pos:"N", ar:"جهاز الخدمات عبر الإنترنت", darija:"جهاز الخدمات أونلاين" },
-      { word:"Personalausweis", pos:"N", ar:"بطاقة هوية", darija:"لاكارط ناسيونال" },
-      { word:"PIN", pos:"N", ar:"الرقم السري", darija:"الكود" },
-      { word:"Rechnungsnummer", pos:"N", ar:"رقم الفاتورة", darija:"رقم الفاتورة" },
-      { word:"Schalter", pos:"N", ar:"شباك", darija:"ݣيشي" },
-      { word:"Service (nur Sg.)", pos:"N", ar:"خدمة", darija:"خدمة" },
-      { word:"Sparbuch", pos:"N", ar:"دفتر توفير", darija:"دفتر التوفير" },
-      { word:"Tagesgeld", pos:"N", ar:"مال يومي", darija:"فلوس يومية" },
-      { word:"Transaktion", pos:"N", ar:"معاملة", darija:"عملية / معاملة" },
-      { word:"Überweisung", pos:"N", ar:"تحويل بنكي", darija:"فيرمون" },
-      { word:"Überweisungsbeleg", pos:"N", ar:"وصل التحويل", darija:"ورقة الفيرمون" },
-      { word:"Überweisungsformular", pos:"N", ar:"استمارة التحويل", darija:"استمارة الفيرمون" },
-      { word:"Verwendungszweck", pos:"N", ar:"الغرض من التحويل", darija:"الغرض من التحويل" },
-      { word:"Zahlung", pos:"N", ar:"دفع", darija:"خلاص / دفع" },
-      { word:"Zahlungsverkehr (nur Sg.)", pos:"N", ar:"حركة المدفوعات", darija:"حركة المدفوعات" },
-      { word:"Zins", pos:"N", ar:"فائدة", darija:"فائدة" },
-      { word:"abheben", pos:"V", ar:"سحب (المال)", darija:"تيرى (الفلوس)" },
-      { word:"anlegen", pos:"V", ar:"استثمر", darija:"حط الفلوس / استثمر" },
-      { word:"einen Kredit aufnehmen", pos:"V", ar:"أخذ قرضا", darija:"خدا كريدي" },
-      { word:"betragen", pos:"V", ar:"بلغ", darija:"وصل / كان" },
-      { word:"einzahlen (Geld)", pos:"V", ar:"إيداع (المال)", darija:"حط الفلوس (فالكونط)" },
-      { word:"ein Konto eröffnen", pos:"V", ar:"فتح حسابا", darija:"حل كونط" },
-      { word:"Online-Banking machen", pos:"V", ar:"قام بالخدمات البنكية عبر الإنترنت", darija:"دار الخدمات البنكية أونلاين" },
-      { word:"Platz nehmen", pos:"V", ar:"جلس", darija:"جلس" },
-      { word:"sparen", pos:"V", ar:"ادخر", darija:"جمع / وفر" },
-      { word:"sperren (Karte)", pos:"V", ar:"أوقف (البطاقة)", darija:"بلوكا (الكارطة)" },
-      { word:"überweisen", pos:"V", ar:"حوّل (مال)", darija:"دار فيرمون" },
-      { word:"bar", pos:"Adj", ar:"نقدا", darija:"كاش" },
-      { word:"bargeldlos", pos:"Adj", ar:"بدون نقد", darija:"بلا كاش / بالكارطة" },
-      { word:"kostenfrei", pos:"Adj", ar:"مجاني", darija:"فابور" },
-      { word:"kurzfristig", pos:"Adj", ar:"على المدى القصير", darija:"على المدى القصير" },
-      { word:"Bankautomat", pos:"N", ar:"صراف آلي", darija:"ݣيشي أوتوماتيك" },
-      { word:"Geldkarte", pos:"N", ar:"بطاقة بنكية", darija:"كارطة ݣيشي" },
-      { word:"Hauptmenü", pos:"N", ar:"القائمة الرئيسية", darija:"القائمة الرئيسية" },
-      { word:"Karte einführen", pos:"V", ar:"أدخل البطاقة", darija:"دخل الكارطة" },
-      { word:"PIN eingeben", pos:"V", ar:"أدخل الرقم السري", darija:"دخل الكود" },
-      { word:"Anzeige", pos:"N", ar:"بلاغ / إعلان", darija:"شكاية / إعلان" },
-      { word:"Aussage", pos:"N", ar:"إفادة", darija:"إفادة / شهادة" },
-      { word:"Ausweis", pos:"N", ar:"بطاقة هوية", darija:"لاكارط" },
-      { word:"Besitzer", pos:"N", ar:"مالك", darija:"مول الحاجة" },
-      { word:"Dieb", pos:"N", ar:"لص", darija:"شفار" },
-      { word:"Finder", pos:"N", ar:"من وجد شيئا", darija:"لي لقا الحاجة" },
-      { word:"Finderlohn (nur Sg.)", pos:"N", ar:"مكافأة", darija:"حلاوة" },
-      { word:"Fundbüro", pos:"N", ar:"مكتب المفقودات", darija:"بيرو ديال الضايعات" },
-      { word:"Fundsache", pos:"N", ar:"شيء مفقود", darija:"حاجة ضايعة" },
-      { word:"Polizist", pos:"N", ar:"شرطي", darija:"بوليسي" },
-      { word:"Polizeiwache", pos:"N", ar:"مركز شرطة", darija:"كوميسارية" },
-      { word:"Wertsache", pos:"N", ar:"شيء ثمين", darija:"حاجة ثمينة" },
-      { word:"Anzeige erstatten", pos:"V", ar:"قدم بلاغا", darija:"دار شكاية" },
-      { word:"stehlen", pos:"V", ar:"سرق", darija:"سرق / شفر" },
-      { word:"ehrlich", pos:"Adj", ar:"صادق / أمين", darija:"صادق / ديال المعقول" },
-      { word:"wertvoll", pos:"Adj", ar:"ثمين", darija:"ثمين / غالي" },
-      { word:"Semesterbeitrag", pos:"N", ar:"رسوم الفصل الدراسي", darija:"مصاريف التسجيل (فالجامعة)" },
-      { word:"Immatrikulation", pos:"N", ar:"تسجيل (جامعي)", darija:"تسجيل (فالجامعة)" },
-      { word:"Angestellte", pos:"N", ar:"موظف/ة", darija:"موظف/ة" },
-      { word:"Anrede (nur Sg.)", pos:"N", ar:"تحية / صيغة المخاطبة", darija:"صيغة المخاطبة" },
-      { word:"Ausgang", pos:"N", ar:"مخرج", darija:"خرجة" },
-      { word:"Autor", pos:"N", ar:"مؤلف", darija:"مؤلف / كاتب" },
-      { word:"Bericht", pos:"N", ar:"تقرير", darija:"تقرير" },
-      { word:"Berufstätige", pos:"N", ar:"عامل/ة", darija:"خدام/ة" },
-      { word:"Bestechung", pos:"N", ar:"رشوة", darija:"رشوة" },
-      { word:"Bestechungsgeld", pos:"N", ar:"مال الرشوة", darija:"فلوس الرشوة" },
-      { word:"Blatt", pos:"N", ar:"ورقة", darija:"ورقة" },
-      { word:"Buchhandlung", pos:"N", ar:"مكتبة لبيع الكتب", darija:"مكتبة" },
-      { word:"Datum", pos:"N", ar:"تاريخ", darija:"تاريخ / لادات" },
-      { word:"Detail", pos:"N", ar:"تفصيل", darija:"ديطاي" },
-      { word:"Dozent", pos:"N", ar:"أستاذ جامعي", darija:"أستاذ جامعي" },
-      { word:"Ehrlichkeit (nur Sg.)", pos:"N", ar:"صدق / أمانة", darija:"الصدق / المعقول" },
-      { word:"Empfänger", pos:"N", ar:"مستلم", darija:"المستلم / لي غايشد" },
-      { word:"Erde (hier nur Sg.)", pos:"N", ar:"أرض", darija:"الأرض" },
-      { word:"Erlebnis", pos:"N", ar:"تجربة / حدث", darija:"تجربة" },
-      { word:"Fachwort", pos:"N", ar:"مصطلح تقني", darija:"مصطلح تقني" },
-      { word:"Freiheit", pos:"N", ar:"حرية", darija:"حرية" },
-      { word:"Gasthaus", pos:"N", ar:"نزل / مطعم صغير", darija:"أوطيل صغير / ريسطورة" },
-      { word:"Gedränge (nur Sg.)", pos:"N", ar:"ازدحام", darija:"زحام" },
-      { word:"Gefängnis", pos:"N", ar:"سجن", darija:"حبس" },
-      { word:"General", pos:"N", ar:"جنرال", darija:"جنرال" },
-      { word:"Gewinn", pos:"N", ar:"ربح / جائزة", darija:"ربح / جائزة" },
-      { word:"Gewissen (nur Sg.)", pos:"N", ar:"ضمير", darija:"ضمير" },
-      { word:"Gold (nur Sg.)", pos:"N", ar:"ذهب", darija:"ذهب" },
-      { word:"Hexe", pos:"N", ar:"ساحرة", darija:"ساحرة / شعواذة" },
-      { word:"Inhalt", pos:"N", ar:"محتوى", darija:"محتوى" },
-      { word:"Innenstadt", pos:"N", ar:"وسط المدينة", darija:"وسط لمدينة / سونطر فيل" },
-      { word:"Karton", pos:"N", ar:"صندوق كرتون", darija:"كرطونة" },
-      { word:"Kern", pos:"N", ar:"لب / جوهر", darija:"القلب / الأساس" },
-      { word:"Kindheit (nur Sg.)", pos:"N", ar:"طفولة", darija:"طفولة" },
-      { word:"Krimi", pos:"N", ar:"فيلم/قصة بوليسية", darija:"فيلم بوليسي" },
-      { word:"Lesung", pos:"N", ar:"قراءة علنية", darija:"قراءة علنية" },
-      { word:"Märchen", pos:"N", ar:"حكاية خرافية", darija:"حكاية / قصة خيالية" },
-      { word:"Münze", pos:"N", ar:"قطعة نقدية", darija:"فلوس صحيحة / قطعة نقدية" },
-      { word:"Nobelpreis", pos:"N", ar:"جائزة نوبل", darija:"جائزة نوبل" },
-      { word:"Pfeife", pos:"N", ar:"غليون / صفارة", darija:"بيب / صفارة" },
-      { word:"Pfütze", pos:"N", ar:"بركة ماء صغيرة", darija:"ضاية" },
-      { word:"Portemonnaie", pos:"N", ar:"محفظة نقود", darija:"بزطام" },
-      { word:"Prinzessin", pos:"N", ar:"أميرة", darija:"أميرة" },
-      { word:"Projekt", pos:"N", ar:"مشروع", darija:"مشروع" },
-      { word:"Richter", pos:"N", ar:"قاضي", darija:"قاضي" },
-      { word:"Schatz", pos:"N", ar:"كنز", darija:"كنز" },
-      { word:"Schloss", pos:"N", ar:"قصر / قفل", darija:"قصر / قفل" },
-      { word:"Schmuck (nur Sg.)", pos:"N", ar:"مجوهرات", darija:"مجوهرات" },
-      { word:"Soldat", pos:"N", ar:"جندي", darija:"عسكري" },
-      { word:"Stadtkasse", pos:"N", ar:"خزينة المدينة", darija:"خزينة المدينة" },
-      { word:"Unterschied", pos:"N", ar:"فرق", darija:"فرق" },
-      { word:"Versicherung", pos:"N", ar:"تأمين", darija:"لاسورانس" },
-      { word:"Versteigerung", pos:"N", ar:"مزاد علني", darija:"مزاد علني" },
-      { word:"Vorfall", pos:"N", ar:"حادث", darija:"واقعة / حدث" },
-      { word:"Vortrag", pos:"N", ar:"محاضرة", darija:"محاضرة" },
-      { word:"Wächter", pos:"N", ar:"حارس", darija:"عساس" },
-      { word:"Zuordnung", pos:"N", ar:"تصنيف / تخصيص", darija:"تصنيف" },
-      { word:"Glück haben", pos:"V", ar:"كان محظوظا", darija:"عندو الزهر" },
-      { word:"abgeben", pos:"V", ar:"سلّم", darija:"عطى / سلّم" },
-      { word:"anrempeln", pos:"V", ar:"صدم / دفع", darija:"دفع" },
-      { word:"ansprechen", pos:"V", ar:"خاطب", darija:"هضر مع" },
-      { word:"bedanken, sich", pos:"V", ar:"شكر", darija:"شكر" },
-      { word:"begründen", pos:"V", ar:"علّل / برر", darija:"برر" },
-      { word:"behalten", pos:"V", ar:"احتفظ بـ", darija:"خلى عندو" },
-      { word:"beraten", pos:"V", ar:"نصح", darija:"نصح" },
-      { word:"bieten", pos:"V", ar:"عرض", darija:"عرض" },
-      { word:"bitten", pos:"V", ar:"طلب / رجا", darija:"طلب / رجا" },
-      { word:"eintreffen", pos:"V", ar:"وصل", darija:"وصل" },
-      { word:"emigrieren", pos:"V", ar:"هاجر", darija:"هاجر" },
-      { word:"erleben", pos:"V", ar:"عاش / جرب", darija:"عاش تجربة" },
-      { word:"klar sein", pos:"V", ar:"كان واضحا", darija:"كان واضح" },
-      { word:"landen", pos:"V", ar:"هبط (طائرة)", darija:"هبط / نزل" },
-      { word:"melden, sich", pos:"V", ar:"أبلغ / اتصل", darija:"تواصل / علم" },
-      { word:"nachfragen", pos:"V", ar:"استفسر", darija:"عاود سول" },
-      { word:"pflanzen", pos:"V", ar:"زرع", darija:"زرع / غرس" },
-      { word:"rennen", pos:"V", ar:"ركض", darija:"جرى" },
-      { word:"Bescheid sagen", pos:"V", ar:"أخبر", darija:"علم / قال" },
-      { word:"stimmen", pos:"V", ar:"كان صحيحا / صوّت", darija:"كان صحيح / صوت" },
-      { word:"strukturieren", pos:"V", ar:"نظم / هيكل", darija:"نظم" },
-      { word:"unterbrechen", pos:"V", ar:"قاطع", darija:"قطع" },
-      { word:"verbinden", pos:"V", ar:"ربط / وصل", darija:"ربط" },
-      { word:"verlassen", pos:"V", ar:"غادر / ترك", darija:"خلى / مشى من" },
-      { word:"verlieren", pos:"V", ar:"خسر / فقد", darija:"خسر / ضيع" },
-      { word:"verschwinden", pos:"V", ar:"اختفى", darija:"غبر" },
-      { word:"versteigern", pos:"V", ar:"باع في مزاد", darija:"باع فالمزاد" },
-      { word:"vertrauen", pos:"V", ar:"وثق", darija:"تاق" },
-      { word:"wachsen", pos:"V", ar:"نما / كبر", darija:"كبر" },
-      { word:"weitergeben", pos:"V", ar:"مرر / أعطى", darija:"دوز / عطى" },
-      { word:"zaubern", pos:"V", ar:"سحر", darija:"دار السحور" },
-      { word:"zurücklaufen", pos:"V", ar:"رجع راكضا", darija:"رجع كيجري" },
-      { word:"ärgerlich", pos:"Adj", ar:"مزعج / غاضب", darija:"معصب / مقلق" },
-      { word:"arm", pos:"Adj", ar:"فقير", darija:"فقير / مسكين" },
-      { word:"aufmerksam", pos:"Adj", ar:"منتبه", darija:"رد البال / منتبه" },
-      { word:"bestimmt", pos:"Adj", ar:"محدد / بالتأكيد", darija:"محدد / أكيد" },
-      { word:"blond", pos:"Adj", ar:"أشقر", darija:"شقراء / أشقر" },
-      { word:"fiktiv", pos:"Adj", ar:"خيالي", darija:"خيالي" },
-      { word:"golden", pos:"Adj", ar:"ذهبي", darija:"ذهبي" },
-      { word:"hässlich", pos:"Adj", ar:"قبيح", darija:"خايب / قبيح" },
-      { word:"jährlich", pos:"Adj", ar:"سنوي", darija:"سنوي / كل عام" },
-      { word:"komisch", pos:"Adj", ar:"مضحك / غريب", darija:"كيضحك / غريب" },
-      { word:"korrupt", pos:"Adj", ar:"فاسد / مرتشي", darija:"شفار / مرتشي" },
-      { word:"langfristig", pos:"Adj", ar:"على المدى الطويل", darija:"على المدى البعيد" },
-      { word:"letzt- (-er, -es, -e)", pos:"Adj", ar:"أخير", darija:"لخر / الأخير" },
-      { word:"optimistisch", pos:"Adj", ar:"متفائل", darija:"متفائل" },
-      { word:"überrascht", pos:"Adj", ar:"متفاجئ", darija:"متفاجئ / مخلوع" },
-      { word:"ungewöhnlich", pos:"Adj", ar:"غير عادي", darija:"ماشي عادي" },
-      { word:"vorletzt- (-er, -es, -e)", pos:"Adj", ar:"قبل الأخير", darija:"قبل الأخير" },
-      { word:"wahr", pos:"Adj", ar:"صحيح / حقيقي", darija:"بصح / حقيقي" },
-      { word:"zerbrochen", pos:"Adj", ar:"مكسور", darija:"مهّرس" },
-      { word:"jemand", pos:"Pron", ar:"شخص ما", darija:"شي واحد" },
-      { word:"niemand", pos:"Pron", ar:"لا أحد", darija:"تا واحد" },
-      { word:"genau", pos:"Adv", ar:"بالضبط", darija:"بالضبط / نيشان" },
-      { word:"irgendwo", pos:"Adv", ar:"في مكان ما", darija:"فشي بلاصة" },
-      { word:"leider", pos:"Adv", ar:"للأسف", darija:"مع الأسف" },
-      { word:"plötzlich", pos:"Adv", ar:"فجأة", darija:"فجأة / على غفلة" },
-      { word:"rund um", pos:"Adv", ar:"حول", darija:"داير ب" },
-      // Lektion 13
-      { word:"Ader", pos:"N", ar:"وريد", darija:"عرق" },
-      { word:"Arm", pos:"N", ar:"ذراع", darija:"دراع" },
-      { word:"Auge", pos:"N", ar:"عين", darija:"عين" },
-      { word:"Bauch", pos:"N", ar:"بطن", darija:"كرش" },
-      { word:"Bein", pos:"N", ar:"ساق", darija:"رجل" },
-      { word:"Blutdruck (nur Sg.)", pos:"N", ar:"ضغط الدم", darija:"طونسيو" },
-      { word:"Brust", pos:"N", ar:"صدر", darija:"صدر" },
-      { word:"Darm", pos:"N", ar:"أمعاء", darija:"مصران" },
-      { word:"Finger", pos:"N", ar:"إصبع", darija:"صبع" },
-      { word:"Fuß", pos:"N", ar:"قدم", darija:"رجل / قدم" },
-      { word:"Hals", pos:"N", ar:"رقبة / حلق", darija:"عنق / حلق" },
-      { word:"Herz", pos:"N", ar:"قلب", darija:"قلب" },
-      { word:"Immunsystem", pos:"N", ar:"جهاز المناعة", darija:"جهاز المناعة" },
-      { word:"Knie", pos:"N", ar:"ركبة", darija:"ركبة" },
-      { word:"Knochen", pos:"N", ar:"عظم", darija:"عضم" },
-      { word:"Kopf", pos:"N", ar:"رأس", darija:"راس" },
-      { word:"Lunge", pos:"N", ar:"رئة", darija:"رية" },
-      { word:"Magen", pos:"N", ar:"معدة", darija:"معدة" },
-      { word:"Mandel", pos:"N", ar:"لوزة (الحلق)", darija:"حلاقم" },
-      { word:"Mund", pos:"N", ar:"فم", darija:"فم" },
-      { word:"Muskel", pos:"N", ar:"عضلة", darija:"عضلة / ميस्كل" },
-      { word:"Nacken", pos:"N", ar:"قفا / عنق", darija:"قفا" },
-      { word:"Nase", pos:"N", ar:"أنف", darija:"نيف" },
-      { word:"Nerv", pos:"N", ar:"عصب", darija:"عصب" },
-      { word:"Ohr", pos:"N", ar:"أذن", darija:"ودن" },
-      { word:"Organ", pos:"N", ar:"عضو", darija:"عضو" },
-      { word:"Po", pos:"N", ar:"مؤخرة", darija:"ترمة" },
-      { word:"Rücken", pos:"N", ar:"ظهر", darija:"ظهر" },
-      { word:"Schenkel", pos:"N", ar:"فخذ", darija:"فخذ" },
-      { word:"Schulter", pos:"N", ar:"كتف", darija:"كتف" },
-      { word:"Skelett", pos:"N", ar:"هيكل عظمي", darija:"هيكل عظمي" },
-      { word:"Körperteil", pos:"N", ar:"جزء من الجسم", darija:"جزء من الجسم" },
-      { word:"Zeh", pos:"N", ar:"إصبع القدم", darija:"صبع ديال الرجل" }
-    ];
+    const WORTSCHATZ_DATA = {
+      
+      "Lektion 19: Verkehr & Ruhrgebiet": [
+        { word:"die Abgase (meist Pl.)", pos:"N", ar:"عوادم", darija:"دخان الطوموبيلات", de_example:"Moderne Autos haben weniger Abgase.", darija_example:"الطوموبيلات الجداد عندهم دخان أقل." },
+        { word:"die Ampel, -n", pos:"N", ar:"إشارة مرور", darija:"ضو الحمر", de_example:"Die Ampel ist rot, du musst anhalten.", darija_example:"الضو الحمر شاعل، خاصك توقف." },
+        { word:"die Fahrbahn, -en", pos:"N", ar:"مسار الطريق", darija:"الطريق", de_example:"Die Fahrbahn ist wegen des Regens nass.", darija_example:"الطريق فازڭة بسباب الشتا." },
+        { word:"der Stau, -s", pos:"N", ar:"ازدحام مروري", darija:"زحام / بلوكاج", de_example:"Ich stehe im Stau.", darija_example:"أنا واقف فالبلوكاج." },
+        { word:"der Unfall, -e", pos:"N", ar:"حادثة", darija:"كسيدة", de_example:"Es gab einen Unfall auf der Autobahn.", darija_example:"كانت واحد الكسيدة فالطريق السيار." }
+      ],
 
-    // ========= DICTIONARY LOGIC =========
-    function normalizeWord(s){
-      return String(s||'').trim().toLowerCase()
-        .replace(/[.,;:!?()"'„""'']/g,'')
-        .normalize("NFD").replace(/[\u0300-\u036f]/g,"");
-    }
+      // === HIER NEUE LEKTIONEN EINFÜGEN (زيد هنا) ===
+      
+      "Lektion 20: Beispiel": [
+         { word:"Test", pos:"N", ar:"تجربة", darija:"تجربة", de_example:"Das ist ein Test.", darija_example:"هادي تجربة." }
+      ]
+
+    };
+
+    // Auto-Lookup Dictionary helper
     const QAMOS = {};
-    RAW_ENTRIES.forEach(e => { QAMOS[normalizeWord(e.word)] = e; });
+    function buildQamos(){
+      Object.values(WORTSCHATZ_DATA).forEach(list => {
+        list.forEach(e => { QAMOS[normalizeWord(e.word)] = e; });
+      });
+    }
+    function normalizeWord(s){ return String(s||'').trim().toLowerCase().replace(/[.,;:!?()"'„""']/g,'').normalize("NFD").replace(/[\u0300-\u036f]/g,""); }
+    buildQamos();
     function lookupB1(w){ return QAMOS[normalizeWord(w)] || null; }
 
-    // ========= الإعدادات =========
+
+    // ================================================================================================
+    // ✅ 2. APP LOGIC
+    // ================================================================================================
     let boxes = [];
     let settings = { numBoxes: 12, columns: 3, boxSize: 'normal', showBack: false };
 
@@ -859,12 +326,9 @@
     const boxSizeSelect = document.getElementById('boxSize');
     const showBackCheckbox = document.getElementById('showBack');
 
+    // Box Sizing
     function applyBoxCssSize(){
-      const sizes = {
-        small: { app: '900px', boxH: '220px' },
-        normal:{ app: '1100px', boxH: '260px' },
-        large: { app: '1400px', boxH: '310px' }
-      };
+      const sizes = { small: { app: '900px', boxH: '220px' }, normal:{ app: '1100px', boxH: '260px' }, large: { app: '1400px', boxH: '310px' } };
       const conf = sizes[settings.boxSize] || sizes.normal;
       document.documentElement.style.setProperty('--app-max-w', conf.app);
       document.documentElement.style.setProperty('--box-h', conf.boxH);
@@ -880,7 +344,6 @@
     }
 
     function ensureBoxesLength(){
-      settings.numBoxes = parseInt(settings.numBoxes, 10) || 12;
       while (boxes.length < settings.numBoxes) {
         boxes.push({ word:'', example:'', posOverride:'', note:'', arTextManual:'', darTextManual:'', arabicExampleManual:'', darijaExampleManual:'', darijaExampleB1:'' });
       }
@@ -896,7 +359,7 @@
       }
     }
 
-    // ========= بناء المربعات =========
+    // Build Box
     function createBoxElement(index){
       const data = boxes[index];
       const box = document.createElement('div'); box.className = 'box';
@@ -919,7 +382,7 @@
 
       const back = document.createElement('div'); back.className = 'flip-side flip-back';
       const posBadge = document.createElement('div'); posBadge.className = 'posBadge';
-
+      
       const topRow = document.createElement('div'); topRow.className = 'backTopRow';
       const arCenter = document.createElement('textarea'); arCenter.className = 'arabicCenter'; arCenter.placeholder = 'الترجمة بالعربية...'; arCenter.value = data.arTextManual;
       const darSide = document.createElement('textarea'); darSide.className = 'darijaSide'; darSide.placeholder = 'بالدارجة...'; darSide.value = data.darTextManual;
@@ -929,29 +392,27 @@
       const exL = document.createElement('div'); exL.className = 'noteLabel'; exL.textContent = 'أكتب مثالك هنا:';
       const arExTA = document.createElement('textarea'); arExTA.className = 'noteInput'; arExTA.placeholder = 'مثال بالعربية...'; arExTA.value = data.arabicExampleManual;
       const darExTA = document.createElement('textarea'); darExTA.className = 'noteInput'; darExTA.placeholder = 'مثال بالدارجة...'; darExTA.value = data.darijaExampleManual;
-
+      
       const extraNoteWrap = document.createElement('div'); extraNoteWrap.style.display = 'none'; extraNoteWrap.style.flexDirection = 'column'; extraNoteWrap.style.gap='4px'; extraNoteWrap.style.borderTop='1px dashed rgba(255,255,255,0.1)'; extraNoteWrap.style.marginTop='6px'; extraNoteWrap.style.paddingTop='6px';
       const nL = document.createElement('div'); nL.className = 'noteLabel'; nL.textContent = 'ملاحظة:';
       const noteTA = document.createElement('textarea'); noteTA.className = 'noteInput'; noteTA.placeholder = 'ملاحظة...'; noteTA.value = data.note;
       extraNoteWrap.appendChild(nL); extraNoteWrap.appendChild(noteTA);
-
+      
       noteWrap.appendChild(exL); noteWrap.appendChild(arExTA); noteWrap.appendChild(darExTA); noteWrap.appendChild(extraNoteWrap);
       back.appendChild(posBadge); back.appendChild(topRow); back.appendChild(noteWrap);
 
       function render(){
         const b1 = lookupB1(wordTA.value);
         posBadge.textContent = data.posOverride || (b1?b1.pos:'N/V/A');
-
         arCenter.value = data.arTextManual || (b1?b1.ar:'');
-        darSide.value  = data.darTextManual || (b1?b1.darija:'');
+        darSide.value = data.darTextManual || (b1?b1.darija:'');
 
         const manualDarEx = (data.darijaExampleManual || '').trim();
         const autoDarEx   = (data.darijaExampleB1 || '').trim();
         darExTA.value = manualDarEx || autoDarEx || '';
-        arExTA.value  = data.arabicExampleManual || '';
-
-        extraNoteWrap.style.display = (b1 || (data.note||'').trim() !== '') ? 'flex' : 'none';
-
+        arExTA.value = data.arabicExampleManual || '';
+        extraNoteWrap.style.display = (b1 || data.note.trim() !== '') ? 'flex' : 'none';
+        
         [wordTA, exTA, arCenter, darSide, arExTA, darExTA, noteTA].forEach(t => autoFitTextarea(t));
       }
 
@@ -959,42 +420,16 @@
         e.stopPropagation();
         const b1 = lookupB1(wordTA.value);
         if(!b1) { autoMsg.textContent = "Not in dict"; return; }
-        data.posOverride = b1.pos;
-        data.example = b1.de_example;
-        exTA.value = b1.de_example || "";
-        data.darijaExampleB1 = b1.darija_example || "";
-        autoMsg.textContent = "✅";
-        render();
-        save();
+        data.posOverride = b1.pos; data.example = b1.de_example; exTA.value = b1.de_example;
+        data.darijaExampleB1 = b1.darija_example; autoMsg.textContent = "✅"; render(); save();
       };
+      
+      posBadge.onclick = (e) => { e.stopPropagation(); data.posOverride = data.posOverride==='V'?'N':data.posOverride==='N'?'A':'V'; render(); save(); };
 
-      posBadge.onclick = (e) => {
-        e.stopPropagation();
-        data.posOverride = data.posOverride==='V' ? 'N' : data.posOverride==='N' ? 'A' : 'V';
-        render(); save();
-      };
+      const binds = [ [wordTA,'word'], [exTA,'example'], [arCenter,'arTextManual'], [darSide,'darTextManual'], [arExTA,'arabicExampleManual'], [darExTA,'darijaExampleManual'], [noteTA,'note'] ];
+      binds.forEach(([el, key]) => { el.oninput = () => { data[key] = el.value; autoFitTextarea(el); save(); }; });
 
-      const binds = [
-        [wordTA,'word'],
-        [exTA,'example'],
-        [arCenter,'arTextManual'],
-        [darSide,'darTextManual'],
-        [arExTA,'arabicExampleManual'],
-        [darExTA,'darijaExampleManual'],
-        [noteTA,'note']
-      ];
-      binds.forEach(([el, key]) => {
-        el.oninput = () => {
-          data[key] = el.value;
-          autoFitTextarea(el);
-          save();
-        };
-      });
-
-      box.onclick = (e) => {
-        if(!['TEXTAREA','INPUT','BUTTON'].includes(e.target.tagName)) flip.classList.toggle('flipped');
-      };
-
+      box.onclick = (e) => { if(!['TEXTAREA','INPUT','BUTTON'].includes(e.target.tagName)) flip.classList.toggle('flipped'); };
       setTimeout(render, 10);
       flip.appendChild(front); flip.appendChild(back); box.appendChild(flip);
       return box;
@@ -1009,84 +444,117 @@
       boxes.forEach((_, i) => grid.appendChild(createBoxElement(i)));
     }
 
-    // ========= الحفظ =========
-    function save(){
-      localStorage.setItem('dms_boxes', JSON.stringify(boxes));
-      localStorage.setItem('dms_settings', JSON.stringify(settings));
-    }
-    function load(){
-      try{
-        if(localStorage.getItem('dms_boxes')) boxes = JSON.parse(localStorage.getItem('dms_boxes'));
-        if(localStorage.getItem('dms_settings')) settings = {...settings, ...JSON.parse(localStorage.getItem('dms_settings'))};
-      }catch(e){}
-    }
+    function save(){ localStorage.setItem('dms_boxes', JSON.stringify(boxes)); localStorage.setItem('dms_settings', JSON.stringify(settings)); }
+    function load(){ try{ if(localStorage.getItem('dms_boxes')) boxes = JSON.parse(localStorage.getItem('dms_boxes')); if(localStorage.getItem('dms_settings')) settings = {...settings, ...JSON.parse(localStorage.getItem('dms_settings'))}; }catch(e){} }
 
-    numBoxesInput.oninput = () => {
-      settings.numBoxes = parseInt(numBoxesInput.value, 10) || 12;
-      numBoxesValue.textContent = settings.numBoxes;
-      updateGrid(); save();
-    };
+    numBoxesInput.oninput = () => { settings.numBoxes = numBoxesInput.value; numBoxesValue.textContent = numBoxesInput.value; updateGrid(); save(); };
     columnsSelect.onchange = () => { settings.columns = columnsSelect.value; updateGrid(); save(); };
-    boxSizeSelect.onchange  = () => { settings.boxSize  = boxSizeSelect.value; updateGrid(); save(); };
+    boxSizeSelect.onchange = () => { settings.boxSize = boxSizeSelect.value; updateGrid(); save(); };
     showBackCheckbox.onchange = () => { settings.showBack = showBackCheckbox.checked; updateGrid(); save(); };
     document.getElementById('resetBtn').onclick = () => { boxes=[]; updateGrid(); save(); };
     window.addEventListener('resize', () => { requestAnimationFrame(updateGrid); });
 
     document.getElementById('waBtn').onclick = () => document.getElementById('waPopup').classList.toggle('open');
     document.getElementById('waClose').onclick = () => document.getElementById('waPopup').classList.remove('open');
-    document.getElementById('waSend').onclick = () => {
-      window.open(`https://wa.me/212690010348?text=${encodeURIComponent(document.getElementById('waInput').value || 'Hallo Said!')}`, '_blank');
+    document.getElementById('waSend').onclick = () => { window.open(`https://wa.me/212690010348?text=${encodeURIComponent(document.getElementById('waInput').value || 'Hallo Said!')}`, '_blank'); };
+
+    // =========================================================
+    // ✅ 3. WORTSCHATZ BUTTON LOGIC
+    // =========================================================
+    document.getElementById('vocabBtn').onclick = () => {
+      const modal = document.getElementById('vocabModal');
+      const container = document.getElementById('vocabListContainer');
+      container.innerHTML = ''; // Clear existing
+
+      // Loop through categories (Lessons)
+      Object.keys(WORTSCHATZ_DATA).forEach(lessonTitle => {
+        const item = document.createElement('div');
+        item.className = 'vocabItem';
+        item.innerHTML = `<span class="vocabItemName">${lessonTitle}</span> <span class="vocabItemCount">${WORTSCHATZ_DATA[lessonTitle].length} Wörter</span>`;
+        
+        item.onclick = () => {
+          // Load this lesson into boxes
+          const lessonWords = WORTSCHATZ_DATA[lessonTitle];
+          
+          if(confirm(`Möchtest du "${lessonTitle}" laden? (${lessonWords.length} Wörter)`)){
+            // Reset and load
+            boxes = [];
+            settings.numBoxes = lessonWords.length;
+            numBoxesInput.value = lessonWords.length;
+            numBoxesValue.textContent = lessonWords.length;
+
+            lessonWords.forEach(entry => {
+              boxes.push({
+                word: entry.word,
+                example: entry.de_example,
+                posOverride: entry.pos,
+                note: '',
+                arTextManual: entry.ar,
+                darTextManual: entry.darija,
+                arabicExampleManual: '',
+                darijaExampleManual: '',
+                darijaExampleB1: entry.darija_example
+              });
+            });
+
+            save();
+            updateGrid();
+            modal.classList.remove('open');
+          }
+        };
+        container.appendChild(item);
+      });
+
+      modal.classList.add('open');
+    };
+
+    document.getElementById('closeVocabModal').onclick = () => {
+      document.getElementById('vocabModal').classList.remove('open');
     };
 
     // =========================================================
-    // PDF GENERATOR PRO
+    // PDF GENERATOR
     // =========================================================
     document.getElementById('downloadPdfBtn').onclick = async () => {
       const loader = document.getElementById('pdfLoading');
       try {
         loader.style.display = 'flex';
-
+        
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF("p", "mm", "a4");
-
+        
         ensureBoxesLength();
-        const cols = Math.min(Math.max(1, parseInt(settings.columns,10) || 3), 4);
-
+        const cols = Math.min(Math.max(1, settings.columns), 4);
+        
         const pageW = 210; const pageH = 297;
         const pad = 12; const gap = 4;
         const innerW = pageW - (2 * pad);
         const boxMmW = (innerW - (gap * (cols - 1))) / cols;
-        const boxMmH = boxMmW * 1.1;
+        const boxMmH = boxMmW * 1.1; 
 
         const pdfStage = document.getElementById('pdfStage');
 
         function buildPage(mode, startIndex, count, headerH){
           pdfStage.innerHTML = "";
-
+          
           const headerArea = document.createElement("div");
           headerArea.className = "pdfHeaderArea";
           headerArea.style.setProperty("--header-h", headerH + "mm");
-
+          
           if (mode === "front" && headerH > 0) {
-            const title = document.createElement("div");
-            title.className = "pdfBigTitle";
-            title.textContent = "Deutsch mit Said ist einfacher, als du denkst.";
-
-            const meta = document.createElement("div");
-            meta.className = "pdfMeta";
+            const title = document.createElement("div"); title.className = "pdfBigTitle"; title.textContent = "Deutsch mit Said ist einfacher, als du denkst.";
+            const meta = document.createElement("div"); meta.className = "pdfMeta";
             const nm = (document.getElementById('name').value || "").trim();
             const dt = (document.getElementById('date').value || "").trim();
             const tp = (document.getElementById('topic').value || "").trim();
             meta.innerHTML = `<span>Name: ${nm||"—"}</span><span>Datum: ${dt||"—"}</span><span>Thema: ${tp||"—"}</span>`;
-
             headerArea.appendChild(title);
             headerArea.appendChild(meta);
           }
           pdfStage.appendChild(headerArea);
 
-          const g = document.createElement("div");
+          const g = document.createElement("div"); 
           g.className = "pdfGrid";
-
           pdfStage.style.setProperty("--pdfCols", String(cols));
           pdfStage.style.setProperty("--pdfBoxW", boxMmW + "mm");
           pdfStage.style.setProperty("--pdfBoxH", boxMmH + "mm");
@@ -1100,25 +568,21 @@
               let itemIndex = (mode === "front") ? (r * cols + c) : (r * cols + (cols - 1 - c));
               const card = document.createElement("div");
               card.className = "pdfCard";
-
+              
               if (itemIndex >= pageData.length) {
                 card.classList.add("empty");
               } else {
                 const d = pageData[itemIndex] || {};
-                const inner = document.createElement("div");
-                inner.className = "pdfCardInner";
+                const inner = document.createElement("div"); inner.className = "pdfCardInner";
 
                 if (mode === "front"){
-                  inner.innerHTML =
-                    `<div class="pdfWordWrap"><div class="pdfWord">${(d.word||"")}</div></div>
-                     <div class="pdfLine"></div>
-                     <div class="pdfExample">${(d.example||"")}</div>`;
+                  inner.innerHTML = `<div class="pdfWordWrap"><div class="pdfWord">${d.word||""}</div></div><div class="pdfLine"></div><div class="pdfExample">${d.example||""}</div>`;
                 } else {
                   const b1 = lookupB1(d.word);
                   const arText = d.arTextManual || (b1?b1.ar:"");
                   const darText = d.darTextManual || (b1?b1.darija:"");
                   const darEx = d.darijaExampleManual || d.darijaExampleB1 || "";
-
+                  
                   inner.innerHTML = `
                     <div class="pdfAr">${arText}</div>
                     <div class="pdfDar">${darText}</div>
@@ -1135,18 +599,18 @@
           pdfStage.appendChild(g);
         }
 
-        let index = 0;
+        let index = 0; 
         let isFirstPage = true;
 
         while (index < boxes.length) {
           const headerH = isFirstPage ? 20 : 0;
           const innerH = pageH - (2 * pad);
-          const availableGridH = innerH - headerH - 4;
+          const availableGridH = innerH - headerH - 4; 
           const rowsPerPage = Math.max(1, Math.floor(availableGridH / (boxMmH + gap)));
           const perPage = cols * rowsPerPage;
 
           pdfStage.style.zIndex = "1";
-
+          
           buildPage("front", index, perPage, headerH);
           await new Promise(r => setTimeout(r, 100));
           const c1 = await html2canvas(pdfStage, { scale: 3, useCORS: true, backgroundColor: "#ffffff" });
@@ -1167,26 +631,19 @@
         pdf.save("Deutsch_mit_Said.pdf");
 
       } catch (e) {
-        alert("Fehler: " + (e?.message || e));
+        alert("Fehler: " + e.message);
       } finally {
         loader.style.display = 'none';
       }
     };
 
-    // Initialize
     window.addEventListener('DOMContentLoaded', () => {
       load();
-      numBoxesInput.value = settings.numBoxes;
-      numBoxesValue.textContent = settings.numBoxes;
-      columnsSelect.value = settings.columns;
-      boxSizeSelect.value = settings.boxSize;
+      numBoxesInput.value = settings.numBoxes; numBoxesValue.textContent = settings.numBoxes;
+      columnsSelect.value = settings.columns; boxSizeSelect.value = settings.boxSize;
       showBackCheckbox.checked = settings.showBack;
-
-      applyI18n();
       updateGrid();
     });
   </script>
 </body>
 </html>
-
-
