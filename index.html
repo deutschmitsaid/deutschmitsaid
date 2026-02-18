@@ -23,7 +23,7 @@
       --shadow: 0 16px 60px rgba(0,0,0,0.45);
       --glass1: rgba(255,255,255,0.10); --glass2: rgba(255,255,255,0.06);
       --wa:#25D366; --waDark:#0b5a46;
-      --box-h: 260px; 
+      --box-h: 260px;
     }
 
     *{ box-sizing:border-box; }
@@ -34,6 +34,7 @@
       overflow-x:hidden; -webkit-text-size-adjust: 100%;
     }
 
+    /* aura effect */
     body::before{
       content:""; position: fixed; inset: -35%; z-index: -2; pointer-events:none;
       background:
@@ -44,12 +45,14 @@
     }
     @keyframes auraDrift{ 0% { transform: translate3d(-2%, -1%, 0) scale(1.02); } 100% { transform: translate3d(-1%,  3%, 0) scale(1.03); } }
 
+    /* ===== APP WRAPPER ===== */
     #app{ max-width: var(--app-max-w, 1100px); margin: 0 auto; padding: 16px; display: flex; flex-direction: column; gap: 16px; min-height: 100vh; }
 
+    /* ---------- HEADER ---------- */
     .topbar{
       position: relative; z-index: 5; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px;
       border-radius: 18px; background: linear-gradient(180deg, var(--glass1), var(--glass2));
-      border: 1px solid rgba(255,255,255,0.12); backdrop-filter: blur(12px); box-shadow: var(--shadow); flex-wrap: wrap; 
+      border: 1px solid rgba(255,255,255,0.12); backdrop-filter: blur(12px); box-shadow: var(--shadow); flex-wrap: wrap;
     }
     .brand{ display:flex; flex-direction:column; gap:3px; flex: 1 1 200px; }
     .brandTitle{ font-size: clamp(18px, 4vw, 22px); font-weight: 900; line-height:1.1; background: linear-gradient(90deg, #d7f7e6, rgba(62,122,75,0.95), rgba(0,66,37,0.95)); -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -60,12 +63,15 @@
     .pill input{ padding:10px 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.14); outline:none; background: rgba(0,0,0,0.24); color: var(--ink); font-size: 14px; font-weight: 800; flex: 1 1 120px; min-width: 80px; }
     .pill input:focus{ border-color: rgba(62,122,75,0.70); box-shadow: 0 0 0 4px rgba(62,122,75,0.18); }
 
-    #controls{ 
-      position: sticky; top: 10px; z-index: 100; 
-      display:flex; flex-wrap:wrap; gap:12px; padding:16px; border-radius: 18px; justify-content:center; align-items: center; 
-      background: linear-gradient(180deg, rgba(30, 35, 33, 0.85), rgba(15, 20, 18, 0.95)); 
-      border: 1px solid rgba(255,255,255,0.15); backdrop-filter: blur(16px); box-shadow: 0 10px 30px rgba(0,0,0,0.6); 
-      width: 100%; transition: all 0.3s ease;
+    /* ---------- STICKY CONTROLS ---------- */
+    #controls{
+      position: sticky; top: 10px;
+      z-index: 100;
+      display:flex; flex-wrap:wrap; gap:12px; padding:16px; border-radius: 18px; justify-content:center; align-items: center;
+      background: linear-gradient(180deg, rgba(30, 35, 33, 0.85), rgba(15, 20, 18, 0.95));
+      border: 1px solid rgba(255,255,255,0.15); backdrop-filter: blur(16px); box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      width: 100%;
+      transition: all 0.3s ease;
     }
     .control-group{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:center; }
     .control-group label{ font-weight: 900; font-size: 14px; color: rgba(234,242,238,0.92); }
@@ -75,7 +81,6 @@
     .btn:active{ transform: scale(0.95); }
     .btnPrimary{ background: linear-gradient(90deg, var(--brg), var(--moss2)); color:#EAF2EE; box-shadow: 0 8px 20px rgba(0,66,37,0.35); }
     .btnDanger{ background: linear-gradient(90deg, #9b2222, #b45309); color:#fff; box-shadow: 0 8px 20px rgba(0,0,0,0.35); }
-    .btnSecondary{ background: linear-gradient(90deg, #1e40af, #3b82f6); color:#fff; box-shadow: 0 8px 20px rgba(30,64,175,0.35); }
 
     @media (max-width: 600px) {
       #controls { padding: 10px; gap: 8px; }
@@ -86,6 +91,7 @@
 
     #debug{ text-align:center; font-size: 14px; color: rgba(234,242,238,0.82); font-weight: 900; margin: 0; }
 
+    /* ---------- GRID ---------- */
     #grid{ display:grid; gap: 16px; width: 100%; background: transparent; padding-bottom: 50px; }
     .box{ width: 100%; height: var(--box-h); border-radius: 16px; position:relative; overflow:hidden; border: 1px solid rgba(255,255,255,0.12); background: radial-gradient(circle at 10% 0%, rgba(62,122,75,0.15), transparent 60%), linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); box-shadow: 0 12px 30px rgba(0,0,0,0.4); contain: content; touch-action: pan-y; }
     .flip-card{ width:100%; height:100%; position:relative; transform-style:preserve-3d; transition: transform .6s cubic-bezier(0.4, 0.2, 0.2, 1); }
@@ -93,8 +99,9 @@
     .flip-side{ position:absolute; inset:0; backface-visibility:hidden; display:flex; flex-direction:column; padding:14px; gap:8px; }
     .flip-back{ transform: rotateY(180deg); direction: rtl; text-align:right; }
 
-    textarea, input { font-size: 16px !important; }
+    textarea, input { font-size: 16px !important; } /* منع الزوم فالايفون */
 
+    /* FRONT SIDE */
     .frontWordWrap{ flex: 1; display:flex; align-items:center; justify-content:center; min-height: 45%; }
     .wordInput{ width:100%; border:none; outline:none; resize:none; background:transparent; color: var(--ink); font-weight: 900; text-align:center; overflow:hidden; text-shadow: 0 0 15px rgba(46,94,58,0.3); }
     .exampleWrap{ border-top: 1px solid rgba(255,255,255,0.10); padding-top: 8px; flex: 1.2; display:flex; flex-direction:column; gap:6px; }
@@ -105,6 +112,7 @@
     .autoMsg{ font-size: 11px; font-weight: 900; color: rgba(234,242,238,0.62); min-height: 14px; direction:ltr; text-align:left; }
     .explainInput{ border:none; outline:none; resize:none; background:transparent; color: rgba(234,242,238,0.92); line-height:1.4; flex:1; }
 
+    /* BACK SIDE */
     .posBadge{ display:inline-flex; align-self:flex-start; padding:4px 10px; border-radius:999px; font-size: 11px; font-weight: 900; background: rgba(62,122,75,0.2); border: 1px solid rgba(62,122,75,0.3); color: #d7f7e6; direction:ltr; cursor:pointer; }
     .backTopRow{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; margin-top: 8px; flex: 1; }
     .arabicCenter{ flex: 1.2; text-align:right; font-weight: 700; line-height: 1.6; direction: rtl; color: #e9fff4; font-family: "Amiri", Arial, sans-serif; border: none; outline: none; resize: none; background: transparent; overflow: hidden; }
@@ -113,6 +121,7 @@
     .noteLabel{ font-size: 12px; font-weight: 800; opacity: .90; direction: rtl; text-align: right; color: rgba(234,242,238,0.90); }
     .noteInput{ border:none; outline:none; resize:none; background:transparent; color: rgba(234,242,238,0.92); line-height: 1.5; min-height: 30px; text-align:right; direction: rtl; overflow:hidden; font-family: "Amiri", Arial, sans-serif; }
 
+    /* WhatsApp */
     #waBtn{ position: fixed; right: 18px; bottom: 18px; width: 54px; height: 54px; border-radius: 999px; background: var(--wa); border: none; cursor: pointer; box-shadow: 0 16px 30px rgba(0,0,0,0.35); display:flex; align-items:center; justify-content:center; z-index: 9999; }
     #waBtn svg{ width: 28px; height: 28px; fill: #fff; }
     #waPopup{ position: fixed; right: 18px; bottom: 86px; width: 320px; max-width: calc(100vw - 36px); border-radius: 16px; overflow:hidden; box-shadow: 0 18px 50px rgba(0,0,0,0.4); background:#fff; z-index: 9999; display:none; }
@@ -130,18 +139,20 @@
     #waInput{ flex:1; border-radius: 20px; border: 1px solid #ccc; padding: 12px 16px; outline:none; font-weight: 800; font-size: 15px;}
     #waSend{ border:none; border-radius: 20px; padding: 0 20px; background: var(--wa); color:#fff; font-weight: 900; cursor:pointer; }
 
+    /* =========================================================
+       PDF STAGE
+       ========================================================= */
     #pdfStage{
       position: absolute; left: -9999px; top: 0;
       width: 210mm; height: 297mm; padding: 12mm;
       background: #ffffff; color: #111; box-sizing: border-box; font-family: Arial, sans-serif;
       display: flex; flex-direction: column; z-index: -999;
     }
-    
     .pdfHeaderArea { height: var(--header-h); width: 100%; margin-bottom: 4mm; }
     .pdfBigTitle{ margin:0; text-align:center; font-weight: 900; font-size: 18px; color:#0B5A36; line-height: 1.2; }
     .pdfMeta{ display:flex; justify-content:space-between; gap: 6mm; font-size: 11px; font-weight: 900; margin-top: 5mm; }
     .pdfMeta span{ border: 1px solid rgba(0,0,0,0.14); border-radius: 999px; padding: 2.5mm 4mm; background: rgba(0,0,0,0.02); }
-    
+
     .pdfGrid{ display: grid; gap: var(--pdfGap); grid-template-columns: repeat(var(--pdfCols), var(--pdfBoxW)); grid-auto-rows: var(--pdfBoxH); width: 100%; }
     .pdfCard{ width: var(--pdfBoxW); height: var(--pdfBoxH); background: #fff; border: 1px solid rgba(0,0,0,0.25); border-radius: 14px; overflow: hidden; }
     .pdfCard.empty { border: none; background: transparent; }
@@ -149,33 +160,20 @@
     .pdfWordWrap{ flex: 1; display:flex; align-items:center; justify-content:center; text-align:center; }
     .pdfWord{ font-weight: 900; font-size: 18px; white-space: pre-wrap; word-break: break-word; color: #000; }
     .pdfLine{ height: 1px; background: rgba(0,0,0,0.15); width: 100%; }
-    .pdfExample{ font-size: 12px; line-height: 1.4; flex: 1; color: #222; }
-    .pdfAr{ direction: rtl; text-align: center; font-family: "Amiri", Arial, sans-serif; font-weight: 700; font-size: 18px; line-height: 1.5; color: #000; }
-    .pdfDar{ direction: rtl; text-align: right; font-weight: 700; font-size: 13px; line-height: 1.5; color: #333; }
-    .pdfNote{ direction: rtl; text-align: right; font-size: 12px; line-height: 1.4; font-family: "Amiri", Arial, sans-serif; color: #444; }
+    .pdfExample{ font-size: 12px; line-height: 1.4; flex: 1; color: #222; white-space: pre-wrap; }
+    .pdfAr{ direction: rtl; text-align: center; font-family: "Amiri", Arial, sans-serif; font-weight: 700; font-size: 18px; line-height: 1.5; color: #000; white-space: pre-wrap; }
+    .pdfDar{ direction: rtl; text-align: right; font-weight: 700; font-size: 13px; line-height: 1.5; color: #333; white-space: pre-wrap; }
+    .pdfNote{ direction: rtl; text-align: right; font-size: 12px; line-height: 1.4; font-family: "Amiri", Arial, sans-serif; color: #444; white-space: pre-wrap; }
 
+    /* Loading Overlay */
     #pdfLoading { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 99999; display: none; align-items: center; justify-content: center; flex-direction: column; color: white; font-weight: 900; font-size: 20px; backdrop-filter: blur(5px); }
     .spinner { border: 4px solid rgba(255,255,255,0.3); border-top: 4px solid #25D366; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin-bottom: 15px; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-    /* ✅ Vocab Selector Modal */
-    #vocabModal{ position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 10000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
-    #vocabModal.open{ display: flex; }
-    .vocabPanel{ background: linear-gradient(180deg, #1a1d1b, #0f1412); border-radius: 20px; max-width: 800px; width: 90%; max-height: 85vh; overflow-y: auto; padding: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.7); border: 1px solid rgba(255,255,255,0.15); }
-    .vocabHeader{ display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-    .vocabTitle{ font-size: 22px; font-weight: 900; color: #d7f7e6; }
-    .vocabClose{ background: rgba(255,255,255,0.1); border: none; color: white; width: 40px; height: 40px; border-radius: 10px; font-size: 24px; cursor: pointer; }
-    .vocabList{ display: flex; flex-direction: column; gap: 10px; }
-    .vocabItem{ padding: 14px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; cursor: pointer; transition: all 0.2s; }
-    .vocabItem:hover{ background: rgba(62,122,75,0.2); border-color: rgba(62,122,75,0.4); }
-    .vocabItem.selected{ background: rgba(62,122,75,0.3); border-color: rgba(62,122,75,0.6); }
-    .vocabItemWord{ font-weight: 900; font-size: 16px; color: #EAF2EE; }
-    .vocabItemAr{ font-size: 14px; color: rgba(234,242,238,0.7); margin-top: 4px; direction: rtl; text-align: right; font-family: "Amiri", Arial, sans-serif; }
-    .vocabActions{ margin-top: 20px; display: flex; gap: 12px; justify-content: flex-end; }
   </style>
 </head>
 <body>
 
+  <!-- Loading PDF -->
   <div id="pdfLoading">
     <div class="spinner"></div>
     <div>PDF wird erstellt...</div>
@@ -185,7 +183,7 @@
     <div class="topbar" id="topbar">
       <div class="brand">
         <div class="brandTitle">Deutsch mit Said</div>
-        <div class="brandSub">ist einfacher: wählen • schreiben • drucken</div>
+        <div class="brandSub" data-i18n="subtitle">ist einfacher: wählen • schreiben • drucken</div>
       </div>
       <div class="topActions">
         <div class="pill">
@@ -198,12 +196,12 @@
 
     <div id="controls">
       <div class="control-group">
-        <label>Anzahl</label>
+        <label data-i18n="count">Anzahl</label>
         <input type="range" id="numBoxes" min="1" max="200" value="12" step="1" style="max-width: 100px;">
         <span id="numBoxesValue" style="font-weight:900; width: 24px; color:white;">12</span>
       </div>
       <div class="control-group">
-        <label>Spalten</label>
+        <label data-i18n="cols">Spalten</label>
         <select id="columns">
           <option value="1">1</option>
           <option value="2">2</option>
@@ -212,45 +210,28 @@
         </select>
       </div>
       <div class="control-group">
-        <label>Größe</label>
+        <label data-i18n="size">Größe</label>
         <select id="boxSize">
-          <option value="small">Klein</option>
-          <option value="normal" selected>Normal</option>
-          <option value="large">Groß</option>
+          <option value="small" data-i18n="small">Klein</option>
+          <option value="normal" selected data-i18n="normal">Normal</option>
+          <option value="large" data-i18n="large">Groß</option>
         </select>
       </div>
       <div class="control-group" style="margin: 0 5px;">
         <label style="cursor:pointer; display:flex; align-items:center; gap:5px;">
-          <input type="checkbox" id="showBack" style="width:18px; height:18px;"> 
-          <span>Rückseite zeigen</span>
+          <input type="checkbox" id="showBack" style="width:18px; height:18px;">
+          <span data-i18n="back">Rückseite zeigen</span>
         </label>
       </div>
-      <button class="btn btnSecondary" id="selectVocabBtn" type="button">📚 Wortschatz wählen</button>
-      <button class="btn btnDanger" id="resetBtn" type="button">Leeren</button>
+      <button class="btn btnDanger" id="resetBtn" type="button" data-i18n="reset">Leeren</button>
       <button class="btn btnPrimary" id="downloadPdfBtn" type="button">PDF</button>
     </div>
 
     <div id="debug" style="margin-top: 5px;">Viel Erfolg</div>
-    
     <div id="grid"></div>
   </div>
 
   <div id="pdfStage" aria-hidden="true"></div>
-
-  <!-- ✅ Vocab Selection Modal -->
-  <div id="vocabModal">
-    <div class="vocabPanel">
-      <div class="vocabHeader">
-        <div class="vocabTitle">Wortschatz aus Lektion wählen</div>
-        <button class="vocabClose" id="closeVocabModal">×</button>
-      </div>
-      <div class="vocabList" id="vocabList"></div>
-      <div class="vocabActions">
-        <button class="btn btnDanger" onclick="document.getElementById('vocabModal').classList.remove('open')">Abbrechen</button>
-        <button class="btn btnPrimary" id="fillSelectedBtn">Ausgewählte einfügen</button>
-      </div>
-    </div>
-  </div>
 
   <button id="waBtn" aria-label="WhatsApp">
     <svg viewBox="0 0 32 32"><path d="M19.11 17.25c-.27-.14-1.6-.79-1.85-.88-.25-.09-.43-.14-.62.14-.18.27-.71.88-.87 1.06-.16.18-.32.21-.59.07-.27-.14-1.16-.43-2.21-1.36-.82-.73-1.38-1.63-1.54-1.9-.16-.27-.02-.42.12-.56.12-.12.27-.32.41-.48.14-.16.18-.27.27-.46.09-.18.05-.34-.02-.48-.07-.14-.62-1.5-.85-2.06-.22-.53-.45-.46-.62-.47h-.53c-.18 0-.48.07-.73.34-.25.27-.96.94-.96 2.29 0 1.35.99 2.65 1.13 2.83.14.18 1.95 2.97 4.73 4.17.66.29 1.18.46 1.58.59.66.21 1.26.18 1.74.11.53-.08 1.6-.65 1.83-1.27.23-.62.23-1.15.16-1.27-.07-.12-.25-.18-.52-.32zM16 3C9.38 3 4 8.38 4 15c0 2.11.55 4.17 1.6 5.99L4 29l8.21-1.56A11.92 11.92 0 0 0 16 27c6.62 0 12-5.38 12-12S22.62 3 16 3zm0 21.7c-1.94 0-3.83-.52-5.47-1.5l-.39-.23-4.87.93.93-4.74-.25-.41A9.69 9.69 0 0 1 6.3 15C6.3 9.64 10.64 5.3 16 5.3S25.7 9.64 25.7 15 21.36 24.7 16 24.7z"/></svg>
@@ -269,68 +250,66 @@
   </div>
 
   <script>
+    // ========= FIX #1: i18n functions (باش ما يطيحش السكريبت) =========
+    let lang = "de";
+    const I18N = {
+      de: { subtitle:"ist einfacher: wählen • schreiben • drucken", count:"Anzahl", cols:"Spalten", size:"Größe", small:"Klein", normal:"Normal", large:"Groß", back:"Rückseite zeigen", reset:"Leeren" },
+      en: { subtitle:"made easy: choose • write • print",          count:"Count",  cols:"Columns", size:"Size",   small:"Small", normal:"Normal", large:"Large", back:"Show back side",        reset:"Clear" }
+    };
+    function applyI18n(){
+      document.querySelectorAll("[data-i18n]").forEach(el=>{
+        const k = el.getAttribute("data-i18n");
+        if (I18N[lang] && I18N[lang][k]) el.textContent = I18N[lang][k];
+      });
+    }
+
+    // ========= الحماية =========
     document.addEventListener('contextmenu', e => e.preventDefault());
     document.addEventListener('keydown', (e) => {
       const k = (e.key || '').toLowerCase();
       if ((e.ctrlKey || e.metaKey) && ['s','p','c'].includes(k)) e.preventDefault();
     });
 
-    // ========= EXTENDED VOCABULARY DATABASE (from PDFs) =========
+    // ========= القاموس =========
     const RAW_ENTRIES = [
-      // Verkehr & Transport (from your original + PDF)
       { word:"Verkehrszeichen", pos:"N", ar:"علامة مرور", darija:"بلاكة ديال الطريق", de_example:"Das Verkehrszeichen ist wichtig.", darija_example:"بلاكة الطريق مهمة." },
       { word:"Vorfahrt", pos:"N", ar:"أولوية مرور", darija:"حق المرور", de_example:"Er hat Vorfahrt.", darija_example:"عندو حق المرور." },
       { word:"Kreuzung", pos:"N", ar:"تقاطع طرق", darija:"الكروازي", de_example:"An der Kreuzung ist eine Ampel.", darija_example:"فالكروازي كاين السينيال." },
       { word:"Kurve", pos:"N", ar:"منعطف طريق", darija:"الفيراج", de_example:"Die Kurve ist gefährlich.", darija_example:"الفيراج خطير." },
+      { word:"Leitplanke", pos:"N", ar:"حاجز جانبي", darija:"الحديدة فالطريق", de_example:"Das Auto fährt gegen die Leitplanke.", darija_example:"الطوموبيل ضربات فالحديدة ديال الطريق." },
+      { word:"Landstraße", pos:"N", ar:"طريق ريفي", darija:"طريق خارج المدينة", de_example:"Wir fahren auf der Landstraße.", darija_example:"كنسوقو فطريق خارج المدينة." },
+      { word:"Mitfahrgelegenheit", pos:"N", ar:"فرصة ركوب", darija:"توصيلة مع شي حد", de_example:"Ich suche eine Mitfahrgelegenheit.", darija_example:"كنقلب على توصيلة." },
+      { word:"Pendler", pos:"N", ar:"مسافر يومي", darija:"اللي كيمشي ويرجع للخدمة", de_example:"Der Pendler fährt jeden Tag.", darija_example:"كيمشي ويرجع كل نهار." },
+      { word:"Radweg", pos:"N", ar:"مسار دراجات", darija:"طريق ديال البيكالة", de_example:"Der Radweg ist neu.", darija_example:"طريق البيكالة جديد." },
+      { word:"Semesterticket", pos:"N", ar:"تذكرة فصل", darija:"تيكي ديال السميستر", de_example:"Ich habe ein Semesterticket.", darija_example:"عندي تيكي ديال السميستر." },
       { word:"Stau", pos:"N", ar:"ازدحام سير", darija:"الزحام", de_example:"Es gibt einen Stau.", darija_example:"كاين الزحام." },
+      { word:"Tempo", pos:"N", ar:"سرعة محددة", darija:"السرعة", de_example:"Das Tempo ist 50.", darija_example:"السرعة 50." },
+      { word:"Tunnel", pos:"N", ar:"نفق طريق", darija:"تونيل", de_example:"Das Auto fährt durch den Tunnel.", darija_example:"الطوموبيل دازت من التونيل." },
+      { word:"Überholmanöver", pos:"N", ar:"عملية تجاوز", darija:"دوزان على شي حد", de_example:"Das Überholmanöver ist gefährlich.", darija_example:"دوزان على شي حد خطير." },
       { word:"Unfall", pos:"N", ar:"حادث طريق", darija:"حادثة", de_example:"Es gibt einen Unfall.", darija_example:"كاينة حادثة." },
-      
-      // Wohnen (from PDF Lektion 10)
-      { word:"Miete", pos:"N", ar:"إيجار", darija:"الكرا", de_example:"Die Miete ist hoch.", darija_example:"الكرا غالي." },
-      { word:"Wohnung", pos:"N", ar:"شقة", darija:"شقة", de_example:"Die Wohnung ist schön.", darija_example:"الشقة زوينة." },
-      { word:"Zimmer", pos:"N", ar:"غرفة", darija:"بيت", de_example:"Das Zimmer ist groß.", darija_example:"البيت كبير." },
-      { word:"Möbel", pos:"N", ar:"أثاث", darija:"الموبليا", de_example:"Die Möbel sind neu.", darija_example:"الموبليا جديدة." },
-      { word:"Balkon", pos:"N", ar:"شرفة", darija:"بلكونة", de_example:"Der Balkon ist sonnig.", darija_example:"البلكونة فالشمس." },
-      
-      // Bank (from PDF Lektion 12)
-      { word:"Konto", pos:"N", ar:"حساب بنكي", darija:"الكومت", de_example:"Ich eröffne ein Konto.", darija_example:"كنحل الكومت." },
-      { word:"Geld", pos:"N", ar:"مال", darija:"الفلوس", de_example:"Ich brauche Geld.", darija_example:"خاصني الفلوس." },
-      { word:"Überweisung", pos:"N", ar:"تحويل مالي", darija:"فيرمون", de_example:"Ich mache eine Überweisung.", darija_example:"غندير فيرمون." },
-      
-      // Gesundheit (from PDF Lektion 13)
-      { word:"Arzt", pos:"N", ar:"طبيب", darija:"الطبيب", de_example:"Ich gehe zum Arzt.", darija_example:"غنمشي عند الطبيب." },
-      { word:"Krankenhaus", pos:"N", ar:"مستشفى", darija:"السبيطار", de_example:"Er ist im Krankenhaus.", darija_example:"هو فالسبيطار." },
-      { word:"Schmerz", pos:"N", ar:"ألم", darija:"الوجع", de_example:"Ich habe Schmerzen.", darija_example:"عندي الوجع." },
-      { word:"Medikament", pos:"N", ar:"دواء", darija:"الدوا", de_example:"Ich nehme ein Medikament.", darija_example:"كناخذ الدوا." },
-      
-      // Kleidung (from PDF Lektion 14)
-      { word:"Kleidung", pos:"N", ar:"ملابس", darija:"الحوايج", de_example:"Die Kleidung ist schön.", darija_example:"الحوايج زوينة." },
-      { word:"Jacke", pos:"N", ar:"سترة", darija:"الجاكيطة", de_example:"Die Jacke ist warm.", darija_example:"الجاكيطة سخونة." },
-      { word:"Hose", pos:"N", ar:"بنطلون", darija:"السروال", de_example:"Die Hose passt gut.", darija_example:"السروال مزيان." },
-      
-      // Stadt & Reisen (from PDF Lektion 15)
-      { word:"Hotel", pos:"N", ar:"فندق", darija:"لوطيل", de_example:"Das Hotel ist teuer.", darija_example:"لوطيل غالي." },
-      { word:"Stadt", pos:"N", ar:"مدينة", darija:"المدينة", de_example:"Die Stadt ist groß.", darija_example:"المدينة كبيرة." },
-      { word:"Museum", pos:"N", ar:"متحف", darija:"الموزي", de_example:"Wir besuchen das Museum.", darija_example:"غنزورو الموزي." },
-      
-      // Beruf (from PDF Lektion 16-17)
-      { word:"Beruf", pos:"N", ar:"مهنة", darija:"الخدمة", de_example:"Was ist dein Beruf?", darija_example:"شنو خدمتك؟" },
-      { word:"Arbeit", pos:"N", ar:"عمل", darija:"الخدمة", de_example:"Die Arbeit ist schwer.", darija_example:"الخدمة صعيبة." },
-      { word:"Gehalt", pos:"N", ar:"راتب", darija:"السالير", de_example:"Das Gehalt ist gut.", darija_example:"السالير مزيان." },
-      { word:"Bewerbung", pos:"N", ar:"طلب توظيف", darija:"الكونديدا", de_example:"Ich schreibe eine Bewerbung.", darija_example:"كنكتب الكونديدا." },
-      
-      // Urlaub (from PDF Lektion 18)
-      { word:"Urlaub", pos:"N", ar:"إجازة", darija:"العطلة", de_example:"Ich mache Urlaub.", darija_example:"غندير العطلة." },
-      { word:"Strand", pos:"N", ar:"شاطئ", darija:"البلاج", de_example:"Wir gehen zum Strand.", darija_example:"غنمشيو للبلاج." },
-      { word:"Meer", pos:"N", ar:"بحر", darija:"البحر", de_example:"Das Meer ist schön.", darija_example:"البحر زوين." },
+      { word:"Verkehr", pos:"N", ar:"حركة مرور", darija:"السير", de_example:"Der Verkehr ist stark.", darija_example:"السير قوي." },
+      { word:"Verkehrsregel", pos:"N", ar:"قانون مرور", darija:"قانون السير", de_example:"Ich kenne die Verkehrsregeln.", darija_example:"كنعرف قانون السير." },
+      { word:"Verkehrsmittel", pos:"N", ar:"وسيلة نقل", darija:"وسيلة نقل", de_example:"Das Verkehrsmittel ist schnell.", darija_example:"وسيلة النقل سريعة." },
+      { word:"(Langlauf)Loipe", pos:"N", ar:"مسار تزلج", darija:"طريق ديال السكي", de_example:"Die Loipe ist lang.", darija_example:"طريق السكي طويلة." },
+      { word:"Loipe", pos:"N", ar:"مسار تزلج", darija:"طريق ديال السكي", de_example:"Die Loipe ist lang.", darija_example:"طريق السكي طويلة." },
+      { word:"Lift", pos:"N", ar:"مصعد جبلي", darija:"تلفريك", de_example:"Der Lift ist offen.", darija_example:"التلفريك محلول." },
+      { word:"Mittelalter", pos:"N", ar:"العصور الوسطى", darija:"وقت قديم بزاف", de_example:"Das Mittelalter war lang.", darija_example:"هداك الوقت قديم بزاف." },
+      { word:"Netzwerk", pos:"N", ar:"شبكة علاقات", darija:"شبكة", de_example:"Ich habe ein Netzwerk.", darija_example:"عندي شبكة ديال الناس." },
+      { word:"Panorama", pos:"N", ar:"منظر شامل", darija:"منظر واسع", de_example:"Das Panorama ist schön.", darija_example:"المنظر واسع وزوين." },
+      { word:"Prozess", pos:"N", ar:"عملية تطوّر", darija:"عملية", de_example:"Der Prozess dauert lange.", darija_example:"العملية خذات وقت." },
+      { word:"Sage", pos:"N", ar:"قصة قديمة", darija:"حكاية قديمة", de_example:"Die Sage ist interessant.", darija_example:"الحكاية القديمة زوينة." }
     ];
 
-    function normalizeWord(s){ return String(s||'').trim().toLowerCase().replace(/[.,;:!?()"'„""']/g,'').normalize("NFD").replace(/[\u0300-\u036f]/g,""); }
+    function normalizeWord(s){
+      return String(s||'').trim().toLowerCase()
+        .replace(/[.,;:!?()"'„“”’]/g,'')
+        .normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+    }
     const QAMOS = {};
     RAW_ENTRIES.forEach(e => { QAMOS[normalizeWord(e.word)] = e; });
     function lookupB1(w){ return QAMOS[normalizeWord(w)] || null; }
 
-    // ========= SETTINGS =========
+    // ========= الإعدادات =========
     let boxes = [];
     let settings = { numBoxes: 12, columns: 3, boxSize: 'normal', showBack: false };
 
@@ -342,7 +321,11 @@
     const showBackCheckbox = document.getElementById('showBack');
 
     function applyBoxCssSize(){
-      const sizes = { small: { app: '900px', boxH: '220px' }, normal:{ app: '1100px', boxH: '260px' }, large: { app: '1400px', boxH: '310px' } };
+      const sizes = {
+        small: { app: '900px', boxH: '220px' },
+        normal:{ app: '1100px', boxH: '260px' },
+        large: { app: '1400px', boxH: '310px' }
+      };
       const conf = sizes[settings.boxSize] || sizes.normal;
       document.documentElement.style.setProperty('--app-max-w', conf.app);
       document.documentElement.style.setProperty('--box-h', conf.boxH);
@@ -351,13 +334,14 @@
     function calculateResponsiveColumns() {
       let userCols = parseInt(settings.columns, 10);
       let screenW = window.innerWidth;
-      if (screenW <= 550) return 1; 
-      if (screenW <= 850) return Math.min(userCols, 2); 
-      if (screenW <= 1100) return Math.min(userCols, 3); 
-      return userCols; 
+      if (screenW <= 550) return 1;
+      if (screenW <= 850) return Math.min(userCols, 2);
+      if (screenW <= 1100) return Math.min(userCols, 3);
+      return userCols;
     }
 
     function ensureBoxesLength(){
+      settings.numBoxes = parseInt(settings.numBoxes, 10) || 12; // ✅ FIX #2
       while (boxes.length < settings.numBoxes) {
         boxes.push({ word:'', example:'', posOverride:'', note:'', arTextManual:'', darTextManual:'', arabicExampleManual:'', darijaExampleManual:'', darijaExampleB1:'' });
       }
@@ -365,6 +349,7 @@
     }
 
     function autoFitTextarea(textarea, min=12, max=18){
+      if(!textarea) return;
       textarea.style.fontSize = max + 'px';
       for (let s=max; s>=min; s--){
         textarea.style.fontSize = s + 'px';
@@ -372,6 +357,7 @@
       }
     }
 
+    // ========= بناء المربعات =========
     function createBoxElement(index){
       const data = boxes[index];
       const box = document.createElement('div'); box.className = 'box';
@@ -394,7 +380,7 @@
 
       const back = document.createElement('div'); back.className = 'flip-side flip-back';
       const posBadge = document.createElement('div'); posBadge.className = 'posBadge';
-      
+
       const topRow = document.createElement('div'); topRow.className = 'backTopRow';
       const arCenter = document.createElement('textarea'); arCenter.className = 'arabicCenter'; arCenter.placeholder = 'الترجمة بالعربية...'; arCenter.value = data.arTextManual;
       const darSide = document.createElement('textarea'); darSide.className = 'darijaSide'; darSide.placeholder = 'بالدارجة...'; darSide.value = data.darTextManual;
@@ -404,27 +390,29 @@
       const exL = document.createElement('div'); exL.className = 'noteLabel'; exL.textContent = 'أكتب مثالك هنا:';
       const arExTA = document.createElement('textarea'); arExTA.className = 'noteInput'; arExTA.placeholder = 'مثال بالعربية...'; arExTA.value = data.arabicExampleManual;
       const darExTA = document.createElement('textarea'); darExTA.className = 'noteInput'; darExTA.placeholder = 'مثال بالدارجة...'; darExTA.value = data.darijaExampleManual;
-      
+
       const extraNoteWrap = document.createElement('div'); extraNoteWrap.style.display = 'none'; extraNoteWrap.style.flexDirection = 'column'; extraNoteWrap.style.gap='4px'; extraNoteWrap.style.borderTop='1px dashed rgba(255,255,255,0.1)'; extraNoteWrap.style.marginTop='6px'; extraNoteWrap.style.paddingTop='6px';
       const nL = document.createElement('div'); nL.className = 'noteLabel'; nL.textContent = 'ملاحظة:';
       const noteTA = document.createElement('textarea'); noteTA.className = 'noteInput'; noteTA.placeholder = 'ملاحظة...'; noteTA.value = data.note;
       extraNoteWrap.appendChild(nL); extraNoteWrap.appendChild(noteTA);
-      
+
       noteWrap.appendChild(exL); noteWrap.appendChild(arExTA); noteWrap.appendChild(darExTA); noteWrap.appendChild(extraNoteWrap);
       back.appendChild(posBadge); back.appendChild(topRow); back.appendChild(noteWrap);
 
       function render(){
         const b1 = lookupB1(wordTA.value);
         posBadge.textContent = data.posOverride || (b1?b1.pos:'N/V/A');
+
         arCenter.value = data.arTextManual || (b1?b1.ar:'');
-        darSide.value = data.darTextManual || (b1?b1.darija:'');
+        darSide.value  = data.darTextManual || (b1?b1.darija:'');
 
         const manualDarEx = (data.darijaExampleManual || '').trim();
         const autoDarEx   = (data.darijaExampleB1 || '').trim();
         darExTA.value = manualDarEx || autoDarEx || '';
-        arExTA.value = data.arabicExampleManual || '';
-        extraNoteWrap.style.display = (b1 || data.note.trim() !== '') ? 'flex' : 'none';
-        
+        arExTA.value  = data.arabicExampleManual || '';
+
+        extraNoteWrap.style.display = (b1 || (data.note||'').trim() !== '') ? 'flex' : 'none';
+
         [wordTA, exTA, arCenter, darSide, arExTA, darExTA, noteTA].forEach(t => autoFitTextarea(t));
       }
 
@@ -432,16 +420,42 @@
         e.stopPropagation();
         const b1 = lookupB1(wordTA.value);
         if(!b1) { autoMsg.textContent = "Not in dict"; return; }
-        data.posOverride = b1.pos; data.example = b1.de_example; exTA.value = b1.de_example;
-        data.darijaExampleB1 = b1.darija_example; autoMsg.textContent = "✅"; render(); save();
+        data.posOverride = b1.pos;
+        data.example = b1.de_example;
+        exTA.value = b1.de_example || "";
+        data.darijaExampleB1 = b1.darija_example || "";
+        autoMsg.textContent = "✅";
+        render();
+        save();
       };
-      
-      posBadge.onclick = (e) => { e.stopPropagation(); data.posOverride = data.posOverride==='V'?'N':data.posOverride==='N'?'A':'V'; render(); save(); };
 
-      const binds = [ [wordTA,'word'], [exTA,'example'], [arCenter,'arTextManual'], [darSide,'darTextManual'], [arExTA,'arabicExampleManual'], [darExTA,'darijaExampleManual'], [noteTA,'note'] ];
-      binds.forEach(([el, key]) => { el.oninput = () => { data[key] = el.value; autoFitTextarea(el); save(); }; });
+      posBadge.onclick = (e) => {
+        e.stopPropagation();
+        data.posOverride = data.posOverride==='V' ? 'N' : data.posOverride==='N' ? 'A' : 'V';
+        render(); save();
+      };
 
-      box.onclick = (e) => { if(!['TEXTAREA','INPUT','BUTTON'].includes(e.target.tagName)) flip.classList.toggle('flipped'); };
+      const binds = [
+        [wordTA,'word'],
+        [exTA,'example'],
+        [arCenter,'arTextManual'],
+        [darSide,'darTextManual'],
+        [arExTA,'arabicExampleManual'],
+        [darExTA,'darijaExampleManual'],
+        [noteTA,'note']
+      ];
+      binds.forEach(([el, key]) => {
+        el.oninput = () => {
+          data[key] = el.value;
+          autoFitTextarea(el);
+          save();
+        };
+      });
+
+      box.onclick = (e) => {
+        if(!['TEXTAREA','INPUT','BUTTON'].includes(e.target.tagName)) flip.classList.toggle('flipped');
+      };
+
       setTimeout(render, 10);
       flip.appendChild(front); flip.appendChild(back); box.appendChild(flip);
       return box;
@@ -456,128 +470,84 @@
       boxes.forEach((_, i) => grid.appendChild(createBoxElement(i)));
     }
 
-    function save(){ localStorage.setItem('dms_boxes', JSON.stringify(boxes)); localStorage.setItem('dms_settings', JSON.stringify(settings)); }
-    function load(){ try{ if(localStorage.getItem('dms_boxes')) boxes = JSON.parse(localStorage.getItem('dms_boxes')); if(localStorage.getItem('dms_settings')) settings = {...settings, ...JSON.parse(localStorage.getItem('dms_settings'))}; }catch(e){} }
+    // ========= الحفظ =========
+    function save(){
+      localStorage.setItem('dms_boxes', JSON.stringify(boxes));
+      localStorage.setItem('dms_settings', JSON.stringify(settings));
+    }
+    function load(){
+      try{
+        if(localStorage.getItem('dms_boxes')) boxes = JSON.parse(localStorage.getItem('dms_boxes'));
+        if(localStorage.getItem('dms_settings')) settings = {...settings, ...JSON.parse(localStorage.getItem('dms_settings'))};
+      }catch(e){}
+    }
 
-    numBoxesInput.oninput = () => { settings.numBoxes = numBoxesInput.value; numBoxesValue.textContent = numBoxesInput.value; updateGrid(); save(); };
+    numBoxesInput.oninput = () => {
+      settings.numBoxes = parseInt(numBoxesInput.value, 10) || 12;
+      numBoxesValue.textContent = settings.numBoxes;
+      updateGrid(); save();
+    };
     columnsSelect.onchange = () => { settings.columns = columnsSelect.value; updateGrid(); save(); };
-    boxSizeSelect.onchange = () => { settings.boxSize = boxSizeSelect.value; updateGrid(); save(); };
+    boxSizeSelect.onchange  = () => { settings.boxSize  = boxSizeSelect.value; updateGrid(); save(); };
     showBackCheckbox.onchange = () => { settings.showBack = showBackCheckbox.checked; updateGrid(); save(); };
     document.getElementById('resetBtn').onclick = () => { boxes=[]; updateGrid(); save(); };
     window.addEventListener('resize', () => { requestAnimationFrame(updateGrid); });
 
-    // ========= VOCAB SELECTOR =========
-    let selectedVocab = new Set();
-
-    document.getElementById('selectVocabBtn').onclick = () => {
-      const modal = document.getElementById('vocabModal');
-      const list = document.getElementById('vocabList');
-      list.innerHTML = '';
-      selectedVocab.clear();
-
-      RAW_ENTRIES.forEach((entry, idx) => {
-        const item = document.createElement('div');
-        item.className = 'vocabItem';
-        item.innerHTML = `
-          <div class="vocabItemWord">${entry.word} <span style="opacity:0.6; font-size:13px;">(${entry.pos})</span></div>
-          <div class="vocabItemAr">${entry.ar} • ${entry.darija}</div>
-        `;
-        item.onclick = () => {
-          item.classList.toggle('selected');
-          if (item.classList.contains('selected')) {
-            selectedVocab.add(idx);
-          } else {
-            selectedVocab.delete(idx);
-          }
-        };
-        list.appendChild(item);
-      });
-
-      modal.classList.add('open');
-    };
-
-    document.getElementById('closeVocabModal').onclick = () => {
-      document.getElementById('vocabModal').classList.remove('open');
-    };
-
-    document.getElementById('fillSelectedBtn').onclick = () => {
-      if (selectedVocab.size === 0) {
-        alert('Bitte wähle mindestens ein Wort aus.');
-        return;
-      }
-
-      const selectedEntries = Array.from(selectedVocab).map(idx => RAW_ENTRIES[idx]);
-      
-      // Reset boxes
-      boxes = [];
-      settings.numBoxes = selectedEntries.length;
-      numBoxesInput.value = selectedEntries.length;
-      numBoxesValue.textContent = selectedEntries.length;
-
-      selectedEntries.forEach(entry => {
-        boxes.push({
-          word: entry.word,
-          example: entry.de_example,
-          posOverride: entry.pos,
-          note: '',
-          arTextManual: entry.ar,
-          darTextManual: entry.darija,
-          arabicExampleManual: '',
-          darijaExampleManual: '',
-          darijaExampleB1: entry.darija_example
-        });
-      });
-
-      save();
-      updateGrid();
-      document.getElementById('vocabModal').classList.remove('open');
-    };
-
     document.getElementById('waBtn').onclick = () => document.getElementById('waPopup').classList.toggle('open');
     document.getElementById('waClose').onclick = () => document.getElementById('waPopup').classList.remove('open');
-    document.getElementById('waSend').onclick = () => { window.open(`https://wa.me/212690010348?text=${encodeURIComponent(document.getElementById('waInput').value || 'Hallo Said!')}`, '_blank'); };
+    document.getElementById('waSend').onclick = () => {
+      window.open(`https://wa.me/212690010348?text=${encodeURIComponent(document.getElementById('waInput').value || 'Hallo Said!')}`, '_blank');
+    };
 
-    // ========= PDF GENERATOR =========
+    // =========================================================
+    // PDF GENERATOR PRO (نفس كودك)
+    // =========================================================
     document.getElementById('downloadPdfBtn').onclick = async () => {
       const loader = document.getElementById('pdfLoading');
       try {
         loader.style.display = 'flex';
-        
+
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF("p", "mm", "a4");
-        
+
         ensureBoxesLength();
-        const cols = Math.min(Math.max(1, settings.columns), 4);
-        
+        const cols = Math.min(Math.max(1, parseInt(settings.columns,10) || 3), 4);
+
         const pageW = 210; const pageH = 297;
         const pad = 12; const gap = 4;
         const innerW = pageW - (2 * pad);
         const boxMmW = (innerW - (gap * (cols - 1))) / cols;
-        const boxMmH = boxMmW * 1.1; 
+        const boxMmH = boxMmW * 1.1;
 
         const pdfStage = document.getElementById('pdfStage');
 
         function buildPage(mode, startIndex, count, headerH){
           pdfStage.innerHTML = "";
-          
+
           const headerArea = document.createElement("div");
           headerArea.className = "pdfHeaderArea";
           headerArea.style.setProperty("--header-h", headerH + "mm");
-          
+
           if (mode === "front" && headerH > 0) {
-            const title = document.createElement("div"); title.className = "pdfBigTitle"; title.textContent = "Deutsch mit Said ist einfacher, als du denkst.";
-            const meta = document.createElement("div"); meta.className = "pdfMeta";
+            const title = document.createElement("div");
+            title.className = "pdfBigTitle";
+            title.textContent = "Deutsch mit Said ist einfacher, als du denkst.";
+
+            const meta = document.createElement("div");
+            meta.className = "pdfMeta";
             const nm = (document.getElementById('name').value || "").trim();
             const dt = (document.getElementById('date').value || "").trim();
             const tp = (document.getElementById('topic').value || "").trim();
             meta.innerHTML = `<span>Name: ${nm||"—"}</span><span>Datum: ${dt||"—"}</span><span>Thema: ${tp||"—"}</span>`;
+
             headerArea.appendChild(title);
             headerArea.appendChild(meta);
           }
           pdfStage.appendChild(headerArea);
 
-          const g = document.createElement("div"); 
+          const g = document.createElement("div");
           g.className = "pdfGrid";
+
           pdfStage.style.setProperty("--pdfCols", String(cols));
           pdfStage.style.setProperty("--pdfBoxW", boxMmW + "mm");
           pdfStage.style.setProperty("--pdfBoxH", boxMmH + "mm");
@@ -591,21 +561,25 @@
               let itemIndex = (mode === "front") ? (r * cols + c) : (r * cols + (cols - 1 - c));
               const card = document.createElement("div");
               card.className = "pdfCard";
-              
+
               if (itemIndex >= pageData.length) {
                 card.classList.add("empty");
               } else {
                 const d = pageData[itemIndex] || {};
-                const inner = document.createElement("div"); inner.className = "pdfCardInner";
+                const inner = document.createElement("div");
+                inner.className = "pdfCardInner";
 
                 if (mode === "front"){
-                  inner.innerHTML = `<div class="pdfWordWrap"><div class="pdfWord">${d.word||""}</div></div><div class="pdfLine"></div><div class="pdfExample">${d.example||""}</div>`;
+                  inner.innerHTML =
+                    `<div class="pdfWordWrap"><div class="pdfWord">${(d.word||"")}</div></div>
+                     <div class="pdfLine"></div>
+                     <div class="pdfExample">${(d.example||"")}</div>`;
                 } else {
                   const b1 = lookupB1(d.word);
                   const arText = d.arTextManual || (b1?b1.ar:"");
                   const darText = d.darTextManual || (b1?b1.darija:"");
                   const darEx = d.darijaExampleManual || d.darijaExampleB1 || "";
-                  
+
                   inner.innerHTML = `
                     <div class="pdfAr">${arText}</div>
                     <div class="pdfDar">${darText}</div>
@@ -622,18 +596,18 @@
           pdfStage.appendChild(g);
         }
 
-        let index = 0; 
+        let index = 0;
         let isFirstPage = true;
 
         while (index < boxes.length) {
           const headerH = isFirstPage ? 20 : 0;
           const innerH = pageH - (2 * pad);
-          const availableGridH = innerH - headerH - 4; 
+          const availableGridH = innerH - headerH - 4;
           const rowsPerPage = Math.max(1, Math.floor(availableGridH / (boxMmH + gap)));
           const perPage = cols * rowsPerPage;
 
           pdfStage.style.zIndex = "1";
-          
+
           buildPage("front", index, perPage, headerH);
           await new Promise(r => setTimeout(r, 100));
           const c1 = await html2canvas(pdfStage, { scale: 3, useCORS: true, backgroundColor: "#ffffff" });
@@ -654,18 +628,23 @@
         pdf.save("Deutsch_mit_Said.pdf");
 
       } catch (e) {
-        alert("Fehler: " + e.message);
+        alert("Fehler: " + (e?.message || e));
       } finally {
         loader.style.display = 'none';
       }
     };
 
+    // Initialize
     window.addEventListener('DOMContentLoaded', () => {
       load();
-      numBoxesInput.value = settings.numBoxes; numBoxesValue.textContent = settings.numBoxes;
-      columnsSelect.value = settings.columns; boxSizeSelect.value = settings.boxSize;
+      numBoxesInput.value = settings.numBoxes;
+      numBoxesValue.textContent = settings.numBoxes;
+      columnsSelect.value = settings.columns;
+      boxSizeSelect.value = settings.boxSize;
       showBackCheckbox.checked = settings.showBack;
-      updateGrid();
+
+      applyI18n();   // ✅ دابا كتخدم وما كتطيحش السكريبت
+      updateGrid();  // ✅ المربعات كيبانو
     });
   </script>
 </body>
