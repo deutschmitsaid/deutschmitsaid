@@ -117,8 +117,26 @@
     /* WhatsApp */
     #waBtn{ position: fixed; right: 18px; bottom: 18px; width: 54px; height: 54px; border-radius: 999px; background: var(--wa); border: none; cursor: pointer; box-shadow: 0 16px 30px rgba(0,0,0,0.35); display:flex; align-items:center; justify-content:center; z-index: 9999; }
     #waBtn svg{ width: 28px; height: 28px; fill: #fff; }
-    #waPopup{ position: fixed; right: 18px; bottom: 86px; width: 320px; max-width: calc(100vw - 36px); border-radius: 16px; overflow:hidden; box-shadow: 0 18px 50px rgba(0,0,0,0.4); background:#fff; z-index: 9999; display:none; }
-    #waPopup.open{ display:block; animation: popUp 0.3s ease; }
+   #waPopup{
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 380px;
+  max-width: 95vw;
+  border-radius: 20px;
+  overflow:hidden;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+  background:#fff;
+  z-index: 9999;
+  display:none;
+}
+
+#waPopup.open{
+  display:block;
+  animation: popUp 0.3s ease;
+}
+
     @keyframes popUp { from { transform: scale(0.8) translateY(20px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
     .waHeader{ background: var(--waDark); padding: 14px; display:flex; gap:12px; align-items:center; color:#fff; }
     .waAvatar{ width: 44px; height: 44px; border-radius: 999px; object-fit: cover; border: 2px solid rgba(255,255,255,0.3); background:#0f172a; }
@@ -237,7 +255,20 @@
       <button class="btn btnPrimary" id="downloadPdfBtn" type="button">PDF</button>
     </div>
 
-    <div id="debug" style="margin-top: 5px;">Viel Erfolg</div>
+    <div id="debug" style="
+  margin: 20px 0;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  background: linear-gradient(90deg,#d7f7e6,#3E7A4B,#004225);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+">
+  Viel Erfolg 🚀
+</div>
+
     <div id="grid"></div>
   </div>
 
