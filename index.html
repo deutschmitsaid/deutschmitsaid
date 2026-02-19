@@ -192,6 +192,45 @@
     .vocabItemName{ font-weight: 900; color: #EAF2EE; font-size: 15px; }
     .vocabItemCount{ font-size: 12px; opacity: 0.7; background: rgba(0,0,0,0.3); padding: 2px 8px; border-radius: 10px; }
 
+.cleanFooter{
+  margin-top:80px;
+  padding:60px 0;
+  border-top:1px solid rgba(255,255,255,0.08);
+  display:flex;
+  justify-content:center;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.25));
+}
+
+.cleanSocial{
+  display:flex;
+  gap:60px;
+}
+
+.cleanIcon{
+  width:110px;
+  height:110px;
+  border-radius:28px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: linear-gradient(180deg, #0F1412, #0B0D0E);
+  border:2px solid #2E5E3A;
+  box-shadow:0 25px 70px rgba(0,0,0,0.7);
+  transition:0.3s ease;
+}
+
+.cleanIcon svg{
+  width:55px;
+  height:55px;
+  fill:#3E7A4B;
+}
+
+.cleanIcon:hover{
+  transform:translateY(-8px) scale(1.05);
+  border-color:#3E7A4B;
+  box-shadow:0 35px 90px rgba(0,66,37,0.9);
+}
+
   </style>
 </head>
 <body>
@@ -3377,4 +3416,28 @@ lektion16: [
     });
   </script>
 </body>
+<footer class="cleanFooter">
+  <div class="cleanSocial">
+
+    <a href="https://www.instagram.com/saidaiadi?igsh=MWVldzB2OXNvMWwzaQ==" 
+       target="_blank" 
+       aria-label="Instagram" 
+       class="cleanIcon">
+      <svg viewBox="0 0 24 24">
+        <path d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5H7zm10 2a3 3 0 013 3v10a3 3 0 01-3 3H7a3 3 0 01-3-3V7a3 3 0 013-3h10zm-5 3.5A5.5 5.5 0 106.5 13 5.51 5.51 0 0012 7.5zm0 2A3.5 3.5 0 118.5 13 3.5 3.5 0 0112 9.5zm4.75-3.75a1.25 1.25 0 11-1.25 1.25 1.25 1.25 0 011.25-1.25z"/>
+      </svg>
+    </a>
+
+    <a href="https://www.tiktok.com/@saidaiadii?is_from_webapp=1&sender_device=pc" 
+       target="_blank" 
+       aria-label="TikTok" 
+       class="cleanIcon">
+      <svg viewBox="0 0 24 24">
+        <path d="M16 3c.55 2.26 2.24 3.95 4.5 4.5v3c-1.56-.04-3.04-.5-4.25-1.3V15a6 6 0 11-6-6c.34 0 .67.03 1 .08v3.02a3 3 0 103 3V3h1z"/>
+      </svg>
+    </a>
+
+  </div>
+</footer>
+
 </html>
