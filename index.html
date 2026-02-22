@@ -607,7 +607,7 @@
     ========================================================= */
     @keyframes airdrop-pulse-anim {
       0% { box-shadow: 0 0 0 0 rgba(var(--airdrop-blue-rgb), 0.7); transform: scale(1); }
-      50% { box-shadow: 0 0 0 15px rgba(var(--airdrop-blue-rgb), 0); transform: scale(1.05); }
+      50% { boxhadow: 0 0 0 15px rgba(var(--airdrop-blue-rgb), 0); transform: scale(1.05); }
       100% { box-shadow: 0 0 0 0 rgba(var(--airdrop-blue-rgb), 0); transform: scale(1); }
     }
     .airdrop-pulse { animation: airdrop-pulse-anim 0.6s ease-out; border-color: var(--airdrop-blue) !important; }
@@ -3703,7 +3703,7 @@ lektion16: [
     }
 
     // ======================
-    // ✅ SPEECH (FIXED CLEAR AUDIO ON iPhone/Android)
+    // ✅ SPEECH
     // ======================
     const TTS = {
       voices: [],
@@ -3802,7 +3802,7 @@ lektion16: [
       return out.filter(Boolean);
     }
 
-    // ✅ speakGerman (RATE ثابت 0.96)  — تعديل
+    // ✅ speakGerman (RATE ثابت 0.96)
     function speakGerman(text, opts = {}){
       const t = cleanSpeakText(text);
       if(!t || !window.speechSynthesis) return;
@@ -3812,7 +3812,7 @@ lektion16: [
       ttsRefreshVoices();
 
       const voice = pickBestGermanVoice();
-      const rate = 0.96; // ✅ تعديل
+      const rate = 0.96;
       const pitch = (opts.pitch ?? 1.00);
       const volume = (opts.volume ?? 1.0);
       const chunks = chunkTextForTTS(t, 170);
@@ -3847,47 +3847,6 @@ lektion16: [
       speakNext();
     }
 
-    // ✅ speakGermanSequence (تعديل نهائي للمفرد + الجمع) — تعديل
-    function speakGermanSequence(texts, opts = {}) {
-      if (!window.speechSynthesis) return;
-
-      const arr = (texts || [])
-        .map(t => cleanSpeakText(t))
-        .filter(Boolean);
-
-      if (!arr.length) return;
-
-      ttsPrimeOnce();
-      ttsStop();
-      ttsRefreshVoices();
-
-      const voice = pickBestGermanVoice();
-      const rate  = (opts.rate ?? 0.96);  // ✅ تعديل
-      const pitch = (opts.pitch ?? 1.0);
-      const volume = (opts.volume ?? 1);
-      const gapMs = (opts.gapMs ?? 350);  // ✅ تعديل
-
-      let index = 0;
-
-      function speakNext() {
-        if (index >= arr.length) return;
-
-        const u = new SpeechSynthesisUtterance(arr[index]);
-        u.lang = "de-DE";
-        u.rate = rate;
-        u.pitch = pitch;
-        u.volume = volume;
-        if (voice) u.voice = voice;
-
-        u.onend = () => { index++; setTimeout(speakNext, gapMs); };
-        u.onerror = () => { index++; setTimeout(speakNext, gapMs); };
-
-        window.speechSynthesis.speak(u);
-      }
-
-      speakNext();
-    }
-
     function stripParentheses(s){
       return String(s || '').replace(/\([^)]*\)/g, '').replace(/\s+/g,' ').trim();
     }
@@ -3915,6 +3874,7 @@ lektion16: [
       return { article, base, plural, isNoun: !!article };
     }
 
+    // ✅ buildSpeakTextsFromEntry (نزيد die فالجمع و نرجعو list)
     function buildSpeakTextsFromEntry(entry){
       const w = entry && entry.word ? entry.word : '';
       const parsed = parseNounEntry(w);
@@ -3923,10 +3883,77 @@ lektion16: [
         return cleaned ? [cleaned] : [];
       }
       const singular = (parsed.article + ' ' + parsed.base).trim();
+
+      let pluralText = '';
+      if (parsed.plural){
+        pluralText = String(parsed.plural).trim();
+        if (!/^(der|die|das)\s+/i.test(pluralText)) {
+          pluralText = 'die ' + pluralText;
+        }
+      }
+
       const texts = [];
       if (singular) texts.push(singular);
-      if (parsed.plural) texts.push(parsed.plural);
+      if (pluralText) texts.push(pluralText);
       return texts;
+    }
+
+    // ✅ speakGermanSequence مع تفرقة iOS/PC
+    function speakGermanSequence(texts, opts = {}) {
+      if (!window.speechSynthesis) return;
+
+      const arr = (texts || []).map(t => cleanSpeakText(t)).filter(Boolean);
+      if (!arr.length) return;
+
+      ttsPrimeOnce();
+      ttsStop();
+      ttsRefreshVoices();
+
+      const voice  = pickBestGermanVoice();
+      const rate   = (opts.rate ?? 0.96);
+      const pitch  = (opts.pitch ?? 1.0);
+      const volume = (opts.volume ?? 1);
+
+      // ✅ iOS: نخلي المفرد+الجمع فـ utterance وحدة باش ما يحبسش من بعد الأولى
+      if (TTS.isIOS) {
+        const joined = arr.join('. ');
+        const u = new SpeechSynthesisUtterance(joined);
+        u.lang = "de-DE";
+        u.rate = rate;
+        u.pitch = pitch;
+        u.volume = volume;
+        if (voice) u.voice = voice;
+
+        try { window.speechSynthesis.resume(); } catch(e) {}
+
+        setTimeout(() => {
+          try { window.speechSynthesis.speak(u); } catch(e) {}
+        }, 80);
+
+        return;
+      }
+
+      // ✅ PC/Android: chaining عادي
+      const gapMs = (opts.gapMs ?? 350);
+      let index = 0;
+
+      function speakNext() {
+        if (index >= arr.length) return;
+
+        const u = new SpeechSynthesisUtterance(arr[index]);
+        u.lang = "de-DE";
+        u.rate = rate;
+        u.pitch = pitch;
+        u.volume = volume;
+        if (voice) u.voice = voice;
+
+        u.onend = () => { index++; setTimeout(speakNext, gapMs); };
+        u.onerror = () => { index++; setTimeout(speakNext, gapMs); };
+
+        window.speechSynthesis.speak(u);
+      }
+
+      speakNext();
     }
 
     // ======================
@@ -3998,7 +4025,6 @@ lektion16: [
       wordTA.value = data.word;
       wordTA.rows=2;
 
-      // ✅ Speaker Button (WORD)
       const speakBtn = document.createElement('button');
       speakBtn.className = 'speakBtn';
       speakBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>`;
@@ -4009,12 +4035,12 @@ lektion16: [
         if (res && res.entry){
           const speakTexts = buildSpeakTextsFromEntry(res.entry);
           if (speakTexts.length){
-            speakGermanSequence(speakTexts, { rate: 0.96, gapMs: 350 }); // ✅ تعديل
+            speakGermanSequence(speakTexts, { rate: 0.96, gapMs: 350 });
             return;
           }
         }
         const cleaned = stripParentheses(String(wordTA.value || '')).split(',')[0].trim();
-        speakGerman(cleaned, { rate: 0.96 }); // ✅ تعديل
+        speakGerman(cleaned, { rate: 0.96 });
       };
 
       wordWrap.appendChild(wordTA);
@@ -4035,7 +4061,6 @@ lektion16: [
       exLabel.className = 'exampleLabel';
       exLabel.textContent = 'Beispiel';
 
-      // ✅ Speaker Button (EXAMPLE)
       const exSpeakBtn = document.createElement('button');
       exSpeakBtn.className = 'miniSpeakBtn';
       exSpeakBtn.title = 'Beispiel anhören';
@@ -4049,7 +4074,7 @@ lektion16: [
       exSpeakBtn.onclick = (e) => {
         e.stopPropagation();
         hapticTap(10);
-        speakGerman(exTA.value, { rate: 0.96, gapMs: 120 }); // ✅ تعديل
+        speakGerman(exTA.value, { rate: 0.96, gapMs: 120 });
       };
 
       leftGroup.appendChild(exLabel);
@@ -4064,7 +4089,6 @@ lektion16: [
 
       exHeader.appendChild(leftGroup);
       exHeader.appendChild(autoBtn);
-
       exWrap.appendChild(exHeader);
       exWrap.appendChild(autoMsg);
       exWrap.appendChild(exTA);
@@ -4072,7 +4096,6 @@ lektion16: [
       front.appendChild(wordWrap);
       front.appendChild(exWrap);
 
-      // BACK
       const back = document.createElement('div');
       back.className = 'flip-side flip-back';
 
@@ -4158,7 +4181,6 @@ lektion16: [
         [wordTA, exTA, arCenter, darSide, arExTA, darExTA, noteTA].forEach(t => autoFitTextarea(t));
       }
 
-      // ✅ SMART AUTOMATIK (NO SOUND)
       autoBtn.onclick = (e) => {
         e.stopPropagation();
         hapticTap(10);
@@ -4258,9 +4280,7 @@ lektion16: [
       window.open(`https://wa.me/212690010348?text=${encodeURIComponent(document.getElementById('waInput').value || 'Hallo Said!')}`, '_blank');
     };
 
-    // =========================================================
-    // ✅ 3. CREATIVE WORTSCHATZ LOGIC (NO SOUND)
-    // =========================================================
+    // CREATIVE Hub
     function triggerHaptic(pattern = [10, 30, 10]) { if (navigator.vibrate) navigator.vibrate(pattern); }
 
     function fireConfetti() {
@@ -4375,9 +4395,7 @@ lektion16: [
       if(e.target.id === 'vocabHub') document.getElementById('vocabHub').classList.remove('open');
     };
 
-    // =========================================================
-    // PDF GENERATOR (MOBILE-OPTIMIZED + ROBUST)  — تعديل
-    // =========================================================
+    // PDF
     document.getElementById('downloadPdfBtn').onclick = async () => {
       const loader = document.getElementById('pdfLoading');
       const progress = document.getElementById('pdfProgress');
@@ -4395,8 +4413,6 @@ lektion16: [
 
         const cols = Math.min(Math.max(1, parseInt(settings.columns,10) || 3), 4);
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
-        // ✅ تعديل: iPhone scale
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
         const canvasScale = isIOS ? 1.7 : (isMobile ? 2 : 3);
 
@@ -4420,8 +4436,6 @@ lektion16: [
           if (mode === "front" && headerH > 0) {
             const title = document.createElement("div");
             title.className = "pdfBigTitle";
-
-            // ✅ تعديل: عنوان احترافي
             title.textContent = "Deutsch mit Said – Professionelles Vokabelblatt";
             title.style.fontSize = "22px";
             title.style.letterSpacing = "1px";
@@ -4506,18 +4520,15 @@ lektion16: [
 
           pdfStage.style.zIndex = "1";
 
-          // progress (front+back)
           step++;
           progressFill.style.width = Math.min(100, Math.round((step / (Math.ceil(boxes.length/perPage) * 2)) * 100)) + '%';
 
-          // FRONT
           buildPage("front", index, perPage, headerH);
           await new Promise(r => setTimeout(r, 40));
           const c1 = await html2canvas(pdfStage, { scale: canvasScale, useCORS: true, backgroundColor: "#ffffff", logging: false });
           if(!isFirstPage) pdf.addPage();
           pdf.addImage(c1.toDataURL("image/png"), "PNG", 0, 0, 210, 297);
 
-          // BACK
           pdf.addPage();
           step++;
           progressFill.style.width = Math.min(100, Math.round((step / (Math.ceil(boxes.length/perPage) * 2)) * 100)) + '%';
@@ -4535,7 +4546,6 @@ lektion16: [
         progress.classList.remove('active');
         progress.style.display = 'none';
 
-        // ✅ تعديل: اسم الملف فيه تاريخ
         const today = new Date().toISOString().split('T')[0];
         pdf.save("Deutsch_mit_Said_" + today + ".pdf");
 
