@@ -555,6 +555,7 @@
     // ================================================================================================
     const WORTSCHATZ_DATA = {
       
+      
       "Lektion9": [
       // ===== Feste / Bräuche (احتفالات / تقاليد) =====
        { word:"der Ball, -e", pos:"N", ar:"حفلة راقصة", darija:"حفلة ديال الشطيح", de_example:"Wir gehen heute Abend auf einen Ball.", darija_example:"غادين لواحد الحفلة ديال الشطيح هاد الليلة." },
@@ -3308,11 +3309,11 @@ lektion16: [
         out.add(stripped.replace(/[\s-]/g,''));
       }
 
-      const simpleUml = base.replace(/ae/g,'a').replace(/oe/g,'o').replace(/ue/g,'u');
+      const simpleUml = base.replace(/ae/g,'a').replace(/oe/g,'o').replace(/ü/g,'u');
       out.add(simpleUml);
       out.add(simpleUml.replace(/[\s-]/g,''));
 
-      const simpleUml2 = stripped.replace(/ae/g,'a').replace(/oe/g,'o').replace(/ue/g,'u');
+      const simpleUml2 = stripped.replace(/ae/g,'a').replace(/oe/g,'o').replace(/ü/g,'u');
       if(simpleUml2 && simpleUml2.length >= 3){
         out.add(simpleUml2);
         out.add(simpleUml2.replace(/[\s-]/g,''));
@@ -3381,7 +3382,10 @@ lektion16: [
       const raw = String(userInput || '').trim();
       if(!raw) return null;
 
-      const n = normalizeWord(raw);
+      // When looking up, temporarily remove the " ... plus Akkusativ/Dativ" display format
+      const cleanedInputForLookup = raw.replace(/\s*\.\.\.\s*([a-zäöüÄÖÜß]+)\s*plus\s*(Akkusativ|Dativ)$/i, ' $1 + $2').trim();
+
+      const n = normalizeWord(cleanedInputForLookup);
       const variants = generateVariants(n);
 
       for(const v of variants){
@@ -3546,7 +3550,9 @@ lektion16: [
       const parsed = parseNounEntry(w);
 
       if (!parsed.isNoun){
-        const cleaned = stripParentheses(String(w || '')).split(',')[0].trim();
+        let cleaned = stripParentheses(String(w || '')).split(',')[0].trim();
+        // ✅ Remove "+ A" or "+ D" suffix for speaking verbs
+        cleaned = cleaned.replace(/\s*\+\s*[AD]$/i, ''); 
         return cleaned ? [cleaned] : [];
       }
 
@@ -3555,6 +3561,37 @@ lektion16: [
       if (singular) texts.push(singular);
       if (parsed.plural) texts.push(parsed.plural);
       return texts;
+    }
+
+    // =========================================================
+    // ✅ NEW: Function to format verb prepositions for display
+    // =========================================================
+    function formatVerbPreposition(word, pos) {
+      if (!word || String(pos).toUpperCase() !== 'V') {
+        return word; // Only format verbs
+      }
+
+      // First, strip common parenthetical notes that shouldn't be part of the core format
+      let cleanedWord = word.replace(/\s*\([^)]*\)/g, '').trim();
+
+      // Regex to match "verb parts preposition + A/D"
+      // Example: "danken für + A" or "sich freuen über + D"
+      // Group 1: The verb part (e.g., "danken", "sich freuen")
+      // Group 2: The preposition (e.g., "für", "über")
+      // Group 3: The case (A or D)
+      const match = cleanedWord.match(/^(.+?)\s+([a-zäöüÄÖÜß]+)\s*\+\s*([AD])$/);
+
+      if (match) {
+        const verbPart = match[1].trim();
+        const preposition = match[2].trim();
+        const caseType = match[3].trim();
+
+        const caseText = (caseType === 'A') ? 'plus Akkusativ' : 'plus Dativ';
+        return `${verbPart} ... ${preposition} ${caseText}`;
+      }
+
+      // If not a prepositional verb in the expected format, return original word
+      return word;
     }
 
     // ======================
@@ -3610,7 +3647,13 @@ lektion16: [
 
       const front = document.createElement('div'); front.className = 'flip-side flip-front';
       const wordWrap = document.createElement('div'); wordWrap.className = 'frontWordWrap';
-      const wordTA = document.createElement('textarea'); wordTA.className = 'wordInput'; wordTA.placeholder = 'Wort'; wordTA.value = data.word; wordTA.rows=2;
+      const wordTA = document.createElement('textarea'); wordTA.className = 'wordInput'; wordTA.placeholder = 'Wort'; wordTA.rows=2;
+
+      // Determine initial position for display formatting
+      const b1OnLoad = lookupSmart(data.word)?.entry; 
+      const initialPos = data.posOverride || (b1OnLoad ? b1OnLoad.pos : '');
+      wordTA.value = formatVerbPreposition(data.word, initialPos);
+
 
       // ✅ Speaker Button (WORD) — reads singular + plural if noun
       const speakBtn = document.createElement('button');
@@ -3620,7 +3663,8 @@ lektion16: [
         e.stopPropagation();
         hapticTap(10);
 
-        const res = lookupSmart(wordTA.value);
+        // Perform lookup on the raw stored word, not the formatted display
+        const res = lookupSmart(data.word); 
         if (res && res.entry){
           const speakTexts = buildSpeakTextsFromEntry(res.entry);
           if (speakTexts.length){
@@ -3628,7 +3672,8 @@ lektion16: [
             return;
           }
         }
-        const cleaned = stripParentheses(String(wordTA.value || '')).split(',')[0].trim();
+        // Fallback: if no entry found, speak the currently displayed word (stripped of format elements)
+        const cleaned = stripParentheses(String(wordTA.value || '')).split(',')[0].trim().replace(/\s*\.\.\.\s*([a-zäöüÄÖÜß]+)\s*plus\s*(Akkusativ|Dativ)$/i, '');
         speakGerman(cleaned, { rate: 0.85 });
       };
 
@@ -3693,10 +3738,16 @@ lektion16: [
       back.appendChild(posBadge); back.appendChild(topRow); back.appendChild(noteWrap);
 
       function render(){
-        const res = lookupSmart(wordTA.value);
+        // Lookup based on the raw stored word, not the potentially formatted wordTA.value
+        const res = lookupSmart(data.word); 
         const b1 = res ? res.entry : null;
 
-        posBadge.textContent = data.posOverride || (b1?b1.pos:'N/V/A');
+        const currentPosForDisplay = data.posOverride || (b1 ? b1.pos : '');
+        posBadge.textContent = currentPosForDisplay || 'N/V/A';
+        
+        // Always display the formatted word in the textarea
+        wordTA.value = formatVerbPreposition(data.word, currentPosForDisplay);
+
         arCenter.value = data.arTextManual || (b1?b1.ar:'');
         darSide.value = data.darTextManual || (b1?b1.darija:'');
 
@@ -3719,6 +3770,7 @@ lektion16: [
         flashPulse(box);
         startTransferBar(900);
 
+        // Lookup using the current raw content of the wordTA, before formatting it for display
         const res = lookupSmart(wordTA.value);
 
         if(!res){
@@ -3731,16 +3783,13 @@ lektion16: [
         const pct = Math.round((res.confidence || 0.9) * 100);
         autoMsg.textContent = `✅ ${pct}%`;
 
+        // Update stored data with the exact dictionary form from b1
+        data.word = b1.word; 
         data.posOverride = b1.pos;
         data.example = b1.de_example;
-        exTA.value = b1.de_example;
-        data.darijaExampleB1 = b1.darija_example;
+        data.darijaExampleB1 = b1.darija_example; // Store auto-generated Darija example
 
-        // ✅ Auto-correct visible word to exact dictionary form
-        data.word = b1.word;
-        wordTA.value = b1.word;
-
-        render();
+        render(); // Re-render to show the formatted word
         save();
         endTransferBar();
       };
@@ -3748,7 +3797,19 @@ lektion16: [
       posBadge.onclick = (e) => { e.stopPropagation(); data.posOverride = data.posOverride==='V'?'N':data.posOverride==='N'?'A':'V'; render(); save(); };
 
       const binds = [ [wordTA,'word'], [exTA,'example'], [arCenter,'arTextManual'], [darSide,'darTextManual'], [arExTA,'arabicExampleManual'], [darExTA,'darijaExampleManual'], [noteTA,'note'] ];
-      binds.forEach(([el, key]) => { el.oninput = () => { data[key] = el.value; autoFitTextarea(el); save(); }; });
+      binds.forEach(([el, key]) => { 
+        el.oninput = () => { 
+          data[key] = el.value; 
+          autoFitTextarea(el); 
+          save(); 
+          // If the word input is changed, re-render to apply verb formatting IF it's a verb
+          if (key === 'word') {
+            const currentPos = data.posOverride || (lookupSmart(data.word)?.entry?.pos || '');
+            wordTA.value = formatVerbPreposition(data.word, currentPos);
+            autoFitTextarea(wordTA); // Ensure it refits after formatting
+          }
+        }; 
+      });
 
       box.onclick = (e) => { if(!['TEXTAREA','INPUT','BUTTON'].includes(e.target.tagName)) flip.classList.toggle('flipped'); };
       setTimeout(render, 10);
@@ -3988,7 +4049,12 @@ lektion16: [
                 const inner = document.createElement("div"); inner.className = "pdfCardInner";
 
                 if (mode === "front"){
-                  inner.innerHTML = `<div class="pdfWordWrap"><div class="pdfWord">${d.word||""}</div></div><div class="pdfLine"></div><div class="pdfExample">${d.example||""}</div>`;
+                  // Determine position for PDF display formatting
+                  const b1ForPdf = lookupSmart(d.word)?.entry; 
+                  const posForPdf = d.posOverride || (b1ForPdf ? b1ForPdf.pos : '');
+                  const displayedWord = formatVerbPreposition(d.word, posForPdf);
+
+                  inner.innerHTML = `<div class="pdfWordWrap"><div class="pdfWord">${displayedWord||""}</div></div><div class="pdfLine"></div><div class="pdfExample">${d.example||""}</div>`;
                 } else {
                   const res = lookupSmart(d.word);
                   const b1 = res ? res.entry : null;
@@ -4025,14 +4091,14 @@ lektion16: [
           pdfStage.style.zIndex = "1";
 
           buildPage("front", index, perPage, headerH);
-          await new Promise(r => setTimeout(r, 100));
+          await new Promise(r => setTimeout(r, 100)); // Small delay for DOM to render
           const c1 = await html2canvas(pdfStage, { scale: 4, useCORS: true, backgroundColor: "#ffffff" }); // ✅ sharper
           if(!isFirstPage) pdf.addPage();
           pdf.addImage(c1.toDataURL("image/png"), "PNG", 0, 0, 210, 297);
 
           pdf.addPage();
           buildPage("back", index, perPage, headerH);
-          await new Promise(r => setTimeout(r, 100));
+          await new Promise(r => setTimeout(r, 100)); // Small delay for DOM to render
           const c2 = await html2canvas(pdfStage, { scale: 4, useCORS: true, backgroundColor: "#ffffff" }); // ✅ sharper
           pdf.addImage(c2.toDataURL("image/png"), "PNG", 0, 0, 210, 297);
 
