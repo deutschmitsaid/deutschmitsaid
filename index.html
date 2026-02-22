@@ -4,12 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>Deutsch mit Said – Vokabelblatt Pro</title>
-<!-- Favicon -->
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-96x96[1].png">
-<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16[1].png">
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon[1].png">
-<link rel="icon" type="image/x-icon" href="favicon[1].ico">
-<link rel="manifest" href="site[1].webmanifest">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-96x96[1].png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16[1].png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon[1].png">
+  <link rel="icon" type="image/x-icon" href="favicon[1].ico">
+  <link rel="manifest" href="site[1].webmanifest">
 
   <!-- ✅ jsPDF & html2canvas -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -34,6 +35,7 @@
       --accent: #3b82f6;
       --airdrop-blue: #007AFF;
       --airdrop-green: #34C759;
+      --airdrop-blue-rgb: 0, 122, 255;
     }
 
     *{ box-sizing:border-box; }
@@ -44,7 +46,7 @@
       overflow-x:hidden; -webkit-text-size-adjust: 100%;
     }
 
-    /* Aura effect */
+    /* Aura effect - Subtle background movement */
     body::before{
       content:""; position: fixed; inset: -35%; z-index: -2; pointer-events:none;
       background:
@@ -71,7 +73,7 @@
     .topActions{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end; flex: 1 1 300px; }
     .pill{ display:flex; align-items:center; gap:10px; padding:10px; border-radius: 999px; background: rgba(0,0,0,0.16); border: 1px solid rgba(255,255,255,0.12); flex-wrap: wrap; width: 100%; }
     .pill input{ padding:10px 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.14); outline:none; background: rgba(0,0,0,0.24); color: var(--ink); font-size: 14px; font-weight: 800; flex: 1 1 120px; min-width: 80px; }
-    
+
     /* ---------- STICKY CONTROLS ---------- */
     #controls{
       position: sticky; top: 10px; z-index: 100;
@@ -84,11 +86,11 @@
     .control-group label{ font-weight: 900; font-size: 14px; color: rgba(234,242,238,0.92); }
     select, input[type="range"]{ padding:8px 12px; border:1px solid rgba(255,255,255,0.14); border-radius: 12px; background: rgba(0,0,0,0.3); color: var(--ink); font-weight: 900; outline: none; }
 
-    .btn{ border: none; cursor: pointer; padding:10px 16px; border-radius: 999px; font-weight: 900; transition: all .15s ease; display:flex; align-items:center; justify-content:center; gap:8px; white-space:nowrap; color: var(--ink); font-size: 14px; }
+    .btn{ border: none; cursor: pointer; padding:10px 16px; border-radius: 999px; font-weight: 900; transition: all .15s ease; display:flex; align-items:center; justify-content:center; gap:8px; white-space:nowrap; color: var(--ink); font-size: 14px; position: relative; overflow: hidden; }
     .btn:active{ transform: scale(0.95); }
     .btnPrimary{ background: linear-gradient(90deg, var(--brg), var(--moss2)); color:#EAF2EE; box-shadow: 0 8px 20px rgba(0,66,37,0.35); }
     .btnDanger{ background: linear-gradient(90deg, #9b2222, #b45309); color:#fff; box-shadow: 0 8px 20px rgba(0,0,0,0.35); }
-    
+
     /* ✅ Button Wortschatz */
     .btnVocab{ background: var(--blue-grad); color: white; box-shadow: 0 8px 20px rgba(37,99,235,0.4); border: 1px solid rgba(255,255,255,0.2); }
     .btnVocab:hover { box-shadow: 0 12px 30px rgba(37,99,235,0.6); transform: translateY(-1px); }
@@ -104,11 +106,48 @@
     textarea, input { font-size: 16px !important; }
 
     /* FRONT SIDE */
-    .frontWordWrap{ flex: 1; display:flex; align-items:center; justify-content:center; min-height: 45%; }
-    .wordInput{ width:100%; border:none; outline:none; resize:none; background:transparent; color: var(--ink); font-weight: 900; text-align:center; overflow:hidden; text-shadow: 0 0 15px rgba(46,94,58,0.3); }
+    .frontWordWrap{ flex: 1; display:flex; align-items:center; justify-content:center; min-height: 45%; position: relative; }
+
+    /* ✅ Speaker Buttons */
+    .speakBtn{
+      position: absolute;
+      right: 10px; top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.1);
+      border: none;
+      border-radius: 50%;
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: 0.2s;
+      color: var(--ink);
+      z-index: 10;
+    }
+    .speakBtn:hover{ background: rgba(255,255,255,0.25); transform: translateY(-50%) scale(1.1); }
+    .speakBtn svg{ width: 16px; height: 16px; fill: currentColor; }
+
+    /* ✅ Small speaker near Beispiel */
+    .miniSpeakBtn{
+      border:none;
+      cursor:pointer;
+      width: 28px; height: 28px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      display:flex; align-items:center; justify-content:center;
+      color: rgba(234,242,238,0.92);
+      transition: .2s;
+    }
+    .miniSpeakBtn:hover{ background: rgba(255,255,255,0.18); transform: translateY(-1px) scale(1.05); }
+    .miniSpeakBtn:active{ transform: scale(0.95); }
+    .miniSpeakBtn svg{ width: 14px; height: 14px; fill: currentColor; }
+
+    .wordInput{ width:100%; border:none; outline:none; resize:none; background:transparent; color: var(--ink); font-weight: 900; text-align:center; overflow:hidden; text-shadow: 0 0 15px rgba(46,94,58,0.3); padding-right: 40px; }
+
     .exampleWrap{ border-top: 1px solid rgba(255,255,255,0.10); padding-top: 8px; flex: 1.2; display:flex; flex-direction:column; gap:6px; }
     .exampleHeader{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
     .exampleLabel{ font-size:12px; color: rgba(234,242,238,0.65); font-weight:900; direction:ltr; }
+
     .autoBtn{ border:none; cursor:pointer; padding:6px 10px; border-radius: 999px; font-weight: 900; font-size: 11px; color: #e9fff4; background: linear-gradient(90deg, rgba(0,66,37,0.92), rgba(62,122,75,0.92)); border: 1px solid rgba(255,255,255,0.12); box-shadow: 0 6px 15px rgba(0,0,0,0.3); }
     .autoBtn:active{ transform: scale(0.95); }
     .autoMsg{ font-size: 11px; font-weight: 900; color: rgba(234,242,238,0.62); min-height: 14px; direction:ltr; text-align:left; }
@@ -126,27 +165,25 @@
     /* WhatsApp */
     #waBtn{ position: fixed; right: 18px; bottom: 18px; width: 54px; height: 54px; border-radius: 999px; background: var(--wa); border: none; cursor: pointer; box-shadow: 0 16px 30px rgba(0,0,0,0.35); display:flex; align-items:center; justify-content:center; z-index: 9999; }
     #waBtn svg{ width: 28px; height: 28px; fill: #fff; }
-   #waPopup{
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 380px;
-  max-width: 95vw;
-  border-radius: 20px;
-  overflow:hidden;
-  box-shadow: 0 30px 80px rgba(0,0,0,0.7);
-  background:#fff;
-  z-index: 9999;
-  display:none;
-}
-
-#waPopup.open{
-  display:block;
-  animation: popUp 0.3s ease;
-}
-
-    @keyframes popUp { from { transform: scale(0.8) translateY(20px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+    #waPopup{
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 380px;
+      max-width: 95vw;
+      border-radius: 20px;
+      overflow:hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+      background:#fff;
+      z-index: 9999;
+      display:none;
+    }
+    #waPopup.open{
+      display:block;
+      animation: popUp 0.3s ease;
+    }
+    @keyframes popUp { from { transform: translate(-50%, -50%) scale(0.8) translateY(20px); opacity: 0; } to { transform: translate(-50%, -50%) scale(1) translateY(0); opacity: 1; } }
     .waHeader{ background: var(--waDark); padding: 14px; display:flex; gap:12px; align-items:center; color:#fff; }
     .waAvatar{ width: 44px; height: 44px; border-radius: 999px; object-fit: cover; border: 2px solid rgba(255,255,255,0.3); background:#0f172a; }
     .waTitle{ font-weight: 900; font-size: 15px; }
@@ -188,30 +225,29 @@
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
     /* ✅ CREATIVE HUB (Wortschatz) */
-    #vocabHub{ 
-      position: fixed; inset: 0; 
-      background: rgba(11, 13, 14, 0.95); 
-      z-index: 10000; 
-      display: none; 
-      align-items: center; 
-      justify-content: center; 
-      backdrop-filter: blur(10px); 
+    #vocabHub{
+      position: fixed; inset: 0;
+      background: rgba(11, 13, 14, 0.95);
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(10px);
     }
     #vocabHub.open{ display: flex; }
-    
-    .hubPanel{ 
-      background: linear-gradient(180deg, #1a1d1b, #0f1412); 
-      border-radius: 24px; 
-      max-width: 800px; 
-      width: 95%; 
-      max-height: 80vh; 
-      overflow-y: auto; 
-      padding: 30px; 
-      box-shadow: 0 0 100px rgba(37,99,235,0.2); 
-      border: 1px solid rgba(255,255,255,0.1); 
+
+    .hubPanel{
+      background: linear-gradient(180deg, #1a1d1b, #0f1412);
+      border-radius: 24px;
+      max-width: 800px;
+      width: 95%;
+      max-height: 80vh;
+      overflow-y: auto;
+      padding: 30px;
+      box-shadow: 0 0 100px rgba(37,99,235,0.2);
+      border: 1px solid rgba(255,255,255,0.1);
       animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    
     @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
     .hubHeader{ display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
@@ -220,29 +256,29 @@
     .hubClose:hover{ background: rgba(255,255,255,0.2); }
 
     .hubGrid{ display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; }
-    
-    .hubCard{ 
-      background: rgba(255,255,255,0.03); 
-      border: 1px solid rgba(255,255,255,0.08); 
-      border-radius: 16px; 
-      padding: 20px; 
-      cursor: pointer; 
-      transition: all 0.3s ease; 
-      display: flex; 
-      flex-direction: column; 
-      align-items: center; 
-      text-align: center; 
-      position: relative; 
+
+    .hubCard{
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
       overflow: hidden;
     }
-    
-    .hubCard:hover{ 
-      background: rgba(37,99,235,0.15); 
-      border-color: var(--accent); 
-      transform: translateY(-5px); 
+
+    .hubCard:hover{
+      background: rgba(37,99,235,0.15);
+      border-color: var(--accent);
+      transform: translateY(-5px);
       box-shadow: 0 10px 30px rgba(37,99,235,0.2);
     }
-    
+
     .hubCard::before{
       content:''; position: absolute; top:0; left:0; width:100%; height:100%;
       background: radial-gradient(circle at center, rgba(255,255,255,0.1), transparent 70%);
@@ -257,12 +293,17 @@
     #loadBarContainer{
       position: fixed; top: 0; left: 0; width: 100%; height: 6px; z-index: 10001; display: none;
     }
-    #loadBar{ 
-      height: 100%; 
-      background: linear-gradient(90deg, var(--airdrop-blue), var(--airdrop-green)); 
-      width: 0%; 
-      transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1); 
+    #loadBar{
+      height: 100%;
+      background: linear-gradient(90deg, var(--airdrop-blue), var(--airdrop-green));
+      width: 0%;
+      transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
       box-shadow: 0 0 15px var(--airdrop-blue);
+    }
+
+    /* ✅ CONFETTI CANVAS */
+    #confettiCanvas{
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 10002;
     }
 
     /* Footer */
@@ -283,16 +324,75 @@
     .cleanIcon svg{ width:55px; height:55px; fill:#3E7A4B; }
     .cleanIcon:hover{ transform:translateY(-8px) scale(1.05); border-color:#3E7A4B; box-shadow:0 35px 90px rgba(0,66,37,0.9); }
 
+    /* =========================================================
+       ✅ AirDrop style (Pulse + Transfer bar with tick)
+       ========================================================= */
+
+    @keyframes airdrop-pulse-anim {
+      0% { box-shadow: 0 0 0 0 rgba(var(--airdrop-blue-rgb), 0.7); transform: scale(1); }
+      50% { box-shadow: 0 0 0 15px rgba(var(--airdrop-blue-rgb), 0); transform: scale(1.05); }
+      100% { box-shadow: 0 0 0 0 rgba(var(--airdrop-blue-rgb), 0); transform: scale(1); }
+    }
+    .airdrop-pulse {
+      animation: airdrop-pulse-anim 0.6s ease-out;
+      border-color: var(--airdrop-blue) !important;
+    }
+
+    #airdrop-transfer-bar {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 4px;
+      background: transparent;
+      z-index: 99999;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    #airdrop-transfer-bar.active { opacity: 1; }
+
+    #airdrop-transfer-fill {
+      height: 100%;
+      width: 0%;
+      background-color: var(--airdrop-blue);
+      box-shadow: 0 0 10px var(--airdrop-blue);
+      transition: width 0.3s ease-out, background-color 0.2s;
+      position: relative;
+    }
+
+    #airdrop-transfer-bar.success #airdrop-transfer-fill {
+      width: 100% !important;
+      background-color: var(--airdrop-green);
+      box-shadow: 0 0 15px var(--airdrop-green);
+    }
+
+    #airdrop-transfer-bar.success #airdrop-transfer-fill::after {
+      content: '✓';
+      position: absolute;
+      right: 10px;
+      top: -8px;
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+      animation: tick-pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes tick-pop {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
   </style>
 </head>
+
 <body>
+  <!-- Confetti Canvas -->
+  <canvas id="confettiCanvas"></canvas>
 
   <!-- Loading PDF -->
   <div id="pdfLoading">
     <div class="spinner"></div>
     <div>PDF wird erstellt...</div>
   </div>
-  
+
   <!-- Loading Bar -->
   <div id="loadBarContainer"><div id="loadBar"></div></div>
 
@@ -341,27 +441,25 @@
           <span data-i18n="back">Rückseite zeigen</span>
         </label>
       </div>
-      
+
       <!-- ✅ Creative Button -->
       <button class="btn btnVocab" id="vocabBtn" type="button">📚 Wortschatz</button>
-      
+
       <button class="btn btnDanger" id="resetBtn" type="button" data-i18n="reset">Leeren</button>
       <button class="btn btnPrimary" id="downloadPdfBtn" type="button">PDF</button>
     </div>
 
     <div id="debug" style="
-  margin: 20px 0;
-  text-align: center;
-  font-size: 22px;
-  font-weight: 900;
-  letter-spacing: 1px;
-  background: linear-gradient(90deg,#d7f7e6,#3E7A4B,#004225);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-">
-  Viel Erfolg 🚀
-</div>
+      margin: 20px 0;
+      text-align: center;
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      background: linear-gradient(90deg,#d7f7e6,#3E7A4B,#004225);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    ">Viel Erfolg 🚀</div>
 
     <div id="grid"></div>
   </div>
@@ -375,9 +473,7 @@
         <div class="hubTitle">Lektion wählen</div>
         <button class="hubClose" id="closeVocabHub">×</button>
       </div>
-      <div class="hubGrid" id="hubGridContainer">
-        <!-- Cards generated by JS -->
-      </div>
+      <div class="hubGrid" id="hubGridContainer"></div>
     </div>
   </div>
 
@@ -405,12 +501,61 @@
       if ((e.ctrlKey || e.metaKey) && ['s','p','c'].includes(k)) e.preventDefault();
     });
 
+    // =========================================================
+    // ✅ AirDrop Helper Module (Haptic + Pulse + Transfer Bar)
+    // ⚠️ IMPORTANT: NO SOUND HERE (sound only when clicking speaker buttons)
+    // =========================================================
+
+    // 1) Haptic (fallback vibrate)
+    function hapticTap(ms = 10) {
+      if (navigator.vibrate) navigator.vibrate(ms);
+    }
+
+    // 2) Visual pulse
+    function flashPulse(el) {
+      if (!el) return;
+      el.classList.remove('airdrop-pulse');
+      void el.offsetWidth;
+      el.classList.add('airdrop-pulse');
+    }
+
+    // 3) Transfer bar (top)
+    let airdropBar = null;
+    function startTransferBar(durationMs = 1200) {
+      if (!airdropBar) {
+        airdropBar = document.createElement('div');
+        airdropBar.id = 'airdrop-transfer-bar';
+        airdropBar.innerHTML = '<div id="airdrop-transfer-fill"></div>';
+        document.body.appendChild(airdropBar);
+      }
+
+      airdropBar.classList.remove('success');
+      const fill = document.getElementById('airdrop-transfer-fill');
+      fill.style.width = '0%';
+      fill.style.transition = 'none';
+
+      airdropBar.classList.add('active');
+
+      requestAnimationFrame(() => {
+        fill.style.transition = `width ${durationMs}ms ease-in-out`;
+        fill.style.width = '100%';
+      });
+    }
+
+    function endTransferBar() {
+      if (!airdropBar) return;
+      airdropBar.classList.add('success');
+      setTimeout(() => {
+        airdropBar.classList.remove('active', 'success');
+      }, 1400);
+    }
+
     // ================================================================================================
     // ✅ 1. WORTSCHATZ DATENBANK (المكان المخصص للدروس)
     // ================================================================================================
     const WORTSCHATZ_DATA = {
-      
-      "Lektion 9": [
+     
+      "Lektion9": [
       // ===== Feste / Bräuche (احتفالات / تقاليد) =====
        { word:"der Ball, -e", pos:"N", ar:"حفلة راقصة", darija:"حفلة ديال الشطيح", de_example:"Wir gehen heute Abend auf einen Ball.", darija_example:"غادين لواحد الحفلة ديال الشطيح هاد الليلة." },
       { word:"der Baum, -e", pos:"N", ar:"شجرة", darija:"شجرة", de_example:"Der Weihnachtsbaum ist schön geschmückt.", darija_example:"شجرة الكريسماس مزوقة زوين." },
@@ -441,7 +586,7 @@
       { word:"der Ostersonntag, -e", pos:"N", ar:"أحد عيد الفصح", darija:"حد ديال عيد الفصح", de_example:"Am Ostersonntag essen wir zusammen.", darija_example:"نهار حد عيد الفصح كناكلو مجموعين." },
       { word:"der Priester, -", pos:"N", ar:"كاهن", darija:"قسيس", de_example:"Der Priester spricht in der Kirche.", darija_example:"القسيس كيهضر فالكنيسة." },
       { word:"das Symbol, -e", pos:"N", ar:"رمز", darija:"رمز", de_example:"Die Taube ist ein Symbol für Frieden.", darija_example:"الحمامة رمز للسلام." },
-      { word:"der Tod, -e", pos:"N", ar:"موت", darija:"موت", de_example:"Der Tod is ein Teil des Lebens.", darija_example:"الموت جزء من الحياة." },
+      { word:"der Tod, -e", pos:"N", ar:"موت", darija:"موت", de_example:"Der Tod ist ein Teil des Lebens.", darija_example:"الموت جزء من الحياة." },
       { word:"die Tradition, -en", pos:"N", ar:"تقليد", darija:"تقليد", de_example:"Das ist eine alte Tradition.", darija_example:"هذا تقليد قديم." },
       { word:"der Wagen, -", pos:"N", ar:"عربة", darija:"كارو / عربة", de_example:"Der Wagen im Karnevalszug ist bunt.", darija_example:"العربة فموكب الكرنفال مزوقة بالألوان." },
       { word:"das Weihnachten, -", pos:"N", ar:"عيد الميلاد", darija:"الكريسماس / بوناني", de_example:"Frohe Weihnachten!", darija_example:"كريسماس سعيد!" },
@@ -567,6 +712,7 @@
       // ===== Fragewort (أداة استفهام) =====
       { word:"wem?", pos:"Fragewort", ar:"لمن؟", darija:"لمن؟", de_example:"Wem gehört dieses Buch?", darija_example:"ديالمن هاد الكتاب؟" }
     ],
+  
   // ================================================================================================
   // ===== Lektion 10: Alles auf einen Blick =====
   // ================================================================================================
@@ -3126,21 +3272,294 @@ lektion16: [
       ],
     };
 
-    // Auto-Lookup Dictionary helper
-    const QAMOS = {};
+    // ================================================================================================
+    // ✅ 1.1 NORMALIZE قوي (يدير: article/plural/umlaut/ß/علامات...)
+    // ================================================================================================
+    function normalizeWord(s){
+      s = String(s || '').trim().toLowerCase();
+      s = s.replace(/^(der|die|das|ein|eine|einen|einem|einer)\s+/i, '');
+      s = s.replace(/[“”„"']/g,'');
+      s = s.replace(/[.,;:!?()[\]{}]/g,' ');
+      s = s.replace(/\s+/g,' ').trim();
+      s = s.replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss');
+      s = s.normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+      return s;
+    }
+
+    const QAMOS = Object.create(null);
+
+    function addKey(key, entry){
+      key = String(key || '').trim();
+      if(!key || key.length < 2) return;
+      QAMOS[key] = entry;
+    }
+
+    function generateVariants(base){
+      const out = new Set();
+      out.add(base);
+      out.add(base.replace(/[\s-]/g,''));
+
+      const stripped = base
+        .replace(/\s+-\w+$/,'')
+        .replace(/\s+-(e|en|er|n|s)$/,'')
+        .replace(/(en|er|e|n|s)$/,'');
+      if(stripped && stripped.length >= 3){
+        out.add(stripped);
+        out.add(stripped.replace(/[\s-]/g,''));
+      }
+
+      const simpleUml = base.replace(/ae/g,'a').replace(/oe/g,'o').replace(/ue/g,'u');
+      out.add(simpleUml);
+      out.add(simpleUml.replace(/[\s-]/g,''));
+
+      const simpleUml2 = stripped.replace(/ae/g,'a').replace(/oe/g,'o').replace(/ue/g,'u');
+      if(simpleUml2 && simpleUml2.length >= 3){
+        out.add(simpleUml2);
+        out.add(simpleUml2.replace(/[\s-]/g,''));
+      }
+
+      const schToCh = base.replace(/sch/g,'ch');
+      out.add(schToCh); out.add(schToCh.replace(/[\s-]/g,''));
+      const chToSch = base.replace(/ch/g,'sch');
+      out.add(chToSch); out.add(chToSch.replace(/[\s-]/g,''));
+
+      out.add(simpleUml.replace(/sch/g,'ch'));
+      out.add(simpleUml.replace(/ch/g,'sch'));
+
+      const eToI = base.replace(/e/g,'i');
+      const iToE = base.replace(/i/g,'e');
+      out.add(eToI); out.add(iToE);
+      out.add(eToI.replace(/[\s-]/g,'')); out.add(iToE.replace(/[\s-]/g,''));
+      out.add(eToI.replace(/sch/g,'ch'));
+      out.add(iToE.replace(/sch/g,'ch'));
+      out.add(eToI.replace(/ch/g,'sch'));
+      out.add(iToE.replace(/ch/g,'sch'));
+
+      out.add(base.replace(/ss/g,'s'));
+      out.add(base.replace(/ss/g,'sz'));
+
+      return [...out].filter(v => v && v.length >= 2);
+    }
+
+    function addToQamos(entry){
+      const base = normalizeWord(entry.word);
+      const variants = generateVariants(base);
+      for(const v of variants) addKey(v, entry);
+      addKey(base.replace(/[\s-]/g,''), entry);
+    }
+
     function buildQamos(){
-      Object.values(WORTSCHATZ_DATA).forEach(list => {
-        list.forEach(e => { QAMOS[normalizeWord(e.word)] = e; });
+      for(const k in QAMOS) delete QAMOS[k];
+      Object.values(WORTSCHATZ_DATA).forEach(list => (list||[]).forEach(entry => addToQamos(entry)));
+    }
+    buildQamos();
+
+    function levenshtein(a, b){
+      a = a || ""; b = b || "";
+      if (a === b) return 0;
+      const al = a.length, bl = b.length;
+      if (al === 0) return bl;
+      if (bl === 0) return al;
+
+      const v0 = new Array(bl + 1);
+      const v1 = new Array(bl + 1);
+      for (let i = 0; i <= bl; i++) v0[i] = i;
+
+      for (let i = 0; i < al; i++){
+        v1[0] = i + 1;
+        const ca = a.charCodeAt(i);
+        for (let j = 0; j < bl; j++){
+          const cost = (ca === b.charCodeAt(j)) ? 0 : 1;
+          v1[j+1] = Math.min(v1[j] + 1, v0[j+1] + 1, v0[j] + cost);
+        }
+        for (let j = 0; j <= bl; j++) v0[j] = v1[j];
+      }
+      return v1[bl];
+    }
+
+    function lookupSmart(userInput){
+      const raw = String(userInput || '').trim();
+      if(!raw) return null;
+
+      const n = normalizeWord(raw);
+      const variants = generateVariants(n);
+
+      for(const v of variants){
+        if(QAMOS[v]) return { entry: QAMOS[v], confidence: 1 };
+      }
+
+      const seen = new Set();
+      const candidates = [];
+      for(const k in QAMOS){
+        const e = QAMOS[k];
+        if(e && !seen.has(e.word)){
+          seen.add(e.word);
+          candidates.push(e);
+        }
+      }
+
+      const target = variants[0].replace(/[\s-]/g,'');
+      const tl = target.length;
+      const maxDist = tl <= 4 ? 1 : (tl <= 7 ? 2 : 3);
+
+      let best = null;
+      let bestScore = -Infinity;
+
+      for(const e of candidates){
+        const keyBase = normalizeWord(e.word).replace(/[\s-]/g,'');
+        if(!keyBase) continue;
+
+        const d = levenshtein(target, keyBase);
+        if(d > maxDist) continue;
+
+        const sim = 1 - (d / Math.max(1, Math.max(keyBase.length, tl)));
+        const bonus = (keyBase.startsWith(target) || target.startsWith(keyBase)) ? 0.12 : 0;
+
+        let vBoost = 0;
+        for(const v of variants.slice(0, 6)){
+          const vc = v.replace(/[\s-]/g,'');
+          const dd = levenshtein(vc, keyBase);
+          const s2 = 1 - (dd / Math.max(1, Math.max(keyBase.length, vc.length)));
+          if(s2 > vBoost) vBoost = s2;
+        }
+
+        const score = sim + bonus + (vBoost * 0.08);
+        if(score > bestScore){
+          bestScore = score;
+          best = e;
+        }
+      }
+
+      if(!best) return null;
+      const confidence = Math.max(0, Math.min(0.98, bestScore));
+      if(confidence < 0.76) return null;
+
+      return { entry: best, confidence };
+    }
+
+    // ======================
+    // ✅ SPEECH HELPERS (SLOW + CLEAR + PLURAL)
+    // ======================
+    let __voices = [];
+    function refreshVoices(){
+      __voices = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
+    }
+    if (window.speechSynthesis){
+      refreshVoices();
+      window.speechSynthesis.onvoiceschanged = refreshVoices;
+    }
+
+    function getGermanVoice(){
+      const voices = __voices || [];
+      // prefer de-DE if exists
+      return voices.find(v => (v.lang || '').toLowerCase() === 'de-de')
+          || voices.find(v => (v.lang || '').toLowerCase().startsWith('de'))
+          || null;
+    }
+
+    function speakGerman(text, opts = {}){
+      const t = String(text || '').trim();
+      if(!t) return;
+
+      if(!window.speechSynthesis) return;
+      window.speechSynthesis.cancel();
+
+      const u = new SpeechSynthesisUtterance(t);
+      u.lang = 'de-DE';
+      u.rate = opts.rate ?? 0.85;   // ✅ slower (clear for learners)
+      u.pitch = opts.pitch ?? 1;
+      u.volume = opts.volume ?? 1;
+
+      const v = getGermanVoice();
+      if (v) u.voice = v;
+
+      window.speechSynthesis.speak(u);
+    }
+
+    function speakGermanSequence(texts, opts = {}){
+      const arr = (texts || []).map(x => String(x || '').trim()).filter(Boolean);
+      if(!arr.length) return;
+
+      if(!window.speechSynthesis) return;
+      window.speechSynthesis.cancel();
+
+      const v = getGermanVoice();
+      const rate = opts.rate ?? 0.85;
+      const pitch = opts.pitch ?? 1;
+      const volume = opts.volume ?? 1;
+      const gapMs = opts.gapMs ?? 180;
+
+      arr.forEach((t, i) => {
+        if (i > 0){
+          // small pause between singular and plural
+          const pause = new SpeechSynthesisUtterance(' ');
+          pause.lang = 'de-DE';
+          pause.rate = 0.6;
+          pause.pitch = 1;
+          pause.volume = 0;
+          window.speechSynthesis.speak(pause);
+        }
+        const u = new SpeechSynthesisUtterance(t);
+        u.lang = 'de-DE';
+        u.rate = rate;
+        u.pitch = pitch;
+        u.volume = volume;
+        if (v) u.voice = v;
+        window.speechSynthesis.speak(u);
       });
     }
-    function normalizeWord(s){ return String(s||'').trim().toLowerCase().replace(/[.,;:!?()"'„""']/g,'').normalize("NFD").replace(/[\u0300-\u036f]/g,""); }
-    buildQamos();
-    function lookupB1(w){ return QAMOS[normalizeWord(w)] || null; }
 
+    function stripParentheses(s){
+      return String(s || '').replace(/\([^)]*\)/g, '').replace(/\s+/g,' ').trim();
+    }
 
-    // ================================================================================================
-    // ✅ 2. APP LOGIC
-    // ================================================================================================
+    function parseNounEntry(wordStr){
+      let raw = stripParentheses(wordStr);
+      raw = raw.replace(/[“”„"]/g,'').trim();
+
+      const m = raw.match(/^(der|die|das)\s+(.+)$/i);
+      const article = m ? m[1].toLowerCase() : '';
+      const rest = m ? m[2] : raw;
+
+      const parts = rest.split(',');
+      const base = stripParentheses(parts[0] || '').trim();
+
+      const pluralInfo = stripParentheses((parts[1] || '')).trim(); // "-e" / "-en" / "-" / "Kinder"
+      let plural = '';
+
+      if (pluralInfo){
+        if (/^[-–—]+$/.test(pluralInfo)) {
+          plural = '';
+        } else if (pluralInfo.startsWith('-')) {
+          const suf = pluralInfo.replace(/^-+/, '').trim();
+          if (suf) plural = base + suf;
+        } else {
+          plural = pluralInfo;
+        }
+      }
+
+      return { article, base, plural, isNoun: !!article };
+    }
+
+    function buildSpeakTextsFromEntry(entry){
+      const w = entry && entry.word ? entry.word : '';
+      const parsed = parseNounEntry(w);
+
+      if (!parsed.isNoun){
+        const cleaned = stripParentheses(String(w || '')).split(',')[0].trim();
+        return cleaned ? [cleaned] : [];
+      }
+
+      const singular = (parsed.article + ' ' + parsed.base).trim();
+      const texts = [];
+      if (singular) texts.push(singular);
+      if (parsed.plural) texts.push(parsed.plural);
+      return texts;
+    }
+
+    // ======================
+    // ✅ APP LOGIC
+    // ======================
     let boxes = [];
     let settings = { numBoxes: 12, columns: 3, boxSize: 'normal', showBack: false };
 
@@ -3151,7 +3570,6 @@ lektion16: [
     const boxSizeSelect = document.getElementById('boxSize');
     const showBackCheckbox = document.getElementById('showBack');
 
-    // Box Sizing
     function applyBoxCssSize(){
       const sizes = { small: { app: '900px', boxH: '220px' }, normal:{ app: '1100px', boxH: '260px' }, large: { app: '1400px', boxH: '310px' } };
       const conf = sizes[settings.boxSize] || sizes.normal;
@@ -3193,21 +3611,69 @@ lektion16: [
       const front = document.createElement('div'); front.className = 'flip-side flip-front';
       const wordWrap = document.createElement('div'); wordWrap.className = 'frontWordWrap';
       const wordTA = document.createElement('textarea'); wordTA.className = 'wordInput'; wordTA.placeholder = 'Wort'; wordTA.value = data.word; wordTA.rows=2;
+
+      // ✅ Speaker Button (WORD) — reads singular + plural if noun
+      const speakBtn = document.createElement('button');
+      speakBtn.className = 'speakBtn';
+      speakBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>`;
+      speakBtn.onclick = (e) => {
+        e.stopPropagation();
+        hapticTap(10);
+
+        const res = lookupSmart(wordTA.value);
+        if (res && res.entry){
+          const speakTexts = buildSpeakTextsFromEntry(res.entry);
+          if (speakTexts.length){
+            speakGermanSequence(speakTexts, { rate: 0.85, gapMs: 180 });
+            return;
+          }
+        }
+        const cleaned = stripParentheses(String(wordTA.value || '')).split(',')[0].trim();
+        speakGerman(cleaned, { rate: 0.85 });
+      };
+
       wordWrap.appendChild(wordTA);
+      wordWrap.appendChild(speakBtn);
 
       const exWrap = document.createElement('div'); exWrap.className = 'exampleWrap';
       const exHeader = document.createElement('div'); exHeader.className = 'exampleHeader';
+
+      // left group: "Beispiel" + speaker button
+      const leftGroup = document.createElement('div');
+      leftGroup.style.display = 'flex';
+      leftGroup.style.alignItems = 'center';
+      leftGroup.style.gap = '8px';
+
       const exLabel = document.createElement('div'); exLabel.className = 'exampleLabel'; exLabel.textContent = 'Beispiel';
+
+      // ✅ Speaker Button (EXAMPLE) — slow clear reading
+      const exSpeakBtn = document.createElement('button');
+      exSpeakBtn.className = 'miniSpeakBtn';
+      exSpeakBtn.title = 'Beispiel anhören';
+      exSpeakBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>`;
+      exSpeakBtn.onclick = (e) => {
+        e.stopPropagation();
+        hapticTap(10);
+        speakGerman(exTA.value, { rate: 0.85 });
+      };
+
+      leftGroup.appendChild(exLabel);
+      leftGroup.appendChild(exSpeakBtn);
+
       const autoBtn = document.createElement('button'); autoBtn.className = 'autoBtn'; autoBtn.textContent = '⚙ Automatik';
       const autoMsg = document.createElement('div'); autoMsg.className = 'autoMsg';
-      exHeader.appendChild(exLabel); exHeader.appendChild(autoBtn);
+
+      exHeader.appendChild(leftGroup);
+      exHeader.appendChild(autoBtn);
+
       const exTA = document.createElement('textarea'); exTA.className = 'explainInput'; exTA.placeholder = 'Beispiel hier...'; exTA.value = data.example;
+
       exWrap.appendChild(exHeader); exWrap.appendChild(autoMsg); exWrap.appendChild(exTA);
       front.appendChild(wordWrap); front.appendChild(exWrap);
 
       const back = document.createElement('div'); back.className = 'flip-side flip-back';
       const posBadge = document.createElement('div'); posBadge.className = 'posBadge';
-      
+
       const topRow = document.createElement('div'); topRow.className = 'backTopRow';
       const arCenter = document.createElement('textarea'); arCenter.className = 'arabicCenter'; arCenter.placeholder = 'الترجمة بالعربية...'; arCenter.value = data.arTextManual;
       const darSide = document.createElement('textarea'); darSide.className = 'darijaSide'; darSide.placeholder = 'بالدارجة...'; darSide.value = data.darTextManual;
@@ -3217,17 +3683,19 @@ lektion16: [
       const exL = document.createElement('div'); exL.className = 'noteLabel'; exL.textContent = 'أكتب مثالك هنا:';
       const arExTA = document.createElement('textarea'); arExTA.className = 'noteInput'; arExTA.placeholder = 'مثال بالعربية...'; arExTA.value = data.arabicExampleManual;
       const darExTA = document.createElement('textarea'); darExTA.className = 'noteInput'; darExTA.placeholder = 'مثال بالدارجة...'; darExTA.value = data.darijaExampleManual;
-      
+
       const extraNoteWrap = document.createElement('div'); extraNoteWrap.style.display = 'none'; extraNoteWrap.style.flexDirection = 'column'; extraNoteWrap.style.gap='4px'; extraNoteWrap.style.borderTop='1px dashed rgba(255,255,255,0.1)'; extraNoteWrap.style.marginTop='6px'; extraNoteWrap.style.paddingTop='6px';
       const nL = document.createElement('div'); nL.className = 'noteLabel'; nL.textContent = 'ملاحظة:';
       const noteTA = document.createElement('textarea'); noteTA.className = 'noteInput'; noteTA.placeholder = 'ملاحظة...'; noteTA.value = data.note;
       extraNoteWrap.appendChild(nL); extraNoteWrap.appendChild(noteTA);
-      
+
       noteWrap.appendChild(exL); noteWrap.appendChild(arExTA); noteWrap.appendChild(darExTA); noteWrap.appendChild(extraNoteWrap);
       back.appendChild(posBadge); back.appendChild(topRow); back.appendChild(noteWrap);
 
       function render(){
-        const b1 = lookupB1(wordTA.value);
+        const res = lookupSmart(wordTA.value);
+        const b1 = res ? res.entry : null;
+
         posBadge.textContent = data.posOverride || (b1?b1.pos:'N/V/A');
         arCenter.value = data.arTextManual || (b1?b1.ar:'');
         darSide.value = data.darTextManual || (b1?b1.darija:'');
@@ -3236,19 +3704,47 @@ lektion16: [
         const autoDarEx   = (data.darijaExampleB1 || '').trim();
         darExTA.value = manualDarEx || autoDarEx || '';
         arExTA.value = data.arabicExampleManual || '';
-        extraNoteWrap.style.display = (b1 || data.note.trim() !== '') ? 'flex' : 'none';
-        
+        extraNoteWrap.style.display = (b1 || (data.note||'').trim() !== '') ? 'flex' : 'none';
+
         [wordTA, exTA, arCenter, darSide, arExTA, darExTA, noteTA].forEach(t => autoFitTextarea(t));
       }
 
+      // ✅ SMART AUTOMATIK
+      // ⚠️ NO SOUND + NO SPEAK here (sound only on speaker buttons)
       autoBtn.onclick = (e) => {
         e.stopPropagation();
-        const b1 = lookupB1(wordTA.value);
-        if(!b1) { autoMsg.textContent = "Not in dict"; return; }
-        data.posOverride = b1.pos; data.example = b1.de_example; exTA.value = b1.de_example;
-        data.darijaExampleB1 = b1.darija_example; autoMsg.textContent = "✅"; render(); save();
+
+        // AirDrop-like feel (visual + haptic only)
+        hapticTap(10);
+        flashPulse(box);
+        startTransferBar(900);
+
+        const res = lookupSmart(wordTA.value);
+
+        if(!res){
+          autoMsg.textContent = "❌ ما لقيتش (قرّب شوية)";
+          endTransferBar();
+          return;
+        }
+
+        const b1 = res.entry;
+        const pct = Math.round((res.confidence || 0.9) * 100);
+        autoMsg.textContent = `✅ ${pct}%`;
+
+        data.posOverride = b1.pos;
+        data.example = b1.de_example;
+        exTA.value = b1.de_example;
+        data.darijaExampleB1 = b1.darija_example;
+
+        // ✅ Auto-correct visible word to exact dictionary form
+        data.word = b1.word;
+        wordTA.value = b1.word;
+
+        render();
+        save();
+        endTransferBar();
       };
-      
+
       posBadge.onclick = (e) => { e.stopPropagation(); data.posOverride = data.posOverride==='V'?'N':data.posOverride==='N'?'A':'V'; render(); save(); };
 
       const binds = [ [wordTA,'word'], [exTA,'example'], [arCenter,'arTextManual'], [darSide,'darTextManual'], [arExTA,'arabicExampleManual'], [darExTA,'darijaExampleManual'], [noteTA,'note'] ];
@@ -3256,6 +3752,7 @@ lektion16: [
 
       box.onclick = (e) => { if(!['TEXTAREA','INPUT','BUTTON'].includes(e.target.tagName)) flip.classList.toggle('flipped'); };
       setTimeout(render, 10);
+
       flip.appendChild(front); flip.appendChild(back); box.appendChild(flip);
       return box;
     }
@@ -3269,8 +3766,16 @@ lektion16: [
       boxes.forEach((_, i) => grid.appendChild(createBoxElement(i)));
     }
 
-    function save(){ localStorage.setItem('dms_boxes', JSON.stringify(boxes)); localStorage.setItem('dms_settings', JSON.stringify(settings)); }
-    function load(){ try{ if(localStorage.getItem('dms_boxes')) boxes = JSON.parse(localStorage.getItem('dms_boxes')); if(localStorage.getItem('dms_settings')) settings = {...settings, ...JSON.parse(localStorage.getItem('dms_settings'))}; }catch(e){} }
+    function save(){
+      localStorage.setItem('dms_boxes', JSON.stringify(boxes));
+      localStorage.setItem('dms_settings', JSON.stringify(settings));
+    }
+    function load(){
+      try{
+        if(localStorage.getItem('dms_boxes')) boxes = JSON.parse(localStorage.getItem('dms_boxes'));
+        if(localStorage.getItem('dms_settings')) settings = {...settings, ...JSON.parse(localStorage.getItem('dms_settings'))};
+      }catch(e){}
+    }
 
     numBoxesInput.oninput = () => { settings.numBoxes = numBoxesInput.value; numBoxesValue.textContent = numBoxesInput.value; updateGrid(); save(); };
     columnsSelect.onchange = () => { settings.columns = columnsSelect.value; updateGrid(); save(); };
@@ -3281,83 +3786,100 @@ lektion16: [
 
     document.getElementById('waBtn').onclick = () => document.getElementById('waPopup').classList.toggle('open');
     document.getElementById('waClose').onclick = () => document.getElementById('waPopup').classList.remove('open');
-    document.getElementById('waSend').onclick = () => { window.open(`https://wa.me/212690010348?text=${encodeURIComponent(document.getElementById('waInput').value || 'Hallo Said!')}`, '_blank'); };
+    document.getElementById('waSend').onclick = () => {
+      window.open(`https://wa.me/212690010348?text=${encodeURIComponent(document.getElementById('waInput').value || 'Hallo Said!')}`, '_blank');
+    };
 
     // =========================================================
-    // ✅ 3. CREATIVE WORTSCHATZ LOGIC (AIRDROP STYLE)
+    // ✅ 3. CREATIVE WORTSCHATZ LOGIC (NO SOUND)
     // =========================================================
-    
-    // ✅ Sound Generator (Web Audio API) - No external files needed!
-    function playAirdropSound() {
-      try {
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        const ctx = new AudioContext();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
 
-        osc.connect(gain);
-        gain.connect(ctx.destination);
+    function triggerHaptic(pattern = [10, 30, 10]) {
+      if (navigator.vibrate) navigator.vibrate(pattern);
+    }
 
-        // Airdrop "Ping" sound synthesis
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(800, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.1);
-        
-        gain.gain.setValueAtTime(0.1, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+    function fireConfetti() {
+      const canvas = document.getElementById('confettiCanvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
 
-        osc.start();
-        osc.stop(ctx.currentTime + 0.4);
-      } catch(e) { console.log("Audio not supported"); }
+      const particles = [];
+      const colors = ['#007AFF', '#34C759', '#FFD60A', '#FF2D55', '#AF52DE'];
+
+      for (let i = 0; i < 150; i++) {
+        particles.push({
+          x: canvas.width / 2,
+          y: canvas.height / 2,
+          vx: (Math.random() - 0.5) * 15,
+          vy: (Math.random() - 0.5) * 15,
+          size: Math.random() * 8 + 2,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          life: 100
+        });
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let active = false;
+        particles.forEach(p => {
+          if (p.life > 0) {
+            active = true;
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.2;
+            p.life--;
+            ctx.fillStyle = p.color;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        });
+        if (active) requestAnimationFrame(animate);
+        else ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+      animate();
     }
 
     document.getElementById('vocabBtn').onclick = () => {
+      triggerHaptic([20, 50, 20]);
+      startTransferBar(800);
+
       const hub = document.getElementById('vocabHub');
       const container = document.getElementById('hubGridContainer');
-      container.innerHTML = ''; // Clear existing
+      container.innerHTML = '';
 
-      // Create Cards
       Object.keys(WORTSCHATZ_DATA).forEach(lessonTitle => {
         const card = document.createElement('div');
         card.className = 'hubCard';
-        
-        const count = WORTSCHATZ_DATA[lessonTitle].length;
-        
+
+        const count = (WORTSCHATZ_DATA[lessonTitle] || []).length;
+
         card.innerHTML = `
           <div class="hubCardName">${lessonTitle}</div>
           <div class="hubCardCount">${count} Wörter</div>
         `;
-        
-        card.onclick = () => {
-          // 1. Play Sound
-          playAirdropSound();
-          
-          // 2. Visual Pulse
-          card.style.boxShadow = "0 0 30px var(--airdrop-blue)";
-          card.style.transform = "scale(0.95)";
-          setTimeout(() => {
-            card.style.transform = "scale(1)";
-            card.style.boxShadow = "0 10px 30px rgba(37,99,235,0.2)";
-          }, 200);
 
-          // 3. Loading Bar
+        card.onclick = () => {
+          triggerHaptic([10, 30, 10]);
+          flashPulse(card);
+          startTransferBar(900);
+
           const loadBar = document.getElementById('loadBar');
           const loadContainer = document.getElementById('loadBarContainer');
-          
+
           loadContainer.style.display = 'block';
           loadBar.style.width = '0%';
-          
-          // Simulate "Transfer"
-          setTimeout(() => { loadBar.style.width = '50%'; }, 100);
-          setTimeout(() => { loadBar.style.width = '100%'; }, 400);
+
+          setTimeout(() => { loadBar.style.width = '50%'; }, 80);
+          setTimeout(() => { loadBar.style.width = '100%'; }, 320);
 
           setTimeout(() => {
-            // Load Data
-            const lessonWords = WORTSCHATZ_DATA[lessonTitle];
+            const lessonWords = WORTSCHATZ_DATA[lessonTitle] || [];
             boxes = [];
-            settings.numBoxes = lessonWords.length;
-            numBoxesInput.value = lessonWords.length;
-            numBoxesValue.textContent = lessonWords.length;
+            settings.numBoxes = lessonWords.length || 12;
+            numBoxesInput.value = settings.numBoxes;
+            numBoxesValue.textContent = settings.numBoxes;
 
             lessonWords.forEach(entry => {
               boxes.push({
@@ -3375,57 +3897,62 @@ lektion16: [
 
             save();
             updateGrid();
-            
-            // Close Hub
+
+            fireConfetti();
+
             hub.classList.remove('open');
             loadContainer.style.display = 'none';
             loadBar.style.width = '0%';
-          }, 800);
+
+            endTransferBar();
+          }, 650);
         };
+
         container.appendChild(card);
       });
 
       hub.classList.add('open');
+      endTransferBar();
     };
 
     document.getElementById('closeVocabHub').onclick = () => {
+      triggerHaptic(10);
       document.getElementById('vocabHub').classList.remove('open');
     };
 
-    // Close on click outside
     document.getElementById('vocabHub').onclick = (e) => {
       if(e.target.id === 'vocabHub') document.getElementById('vocabHub').classList.remove('open');
     };
 
     // =========================================================
-    // PDF GENERATOR
+    // PDF GENERATOR (SHARPER + LESS DIGITAL: PNG + higher scale)
     // =========================================================
     document.getElementById('downloadPdfBtn').onclick = async () => {
       const loader = document.getElementById('pdfLoading');
       try {
         loader.style.display = 'flex';
-        
+
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF("p", "mm", "a4");
-        
+
         ensureBoxesLength();
         const cols = Math.min(Math.max(1, settings.columns), 4);
-        
+
         const pageW = 210; const pageH = 297;
         const pad = 12; const gap = 4;
         const innerW = pageW - (2 * pad);
         const boxMmW = (innerW - (gap * (cols - 1))) / cols;
-        const boxMmH = boxMmW * 1.1; 
+        const boxMmH = boxMmW * 1.1;
 
         const pdfStage = document.getElementById('pdfStage');
 
         function buildPage(mode, startIndex, count, headerH){
           pdfStage.innerHTML = "";
-          
+
           const headerArea = document.createElement("div");
           headerArea.className = "pdfHeaderArea";
           headerArea.style.setProperty("--header-h", headerH + "mm");
-          
+
           if (mode === "front" && headerH > 0) {
             const title = document.createElement("div"); title.className = "pdfBigTitle"; title.textContent = "Deutsch mit Said ist einfacher, als du denkst.";
             const meta = document.createElement("div"); meta.className = "pdfMeta";
@@ -3438,7 +3965,7 @@ lektion16: [
           }
           pdfStage.appendChild(headerArea);
 
-          const g = document.createElement("div"); 
+          const g = document.createElement("div");
           g.className = "pdfGrid";
           pdfStage.style.setProperty("--pdfCols", String(cols));
           pdfStage.style.setProperty("--pdfBoxW", boxMmW + "mm");
@@ -3453,7 +3980,7 @@ lektion16: [
               let itemIndex = (mode === "front") ? (r * cols + c) : (r * cols + (cols - 1 - c));
               const card = document.createElement("div");
               card.className = "pdfCard";
-              
+
               if (itemIndex >= pageData.length) {
                 card.classList.add("empty");
               } else {
@@ -3463,11 +3990,12 @@ lektion16: [
                 if (mode === "front"){
                   inner.innerHTML = `<div class="pdfWordWrap"><div class="pdfWord">${d.word||""}</div></div><div class="pdfLine"></div><div class="pdfExample">${d.example||""}</div>`;
                 } else {
-                  const b1 = lookupB1(d.word);
+                  const res = lookupSmart(d.word);
+                  const b1 = res ? res.entry : null;
                   const arText = d.arTextManual || (b1?b1.ar:"");
                   const darText = d.darTextManual || (b1?b1.darija:"");
                   const darEx = d.darijaExampleManual || d.darijaExampleB1 || "";
-                  
+
                   inner.innerHTML = `
                     <div class="pdfAr">${arText}</div>
                     <div class="pdfDar">${darText}</div>
@@ -3484,29 +4012,29 @@ lektion16: [
           pdfStage.appendChild(g);
         }
 
-        let index = 0; 
+        let index = 0;
         let isFirstPage = true;
 
         while (index < boxes.length) {
           const headerH = isFirstPage ? 20 : 0;
           const innerH = pageH - (2 * pad);
-          const availableGridH = innerH - headerH - 4; 
+          const availableGridH = innerH - headerH - 4;
           const rowsPerPage = Math.max(1, Math.floor(availableGridH / (boxMmH + gap)));
           const perPage = cols * rowsPerPage;
 
           pdfStage.style.zIndex = "1";
-          
+
           buildPage("front", index, perPage, headerH);
           await new Promise(r => setTimeout(r, 100));
-          const c1 = await html2canvas(pdfStage, { scale: 3, useCORS: true, backgroundColor: "#ffffff" });
+          const c1 = await html2canvas(pdfStage, { scale: 4, useCORS: true, backgroundColor: "#ffffff" }); // ✅ sharper
           if(!isFirstPage) pdf.addPage();
-          pdf.addImage(c1.toDataURL("image/jpeg", 0.95), "JPEG", 0, 0, 210, 297);
+          pdf.addImage(c1.toDataURL("image/png"), "PNG", 0, 0, 210, 297);
 
           pdf.addPage();
           buildPage("back", index, perPage, headerH);
           await new Promise(r => setTimeout(r, 100));
-          const c2 = await html2canvas(pdfStage, { scale: 3, useCORS: true, backgroundColor: "#ffffff" });
-          pdf.addImage(c2.toDataURL("image/jpeg", 0.95), "JPEG", 0, 0, 210, 297);
+          const c2 = await html2canvas(pdfStage, { scale: 4, useCORS: true, backgroundColor: "#ffffff" }); // ✅ sharper
+          pdf.addImage(c2.toDataURL("image/png"), "PNG", 0, 0, 210, 297);
 
           index += perPage;
           isFirstPage = false;
@@ -3530,29 +4058,27 @@ lektion16: [
       updateGrid();
     });
   </script>
+
+  <footer class="cleanFooter">
+    <div class="cleanSocial">
+      <a href="https://www.instagram.com/saidaiadi?igsh=MWVldzB2OXNvMWwzaQ=="
+         target="_blank"
+         aria-label="Instagram"
+         class="cleanIcon">
+        <svg viewBox="0 0 24 24">
+          <path d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5H7zm10 2a3 3 0 013 3v10a3 3 0 01-3 3H7a3 3 0 01-3-3V7a3 3 0 013-3h10zm-5 3.5A5.5 5.5 0 106.5 13 5.51 5.51 0 0012 7.5zm0 2A3.5 3.5 0 118.5 13 3.5 3.5 0 0112 9.5zm4.75-3.75a1.25 1.25 0 11-1.25 1.25 1.25 1.25 0 011.25-1.25z"/>
+        </svg>
+      </a>
+
+      <a href="https://www.tiktok.com/@saidaiadii?is_from_webapp=1&sender_device=pc"
+         target="_blank"
+         aria-label="TikTok"
+         class="cleanIcon">
+        <svg viewBox="0 0 24 24">
+          <path d="M16 3c.55 2.26 2.24 3.95 4.5 4.5v3c-1.56-.04-3.04-.5-4.25-1.3V15a6 6 0 11-6-6c.34 0 .67.03 1 .08v3.02a3 3 0 103 3V3h1z"/>
+        </svg>
+      </a>
+    </div>
+  </footer>
 </body>
-<footer class="cleanFooter">
-  <div class="cleanSocial">
-
-    <a href="https://www.instagram.com/saidaiadi?igsh=MWVldzB2OXNvMWwzaQ==" 
-       target="_blank" 
-       aria-label="Instagram" 
-       class="cleanIcon">
-      <svg viewBox="0 0 24 24">
-        <path d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5H7zm10 2a3 3 0 013 3v10a3 3 0 01-3 3H7a3 3 0 01-3-3V7a3 3 0 013-3h10zm-5 3.5A5.5 5.5 0 106.5 13 5.51 5.51 0 0012 7.5zm0 2A3.5 3.5 0 118.5 13 3.5 3.5 0 0112 9.5zm4.75-3.75a1.25 1.25 0 11-1.25 1.25 1.25 1.25 0 011.25-1.25z"/>
-      </svg>
-    </a>
-
-    <a href="https://www.tiktok.com/@saidaiadii?is_from_webapp=1&sender_device=pc" 
-       target="_blank" 
-       aria-label="TikTok" 
-       class="cleanIcon">
-      <svg viewBox="0 0 24 24">
-        <path d="M16 3c.55 2.26 2.24 3.95 4.5 4.5v3c-1.56-.04-3.04-.5-4.25-1.3V15a6 6 0 11-6-6c.34 0 .67.03 1 .08v3.02a3 3 0 103 3V3h1z"/>
-      </svg>
-    </a>
-
-  </div>
-</footer>
-
 </html>
