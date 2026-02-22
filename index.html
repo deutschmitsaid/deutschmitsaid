@@ -23,115 +23,159 @@
 
   <style>
     :root{
-      --carbon:#0B0D0E; --carbon2:#0F1412;
-      --ink:#EAF2EE; --muted:#A7B6AE;
-      --moss:#2E5E3A; --moss2:#3E7A4B;
-      --brg:#004225; --brg2:#0B5A36;
+      --carbon:#0B0D0E; --carbon2:#0F1412; --ink:#EAF2EE; --muted:#A7B6AE;
+      --moss:#2E5E3A; --moss2:#3E7A4B; --brg:#004225; --brg2:#0B5A36;
       --shadow: 0 16px 60px rgba(0,0,0,0.45);
       --glass1: rgba(255,255,255,0.10); --glass2: rgba(255,255,255,0.06);
       --wa:#25D366; --waDark:#0b5a46;
       --blue-grad: linear-gradient(90deg, #2563eb, #3b82f6);
       --box-h: 260px;
       --accent: #3b82f6;
-      --airdrop-blue: #007AFF;
-      --airdrop-green: #34C759;
-      --airdrop-blue-rgb: 0, 122, 255;
+      --airdrop-blue: #007AFF; --airdrop-green: #34C759; --airdrop-blue-rgb: 0, 122, 255;
     }
-
     *{ box-sizing:border-box; }
-    html, body{ height:100%; width: 100%; margin: 0; padding: 0; }
+    html, body{ height:100%; width:100%; margin:0; padding:0; }
     body{
       font-family: Arial, sans-serif; color:var(--ink);
       background: linear-gradient(180deg, var(--carbon), var(--carbon2));
       overflow-x:hidden; -webkit-text-size-adjust: 100%;
     }
-
-    /* Aura effect - Subtle background movement */
     body::before{
       content:""; position: fixed; inset: -35%; z-index: -2; pointer-events:none;
       background:
         radial-gradient(60% 50% at 12% 22%, rgba(46,94,58,0.55), transparent 62%),
         radial-gradient(55% 50% at 88% 28%, rgba(0,66,37,0.48), transparent 62%),
         radial-gradient(50% 45% at 55% 85%, rgba(62,122,75,0.38), transparent 62%);
-      filter: blur(26px) saturate(1.15); animation: auraDrift 18s ease-in-out infinite alternate; opacity: .92;
+      filter: blur(26px) saturate(1.15);
+      animation: auraDrift 18s ease-in-out infinite alternate;
+      opacity: .92;
     }
-    @keyframes auraDrift{ 0% { transform: translate3d(-2%, -1%, 0) scale(1.02); } 100% { transform: translate3d(-1%,  3%, 0) scale(1.03); } }
+    @keyframes auraDrift{
+      0% { transform: translate3d(-2%, -1%, 0) scale(1.02); }
+      100% { transform: translate3d(-1%, 3%, 0) scale(1.03); }
+    }
 
     /* ===== APP WRAPPER ===== */
-    #app{ max-width: var(--app-max-w, 1100px); margin: 0 auto; padding: 16px; display: flex; flex-direction: column; gap: 16px; min-height: 100vh; }
+    #app{
+      max-width: var(--app-max-w, 1100px);
+      margin: 0 auto;
+      padding: 16px;
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+      min-height:100vh;
+    }
 
     /* ---------- HEADER ---------- */
     .topbar{
-      position: relative; z-index: 5; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px;
-      border-radius: 18px; background: linear-gradient(180deg, var(--glass1), var(--glass2));
-      border: 1px solid rgba(255,255,255,0.12); backdrop-filter: blur(12px); box-shadow: var(--shadow); flex-wrap: wrap;
+      position: relative; z-index: 5;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:16px; padding:16px; border-radius: 18px;
+      background: linear-gradient(180deg, var(--glass1), var(--glass2));
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+      flex-wrap: wrap;
     }
     .brand{ display:flex; flex-direction:column; gap:3px; flex: 1 1 200px; }
-    .brandTitle{ font-size: clamp(18px, 4vw, 22px); font-weight: 900; line-height:1.1; background: linear-gradient(90deg, #d7f7e6, rgba(62,122,75,0.95), rgba(0,66,37,0.95)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .brandTitle{
+      font-size: clamp(18px, 4vw, 22px);
+      font-weight: 900; line-height:1.1;
+      background: linear-gradient(90deg, #d7f7e6, rgba(62,122,75,0.95), rgba(0,66,37,0.95));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
     .brandSub{ font-size: 13px; color: var(--muted); font-weight: 800; }
-
     .topActions{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end; flex: 1 1 300px; }
-    .pill{ display:flex; align-items:center; gap:10px; padding:10px; border-radius: 999px; background: rgba(0,0,0,0.16); border: 1px solid rgba(255,255,255,0.12); flex-wrap: wrap; width: 100%; }
-    .pill input{ padding:10px 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.14); outline:none; background: rgba(0,0,0,0.24); color: var(--ink); font-size: 14px; font-weight: 800; flex: 1 1 120px; min-width: 80px; }
+    .pill{
+      display:flex; align-items:center; gap:10px; padding:10px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.16);
+      border: 1px solid rgba(255,255,255,0.12);
+      flex-wrap: wrap; width: 100%;
+    }
+    .pill input{
+      padding:10px 12px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      outline:none; background: rgba(0,0,0,0.24); color: var(--ink);
+      font-size: 14px; font-weight: 800; flex: 1 1 120px; min-width: 80px;
+    }
 
     /* ---------- STICKY CONTROLS ---------- */
     #controls{
       position: sticky; top: 10px; z-index: 100;
-      display:flex; flex-wrap:wrap; gap:12px; padding:16px; border-radius: 18px; justify-content:center; align-items: center;
+      display:flex; flex-wrap:wrap; gap:12px; padding:16px; border-radius: 18px;
+      justify-content:center; align-items: center;
       background: linear-gradient(180deg, rgba(30, 35, 33, 0.85), rgba(15, 20, 18, 0.95));
-      border: 1px solid rgba(255,255,255,0.15); backdrop-filter: blur(16px); box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-      width: 100%; transition: all 0.3s ease;
+      border: 1px solid rgba(255,255,255,0.15);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      width: 100%;
+      transition: all 0.3s ease;
     }
     .control-group{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:center; }
     .control-group label{ font-weight: 900; font-size: 14px; color: rgba(234,242,238,0.92); }
-    select, input[type="range"]{ padding:8px 12px; border:1px solid rgba(255,255,255,0.14); border-radius: 12px; background: rgba(0,0,0,0.3); color: var(--ink); font-weight: 900; outline: none; }
-
-    .btn{ border: none; cursor: pointer; padding:10px 16px; border-radius: 999px; font-weight: 900; transition: all .15s ease; display:flex; align-items:center; justify-content:center; gap:8px; white-space:nowrap; color: var(--ink); font-size: 14px; position: relative; overflow: hidden; }
+    select, input[type="range"]{
+      padding:8px 12px; border:1px solid rgba(255,255,255,0.14);
+      border-radius: 12px; background: rgba(0,0,0,0.3);
+      color: var(--ink); font-weight: 900; outline: none;
+    }
+    .btn{
+      border: none; cursor: pointer; padding:10px 16px; border-radius: 999px;
+      font-weight: 900; transition: all .15s ease;
+      display:flex; align-items:center; justify-content:center; gap:8px; white-space:nowrap;
+      color: var(--ink); font-size: 14px; position: relative; overflow: hidden;
+    }
     .btn:active{ transform: scale(0.95); }
-    .btnPrimary{ background: linear-gradient(90deg, var(--brg), var(--moss2)); color:#EAF2EE; box-shadow: 0 8px 20px rgba(0,66,37,0.35); }
-    .btnDanger{ background: linear-gradient(90deg, #9b2222, #b45309); color:#fff; box-shadow: 0 8px 20px rgba(0,0,0,0.35); }
-
-    /* ✅ Button Wortschatz */
-    .btnVocab{ background: var(--blue-grad); color: white; box-shadow: 0 8px 20px rgba(37,99,235,0.4); border: 1px solid rgba(255,255,255,0.2); }
+    .btnPrimary{
+      background: linear-gradient(90deg, var(--brg), var(--moss2));
+      color:#EAF2EE; box-shadow: 0 8px 20px rgba(0,66,37,0.35);
+    }
+    .btnDanger{
+      background: linear-gradient(90deg, #9b2222, #b45309);
+      color:#fff; box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+    }
+    .btnVocab{
+      background: var(--blue-grad); color: white;
+      box-shadow: 0 8px 20px rgba(37,99,235,0.4);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
     .btnVocab:hover { box-shadow: 0 12px 30px rgba(37,99,235,0.6); transform: translateY(-1px); }
 
     /* ---------- GRID ---------- */
     #grid{ display:grid; gap: 16px; width: 100%; background: transparent; padding-bottom: 50px; }
-    .box{ width: 100%; height: var(--box-h); border-radius: 16px; position:relative; overflow:hidden; border: 1px solid rgba(255,255,255,0.12); background: radial-gradient(circle at 10% 0%, rgba(62,122,75,0.15), transparent 60%), linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); box-shadow: 0 12px 30px rgba(0,0,0,0.4); contain: content; touch-action: pan-y; }
+    .box{
+      width: 100%; height: var(--box-h);
+      border-radius: 16px; position:relative; overflow:hidden;
+      border: 1px solid rgba(255,255,255,0.12);
+      background:
+        radial-gradient(circle at 10% 0%, rgba(62,122,75,0.15), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+      contain: content;
+      touch-action: pan-y;
+    }
     .flip-card{ width:100%; height:100%; position:relative; transform-style:preserve-3d; transition: transform .6s cubic-bezier(0.4, 0.2, 0.2, 1); }
     .flip-card.flipped{ transform: rotateY(180deg); }
     .flip-side{ position:absolute; inset:0; backface-visibility:hidden; display:flex; flex-direction:column; padding:14px; gap:8px; }
     .flip-back{ transform: rotateY(180deg); direction: rtl; text-align:right; }
-
     textarea, input { font-size: 16px !important; }
 
-    /* FRONT SIDE */
+    /* FRONT */
     .frontWordWrap{ flex: 1; display:flex; align-items:center; justify-content:center; min-height: 45%; position: relative; }
-
-    /* ✅ Speaker Buttons */
     .speakBtn{
-      position: absolute;
-      right: 10px; top: 50%;
-      transform: translateY(-50%);
+      position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
       background: rgba(255,255,255,0.1);
-      border: none;
-      border-radius: 50%;
+      border: none; border-radius: 50%;
       width: 32px; height: 32px;
       display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      transition: 0.2s;
-      color: var(--ink);
-      z-index: 10;
+      cursor: pointer; transition: 0.2s;
+      color: var(--ink); z-index: 10;
     }
     .speakBtn:hover{ background: rgba(255,255,255,0.25); transform: translateY(-50%) scale(1.1); }
     .speakBtn svg{ width: 16px; height: 16px; fill: currentColor; }
 
-    /* ✅ Small speaker near Beispiel */
     .miniSpeakBtn{
-      border:none;
-      cursor:pointer;
-      width: 28px; height: 28px;
-      border-radius: 999px;
+      border:none; cursor:pointer; width: 28px; height: 28px; border-radius: 999px;
       background: rgba(255,255,255,0.08);
       border: 1px solid rgba(255,255,255,0.12);
       display:flex; align-items:center; justify-content:center;
@@ -142,48 +186,80 @@
     .miniSpeakBtn:active{ transform: scale(0.95); }
     .miniSpeakBtn svg{ width: 14px; height: 14px; fill: currentColor; }
 
-    .wordInput{ width:100%; border:none; outline:none; resize:none; background:transparent; color: var(--ink); font-weight: 900; text-align:center; overflow:hidden; text-shadow: 0 0 15px rgba(46,94,58,0.3); padding-right: 40px; }
-
+    .wordInput{
+      width:100%; border:none; outline:none; resize:none; background:transparent;
+      color: var(--ink); font-weight: 900; text-align:center;
+      overflow:hidden; text-shadow: 0 0 15px rgba(46,94,58,0.3);
+      padding-right: 40px;
+    }
     .exampleWrap{ border-top: 1px solid rgba(255,255,255,0.10); padding-top: 8px; flex: 1.2; display:flex; flex-direction:column; gap:6px; }
     .exampleHeader{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
     .exampleLabel{ font-size:12px; color: rgba(234,242,238,0.65); font-weight:900; direction:ltr; }
-
-    .autoBtn{ border:none; cursor:pointer; padding:6px 10px; border-radius: 999px; font-weight: 900; font-size: 11px; color: #e9fff4; background: linear-gradient(90deg, rgba(0,66,37,0.92), rgba(62,122,75,0.92)); border: 1px solid rgba(255,255,255,0.12); box-shadow: 0 6px 15px rgba(0,0,0,0.3); }
+    .autoBtn{
+      border:none; cursor:pointer; padding:6px 10px; border-radius: 999px;
+      font-weight: 900; font-size: 11px; color: #e9fff4;
+      background: linear-gradient(90deg, rgba(0,66,37,0.92), rgba(62,122,75,0.92));
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    }
     .autoBtn:active{ transform: scale(0.95); }
     .autoMsg{ font-size: 11px; font-weight: 900; color: rgba(234,242,238,0.62); min-height: 14px; direction:ltr; text-align:left; }
     .explainInput{ border:none; outline:none; resize:none; background:transparent; color: rgba(234,242,238,0.92); line-height:1.4; flex:1; }
 
-    /* BACK SIDE */
-    .posBadge{ display:inline-flex; align-self:flex-start; padding:4px 10px; border-radius:999px; font-size: 11px; font-weight: 900; background: rgba(62,122,75,0.2); border: 1px solid rgba(62,122,75,0.3); color: #d7f7e6; direction:ltr; cursor:pointer; }
+    /* BACK */
+    .posBadge{
+      display:inline-flex; align-self:flex-start; padding:4px 10px; border-radius:999px;
+      font-size: 11px; font-weight: 900;
+      background: rgba(62,122,75,0.2);
+      border: 1px solid rgba(62,122,75,0.3);
+      color: #d7f7e6; direction:ltr; cursor:pointer;
+    }
     .backTopRow{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; margin-top: 8px; flex: 1; }
-    .arabicCenter{ flex: 1.2; text-align:right; font-weight: 700; line-height: 1.6; direction: rtl; color: #e9fff4; font-family: "Amiri", Arial, sans-serif; border: none; outline: none; resize: none; background: transparent; overflow: hidden; }
-    .darijaSide{ flex: 1; text-align:right; font-weight: 700; line-height: 1.6; direction: rtl; color: rgba(234,242,238,0.85); border: none; outline: none; resize: none; background: transparent; overflow: hidden; }
-    .backNoteWrap{ margin-top: 4px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.10); display:flex; flex-direction:column; gap:6px; flex: 1.2; min-height: 0; }
+    .arabicCenter{
+      flex: 1.2; text-align:right; font-weight: 700; line-height: 1.6; direction: rtl;
+      color: #e9fff4; font-family: "Amiri", Arial, sans-serif;
+      border: none; outline: none; resize: none; background: transparent; overflow: hidden;
+    }
+    .darijaSide{
+      flex: 1; text-align:right; font-weight: 700; line-height: 1.6; direction: rtl;
+      color: rgba(234,242,238,0.85);
+      border: none; outline: none; resize: none; background: transparent; overflow: hidden;
+    }
+    .backNoteWrap{
+      margin-top: 4px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.10);
+      display:flex; flex-direction:column; gap:6px; flex: 1.2; min-height: 0;
+    }
     .noteLabel{ font-size: 12px; font-weight: 800; opacity: .90; direction: rtl; text-align: right; color: rgba(234,242,238,0.90); }
-    .noteInput{ border:none; outline:none; resize:none; background:transparent; color: rgba(234,242,238,0.92); line-height: 1.5; min-height: 30px; text-align:right; direction: rtl; overflow:hidden; font-family: "Amiri", Arial, sans-serif; }
+    .noteInput{
+      border:none; outline:none; resize:none; background:transparent; color: rgba(234,242,238,0.92);
+      line-height: 1.5; min-height: 30px; text-align:right; direction: rtl;
+      overflow:hidden; font-family: "Amiri", Arial, sans-serif;
+    }
 
     /* WhatsApp */
-    #waBtn{ position: fixed; right: 18px; bottom: 18px; width: 54px; height: 54px; border-radius: 999px; background: var(--wa); border: none; cursor: pointer; box-shadow: 0 16px 30px rgba(0,0,0,0.35); display:flex; align-items:center; justify-content:center; z-index: 9999; }
-    #waBtn svg{ width: 28px; height: 28px; fill: #fff; }
-    #waPopup{
-      position: fixed;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: 380px;
-      max-width: 95vw;
-      border-radius: 20px;
-      overflow:hidden;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.7);
-      background:#fff;
+    #waBtn{
+      position: fixed; right: 18px; bottom: 18px;
+      width: 54px; height: 54px; border-radius: 999px;
+      background: var(--wa); border: none; cursor: pointer;
+      box-shadow: 0 16px 30px rgba(0,0,0,0.35);
+      display:flex; align-items:center; justify-content:center;
       z-index: 9999;
-      display:none;
     }
-    #waPopup.open{
-      display:block;
-      animation: popUp 0.3s ease;
+    #waBtn svg{ width: 28px; height: 28px; fill: #fff; }
+
+    #waPopup{
+      position: fixed; left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      width: 380px; max-width: 95vw;
+      border-radius: 20px; overflow:hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+      background:#fff; z-index: 9999; display:none;
     }
-    @keyframes popUp { from { transform: translate(-50%, -50%) scale(0.8) translateY(20px); opacity: 0; } to { transform: translate(-50%, -50%) scale(1) translateY(0); opacity: 1; } }
+    #waPopup.open{ display:block; animation: popUp 0.3s ease; }
+    @keyframes popUp {
+      from { transform: translate(-50%, -50%) scale(0.8) translateY(20px); opacity: 0; }
+      to   { transform: translate(-50%, -50%) scale(1) translateY(0); opacity: 1; }
+    }
     .waHeader{ background: var(--waDark); padding: 14px; display:flex; gap:12px; align-items:center; color:#fff; }
     .waAvatar{ width: 44px; height: 44px; border-radius: 999px; object-fit: cover; border: 2px solid rgba(255,255,255,0.3); background:#0f172a; }
     .waTitle{ font-weight: 900; font-size: 15px; }
@@ -200,8 +276,9 @@
     #pdfStage{
       position: absolute; left: -9999px; top: 0;
       width: 210mm; height: 297mm; padding: 12mm;
-      background: #ffffff; color: #111; box-sizing: border-box; font-family: Arial, sans-serif;
-      display: flex; flex-direction: column; z-index: -999;
+      background: #ffffff; color: #111; box-sizing: border-box;
+      font-family: Arial, sans-serif; display: flex; flex-direction: column;
+      z-index: -999;
     }
     .pdfHeaderArea { height: var(--header-h); width: 100%; margin-bottom: 4mm; }
     .pdfBigTitle{ margin:0; text-align:center; font-weight: 900; font-size: 18px; color:#0B5A36; line-height: 1.2; }
@@ -220,8 +297,27 @@
     .pdfNote{ direction: rtl; text-align: right; font-size: 12px; line-height: 1.4; font-family: "Amiri", Arial, sans-serif; color: #444; white-space: pre-wrap; }
 
     /* Loading */
-    #pdfLoading { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 99999; display: none; align-items: center; justify-content: center; flex-direction: column; color: white; font-weight: 900; font-size: 20px; backdrop-filter: blur(5px); }
-    .spinner { border: 4px solid rgba(255,255,255,0.3); border-top: 4px solid #25D366; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin-bottom: 15px; }
+    #pdfLoading {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 99999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: white;
+      font-weight: 900;
+      font-size: 20px;
+      backdrop-filter: blur(5px);
+    }
+    .spinner {
+      border: 4px solid rgba(255,255,255,0.3);
+      border-top: 4px solid #25D366;
+      border-radius: 50%;
+      width: 50px; height: 50px;
+      animation: spin 1s linear infinite;
+      margin-bottom: 15px;
+    }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
     /* ✅ CREATIVE HUB (Wortschatz) */
@@ -235,28 +331,22 @@
       backdrop-filter: blur(10px);
     }
     #vocabHub.open{ display: flex; }
-
     .hubPanel{
       background: linear-gradient(180deg, #1a1d1b, #0f1412);
       border-radius: 24px;
-      max-width: 800px;
-      width: 95%;
-      max-height: 80vh;
-      overflow-y: auto;
+      max-width: 800px; width: 95%;
+      max-height: 80vh; overflow-y: auto;
       padding: 30px;
       box-shadow: 0 0 100px rgba(37,99,235,0.2);
       border: 1px solid rgba(255,255,255,0.1);
       animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
     @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
     .hubHeader{ display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
     .hubTitle{ font-size: 24px; font-weight: 900; color: #d7f7e6; text-transform: uppercase; letter-spacing: 1px; }
     .hubClose{ background: rgba(255,255,255,0.1); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; font-size: 24px; cursor: pointer; transition: 0.2s; }
     .hubClose:hover{ background: rgba(255,255,255,0.2); }
-
     .hubGrid{ display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; }
-
     .hubCard{
       background: rgba(255,255,255,0.03);
       border: 1px solid rgba(255,255,255,0.08);
@@ -271,28 +361,24 @@
       position: relative;
       overflow: hidden;
     }
-
     .hubCard:hover{
       background: rgba(37,99,235,0.15);
       border-color: var(--accent);
       transform: translateY(-5px);
       box-shadow: 0 10px 30px rgba(37,99,235,0.2);
     }
-
     .hubCard::before{
-      content:''; position: absolute; top:0; left:0; width:100%; height:100%;
+      content:'';
+      position: absolute; top:0; left:0; width:100%; height:100%;
       background: radial-gradient(circle at center, rgba(255,255,255,0.1), transparent 70%);
       opacity: 0; transition: 0.3s;
     }
     .hubCard:hover::before{ opacity: 1; }
-
     .hubCardName{ font-weight: 900; color: #EAF2EE; font-size: 16px; margin-bottom: 5px; z-index: 1; }
     .hubCardCount{ font-size: 12px; opacity: 0.6; background: rgba(0,0,0,0.3); padding: 4px 10px; border-radius: 20px; z-index: 1; }
 
     /* ✅ Airdrop Loading Bar Animation */
-    #loadBarContainer{
-      position: fixed; top: 0; left: 0; width: 100%; height: 6px; z-index: 10001; display: none;
-    }
+    #loadBarContainer{ position: fixed; top: 0; left: 0; width: 100%; height: 6px; z-index: 10001; display: none; }
     #loadBar{
       height: 100%;
       background: linear-gradient(90deg, var(--airdrop-blue), var(--airdrop-green));
@@ -302,100 +388,79 @@
     }
 
     /* ✅ CONFETTI CANVAS */
-    #confettiCanvas{
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 10002;
-    }
+    #confettiCanvas{ position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 10002; }
 
     /* Footer */
     .cleanFooter{
-      margin-top:80px;
-      padding:60px 0;
+      margin-top:80px; padding:60px 0;
       border-top:1px solid rgba(255,255,255,0.08);
-      display:flex;
-      justify-content:center;
+      display:flex; justify-content:center;
       background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.25));
     }
     .cleanSocial{ display:flex; gap:60px; }
     .cleanIcon{
-      width:110px; height:110px; border-radius:28px; display:flex; align-items:center; justify-content:center;
-      background: linear-gradient(180deg, #0F1412, #0B0D0E); border:2px solid #2E5E3A;
-      box-shadow:0 25px 70px rgba(0,0,0,0.7); transition:0.3s ease;
+      width:110px; height:110px; border-radius:28px;
+      display:flex; align-items:center; justify-content:center;
+      background: linear-gradient(180deg, #0F1412, #0B0D0E);
+      border:2px solid #2E5E3A;
+      box-shadow:0 25px 70px rgba(0,0,0,0.7);
+      transition:0.3s ease;
     }
     .cleanIcon svg{ width:55px; height:55px; fill:#3E7A4B; }
-    .cleanIcon:hover{ transform:translateY(-8px) scale(1.05); border-color:#3E7A4B; box-shadow:0 35px 90px rgba(0,66,37,0.9); }
+    .cleanIcon:hover{
+      transform:translateY(-8px) scale(1.05);
+      border-color:#3E7A4B;
+      box-shadow:0 35px 90px rgba(0,66,37,0.9);
+    }
 
     /* =========================================================
        ✅ AirDrop style (Pulse + Transfer bar with tick)
        ========================================================= */
-
     @keyframes airdrop-pulse-anim {
       0% { box-shadow: 0 0 0 0 rgba(var(--airdrop-blue-rgb), 0.7); transform: scale(1); }
       50% { box-shadow: 0 0 0 15px rgba(var(--airdrop-blue-rgb), 0); transform: scale(1.05); }
       100% { box-shadow: 0 0 0 0 rgba(var(--airdrop-blue-rgb), 0); transform: scale(1); }
     }
-    .airdrop-pulse {
-      animation: airdrop-pulse-anim 0.6s ease-out;
-      border-color: var(--airdrop-blue) !important;
-    }
+    .airdrop-pulse { animation: airdrop-pulse-anim 0.6s ease-out; border-color: var(--airdrop-blue) !important; }
 
-    #airdrop-transfer-bar {
-      position: fixed;
-      top: 0; left: 0;
+    #airdrop-transfer-bar{
+      position: fixed; top: 0; left: 0;
       width: 100%; height: 4px;
       background: transparent;
-      z-index: 99999;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.2s;
+      z-index: 99999; pointer-events: none;
+      opacity: 0; transition: opacity 0.2s;
     }
-    #airdrop-transfer-bar.active { opacity: 1; }
-
-    #airdrop-transfer-fill {
-      height: 100%;
-      width: 0%;
+    #airdrop-transfer-bar.active{ opacity: 1; }
+    #airdrop-transfer-fill{
+      height: 100%; width: 0%;
       background-color: var(--airdrop-blue);
       box-shadow: 0 0 10px var(--airdrop-blue);
       transition: width 0.3s ease-out, background-color 0.2s;
       position: relative;
     }
-
-    #airdrop-transfer-bar.success #airdrop-transfer-fill {
+    #airdrop-transfer-bar.success #airdrop-transfer-fill{
       width: 100% !important;
       background-color: var(--airdrop-green);
       box-shadow: 0 0 15px var(--airdrop-green);
     }
-
-    #airdrop-transfer-bar.success #airdrop-transfer-fill::after {
+    #airdrop-transfer-bar.success #airdrop-transfer-fill::after{
       content: '✓';
-      position: absolute;
-      right: 10px;
-      top: -8px;
-      color: white;
-      font-weight: bold;
-      font-size: 14px;
+      position: absolute; right: 10px; top: -8px;
+      color: white; font-weight: bold; font-size: 14px;
       animation: tick-pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-
-    @keyframes tick-pop {
-      0% { transform: scale(0); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
-    }
+    @keyframes tick-pop { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
     /* ✅ PDF Progress Bar */
-    #pdfProgress {
-      position: fixed;
-      top: 0; left: 0;
+    #pdfProgress{
+      position: fixed; top: 0; left: 0;
       width: 100%; height: 4px;
       background: transparent;
-      z-index: 99998;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.2s;
+      z-index: 99998; pointer-events: none;
+      opacity: 0; transition: opacity 0.2s;
     }
-    #pdfProgress.active {
-      opacity: 1;
-    }
-    #pdfProgressFill {
+    #pdfProgress.active{ opacity: 1; }
+    #pdfProgressFill{
       height: 100%;
       width: 0%;
       background: linear-gradient(90deg, var(--airdrop-blue), var(--airdrop-green));
@@ -443,6 +508,7 @@
         <input type="range" id="numBoxes" min="1" max="200" value="12" step="1" style="max-width: 100px;">
         <span id="numBoxesValue" style="font-weight:900; width: 24px; color:white;">12</span>
       </div>
+
       <div class="control-group">
         <label data-i18n="cols">Spalten</label>
         <select id="columns">
@@ -452,6 +518,7 @@
           <option value="4">4</option>
         </select>
       </div>
+
       <div class="control-group">
         <label data-i18n="size">Größe</label>
         <select id="boxSize">
@@ -460,6 +527,7 @@
           <option value="large" data-i18n="large">Groß</option>
         </select>
       </div>
+
       <div class="control-group" style="margin: 0 5px;">
         <label style="cursor:pointer; display:flex; align-items:center; gap:5px;">
           <input type="checkbox" id="showBack" style="width:18px; height:18px;">
@@ -467,9 +535,7 @@
         </label>
       </div>
 
-      <!-- ✅ Creative Button -->
       <button class="btn btnVocab" id="vocabBtn" type="button">📚 Wortschatz</button>
-
       <button class="btn btnDanger" id="resetBtn" type="button" data-i18n="reset">Leeren</button>
       <button class="btn btnPrimary" id="downloadPdfBtn" type="button">PDF</button>
     </div>
@@ -503,18 +569,26 @@
   </div>
 
   <button id="waBtn" aria-label="WhatsApp">
-    <svg viewBox="0 0 32 32"><path d="M19.11 17.25c-.27-.14-1.6-.79-1.85-.88-.25-.09-.43-.14-.62.14-.18.27-.71.88-.87 1.06-.16.18-.32.21-.59.07-.27-.14-1.16-.43-2.21-1.36-.82-.73-1.38-1.63-1.54-1.9-.16-.27-.02-.42.12-.56.12-.12.27-.32.41-.48.14-.16.18-.27.27-.46.09-.18.05-.34-.02-.48-.07-.14-.62-1.5-.85-2.06-.22-.53-.45-.46-.62-.47h-.53c-.18 0-.48.07-.73.34-.25.27-.96.94-.96 2.29 0 1.35.99 2.65 1.13 2.83.14.18 1.95 2.97 4.73 4.17.66.29 1.18.46 1.58.59.66.21 1.26.18 1.74.11.53-.08 1.6-.65 1.83-1.27.23-.62.23-1.15.16-1.27-.07-.12-.25-.18-.52-.32zM16 3C9.38 3 4 8.38 4 15c0 2.11.55 4.17 1.6 5.99L4 29l8.21-1.56A11.92 11.92 0 0 0 16 27c6.62 0 12-5.38 12-12S22.62 3 16 3zm0 21.7c-1.94 0-3.83-.52-5.47-1.5l-.39-.23-4.87.93.93-4.74-.25-.41A9.69 9.69 0 0 1 6.3 15C6.3 9.64 10.64 5.3 16 5.3S25.7 9.64 25.7 15 21.36 24.7 16 24.7z"/></svg>
+    <svg viewBox="0 0 32 32">
+      <path d="M19.11 17.25c-.27-.14-1.6-.79-1.85-.88-.25-.09-.43-.14-.62.14-.18.27-.71.88-.87 1.06-.16.18-.32.21-.59.07-.27-.14-1.16-.43-2.21-1.36-.82-.73-1.38-1.63-1.54-1.9-.16-.27-.02-.42.12-.56.12-.12.27-.32.41-.48.14-.16.18-.27.27-.46.09-.18.05-.34-.02-.48-.07-.14-.62-1.5-.85-2.06-.22-.53-.45-.46-.62-.47h-.53c-.18 0-.48.07-.73.34-.25.27-.96.94-.96 2.29 0 1.35.99 2.65 1.13 2.83.14.18 1.95 2.97 4.73 4.17.66.29 1.18.46 1.58.59.66.21 1.26.18 1.74.11.53-.08 1.6-.65 1.83-1.27.23-.62.23-1.15.16-1.27-.07-.12-.25-.18-.52-.32zM16 3C9.38 3 4 8.38 4 15c0 2.11.55 4.17 1.6 5.99L4 29l8.21-1.56A11.92 11.92 0 0 0 16 27c6.62 0 12-5.38 12-12S22.62 3 16 3zm0 21.7c-1.94 0-3.83-.52-5.47-1.5l-.39-.23-4.87.93.93-4.74-.25-.41A9.69 9.69 0 0 1 6.3 15C6.3 9.64 10.64 5.3 16 5.3S25.7 9.64 25.7 15 21.36 24.7 16 24.7z"/>
+    </svg>
   </button>
 
   <div id="waPopup">
     <div class="waHeader">
       <img class="waAvatar" id="waAvatar" src="said.jpg" alt="Said">
-      <div><div class="waTitle">Said Lehrer</div><div class="waSub">Deutsch-Fragen? Schreib mir.</div></div>
+      <div>
+        <div class="waTitle">Said Lehrer</div>
+        <div class="waSub">Deutsch-Fragen? Schreib mir.</div>
+      </div>
       <button class="waClose" id="waClose">×</button>
     </div>
     <div class="waBody">
       <div class="waBubble">Hi! 👋<br>Schick mir deine Frage zu Deutsch.<br><small>ما تترددش: سولني وأنا نجاوبك 😊</small></div>
-      <div class="waInputWrap"><input id="waInput" type="text" placeholder="Deine Frage..."><button id="waSend">Send</button></div>
+      <div class="waInputWrap">
+        <input id="waInput" type="text" placeholder="Deine Frage...">
+        <button id="waSend">Send</button>
+      </div>
     </div>
   </div>
 
@@ -530,21 +604,8 @@
     // ✅ AirDrop Helper Module (Haptic + Pulse + Transfer Bar)
     // ⚠️ IMPORTANT: NO SOUND HERE (sound only when clicking speaker buttons)
     // =========================================================
-
-    // 1) Haptic (fallback vibrate)
-    function hapticTap(ms = 10) {
-      if (navigator.vibrate) navigator.vibrate(ms);
-    }
-
-    // 2) Visual pulse
-    function flashPulse(el) {
-      if (!el) return;
-      el.classList.remove('airdrop-pulse');
-      void el.offsetWidth;
-      el.classList.add('airdrop-pulse');
-    }
-
-    // 3) Transfer bar (top)
+    function hapticTap(ms = 10) { if (navigator.vibrate) navigator.vibrate(ms); }
+    function flashPulse(el) { if (!el) return; el.classList.remove('airdrop-pulse'); void el.offsetWidth; el.classList.add('airdrop-pulse'); }
     let airdropBar = null;
     function startTransferBar(durationMs = 1200) {
       if (!airdropBar) {
@@ -553,30 +614,24 @@
         airdropBar.innerHTML = '<div id="airdrop-transfer-fill"></div>';
         document.body.appendChild(airdropBar);
       }
-
       airdropBar.classList.remove('success');
       const fill = document.getElementById('airdrop-transfer-fill');
       fill.style.width = '0%';
       fill.style.transition = 'none';
-
       airdropBar.classList.add('active');
-
       requestAnimationFrame(() => {
         fill.style.transition = `width ${durationMs}ms ease-in-out`;
         fill.style.width = '100%';
       });
     }
-
     function endTransferBar() {
       if (!airdropBar) return;
       airdropBar.classList.add('success');
-      setTimeout(() => {
-        airdropBar.classList.remove('active', 'success');
-      }, 1400);
+      setTimeout(() => { airdropBar.classList.remove('active', 'success'); }, 1400);
     }
 
     // ================================================================================================
-    // ✅ 1. WORTSCHATZ DATENBANK (المكان المخصص للدروس)
+    // ✅ 1. WORTSCHATZ DATENBANK
     // ================================================================================================
     const WORTSCHATZ_DATA = {
       
@@ -3298,7 +3353,7 @@ lektion16: [
     };
 
     // ================================================================================================
-    // ✅ 1.1 NORMALIZE قوي (يدير: article/plural/umlaut/ß/علامات...)
+    // ✅ NORMALIZE + QAMOS
     // ================================================================================================
     function normalizeWord(s){
       s = String(s || '').trim().toLowerCase();
@@ -3310,20 +3365,16 @@ lektion16: [
       s = s.normalize("NFD").replace(/[\u0300-\u036f]/g,"");
       return s;
     }
-
     const QAMOS = Object.create(null);
-
     function addKey(key, entry){
       key = String(key || '').trim();
       if(!key || key.length < 2) return;
       QAMOS[key] = entry;
     }
-
     function generateVariants(base){
       const out = new Set();
       out.add(base);
       out.add(base.replace(/[\s-]/g,''));
-
       const stripped = base
         .replace(/\s+-\w+$/,'')
         .replace(/\s+-(e|en|er|n|s)$/,'')
@@ -3332,47 +3383,30 @@ lektion16: [
         out.add(stripped);
         out.add(stripped.replace(/[\s-]/g,''));
       }
-
       const simpleUml = base.replace(/ae/g,'a').replace(/oe/g,'o').replace(/ue/g,'u');
       out.add(simpleUml);
       out.add(simpleUml.replace(/[\s-]/g,''));
-
       const simpleUml2 = stripped.replace(/ae/g,'a').replace(/oe/g,'o').replace(/ue/g,'u');
       if(simpleUml2 && simpleUml2.length >= 3){
         out.add(simpleUml2);
         out.add(simpleUml2.replace(/[\s-]/g,''));
       }
-
       const schToCh = base.replace(/sch/g,'ch');
       out.add(schToCh); out.add(schToCh.replace(/[\s-]/g,''));
       const chToSch = base.replace(/ch/g,'sch');
       out.add(chToSch); out.add(chToSch.replace(/[\s-]/g,''));
-
       out.add(simpleUml.replace(/sch/g,'ch'));
       out.add(simpleUml.replace(/ch/g,'sch'));
-
-      const eToI = base.replace(/e/g,'i');
-      const iToE = base.replace(/i/g,'e');
-      out.add(eToI); out.add(iToE);
-      out.add(eToI.replace(/[\s-]/g,'')); out.add(iToE.replace(/[\s-]/g,''));
-      out.add(eToI.replace(/sch/g,'ch'));
-      out.add(iToE.replace(/sch/g,'ch'));
-      out.add(eToI.replace(/ch/g,'sch'));
-      out.add(iToE.replace(/ch/g,'sch'));
-
       out.add(base.replace(/ss/g,'s'));
       out.add(base.replace(/ss/g,'sz'));
-
       return [...out].filter(v => v && v.length >= 2);
     }
-
     function addToQamos(entry){
       const base = normalizeWord(entry.word);
       const variants = generateVariants(base);
       for(const v of variants) addKey(v, entry);
       addKey(base.replace(/[\s-]/g,''), entry);
     }
-
     function buildQamos(){
       for(const k in QAMOS) delete QAMOS[k];
       Object.values(WORTSCHATZ_DATA).forEach(list => (list||[]).forEach(entry => addToQamos(entry)));
@@ -3385,11 +3419,9 @@ lektion16: [
       const al = a.length, bl = b.length;
       if (al === 0) return bl;
       if (bl === 0) return al;
-
       const v0 = new Array(bl + 1);
       const v1 = new Array(bl + 1);
       for (let i = 0; i <= bl; i++) v0[i] = i;
-
       for (let i = 0; i < al; i++){
         v1[0] = i + 1;
         const ca = a.charCodeAt(i);
@@ -3401,18 +3433,14 @@ lektion16: [
       }
       return v1[bl];
     }
-
     function lookupSmart(userInput){
       const raw = String(userInput || '').trim();
       if(!raw) return null;
-
       const n = normalizeWord(raw);
       const variants = generateVariants(n);
-
       for(const v of variants){
         if(QAMOS[v]) return { entry: QAMOS[v], confidence: 1 };
       }
-
       const seen = new Set();
       const candidates = [];
       for(const k in QAMOS){
@@ -3422,24 +3450,18 @@ lektion16: [
           candidates.push(e);
         }
       }
-
       const target = variants[0].replace(/[\s-]/g,'');
       const tl = target.length;
       const maxDist = tl <= 4 ? 1 : (tl <= 7 ? 2 : 3);
-
       let best = null;
       let bestScore = -Infinity;
-
       for(const e of candidates){
         const keyBase = normalizeWord(e.word).replace(/[\s-]/g,'');
         if(!keyBase) continue;
-
         const d = levenshtein(target, keyBase);
         if(d > maxDist) continue;
-
         const sim = 1 - (d / Math.max(1, Math.max(keyBase.length, tl)));
         const bonus = (keyBase.startsWith(target) || target.startsWith(keyBase)) ? 0.12 : 0;
-
         let vBoost = 0;
         for(const v of variants.slice(0, 6)){
           const vc = v.replace(/[\s-]/g,'');
@@ -3447,192 +3469,284 @@ lektion16: [
           const s2 = 1 - (dd / Math.max(1, Math.max(keyBase.length, vc.length)));
           if(s2 > vBoost) vBoost = s2;
         }
-
         const score = sim + bonus + (vBoost * 0.08);
         if(score > bestScore){
           bestScore = score;
           best = e;
         }
       }
-
       if(!best) return null;
       const confidence = Math.max(0, Math.min(0.98, bestScore));
       if(confidence < 0.76) return null;
-
       return { entry: best, confidence };
     }
 
     // ======================
-    // ✅ SPEECH HELPERS (MOBILE-OPTIMIZED + CLEAR)
+    // ✅ SPEECH (FIXED CLEAR AUDIO ON iPhone/Android)
+    // - better voice selection
+    // - prevents "choked" / "muffled" by stopping correctly and chaining utterances
+    // - works only on user click (speaker buttons)
     // ======================
-    let __voices = [];
-    let __voicesLoaded = false;
-    
-    function refreshVoices(){
-      __voices = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
-      __voicesLoaded = __voices.length > 0;
-      // Debug: log available voices
-      if (__voices.length > 0) {
-        console.log('Available voices:', __voices.map(v => ({name: v.name, lang: v.lang})));
-      }
+    const TTS = {
+      voices: [],
+      ready: false,
+      primed: false,
+      speaking: false,
+      isIOS: /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream,
+      isAndroid: /Android/i.test(navigator.userAgent),
+    };
+
+    function ttsRefreshVoices(){
+      if(!window.speechSynthesis) return;
+      TTS.voices = window.speechSynthesis.getVoices() || [];
+      TTS.ready = TTS.voices.length > 0;
     }
-    
     if (window.speechSynthesis){
-      refreshVoices();
-      window.speechSynthesis.onvoiceschanged = refreshVoices;
+      ttsRefreshVoices();
+      window.speechSynthesis.onvoiceschanged = ttsRefreshVoices;
     }
 
-    function getGermanVoice(){
-      const voices = __voices || [];
-      // On mobile, sometimes voices load late
-      if (!__voicesLoaded) {
-        refreshVoices();
+    function pickBestGermanVoice(){
+      const voices = TTS.voices || [];
+      if(!voices.length) return null;
+
+      const scoreVoice = (v) => {
+        const lang = (v.lang || '').toLowerCase();
+        const name = (v.name || '').toLowerCase();
+        let s = 0;
+
+        // Language priority
+        if (lang === 'de-de') s += 50;
+        else if (lang.startsWith('de')) s += 40;
+
+        // Prefer localService on iOS (often clearer)
+        if (v.localService) s += 8;
+
+        // Prefer common high-quality engines
+        if (name.includes('google')) s += 20;
+        if (name.includes('enhanced')) s += 10;
+        if (name.includes('premium')) s += 10;
+        if (name.includes('neural')) s += 10;
+
+        // Some Apple voices can be great too
+        if (name.includes('anna')) s += 12;     // often iOS German voice
+        if (name.includes('helena')) s += 10;
+        if (name.includes('markus')) s += 10;
+
+        // Avoid weird fallback voices
+        if (name.includes('compact')) s -= 2;
+        if (name.includes('android')) s -= 2;
+
+        return s;
+      };
+
+      const german = voices.filter(v => ((v.lang||'').toLowerCase().startsWith('de')));
+      if(!german.length) return null;
+
+      german.sort((a,b) => scoreVoice(b) - scoreVoice(a));
+      return german[0] || null;
+    }
+
+    function ttsPrimeOnce(){
+      // On iOS, priming helps (must be inside user interaction)
+      if(!window.speechSynthesis || TTS.primed) return;
+      try{
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(' ');
+        u.volume = 0; u.rate = 1; u.pitch = 1;
+        window.speechSynthesis.speak(u);
+        TTS.primed = true;
+      }catch(e){}
+    }
+
+    function ttsStop(){
+      if(!window.speechSynthesis) return;
+      try{
+        window.speechSynthesis.cancel();
+        // On iOS sometimes cancel needs a tiny extra tick
+        if (TTS.isIOS) setTimeout(() => { try { window.speechSynthesis.cancel(); } catch(e){} }, 25);
+      }catch(e){}
+      TTS.speaking = false;
+    }
+
+    function cleanSpeakText(t){
+      t = String(t || '').trim();
+      // remove multiple spaces + keep punctuation
+      t = t.replace(/\s+/g,' ').trim();
+      return t;
+    }
+
+    function chunkTextForTTS(text, maxLen = 160){
+      // Split by sentence-ish punctuation first, then by length
+      const t = cleanSpeakText(text);
+      if(!t) return [];
+      const parts = t.split(/([.!?…])\s+/).reduce((acc, cur, i, arr) => {
+        if (cur === '.' || cur === '!' || cur === '?' || cur === '…') {
+          acc[acc.length-1] = (acc[acc.length-1] || '') + cur;
+        } else {
+          acc.push(cur);
+        }
+        return acc;
+      }, []).map(s => s.trim()).filter(Boolean);
+
+      const out = [];
+      for(const p of parts){
+        if(p.length <= maxLen){ out.push(p); continue; }
+        // hard split long sentences
+        let start = 0;
+        while(start < p.length){
+          out.push(p.slice(start, start + maxLen));
+          start += maxLen;
+        }
       }
-      
-      // Try to find the best German voice
-      return voices.find(v => (v.lang || '').toLowerCase() === 'de-de' && v.name.toLowerCase().includes('google'))
-          || voices.find(v => (v.lang || '').toLowerCase() === 'de-de')
-          || voices.find(v => (v.lang || '').toLowerCase().startsWith('de') && v.name.toLowerCase().includes('google'))
-          || voices.find(v => (v.lang || '').toLowerCase().startsWith('de'))
-          || null;
+      return out.filter(Boolean);
     }
 
     function speakGerman(text, opts = {}){
-      const t = String(text || '').trim();
-      if(!t) return;
+      const t = cleanSpeakText(text);
+      if(!t || !window.speechSynthesis) return;
 
-      if(!window.speechSynthesis) {
-        console.warn('Speech synthesis not supported');
-        return;
-      }
+      // MUST be called on click: prime + stop
+      ttsPrimeOnce();
+      ttsStop();
 
-      // On mobile, we need to ensure user interaction happened
-      try {
-        window.speechSynthesis.cancel();
-        
-        // Small delay to ensure cancel completes on mobile
-        setTimeout(() => {
-          const u = new SpeechSynthesisUtterance(t);
-          u.lang = 'de-DE';
-          u.rate = opts.rate ?? 0.80; // Slightly slower for clarity
-          u.pitch = opts.pitch ?? 1.05; // Slightly higher pitch for clarity
-          u.volume = opts.volume ?? 1.0; // Maximum volume
+      // Pick best voice
+      ttsRefreshVoices();
+      const voice = pickBestGermanVoice();
 
-          const v = getGermanVoice();
-          if (v) {
-            u.voice = v;
-            console.log('Using voice:', v.name, v.lang);
-          } else {
-            console.warn('No German voice found, using default');
+      // Settings for clarity (not "muffled")
+      const rate = (opts.rate ?? 0.92);   // slightly faster than 0.80 => clearer on many phones
+      const pitch = (opts.pitch ?? 1.00); // neutral pitch => less robotic
+      const volume = (opts.volume ?? 1.0);
+
+      const chunks = chunkTextForTTS(t, 170);
+
+      // Chain utterances to avoid overlap (this fixes "makhno99")
+      let i = 0;
+      TTS.speaking = true;
+
+      const speakNext = () => {
+        if(i >= chunks.length){
+          TTS.speaking = false;
+          return;
+        }
+        const u = new SpeechSynthesisUtterance(chunks[i]);
+        u.lang = 'de-DE';
+        u.rate = rate;
+        u.pitch = pitch;
+        u.volume = volume;
+        if (voice) u.voice = voice;
+
+        u.onend = () => {
+          i++;
+          // small gap helps clarity on mobile
+          setTimeout(speakNext, (opts.gapMs ?? 120));
+        };
+        u.onerror = () => {
+          // fallback without voice selection
+          try{
+            const f = new SpeechSynthesisUtterance(chunks[i]);
+            f.lang='de-DE'; f.rate=rate; f.pitch=pitch; f.volume=volume;
+            f.onend = () => { i++; setTimeout(speakNext, (opts.gapMs ?? 120)); };
+            window.speechSynthesis.speak(f);
+          }catch(e){
+            TTS.speaking = false;
           }
+        };
 
-          // Error handling for mobile
-          u.onerror = (e) => {
-            console.error('Speech error:', e);
-            // Fallback: try without specific voice
-            const fallback = new SpeechSynthesisUtterance(t);
-            fallback.lang = 'de-DE';
-            fallback.rate = 0.80;
-            fallback.pitch = 1.05;
-            fallback.volume = 1.0;
-            window.speechSynthesis.speak(fallback);
-          };
+        // iOS: speaking must start immediately after click -> use rAF instead of setTimeout
+        requestAnimationFrame(() => window.speechSynthesis.speak(u));
+      };
 
-          window.speechSynthesis.speak(u);
-        }, 50);
-      } catch (e) {
-        console.error('Speech error:', e);
-      }
+      speakNext();
     }
 
     function speakGermanSequence(texts, opts = {}){
-      const arr = (texts || []).map(x => String(x || '').trim()).filter(Boolean);
-      if(!arr.length) return;
+      const arr = (texts || []).map(x => cleanSpeakText(x)).filter(Boolean);
+      if(!arr.length || !window.speechSynthesis) return;
 
-      if(!window.speechSynthesis) return;
+      ttsPrimeOnce();
+      ttsStop();
 
-      try {
-        window.speechSynthesis.cancel();
-        
-        // On mobile, we need a small delay
-        setTimeout(() => {
-          const v = getGermanVoice();
-          const rate = opts.rate ?? 0.80;
-          const pitch = opts.pitch ?? 1.05;
-          const volume = opts.volume ?? 1.0;
-          const gapMs = opts.gapMs ?? 200; // Slightly longer gap
+      ttsRefreshVoices();
+      const voice = pickBestGermanVoice();
 
-          arr.forEach((t, i) => {
-            if (i > 0){
-              // small pause between singular and plural
-              const pause = new SpeechSynthesisUtterance(' ');
-              pause.lang = 'de-DE';
-              pause.rate = 0.6;
-              pause.pitch = 1;
-              pause.volume = 0;
-              window.speechSynthesis.speak(pause);
-            }
-            
-            const u = new SpeechSynthesisUtterance(t);
-            u.lang = 'de-DE';
-            u.rate = rate;
-            u.pitch = pitch;
-            u.volume = volume;
-            if (v) u.voice = v;
-            
-            u.onerror = (e) => {
-              console.error('Speech sequence error:', e);
-            };
-            
-            window.speechSynthesis.speak(u);
-          });
-        }, 50);
-      } catch (e) {
-        console.error('Speech sequence error:', e);
-      }
+      const rate = (opts.rate ?? 0.92);
+      const pitch = (opts.pitch ?? 1.00);
+      const volume = (opts.volume ?? 1.0);
+      const gapMs = (opts.gapMs ?? 220);
+
+      // Flatten each item into chunks and chain all
+      const queue = [];
+      arr.forEach((t, idx) => {
+        const chunks = chunkTextForTTS(t, 120);
+        chunks.forEach(ch => queue.push(ch));
+        if (idx < arr.length - 1) queue.push('__PAUSE__'); // pause between singular/plural
+      });
+
+      let i = 0;
+      TTS.speaking = true;
+
+      const next = () => {
+        if(i >= queue.length){
+          TTS.speaking = false;
+          return;
+        }
+        const item = queue[i];
+
+        if(item === '__PAUSE__'){
+          i++;
+          setTimeout(next, gapMs);
+          return;
+        }
+
+        const u = new SpeechSynthesisUtterance(item);
+        u.lang = 'de-DE';
+        u.rate = rate;
+        u.pitch = pitch;
+        u.volume = volume;
+        if (voice) u.voice = voice;
+
+        u.onend = () => { i++; setTimeout(next, 90); };
+        u.onerror = () => { i++; setTimeout(next, 90); };
+
+        requestAnimationFrame(() => window.speechSynthesis.speak(u));
+      };
+
+      next();
     }
 
     function stripParentheses(s){
       return String(s || '').replace(/\([^)]*\)/g, '').replace(/\s+/g,' ').trim();
     }
-
     function parseNounEntry(wordStr){
       let raw = stripParentheses(wordStr);
       raw = raw.replace(/[“”„"]/g,'').trim();
-
       const m = raw.match(/^(der|die|das)\s+(.+)$/i);
       const article = m ? m[1].toLowerCase() : '';
       const rest = m ? m[2] : raw;
-
       const parts = rest.split(',');
       const base = stripParentheses(parts[0] || '').trim();
-
       const pluralInfo = stripParentheses((parts[1] || '')).trim();
       let plural = '';
-
       if (pluralInfo){
-        if (/^[-–—]+$/.test(pluralInfo)) {
-          plural = '';
-        } else if (pluralInfo.startsWith('-')) {
+        if (/^[-–—]+$/.test(pluralInfo)) plural = '';
+        else if (pluralInfo.startsWith('-')) {
           const suf = pluralInfo.replace(/^-+/, '').trim();
           if (suf) plural = base + suf;
         } else {
           plural = pluralInfo;
         }
       }
-
       return { article, base, plural, isNoun: !!article };
     }
-
     function buildSpeakTextsFromEntry(entry){
       const w = entry && entry.word ? entry.word : '';
       const parsed = parseNounEntry(w);
-
       if (!parsed.isNoun){
         const cleaned = stripParentheses(String(w || '')).split(',')[0].trim();
         return cleaned ? [cleaned] : [];
       }
-
       const singular = (parsed.article + ' ' + parsed.base).trim();
       const texts = [];
       if (singular) texts.push(singular);
@@ -3654,7 +3768,11 @@ lektion16: [
     const showBackCheckbox = document.getElementById('showBack');
 
     function applyBoxCssSize(){
-      const sizes = { small: { app: '900px', boxH: '220px' }, normal:{ app: '1100px', boxH: '260px' }, large: { app: '1400px', boxH: '310px' } };
+      const sizes = {
+        small: { app: '900px', boxH: '220px' },
+        normal:{ app: '1100px', boxH: '260px' },
+        large: { app: '1400px', boxH: '310px' }
+      };
       const conf = sizes[settings.boxSize] || sizes.normal;
       document.documentElement.style.setProperty('--app-max-w', conf.app);
       document.documentElement.style.setProperty('--box-h', conf.boxH);
@@ -3671,7 +3789,11 @@ lektion16: [
 
     function ensureBoxesLength(){
       while (boxes.length < settings.numBoxes) {
-        boxes.push({ word:'', example:'', posOverride:'', note:'', arTextManual:'', darTextManual:'', arabicExampleManual:'', darijaExampleManual:'', darijaExampleB1:'' });
+        boxes.push({
+          word:'', example:'', posOverride:'', note:'',
+          arTextManual:'', darTextManual:'',
+          arabicExampleManual:'', darijaExampleManual:'', darijaExampleB1:''
+        });
       }
       if (boxes.length > settings.numBoxes) boxes = boxes.slice(0, settings.numBoxes);
     }
@@ -3688,12 +3810,24 @@ lektion16: [
     // Build Box
     function createBoxElement(index){
       const data = boxes[index];
-      const box = document.createElement('div'); box.className = 'box';
-      const flip = document.createElement('div'); flip.className = 'flip-card' + (settings.showBack ? ' flipped' : '');
 
-      const front = document.createElement('div'); front.className = 'flip-side flip-front';
-      const wordWrap = document.createElement('div'); wordWrap.className = 'frontWordWrap';
-      const wordTA = document.createElement('textarea'); wordTA.className = 'wordInput'; wordTA.placeholder = 'Wort'; wordTA.value = data.word; wordTA.rows=2;
+      const box = document.createElement('div');
+      box.className = 'box';
+
+      const flip = document.createElement('div');
+      flip.className = 'flip-card' + (settings.showBack ? ' flipped' : '');
+
+      const front = document.createElement('div');
+      front.className = 'flip-side flip-front';
+
+      const wordWrap = document.createElement('div');
+      wordWrap.className = 'frontWordWrap';
+
+      const wordTA = document.createElement('textarea');
+      wordTA.className = 'wordInput';
+      wordTA.placeholder = 'Wort';
+      wordTA.value = data.word;
+      wordTA.rows=2;
 
       // ✅ Speaker Button (WORD) — reads singular + plural if noun
       const speakBtn = document.createElement('button');
@@ -3707,73 +3841,137 @@ lektion16: [
         if (res && res.entry){
           const speakTexts = buildSpeakTextsFromEntry(res.entry);
           if (speakTexts.length){
-            speakGermanSequence(speakTexts, { rate: 0.80, gapMs: 200 });
+            speakGermanSequence(speakTexts, { rate: 0.92, gapMs: 260 });
             return;
           }
         }
         const cleaned = stripParentheses(String(wordTA.value || '')).split(',')[0].trim();
-        speakGerman(cleaned, { rate: 0.80 });
+        speakGerman(cleaned, { rate: 0.92 });
       };
 
       wordWrap.appendChild(wordTA);
       wordWrap.appendChild(speakBtn);
 
-      const exWrap = document.createElement('div'); exWrap.className = 'exampleWrap';
-      const exHeader = document.createElement('div'); exHeader.className = 'exampleHeader';
+      const exWrap = document.createElement('div');
+      exWrap.className = 'exampleWrap';
 
-      // left group: "Beispiel" + speaker button
+      const exHeader = document.createElement('div');
+      exHeader.className = 'exampleHeader';
+
       const leftGroup = document.createElement('div');
       leftGroup.style.display = 'flex';
       leftGroup.style.alignItems = 'center';
       leftGroup.style.gap = '8px';
 
-      const exLabel = document.createElement('div'); exLabel.className = 'exampleLabel'; exLabel.textContent = 'Beispiel';
+      const exLabel = document.createElement('div');
+      exLabel.className = 'exampleLabel';
+      exLabel.textContent = 'Beispiel';
 
-      // ✅ Speaker Button (EXAMPLE) — slow clear reading
+      // ✅ Speaker Button (EXAMPLE) — clear reading
       const exSpeakBtn = document.createElement('button');
       exSpeakBtn.className = 'miniSpeakBtn';
       exSpeakBtn.title = 'Beispiel anhören';
       exSpeakBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>`;
+
+      const exTA = document.createElement('textarea');
+      exTA.className = 'explainInput';
+      exTA.placeholder = 'Beispiel hier...';
+      exTA.value = data.example;
+
       exSpeakBtn.onclick = (e) => {
         e.stopPropagation();
         hapticTap(10);
-        speakGerman(exTA.value, { rate: 0.80 });
+        speakGerman(exTA.value, { rate: 0.92, gapMs: 120 });
       };
 
       leftGroup.appendChild(exLabel);
       leftGroup.appendChild(exSpeakBtn);
 
-      const autoBtn = document.createElement('button'); autoBtn.className = 'autoBtn'; autoBtn.textContent = '⚙ Automatik';
-      const autoMsg = document.createElement('div'); autoMsg.className = 'autoMsg';
+      const autoBtn = document.createElement('button');
+      autoBtn.className = 'autoBtn';
+      autoBtn.textContent = '⚙ Automatik';
+
+      const autoMsg = document.createElement('div');
+      autoMsg.className = 'autoMsg';
 
       exHeader.appendChild(leftGroup);
       exHeader.appendChild(autoBtn);
 
-      const exTA = document.createElement('textarea'); exTA.className = 'explainInput'; exTA.placeholder = 'Beispiel hier...'; exTA.value = data.example;
+      exWrap.appendChild(exHeader);
+      exWrap.appendChild(autoMsg);
+      exWrap.appendChild(exTA);
 
-      exWrap.appendChild(exHeader); exWrap.appendChild(autoMsg); exWrap.appendChild(exTA);
-      front.appendChild(wordWrap); front.appendChild(exWrap);
+      front.appendChild(wordWrap);
+      front.appendChild(exWrap);
 
-      const back = document.createElement('div'); back.className = 'flip-side flip-back';
-      const posBadge = document.createElement('div'); posBadge.className = 'posBadge';
+      // BACK
+      const back = document.createElement('div');
+      back.className = 'flip-side flip-back';
 
-      const topRow = document.createElement('div'); topRow.className = 'backTopRow';
-      const arCenter = document.createElement('textarea'); arCenter.className = 'arabicCenter'; arCenter.placeholder = 'الترجمة بالعربية...'; arCenter.value = data.arTextManual;
-      const darSide = document.createElement('textarea'); darSide.className = 'darijaSide'; darSide.placeholder = 'بالدارجة...'; darSide.value = data.darTextManual;
-      topRow.appendChild(darSide); topRow.appendChild(arCenter);
+      const posBadge = document.createElement('div');
+      posBadge.className = 'posBadge';
 
-      const noteWrap = document.createElement('div'); noteWrap.className = 'backNoteWrap';
-      const exL = document.createElement('div'); exL.className = 'noteLabel'; exL.textContent = 'أكتب مثالك هنا:';
-      const arExTA = document.createElement('textarea'); arExTA.className = 'noteInput'; arExTA.placeholder = 'مثال بالعربية...'; arExTA.value = data.arabicExampleManual;
-      const darExTA = document.createElement('textarea'); darExTA.className = 'noteInput'; darExTA.placeholder = 'مثال بالدارجة...'; darExTA.value = data.darijaExampleManual;
+      const topRow = document.createElement('div');
+      topRow.className = 'backTopRow';
 
-      const extraNoteWrap = document.createElement('div'); extraNoteWrap.style.display = 'none'; extraNoteWrap.style.flexDirection = 'column'; extraNoteWrap.style.gap='4px'; extraNoteWrap.style.borderTop='1px dashed rgba(255,255,255,0.1)'; extraNoteWrap.style.marginTop='6px'; extraNoteWrap.style.paddingTop='6px';
-      const nL = document.createElement('div'); nL.className = 'noteLabel'; nL.textContent = 'ملاحظة:';
-      const noteTA = document.createElement('textarea'); noteTA.className = 'noteInput'; noteTA.placeholder = 'ملاحظة...'; noteTA.value = data.note;
-      extraNoteWrap.appendChild(nL); extraNoteWrap.appendChild(noteTA);
+      const arCenter = document.createElement('textarea');
+      arCenter.className = 'arabicCenter';
+      arCenter.placeholder = 'الترجمة بالعربية...';
+      arCenter.value = data.arTextManual;
 
-      noteWrap.appendChild(exL); noteWrap.appendChild(arExTA); noteWrap.appendChild(darExTA); noteWrap.appendChild(extraNoteWrap);
-      back.appendChild(posBadge); back.appendChild(topRow); back.appendChild(noteWrap);
+      const darSide = document.createElement('textarea');
+      darSide.className = 'darijaSide';
+      darSide.placeholder = 'بالدارجة...';
+      darSide.value = data.darTextManual;
+
+      topRow.appendChild(darSide);
+      topRow.appendChild(arCenter);
+
+      const noteWrap = document.createElement('div');
+      noteWrap.className = 'backNoteWrap';
+
+      const exL = document.createElement('div');
+      exL.className = 'noteLabel';
+      exL.textContent = 'أكتب مثالك هنا:';
+
+      const arExTA = document.createElement('textarea');
+      arExTA.className = 'noteInput';
+      arExTA.placeholder = 'مثال بالعربية...';
+      arExTA.value = data.arabicExampleManual;
+
+      const darExTA = document.createElement('textarea');
+      darExTA.className = 'noteInput';
+      darExTA.placeholder = 'مثال بالدارجة...';
+      darExTA.value = data.darijaExampleManual;
+
+      const extraNoteWrap = document.createElement('div');
+      extraNoteWrap.style.display = 'none';
+      extraNoteWrap.style.flexDirection = 'column';
+      extraNoteWrap.style.gap='4px';
+      extraNoteWrap.style.borderTop='1px dashed rgba(255,255,255,0.1)';
+      extraNoteWrap.style.marginTop='6px';
+      extraNoteWrap.style.paddingTop='6px';
+
+      const nL = document.createElement('div');
+      nL.className = 'noteLabel';
+      nL.textContent = 'ملاحظة:';
+
+      const noteTA = document.createElement('textarea');
+      noteTA.className = 'noteInput';
+      noteTA.placeholder = 'ملاحظة...';
+      noteTA.value = data.note;
+
+      extraNoteWrap.appendChild(nL);
+      extraNoteWrap.appendChild(noteTA);
+
+      noteWrap.appendChild(exL);
+      noteWrap.appendChild(arExTA);
+      noteWrap.appendChild(darExTA);
+      noteWrap.appendChild(extraNoteWrap);
+
+      back.appendChild(posBadge);
+      back.appendChild(topRow);
+      back.appendChild(noteWrap);
 
       function render(){
         const res = lookupSmart(wordTA.value);
@@ -3784,26 +3982,23 @@ lektion16: [
         darSide.value = data.darTextManual || (b1?b1.darija:'');
 
         const manualDarEx = (data.darijaExampleManual || '').trim();
-        const autoDarEx   = (data.darijaExampleB1 || '').trim();
+        const autoDarEx = (data.darijaExampleB1 || '').trim();
         darExTA.value = manualDarEx || autoDarEx || '';
         arExTA.value = data.arabicExampleManual || '';
+
         extraNoteWrap.style.display = (b1 || (data.note||'').trim() !== '') ? 'flex' : 'none';
 
         [wordTA, exTA, arCenter, darSide, arExTA, darExTA, noteTA].forEach(t => autoFitTextarea(t));
       }
 
-      // ✅ SMART AUTOMATIK
-      // ⚠️ NO SOUND + NO SPEAK here (sound only on speaker buttons)
+      // ✅ SMART AUTOMATIK (NO SOUND)
       autoBtn.onclick = (e) => {
         e.stopPropagation();
-
-        // AirDrop-like feel (visual + haptic only)
         hapticTap(10);
         flashPulse(box);
         startTransferBar(900);
 
         const res = lookupSmart(wordTA.value);
-
         if(!res){
           autoMsg.textContent = "❌ ما لقيتش (قرّب شوية)";
           endTransferBar();
@@ -3819,24 +4014,38 @@ lektion16: [
         exTA.value = b1.de_example;
         data.darijaExampleB1 = b1.darija_example;
 
-        // ✅ Auto-correct visible word to exact dictionary form
+        // Auto-correct visible word to exact dictionary form
         data.word = b1.word;
         wordTA.value = b1.word;
 
-        render();
-        save();
-        endTransferBar();
+        render(); save(); endTransferBar();
       };
 
-      posBadge.onclick = (e) => { e.stopPropagation(); data.posOverride = data.posOverride==='V'?'N':data.posOverride==='N'?'A':'V'; render(); save(); };
+      posBadge.onclick = (e) => {
+        e.stopPropagation();
+        data.posOverride = data.posOverride==='V'?'N':data.posOverride==='N'?'A':'V';
+        render(); save();
+      };
 
-      const binds = [ [wordTA,'word'], [exTA,'example'], [arCenter,'arTextManual'], [darSide,'darTextManual'], [arExTA,'arabicExampleManual'], [darExTA,'darijaExampleManual'], [noteTA,'note'] ];
-      binds.forEach(([el, key]) => { el.oninput = () => { data[key] = el.value; autoFitTextarea(el); save(); }; });
+      const binds = [
+        [wordTA,'word'], [exTA,'example'],
+        [arCenter,'arTextManual'], [darSide,'darTextManual'],
+        [arExTA,'arabicExampleManual'], [darExTA,'darijaExampleManual'],
+        [noteTA,'note']
+      ];
+      binds.forEach(([el, key]) => {
+        el.oninput = () => { data[key] = el.value; autoFitTextarea(el); save(); };
+      });
 
-      box.onclick = (e) => { if(!['TEXTAREA','INPUT','BUTTON'].includes(e.target.tagName)) flip.classList.toggle('flipped'); };
+      box.onclick = (e) => {
+        if(!['TEXTAREA','INPUT','BUTTON'].includes(e.target.tagName)) flip.classList.toggle('flipped');
+      };
+
       setTimeout(render, 10);
 
-      flip.appendChild(front); flip.appendChild(back); box.appendChild(flip);
+      flip.appendChild(front);
+      flip.appendChild(back);
+      box.appendChild(flip);
       return box;
     }
 
@@ -3860,11 +4069,17 @@ lektion16: [
       }catch(e){}
     }
 
-    numBoxesInput.oninput = () => { settings.numBoxes = numBoxesInput.value; numBoxesValue.textContent = numBoxesInput.value; updateGrid(); save(); };
+    numBoxesInput.oninput = () => {
+      settings.numBoxes = numBoxesInput.value;
+      numBoxesValue.textContent = numBoxesInput.value;
+      updateGrid(); save();
+    };
     columnsSelect.onchange = () => { settings.columns = columnsSelect.value; updateGrid(); save(); };
     boxSizeSelect.onchange = () => { settings.boxSize = boxSizeSelect.value; updateGrid(); save(); };
     showBackCheckbox.onchange = () => { settings.showBack = showBackCheckbox.checked; updateGrid(); save(); };
+
     document.getElementById('resetBtn').onclick = () => { boxes=[]; updateGrid(); save(); };
+
     window.addEventListener('resize', () => { requestAnimationFrame(updateGrid); });
 
     document.getElementById('waBtn').onclick = () => document.getElementById('waPopup').classList.toggle('open');
@@ -3876,24 +4091,18 @@ lektion16: [
     // =========================================================
     // ✅ 3. CREATIVE WORTSCHATZ LOGIC (NO SOUND)
     // =========================================================
-
-    function triggerHaptic(pattern = [10, 30, 10]) {
-      if (navigator.vibrate) navigator.vibrate(pattern);
-    }
+    function triggerHaptic(pattern = [10, 30, 10]) { if (navigator.vibrate) navigator.vibrate(pattern); }
 
     function fireConfetti() {
       const canvas = document.getElementById('confettiCanvas');
       const ctx = canvas.getContext('2d');
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-
       const particles = [];
       const colors = ['#007AFF', '#34C759', '#FFD60A', '#FF2D55', '#AF52DE'];
-
       for (let i = 0; i < 150; i++) {
         particles.push({
-          x: canvas.width / 2,
-          y: canvas.height / 2,
+          x: canvas.width / 2, y: canvas.height / 2,
           vx: (Math.random() - 0.5) * 15,
           vy: (Math.random() - 0.5) * 15,
           size: Math.random() * 8 + 2,
@@ -3901,7 +4110,6 @@ lektion16: [
           life: 100
         });
       }
-
       function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         let active = false;
@@ -3935,13 +4143,8 @@ lektion16: [
       Object.keys(WORTSCHATZ_DATA).forEach(lessonTitle => {
         const card = document.createElement('div');
         card.className = 'hubCard';
-
         const count = (WORTSCHATZ_DATA[lessonTitle] || []).length;
-
-        card.innerHTML = `
-          <div class="hubCardName">${lessonTitle}</div>
-          <div class="hubCardCount">${count} Wörter</div>
-        `;
+        card.innerHTML = `<div class="hubCardName">${lessonTitle}</div><div class="hubCardCount">${count} Wörter</div>`;
 
         card.onclick = () => {
           triggerHaptic([10, 30, 10]);
@@ -3950,10 +4153,8 @@ lektion16: [
 
           const loadBar = document.getElementById('loadBar');
           const loadContainer = document.getElementById('loadBarContainer');
-
           loadContainer.style.display = 'block';
           loadBar.style.width = '0%';
-
           setTimeout(() => { loadBar.style.width = '50%'; }, 80);
           setTimeout(() => { loadBar.style.width = '100%'; }, 320);
 
@@ -3980,13 +4181,10 @@ lektion16: [
 
             save();
             updateGrid();
-
             fireConfetti();
-
             hub.classList.remove('open');
             loadContainer.style.display = 'none';
             loadBar.style.width = '0%';
-
             endTransferBar();
           }, 650);
         };
@@ -4002,7 +4200,6 @@ lektion16: [
       triggerHaptic(10);
       document.getElementById('vocabHub').classList.remove('open');
     };
-
     document.getElementById('vocabHub').onclick = (e) => {
       if(e.target.id === 'vocabHub') document.getElementById('vocabHub').classList.remove('open');
     };
@@ -4014,8 +4211,8 @@ lektion16: [
       const loader = document.getElementById('pdfLoading');
       const progress = document.getElementById('pdfProgress');
       const progressFill = document.getElementById('pdfProgressFill');
-      
-      try {
+
+      try{
         loader.style.display = 'flex';
         progress.style.display = 'block';
         progress.classList.add('active');
@@ -4024,16 +4221,17 @@ lektion16: [
         const pdf = new jsPDF("p", "mm", "a4");
 
         ensureBoxesLength();
-        const cols = Math.min(Math.max(1, settings.columns), 4);
+        const cols = Math.min(Math.max(1, parseInt(settings.columns,10) || 3), 4);
 
-        // Adaptive quality: lower on mobile for speed
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         const canvasScale = isMobile ? 2 : 4;
-        const totalPages = Math.ceil(boxes.length / (cols * 6)); // Estimate
 
-        const pageW = 210; const pageH = 297;
-        const pad = 12; const gap = 4;
+        const pageW = 210;
+        const pageH = 297;
+        const pad = 12;
+        const gap = 4;
         const innerW = pageW - (2 * pad);
+
         const boxMmW = (innerW - (gap * (cols - 1))) / cols;
         const boxMmH = boxMmW * 1.1;
 
@@ -4047,19 +4245,26 @@ lektion16: [
           headerArea.style.setProperty("--header-h", headerH + "mm");
 
           if (mode === "front" && headerH > 0) {
-            const title = document.createElement("div"); title.className = "pdfBigTitle"; title.textContent = "Deutsch mit Said ist einfacher, als du denkst.";
-            const meta = document.createElement("div"); meta.className = "pdfMeta";
+            const title = document.createElement("div");
+            title.className = "pdfBigTitle";
+            title.textContent = "Deutsch mit Said ist einfacher, als du denkst.";
+
+            const meta = document.createElement("div");
+            meta.className = "pdfMeta";
             const nm = (document.getElementById('name').value || "").trim();
             const dt = (document.getElementById('date').value || "").trim();
             const tp = (document.getElementById('topic').value || "").trim();
             meta.innerHTML = `<span>Name: ${nm||"—"}</span><span>Datum: ${dt||"—"}</span><span>Thema: ${tp||"—"}</span>`;
+
             headerArea.appendChild(title);
             headerArea.appendChild(meta);
           }
+
           pdfStage.appendChild(headerArea);
 
           const g = document.createElement("div");
           g.className = "pdfGrid";
+
           pdfStage.style.setProperty("--pdfCols", String(cols));
           pdfStage.style.setProperty("--pdfBoxW", boxMmW + "mm");
           pdfStage.style.setProperty("--pdfBoxH", boxMmH + "mm");
@@ -4078,10 +4283,15 @@ lektion16: [
                 card.classList.add("empty");
               } else {
                 const d = pageData[itemIndex] || {};
-                const inner = document.createElement("div"); inner.className = "pdfCardInner";
+                const inner = document.createElement("div");
+                inner.className = "pdfCardInner";
 
                 if (mode === "front"){
-                  inner.innerHTML = `<div class="pdfWordWrap"><div class="pdfWord">${d.word||""}</div></div><div class="pdfLine"></div><div class="pdfExample">${d.example||""}</div>`;
+                  inner.innerHTML = `
+                    <div class="pdfWordWrap"><div class="pdfWord">${(d.word||"")}</div></div>
+                    <div class="pdfLine"></div>
+                    <div class="pdfExample">${(d.example||"")}</div>
+                  `;
                 } else {
                   const res = lookupSmart(d.word);
                   const b1 = res ? res.entry : null;
@@ -4097,17 +4307,20 @@ lektion16: [
                     ${d.note ? `<div class="pdfLine"></div><div class="pdfNote">ملاحظة: ${d.note}</div>` : ''}
                   `;
                 }
+
                 card.appendChild(inner);
               }
+
               g.appendChild(card);
             }
           }
+
           pdfStage.appendChild(g);
         }
 
         let index = 0;
         let isFirstPage = true;
-        let pageCount = 0;
+        let step = 0;
 
         while (index < boxes.length) {
           const headerH = isFirstPage ? 20 : 0;
@@ -4118,32 +4331,26 @@ lektion16: [
 
           pdfStage.style.zIndex = "1";
 
-          // Update progress
-          pageCount++;
-          const progressPercent = Math.min(100, Math.round((pageCount / (totalPages * 2)) * 100));
-          progressFill.style.width = progressPercent + '%';
+          // progress (front+back)
+          step++;
+          progressFill.style.width = Math.min(100, Math.round((step / (Math.ceil(boxes.length/perPage) * 2)) * 100)) + '%';
 
+          // FRONT
           buildPage("front", index, perPage, headerH);
-          await new Promise(r => setTimeout(r, 50)); // Reduced delay for speed
-          const c1 = await html2canvas(pdfStage, { 
-            scale: canvasScale, 
-            useCORS: true, 
-            backgroundColor: "#ffffff",
-            logging: false // Disable logging for performance
-          });
+          await new Promise(r => setTimeout(r, 40));
+          const c1 = await html2canvas(pdfStage, { scale: canvasScale, useCORS: true, backgroundColor: "#ffffff", logging: false });
           if(!isFirstPage) pdf.addPage();
-          pdf.addImage(c1.toDataURL("image/png", 0.9), "PNG", 0, 0, 210, 297);
+          pdf.addImage(c1.toDataURL("image/png"), "PNG", 0, 0, 210, 297);
 
+          // BACK
           pdf.addPage();
+          step++;
+          progressFill.style.width = Math.min(100, Math.round((step / (Math.ceil(boxes.length/perPage) * 2)) * 100)) + '%';
+
           buildPage("back", index, perPage, headerH);
-          await new Promise(r => setTimeout(r, 50)); // Reduced delay for speed
-          const c2 = await html2canvas(pdfStage, { 
-            scale: canvasScale, 
-            useCORS: true, 
-            backgroundColor: "#ffffff",
-            logging: false // Disable logging for performance
-          });
-          pdf.addImage(c2.toDataURL("image/png", 0.9), "PNG", 0, 0, 210, 297);
+          await new Promise(r => setTimeout(r, 40));
+          const c2 = await html2canvas(pdfStage, { scale: canvasScale, useCORS: true, backgroundColor: "#ffffff", logging: false });
+          pdf.addImage(c2.toDataURL("image/png"), "PNG", 0, 0, 210, 297);
 
           index += perPage;
           isFirstPage = false;
@@ -4152,9 +4359,10 @@ lektion16: [
         pdfStage.style.zIndex = "-999";
         progress.classList.remove('active');
         progress.style.display = 'none';
+
         pdf.save("Deutsch_mit_Said.pdf");
 
-      } catch (e) {
+      } catch(e){
         alert("Fehler: " + e.message);
         console.error('PDF Error:', e);
       } finally {
@@ -4166,8 +4374,10 @@ lektion16: [
 
     window.addEventListener('DOMContentLoaded', () => {
       load();
-      numBoxesInput.value = settings.numBoxes; numBoxesValue.textContent = settings.numBoxes;
-      columnsSelect.value = settings.columns; boxSizeSelect.value = settings.boxSize;
+      numBoxesInput.value = settings.numBoxes;
+      numBoxesValue.textContent = settings.numBoxes;
+      columnsSelect.value = settings.columns;
+      boxSizeSelect.value = settings.boxSize;
       showBackCheckbox.checked = settings.showBack;
       updateGrid();
     });
@@ -4175,19 +4385,13 @@ lektion16: [
 
   <footer class="cleanFooter">
     <div class="cleanSocial">
-      <a href="https://www.instagram.com/saidaiadi?igsh=MWVldzB2OXNvMWwzaQ=="
-         target="_blank"
-         aria-label="Instagram"
-         class="cleanIcon">
+      <a href="https://www.instagram.com/saidaiadi?igsh=MWVldzB2OXNvMWwzaQ==" target="_blank" aria-label="Instagram" class="cleanIcon">
         <svg viewBox="0 0 24 24">
           <path d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5H7zm10 2a3 3 0 013 3v10a3 3 0 01-3 3H7a3 3 0 01-3-3V7a3 3 0 013-3h10zm-5 3.5A5.5 5.5 0 106.5 13 5.51 5.51 0 0012 7.5zm0 2A3.5 3.5 0 118.5 13 3.5 3.5 0 0112 9.5zm4.75-3.75a1.25 1.25 0 11-1.25 1.25 1.25 1.25 0 011.25-1.25z"/>
         </svg>
       </a>
 
-      <a href="https://www.tiktok.com/@saidaiadii?is_from_webapp=1&sender_device=pc"
-         target="_blank"
-         aria-label="TikTok"
-         class="cleanIcon">
+      <a href="https://www.tiktok.com/@saidaiadii?is_from_webapp=1&sender_device=pc" target="_blank" aria-label="TikTok" class="cleanIcon">
         <svg viewBox="0 0 24 24">
           <path d="M16 3c.55 2.26 2.24 3.95 4.5 4.5v3c-1.56-.04-3.04-.5-4.25-1.3V15a6 6 0 11-6-6c.34 0 .67.03 1 .08v3.02a3 3 0 103 3V3h1z"/>
         </svg>
