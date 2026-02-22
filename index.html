@@ -846,8 +846,7 @@
     // ✅ 1. WORTSCHATZ DATENBANK
     // ================================================================================================
     const WORTSCHATZ_DATA = {
-      
- 
+
       "Lektion9": [
       // ===== Feste / Bräuche (احتفالات / تقاليد) =====
        { word:"der Ball, -e", pos:"N", ar:"حفلة راقصة", darija:"حفلة ديال الشطيح", de_example:"Wir gehen heute Abend auf einen Ball.", darija_example:"غادين لواحد الحفلة ديال الشطيح هاد الليلة." },
@@ -3878,14 +3877,27 @@ lektion16: [
       return { article, base, plural, isNoun: !!article };
     }
 
-    // ✅ buildSpeakTextsFromEntry (نزيد die فالجمع و نرجعو list)
+    // ✅ التعديل المطلوب: فقط يتم نطق الكلمات إذا وجد + A وغيرها (مع إزالة الأقواس لكي ينطق ما بداخلها)
     function buildSpeakTextsFromEntry(entry){
       const w = entry && entry.word ? entry.word : '';
-      const parsed = parseNounEntry(w);
-      if (!parsed.isNoun){
-        const cleaned = stripParentheses(String(w || '')).split(',')[0].trim();
-        return cleaned ? [cleaned] : [];
+      
+      const isNoun = /^(der|die|das)\s+/i.test(w.trim());
+      
+      if (!isNoun) {
+        let s = String(w || '');
+        // التعويض المطلوب بالضبط فقط:
+        s = s.replace(/\+\s*A\b/g, 'plus Akkusativ');
+        s = s.replace(/\+\s*D\b/g, 'plus Dativ');
+        s = s.replace(/\+\s*G\b/g, 'plus Genitiv');
+        s = s.replace(/\+\s*N\b/g, 'plus Nominativ');
+        
+        // إزالة رمز الأقواس فقط لكي ينطق الكلمة التي بداخلها بدلاً من تخطيها
+        s = s.replace(/[()]/g, ' ');
+        s = s.replace(/\s+/g, ' ').trim();
+        return s ? [s] : [];
       }
+
+      const parsed = parseNounEntry(w);
       const singular = (parsed.article + ' ' + parsed.base).trim();
 
       let pluralText = '';
@@ -3964,7 +3976,7 @@ lektion16: [
     // ✅ APP LOGIC
     // ======================
 
-    // ✅ Helper function لمسألة القواعد والـ POS 
+    // ✅ Helper function لمسألة القواعد والـ POS لتظهر ككتابة وتنطق بالصوت
     function formatPosText(code) {
       if (code === 'A') return 'plus Akkusativ';
       if (code === 'D') return 'plus Dativ';
@@ -4042,6 +4054,7 @@ lektion16: [
       const speakBtn = document.createElement('button');
       speakBtn.className = 'speakBtn';
       speakBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>`;
+      
       speakBtn.onclick = (e) => {
         e.stopPropagation();
         hapticTap(10);
@@ -4053,8 +4066,14 @@ lektion16: [
             return;
           }
         }
-        const cleaned = stripParentheses(String(wordTA.value || '')).split(',')[0].trim();
-        speakGerman(cleaned, { rate: 0.96 });
+        // التعويض في حالة لم يتم العثور على الكلمة
+        let rawText = String(wordTA.value || '');
+        rawText = rawText.replace(/\+\s*A\b/g, 'plus Akkusativ');
+        rawText = rawText.replace(/\+\s*D\b/g, 'plus Dativ');
+        rawText = rawText.replace(/\+\s*G\b/g, 'plus Genitiv');
+        rawText = rawText.replace(/\+\s*N\b/g, 'plus Nominativ');
+        rawText = rawText.replace(/[()]/g, ' ');
+        speakGerman(rawText.replace(/\s+/g, ' ').trim(), { rate: 0.96 });
       };
 
       wordWrap.appendChild(wordTA);
@@ -4227,7 +4246,6 @@ lektion16: [
         endTransferBar();
       };
 
-      // ✅ التعديل هنا: الدوران بين الحالات + تغيير النص للكامل + النطق الصوتي
       posBadge.onclick = (e) => {
         e.stopPropagation();
         hapticTap(10);
@@ -4242,7 +4260,6 @@ lektion16: [
         let nextVal = cycle[(idx + 1) % cycle.length];
         data.posOverride = nextVal;
         
-        // نطق الكلمة عند الضغط (سيقرأ plus Akkusativ مثلاً)
         speakGerman(formatPosText(nextVal), { rate: 0.96 });
 
         render(); 
