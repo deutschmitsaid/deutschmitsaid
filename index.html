@@ -579,8 +579,7 @@
     // ✅ 1. WORTSCHATZ DATENBANK (المكان المخصص للدروس)
     // ================================================================================================
     const WORTSCHATZ_DATA = {
-      // ... (keep your existing data here)
-     
+      
       "Lektion9": [
       // ===== Feste / Bräuche (احتفالات / تقاليد) =====
        { word:"der Ball, -e", pos:"N", ar:"حفلة راقصة", darija:"حفلة ديال الشطيح", de_example:"Wir gehen heute Abend auf einen Ball.", darija_example:"غادين لواحد الحفلة ديال الشطيح هاد الليلة." },
@@ -3464,7 +3463,7 @@ lektion16: [
     }
 
     // ======================
-    // ✅ SPEECH HELPERS (MOBILE-OPTIMIZED)
+    // ✅ SPEECH HELPERS (MOBILE-OPTIMIZED + CLEAR)
     // ======================
     let __voices = [];
     let __voicesLoaded = false;
@@ -3472,6 +3471,10 @@ lektion16: [
     function refreshVoices(){
       __voices = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
       __voicesLoaded = __voices.length > 0;
+      // Debug: log available voices
+      if (__voices.length > 0) {
+        console.log('Available voices:', __voices.map(v => ({name: v.name, lang: v.lang})));
+      }
     }
     
     if (window.speechSynthesis){
@@ -3485,7 +3488,11 @@ lektion16: [
       if (!__voicesLoaded) {
         refreshVoices();
       }
-      return voices.find(v => (v.lang || '').toLowerCase() === 'de-de')
+      
+      // Try to find the best German voice
+      return voices.find(v => (v.lang || '').toLowerCase() === 'de-de' && v.name.toLowerCase().includes('google'))
+          || voices.find(v => (v.lang || '').toLowerCase() === 'de-de')
+          || voices.find(v => (v.lang || '').toLowerCase().startsWith('de') && v.name.toLowerCase().includes('google'))
           || voices.find(v => (v.lang || '').toLowerCase().startsWith('de'))
           || null;
     }
@@ -3507,9 +3514,9 @@ lektion16: [
         setTimeout(() => {
           const u = new SpeechSynthesisUtterance(t);
           u.lang = 'de-DE';
-          u.rate = opts.rate ?? 0.85;
-          u.pitch = opts.pitch ?? 1;
-          u.volume = opts.volume ?? 1;
+          u.rate = opts.rate ?? 0.80; // Slightly slower for clarity
+          u.pitch = opts.pitch ?? 1.05; // Slightly higher pitch for clarity
+          u.volume = opts.volume ?? 1.0; // Maximum volume
 
           const v = getGermanVoice();
           if (v) {
@@ -3525,7 +3532,9 @@ lektion16: [
             // Fallback: try without specific voice
             const fallback = new SpeechSynthesisUtterance(t);
             fallback.lang = 'de-DE';
-            fallback.rate = 0.85;
+            fallback.rate = 0.80;
+            fallback.pitch = 1.05;
+            fallback.volume = 1.0;
             window.speechSynthesis.speak(fallback);
           };
 
@@ -3548,10 +3557,10 @@ lektion16: [
         // On mobile, we need a small delay
         setTimeout(() => {
           const v = getGermanVoice();
-          const rate = opts.rate ?? 0.85;
-          const pitch = opts.pitch ?? 1;
-          const volume = opts.volume ?? 1;
-          const gapMs = opts.gapMs ?? 180;
+          const rate = opts.rate ?? 0.80;
+          const pitch = opts.pitch ?? 1.05;
+          const volume = opts.volume ?? 1.0;
+          const gapMs = opts.gapMs ?? 200; // Slightly longer gap
 
           arr.forEach((t, i) => {
             if (i > 0){
@@ -3698,12 +3707,12 @@ lektion16: [
         if (res && res.entry){
           const speakTexts = buildSpeakTextsFromEntry(res.entry);
           if (speakTexts.length){
-            speakGermanSequence(speakTexts, { rate: 0.85, gapMs: 180 });
+            speakGermanSequence(speakTexts, { rate: 0.80, gapMs: 200 });
             return;
           }
         }
         const cleaned = stripParentheses(String(wordTA.value || '')).split(',')[0].trim();
-        speakGerman(cleaned, { rate: 0.85 });
+        speakGerman(cleaned, { rate: 0.80 });
       };
 
       wordWrap.appendChild(wordTA);
@@ -3728,7 +3737,7 @@ lektion16: [
       exSpeakBtn.onclick = (e) => {
         e.stopPropagation();
         hapticTap(10);
-        speakGerman(exTA.value, { rate: 0.85 });
+        speakGerman(exTA.value, { rate: 0.80 });
       };
 
       leftGroup.appendChild(exLabel);
@@ -3999,7 +4008,7 @@ lektion16: [
     };
 
     // =========================================================
-    // PDF GENERATOR (MOBILE-OPTIMIZED)
+    // PDF GENERATOR (MOBILE-OPTIMIZED + ROBUST)
     // =========================================================
     document.getElementById('downloadPdfBtn').onclick = async () => {
       const loader = document.getElementById('pdfLoading');
