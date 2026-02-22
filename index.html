@@ -330,7 +330,9 @@
       color: #d7f7e6;
       direction:ltr;
       cursor:pointer;
+      transition: background 0.2s;
     }
+    .posBadge:hover { background: rgba(62,122,75,0.4); }
     .backTopRow{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; margin-top: 8px; flex: 1; }
     .arabicCenter{
       flex: 1.2;
@@ -845,6 +847,7 @@
     // ================================================================================================
     const WORTSCHATZ_DATA = {
       
+ 
       "Lektion9": [
       // ===== Feste / Bräuche (احتفالات / تقاليد) =====
        { word:"der Ball, -e", pos:"N", ar:"حفلة راقصة", darija:"حفلة ديال الشطيح", de_example:"Wir gehen heute Abend auf einen Ball.", darija_example:"غادين لواحد الحفلة ديال الشطيح هاد الليلة." },
@@ -3560,6 +3563,7 @@ lektion16: [
       // ===== Präpositionen (حروف الجر) =====
       { word:"statt +G (ugs. D)", pos:"Präp", ar:"بدلا من", darija:"بلاصة", de_example:"Statt des Buches hat er mir Geld gegeben.", darija_example:"بلاصة الكتاب، عطاني فلوس." }
       ],
+
     };
 
     // ================================================================================================
@@ -3959,6 +3963,16 @@ lektion16: [
     // ======================
     // ✅ APP LOGIC
     // ======================
+
+    // ✅ Helper function لمسألة القواعد والـ POS 
+    function formatPosText(code) {
+      if (code === 'A') return 'plus Akkusativ';
+      if (code === 'D') return 'plus Dativ';
+      if (code === 'G') return 'plus Genitiv';
+      if (code === 'N') return 'plus Nominativ';
+      return code || 'N/V/A';
+    }
+
     let boxes = [];
     let settings = { numBoxes: 12, columns: 3, boxSize: 'normal', showBack: false };
 
@@ -4168,7 +4182,9 @@ lektion16: [
         const res = lookupSmart(wordTA.value);
         const b1 = res ? res.entry : null;
 
-        posBadge.textContent = data.posOverride || (b1?b1.pos:'N/V/A');
+        let currentPos = data.posOverride || (b1 ? b1.pos : 'N');
+        posBadge.textContent = formatPosText(currentPos);
+        
         arCenter.value = data.arTextManual || (b1?b1.ar:'');
         darSide.value = data.darTextManual || (b1?b1.darija:'');
 
@@ -4211,10 +4227,26 @@ lektion16: [
         endTransferBar();
       };
 
+      // ✅ التعديل هنا: الدوران بين الحالات + تغيير النص للكامل + النطق الصوتي
       posBadge.onclick = (e) => {
         e.stopPropagation();
-        data.posOverride = data.posOverride==='V'?'N':data.posOverride==='N'?'A':'V';
-        render(); save();
+        hapticTap(10);
+        const cycle = ['N', 'A', 'D', 'G', 'V', 'Adj', 'Adv'];
+        const res = lookupSmart(wordTA.value);
+        const b1 = res ? res.entry : null;
+        
+        let current = data.posOverride || (b1 ? b1.pos : 'N');
+        let idx = cycle.indexOf(current);
+        if (idx === -1) idx = 0;
+        
+        let nextVal = cycle[(idx + 1) % cycle.length];
+        data.posOverride = nextVal;
+        
+        // نطق الكلمة عند الضغط (سيقرأ plus Akkusativ مثلاً)
+        speakGerman(formatPosText(nextVal), { rate: 0.96 });
+
+        render(); 
+        save();
       };
 
       const binds = [
