@@ -36,16 +36,13 @@
       --glass2: rgba(255,255,255,0.06);
       --wa:#25D366;
       --waDark:#0b5a46;
-
       --blue-grad: linear-gradient(90deg, #2563eb, #3b82f6);
       --box-h: 260px;
       --accent: #3b82f6;
-
       --airdrop-blue: #007AFF;
       --airdrop-green: #34C759;
       --airdrop-blue-rgb: 0, 122, 255;
     }
-
     *{ box-sizing:border-box; }
     html, body{ height:100%; width:100%; margin:0; padding:0; }
     body{
@@ -101,12 +98,7 @@
       box-shadow: var(--shadow);
       flex-wrap: wrap;
     }
-    .brand{
-      display:flex;
-      flex-direction:column;
-      gap:3px;
-      flex: 1 1 200px;
-    }
+    .brand{ display:flex; flex-direction:column; gap:3px; flex: 1 1 200px; }
     .brandTitle{
       font-size: clamp(18px, 4vw, 22px);
       font-weight: 900;
@@ -116,19 +108,8 @@
       background-clip: text;
       color: transparent;
     }
-    .brandSub{
-      font-size: 13px;
-      color: var(--muted);
-      font-weight: 800;
-    }
-    .topActions{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-      flex: 1 1 300px;
-    }
+    .brandSub{ font-size: 13px; color: var(--muted); font-weight: 800; }
+    .topActions{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end; flex: 1 1 300px; }
     .pill{
       display:flex;
       align-items:center;
@@ -172,18 +153,8 @@
       width: 100%;
       transition: all 0.3s ease;
     }
-    .control-group{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      flex-wrap:wrap;
-      justify-content:center;
-    }
-    .control-group label{
-      font-weight: 900;
-      font-size: 14px;
-      color: rgba(234,242,238,0.92);
-    }
+    .control-group{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:center; }
+    .control-group label{ font-weight: 900; font-size: 14px; color: rgba(234,242,238,0.92); }
     select, input[type="range"]{
       padding:8px 12px;
       border:1px solid rgba(255,255,255,0.14);
@@ -228,28 +199,10 @@
       box-shadow: 0 8px 20px rgba(37,99,235,0.4);
       border: 1px solid rgba(255,255,255,0.2);
     }
-    .btnVocab:hover {
-      box-shadow: 0 12px 30px rgba(37,99,235,0.6);
-      transform: translateY(-1px);
-    }
-
-    /* ✅ Pro disabled state for PDF button */
-    #downloadPdfBtn:disabled{
-      filter: grayscale(.2);
-      transform: none !important;
-      box-shadow: none !important;
-      cursor: not-allowed !important;
-      opacity: .75 !important;
-    }
+    .btnVocab:hover { box-shadow: 0 12px 30px rgba(37,99,235,0.6); transform: translateY(-1px); }
 
     /* ---------- GRID ---------- */
-    #grid{
-      display:grid;
-      gap: 16px;
-      width: 100%;
-      background: transparent;
-      padding-bottom: 50px;
-    }
+    #grid{ display:grid; gap: 16px; width: 100%; background: transparent; padding-bottom: 50px; }
     .box{
       width: 100%;
       height: var(--box-h);
@@ -281,23 +234,11 @@
       padding:14px;
       gap:8px;
     }
-    .flip-back{
-      transform: rotateY(180deg);
-      direction: rtl;
-      text-align:right;
-    }
-
+    .flip-back{ transform: rotateY(180deg); direction: rtl; text-align:right; }
     textarea, input { font-size: 16px !important; }
 
     /* FRONT */
-    .frontWordWrap{
-      flex: 1;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      min-height: 45%;
-      position: relative;
-    }
+    .frontWordWrap{ flex: 1; display:flex; align-items:center; justify-content:center; min-height: 45%; position: relative; }
     .speakBtn{
       position: absolute;
       right: 10px;
@@ -316,10 +257,7 @@
       color: var(--ink);
       z-index: 10;
     }
-    .speakBtn:hover{
-      background: rgba(255,255,255,0.25);
-      transform: translateY(-50%) scale(1.1);
-    }
+    .speakBtn:hover{ background: rgba(255,255,255,0.25); transform: translateY(-50%) scale(1.1); }
     .speakBtn svg{ width: 16px; height: 16px; fill: currentColor; }
 
     .miniSpeakBtn{
@@ -353,7 +291,6 @@
       text-shadow: 0 0 15px rgba(46,94,58,0.3);
       padding-right: 40px;
     }
-
     .exampleWrap{
       border-top: 1px solid rgba(255,255,255,0.10);
       padding-top: 8px;
@@ -362,18 +299,8 @@
       flex-direction:column;
       gap:6px;
     }
-    .exampleHeader{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-    }
-    .exampleLabel{
-      font-size:12px;
-      color: rgba(234,242,238,0.65);
-      font-weight:900;
-      direction:ltr;
-    }
+    .exampleHeader{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+    .exampleLabel{ font-size:12px; color: rgba(234,242,238,0.65); font-weight:900; direction:ltr; }
     .autoBtn{
       border:none;
       cursor:pointer;
@@ -387,23 +314,8 @@
       box-shadow: 0 6px 15px rgba(0,0,0,0.3);
     }
     .autoBtn:active{ transform: scale(0.95); }
-    .autoMsg{
-      font-size: 11px;
-      font-weight: 900;
-      color: rgba(234,242,238,0.62);
-      min-height: 14px;
-      direction:ltr;
-      text-align:left;
-    }
-    .explainInput{
-      border:none;
-      outline:none;
-      resize:none;
-      background:transparent;
-      color: rgba(234,242,238,0.92);
-      line-height:1.4;
-      flex:1;
-    }
+    .autoMsg{ font-size: 11px; font-weight: 900; color: rgba(234,242,238,0.62); min-height: 14px; direction:ltr; text-align:left; }
+    .explainInput{ border:none; outline:none; resize:none; background:transparent; color: rgba(234,242,238,0.92); line-height:1.4; flex:1; }
 
     /* BACK */
     .posBadge{
@@ -419,14 +331,7 @@
       direction:ltr;
       cursor:pointer;
     }
-    .backTopRow{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:10px;
-      margin-top: 8px;
-      flex: 1;
-    }
+    .backTopRow{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; margin-top: 8px; flex: 1; }
     .arabicCenter{
       flex: 1.2;
       text-align:right;
@@ -464,14 +369,7 @@
       flex: 1.2;
       min-height: 0;
     }
-    .noteLabel{
-      font-size: 12px;
-      font-weight: 800;
-      opacity: .90;
-      direction: rtl;
-      text-align: right;
-      color: rgba(234,242,238,0.90);
-    }
+    .noteLabel{ font-size: 12px; font-weight: 800; opacity: .90; direction: rtl; text-align: right; color: rgba(234,242,238,0.90); }
     .noteInput{
       border:none;
       outline:none;
@@ -504,7 +402,6 @@
       z-index: 9999;
     }
     #waBtn svg{ width: 28px; height: 28px; fill: #fff; }
-
     #waPopup{
       position: fixed;
       left: 50%;
@@ -524,22 +421,8 @@
       from { transform: translate(-50%, -50%) scale(0.8) translateY(20px); opacity: 0; }
       to { transform: translate(-50%, -50%) scale(1) translateY(0); opacity: 1; }
     }
-    .waHeader{
-      background: var(--waDark);
-      padding: 14px;
-      display:flex;
-      gap:12px;
-      align-items:center;
-      color:#fff;
-    }
-    .waAvatar{
-      width: 44px;
-      height: 44px;
-      border-radius: 999px;
-      object-fit: cover;
-      border: 2px solid rgba(255,255,255,0.3);
-      background:#0f172a;
-    }
+    .waHeader{ background: var(--waDark); padding: 14px; display:flex; gap:12px; align-items:center; color:#fff; }
+    .waAvatar{ width: 44px; height: 44px; border-radius: 999px; object-fit: cover; border: 2px solid rgba(255,255,255,0.3); background:#0f172a; }
     .waTitle{ font-weight: 900; font-size: 15px; }
     .waSub{ font-size: 12px; opacity: .9; }
     .waClose{
@@ -554,39 +437,11 @@
       font-weight: bold;
     }
     .waBody{ padding: 16px; background: #f0f2f5; }
-    .waBubble{
-      background:#fff;
-      border-radius: 12px 12px 12px 2px;
-      padding: 12px;
-      border: 1px solid rgba(0,0,0,0.05);
-      font-weight: 800;
-      color:#111;
-      font-size: 14px;
-    }
-    .waBubble small{
-      display:block;
-      margin-top:6px;
-      color:#666;
-    }
+    .waBubble{ background:#fff; border-radius: 12px 12px 12px 2px; padding: 12px; border: 1px solid rgba(0,0,0,0.05); font-weight: 800; color:#111; font-size: 14px; }
+    .waBubble small{ display:block; margin-top:6px; color:#666; }
     .waInputWrap{ margin-top: 14px; display:flex; gap:8px; }
-    #waInput{
-      flex:1;
-      border-radius: 20px;
-      border: 1px solid #ccc;
-      padding: 12px 16px;
-      outline:none;
-      font-weight: 800;
-      font-size: 15px;
-    }
-    #waSend{
-      border:none;
-      border-radius: 20px;
-      padding: 0 20px;
-      background: var(--wa);
-      color:#fff;
-      font-weight: 900;
-      cursor:pointer;
-    }
+    #waInput{ flex:1; border-radius: 20px; border: 1px solid #ccc; padding: 12px 16px; outline:none; font-weight: 800; font-size: 15px;}
+    #waSend{ border:none; border-radius: 20px; padding: 0 20px; background: var(--wa); color:#fff; font-weight: 900; cursor:pointer; }
 
     /* PDF STAGE */
     #pdfStage{
@@ -605,85 +460,20 @@
       z-index: -999;
     }
     .pdfHeaderArea { height: var(--header-h); width: 100%; margin-bottom: 4mm; }
-    .pdfBigTitle{
-      margin:0;
-      text-align:center;
-      font-weight: 900;
-      font-size: 18px;
-      color:#0B5A36;
-      line-height: 1.2;
-    }
-    .pdfMeta{
-      display:flex;
-      justify-content:space-between;
-      gap: 6mm;
-      font-size: 11px;
-      font-weight: 900;
-      margin-top: 5mm;
-    }
-    .pdfMeta span{
-      border: 1px solid rgba(0,0,0,0.14);
-      border-radius: 999px;
-      padding: 2.5mm 4mm;
-      background: rgba(0,0,0,0.02);
-    }
-    .pdfGrid{
-      display: grid;
-      gap: var(--pdfGap);
-      grid-template-columns: repeat(var(--pdfCols), var(--pdfBoxW));
-      grid-auto-rows: var(--pdfBoxH);
-      width: 100%;
-    }
-    .pdfCard{
-      width: var(--pdfBoxW);
-      height: var(--pdfBoxH);
-      background: #fff;
-      border: 1px solid rgba(0,0,0,0.25);
-      border-radius: 14px;
-      overflow: hidden;
-    }
+    .pdfBigTitle{ margin:0; text-align:center; font-weight: 900; font-size: 18px; color:#0B5A36; line-height: 1.2; }
+    .pdfMeta{ display:flex; justify-content:space-between; gap: 6mm; font-size: 11px; font-weight: 900; margin-top: 5mm; }
+    .pdfMeta span{ border: 1px solid rgba(0,0,0,0.14); border-radius: 999px; padding: 2.5mm 4mm; background: rgba(0,0,0,0.02); }
+    .pdfGrid{ display: grid; gap: var(--pdfGap); grid-template-columns: repeat(var(--pdfCols), var(--pdfBoxW)); grid-auto-rows: var(--pdfBoxH); width: 100%; }
+    .pdfCard{ width: var(--pdfBoxW); height: var(--pdfBoxH); background: #fff; border: 1px solid rgba(0,0,0,0.25); border-radius: 14px; overflow: hidden; }
     .pdfCard.empty { border: none; background: transparent; }
-    .pdfCardInner{
-      padding: 12px;
-      height: 100%;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
+    .pdfCardInner{ padding: 12px; height: 100%; box-sizing: border-box; display: flex; flex-direction: column; gap: 8px; }
     .pdfWordWrap{ flex: 1; display:flex; align-items:center; justify-content:center; text-align:center; }
     .pdfWord{ font-weight: 900; font-size: 18px; white-space: pre-wrap; word-break: break-word; color: #000; }
     .pdfLine{ height: 1px; background: rgba(0,0,0,0.15); width: 100%; }
     .pdfExample{ font-size: 12px; line-height: 1.4; flex: 1; color: #222; white-space: pre-wrap; }
-
-    .pdfAr{
-      direction: rtl;
-      text-align: center;
-      font-family: "Amiri", Arial, sans-serif;
-      font-weight: 700;
-      font-size: 18px;
-      line-height: 1.5;
-      color: #000;
-      white-space: pre-wrap;
-    }
-    .pdfDar{
-      direction: rtl;
-      text-align: right;
-      font-weight: 700;
-      font-size: 13px;
-      line-height: 1.5;
-      color: #333;
-      white-space: pre-wrap;
-    }
-    .pdfNote{
-      direction: rtl;
-      text-align: right;
-      font-size: 12px;
-      line-height: 1.4;
-      font-family: "Amiri", Arial, sans-serif;
-      color: #444;
-      white-space: pre-wrap;
-    }
+    .pdfAr{ direction: rtl; text-align: center; font-family: "Amiri", Arial, sans-serif; font-weight: 700; font-size: 18px; line-height: 1.5; color: #000; white-space: pre-wrap; }
+    .pdfDar{ direction: rtl; text-align: right; font-weight: 700; font-size: 13px; line-height: 1.5; color: #333; white-space: pre-wrap; }
+    .pdfNote{ direction: rtl; text-align: right; font-size: 12px; line-height: 1.4; font-family: "Amiri", Arial, sans-serif; color: #444; white-space: pre-wrap; }
 
     /* Loading */
     #pdfLoading {
@@ -709,10 +499,7 @@
       animation: spin 1s linear infinite;
       margin-bottom: 15px;
     }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
     /* ✅ CREATIVE HUB (Wortschatz) */
     #vocabHub{
@@ -738,40 +525,12 @@
       border: 1px solid rgba(255,255,255,0.1);
       animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    @keyframes slideUp {
-      from { transform: translateY(50px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-    .hubHeader{
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 30px;
-    }
-    .hubTitle{
-      font-size: 24px;
-      font-weight: 900;
-      color: #d7f7e6;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    .hubClose{
-      background: rgba(255,255,255,0.1);
-      border: none;
-      color: white;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      font-size: 24px;
-      cursor: pointer;
-      transition: 0.2s;
-    }
+    @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .hubHeader{ display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+    .hubTitle{ font-size: 24px; font-weight: 900; color: #d7f7e6; text-transform: uppercase; letter-spacing: 1px; }
+    .hubClose{ background: rgba(255,255,255,0.1); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; font-size: 24px; cursor: pointer; transition: 0.2s; }
     .hubClose:hover{ background: rgba(255,255,255,0.2); }
-    .hubGrid{
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 16px;
-    }
+    .hubGrid{ display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; }
     .hubCard{
       background: rgba(255,255,255,0.03);
       border: 1px solid rgba(255,255,255,0.08);
@@ -795,41 +554,18 @@
     .hubCard::before{
       content:'';
       position: absolute;
-      top:0;
-      left:0;
-      width:100%;
-      height:100%;
+      top:0; left:0;
+      width:100%; height:100%;
       background: radial-gradient(circle at center, rgba(255,255,255,0.1), transparent 70%);
       opacity: 0;
       transition: 0.3s;
     }
     .hubCard:hover::before{ opacity: 1; }
-    .hubCardName{
-      font-weight: 900;
-      color: #EAF2EE;
-      font-size: 16px;
-      margin-bottom: 5px;
-      z-index: 1;
-    }
-    .hubCardCount{
-      font-size: 12px;
-      opacity: 0.6;
-      background: rgba(0,0,0,0.3);
-      padding: 4px 10px;
-      border-radius: 20px;
-      z-index: 1;
-    }
+    .hubCardName{ font-weight: 900; color: #EAF2EE; font-size: 16px; margin-bottom: 5px; z-index: 1; }
+    .hubCardCount{ font-size: 12px; opacity: 0.6; background: rgba(0,0,0,0.3); padding: 4px 10px; border-radius: 20px; z-index: 1; }
 
     /* ✅ Airdrop Loading Bar Animation */
-    #loadBarContainer{
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 6px;
-      z-index: 10001;
-      display: none;
-    }
+    #loadBarContainer{ position: fixed; top: 0; left: 0; width: 100%; height: 6px; z-index: 10001; display: none; }
     #loadBar{
       height: 100%;
       background: linear-gradient(90deg, var(--airdrop-blue), var(--airdrop-green));
@@ -839,15 +575,7 @@
     }
 
     /* ✅ CONFETTI CANVAS */
-    #confettiCanvas{
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 10002;
-    }
+    #confettiCanvas{ position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 10002; }
 
     /* Footer */
     .cleanFooter{
@@ -872,24 +600,17 @@
       transition:0.3s ease;
     }
     .cleanIcon svg{ width:55px; height:55px; fill:#3E7A4B; }
-    .cleanIcon:hover{
-      transform:translateY(-8px) scale(1.05);
-      border-color:#3E7A4B;
-      box-shadow:0 35px 90px rgba(0,66,37,0.9);
-    }
+    .cleanIcon:hover{ transform:translateY(-8px) scale(1.05); border-color:#3E7A4B; box-shadow:0 35px 90px rgba(0,66,37,0.9); }
 
     /* =========================================================
        ✅ AirDrop style (Pulse + Transfer bar with tick)
-       ========================================================= */
+    ========================================================= */
     @keyframes airdrop-pulse-anim {
       0% { box-shadow: 0 0 0 0 rgba(var(--airdrop-blue-rgb), 0.7); transform: scale(1); }
       50% { box-shadow: 0 0 0 15px rgba(var(--airdrop-blue-rgb), 0); transform: scale(1.05); }
       100% { box-shadow: 0 0 0 0 rgba(var(--airdrop-blue-rgb), 0); transform: scale(1); }
     }
-    .airdrop-pulse {
-      animation: airdrop-pulse-anim 0.6s ease-out;
-      border-color: var(--airdrop-blue) !important;
-    }
+    .airdrop-pulse { animation: airdrop-pulse-anim 0.6s ease-out; border-color: var(--airdrop-blue) !important; }
 
     #airdrop-transfer-bar{
       position: fixed;
@@ -927,10 +648,7 @@
       font-size: 14px;
       animation: tick-pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-    @keyframes tick-pop {
-      0% { transform: scale(0); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
-    }
+    @keyframes tick-pop { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
     /* ✅ PDF Progress Bar */
     #pdfProgress{
@@ -978,6 +696,7 @@
         <div class="brandTitle">Deutsch mit Said</div>
         <div class="brandSub" data-i18n="subtitle">ist einfacher: wählen • schreiben • drucken</div>
       </div>
+
       <div class="topActions">
         <div class="pill">
           <input type="text" id="name" placeholder="Name">
@@ -1088,10 +807,14 @@
 
     // =========================================================
     // ✅ AirDrop Helper Module (Haptic + Pulse + Transfer Bar)
-    // ⚠️ IMPORTANT: NO SOUND HERE (sound only when clicking speaker buttons)
     // =========================================================
     function hapticTap(ms = 10) { if (navigator.vibrate) navigator.vibrate(ms); }
-    function flashPulse(el) { if (!el) return; el.classList.remove('airdrop-pulse'); void el.offsetWidth; el.classList.add('airdrop-pulse'); }
+    function flashPulse(el) {
+      if (!el) return;
+      el.classList.remove('airdrop-pulse');
+      void el.offsetWidth;
+      el.classList.add('airdrop-pulse');
+    }
 
     let airdropBar = null;
     function startTransferBar(durationMs = 1200) {
@@ -1121,7 +844,7 @@
     // ✅ 1. WORTSCHATZ DATENBANK
     // ================================================================================================
     const WORTSCHATZ_DATA = {
-     
+      
       "Lektion9": [
       // ===== Feste / Bräuche (احتفالات / تقاليد) =====
        { word:"der Ball, -e", pos:"N", ar:"حفلة راقصة", darija:"حفلة ديال الشطيح", de_example:"Wir gehen heute Abend auf einen Ball.", darija_example:"غادين لواحد الحفلة ديال الشطيح هاد الليلة." },
@@ -3852,14 +3575,12 @@ lektion16: [
       s = s.normalize("NFD").replace(/[\u0300-\u036f]/g,"");
       return s;
     }
-
     const QAMOS = Object.create(null);
     function addKey(key, entry){
       key = String(key || '').trim();
       if(!key || key.length < 2) return;
       QAMOS[key] = entry;
     }
-
     function generateVariants(base){
       const out = new Set();
       out.add(base);
@@ -3898,17 +3619,14 @@ lektion16: [
 
       out.add(base.replace(/ss/g,'s'));
       out.add(base.replace(/ss/g,'sz'));
-
       return [...out].filter(v => v && v.length >= 2);
     }
-
     function addToQamos(entry){
       const base = normalizeWord(entry.word);
       const variants = generateVariants(base);
       for(const v of variants) addKey(v, entry);
       addKey(base.replace(/[\s-]/g,''), entry);
     }
-
     function buildQamos(){
       for(const k in QAMOS) delete QAMOS[k];
       Object.values(WORTSCHATZ_DATA).forEach(list => (list||[]).forEach(entry => addToQamos(entry)));
@@ -3944,7 +3662,6 @@ lektion16: [
       for(const v of variants){
         if(QAMOS[v]) return { entry: QAMOS[v], confidence: 1 };
       }
-
       const seen = new Set();
       const candidates = [];
       for(const k in QAMOS){
@@ -3954,20 +3671,21 @@ lektion16: [
           candidates.push(e);
         }
       }
-
       const target = variants[0].replace(/[\s-]/g,'');
       const tl = target.length;
       const maxDist = tl <= 4 ? 1 : (tl <= 7 ? 2 : 3);
-
       let best = null;
       let bestScore = -Infinity;
+
       for(const e of candidates){
         const keyBase = normalizeWord(e.word).replace(/[\s-]/g,'');
         if(!keyBase) continue;
         const d = levenshtein(target, keyBase);
         if(d > maxDist) continue;
+
         const sim = 1 - (d / Math.max(1, Math.max(keyBase.length, tl)));
         const bonus = (keyBase.startsWith(target) || target.startsWith(keyBase)) ? 0.12 : 0;
+
         let vBoost = 0;
         for(const v of variants.slice(0, 6)){
           const vc = v.replace(/[\s-]/g,'');
@@ -3976,12 +3694,8 @@ lektion16: [
           if(s2 > vBoost) vBoost = s2;
         }
         const score = sim + bonus + (vBoost * 0.08);
-        if(score > bestScore){
-          bestScore = score;
-          best = e;
-        }
+        if(score > bestScore){ bestScore = score; best = e; }
       }
-
       if(!best) return null;
       const confidence = Math.max(0, Math.min(0.98, bestScore));
       if(confidence < 0.76) return null;
@@ -4018,24 +3732,18 @@ lektion16: [
         const lang = (v.lang || '').toLowerCase();
         const name = (v.name || '').toLowerCase();
         let s = 0;
-
         if (lang === 'de-de') s += 50;
         else if (lang.startsWith('de')) s += 40;
-
         if (v.localService) s += 8;
-
         if (name.includes('google')) s += 20;
         if (name.includes('enhanced')) s += 10;
         if (name.includes('premium')) s += 10;
         if (name.includes('neural')) s += 10;
-
         if (name.includes('anna')) s += 12;
         if (name.includes('helena')) s += 10;
         if (name.includes('markus')) s += 10;
-
         if (name.includes('compact')) s -= 2;
         if (name.includes('android')) s -= 2;
-
         return s;
       };
 
@@ -4077,20 +3785,14 @@ lektion16: [
       const t = cleanSpeakText(text);
       if(!t) return [];
       const parts = t.split(/([.!?…])\s+/).reduce((acc, cur) => {
-        if (cur === '.' || cur === '!' || cur === '?' || cur === '…') {
-          acc[acc.length-1] = (acc[acc.length-1] || '') + cur;
-        } else {
-          acc.push(cur);
-        }
+        if (cur === '.' || cur === '!' || cur === '?' || cur === '…') acc[acc.length-1] = (acc[acc.length-1] || '') + cur;
+        else acc.push(cur);
         return acc;
       }, []).map(s => s.trim()).filter(Boolean);
 
       const out = [];
       for(const p of parts){
-        if(p.length <= maxLen){
-          out.push(p);
-          continue;
-        }
+        if(p.length <= maxLen){ out.push(p); continue; }
         let start = 0;
         while(start < p.length){
           out.push(p.slice(start, start + maxLen));
@@ -4100,30 +3802,26 @@ lektion16: [
       return out.filter(Boolean);
     }
 
+    // ✅ speakGerman (RATE ثابت 0.96)  — تعديل
     function speakGerman(text, opts = {}){
       const t = cleanSpeakText(text);
       if(!t || !window.speechSynthesis) return;
 
       ttsPrimeOnce();
       ttsStop();
-
       ttsRefreshVoices();
-      const voice = pickBestGermanVoice();
 
-      const rate = (opts.rate ?? 0.92);
+      const voice = pickBestGermanVoice();
+      const rate = 0.96; // ✅ تعديل
       const pitch = (opts.pitch ?? 1.00);
       const volume = (opts.volume ?? 1.0);
-
       const chunks = chunkTextForTTS(t, 170);
 
       let i = 0;
       TTS.speaking = true;
 
       const speakNext = () => {
-        if(i >= chunks.length){
-          TTS.speaking = false;
-          return;
-        }
+        if(i >= chunks.length){ TTS.speaking = false; return; }
         const u = new SpeechSynthesisUtterance(chunks[i]);
         u.lang = 'de-DE';
         u.rate = rate;
@@ -4135,77 +3833,61 @@ lektion16: [
         u.onerror = () => {
           try{
             const f = new SpeechSynthesisUtterance(chunks[i]);
-            f.lang='de-DE'; f.rate=rate; f.pitch=pitch; f.volume=volume;
+            f.lang='de-DE';
+            f.rate=rate;
+            f.pitch=pitch;
+            f.volume=volume;
             f.onend = () => { i++; setTimeout(speakNext, (opts.gapMs ?? 120)); };
             window.speechSynthesis.speak(f);
-          }catch(e){
-            TTS.speaking = false;
-          }
+          }catch(e){ TTS.speaking = false; }
         };
 
         requestAnimationFrame(() => window.speechSynthesis.speak(u));
       };
-
       speakNext();
     }
 
-    function speakGermanSequence(texts, opts = {}){
-      const arr = (texts || []).map(x => cleanSpeakText(x)).filter(Boolean);
-      if(!arr.length || !window.speechSynthesis) return;
+    // ✅ speakGermanSequence (تعديل نهائي للمفرد + الجمع) — تعديل
+    function speakGermanSequence(texts, opts = {}) {
+      if (!window.speechSynthesis) return;
+
+      const arr = (texts || [])
+        .map(t => cleanSpeakText(t))
+        .filter(Boolean);
+
+      if (!arr.length) return;
 
       ttsPrimeOnce();
       ttsStop();
-
       ttsRefreshVoices();
+
       const voice = pickBestGermanVoice();
+      const rate  = (opts.rate ?? 0.96);  // ✅ تعديل
+      const pitch = (opts.pitch ?? 1.0);
+      const volume = (opts.volume ?? 1);
+      const gapMs = (opts.gapMs ?? 350);  // ✅ تعديل
 
-      const rate = (opts.rate ?? 0.92);
-      const pitch = (opts.pitch ?? 1.00);
-      const volume = (opts.volume ?? 1.0);
-      const gapMs = (opts.gapMs ?? 220);
+      let index = 0;
 
-      const queue = [];
-      arr.forEach((t, idx) => {
-        const chunks = chunkTextForTTS(t, 120);
-        chunks.forEach(ch => queue.push(ch));
-        if (idx < arr.length - 1) queue.push('__PAUSE__');
-      });
+      function speakNext() {
+        if (index >= arr.length) return;
 
-      let i = 0;
-      TTS.speaking = true;
-
-      const next = () => {
-        if(i >= queue.length){
-          TTS.speaking = false;
-          return;
-        }
-
-        const item = queue[i];
-        if(item === '__PAUSE__'){
-          i++;
-          setTimeout(next, gapMs);
-          return;
-        }
-
-        const u = new SpeechSynthesisUtterance(item);
-        u.lang = 'de-DE';
+        const u = new SpeechSynthesisUtterance(arr[index]);
+        u.lang = "de-DE";
         u.rate = rate;
         u.pitch = pitch;
         u.volume = volume;
         if (voice) u.voice = voice;
 
-        u.onend = () => { i++; setTimeout(next, 90); };
-        u.onerror = () => { i++; setTimeout(next, 90); };
+        u.onend = () => { index++; setTimeout(speakNext, gapMs); };
+        u.onerror = () => { index++; setTimeout(speakNext, gapMs); };
 
-        requestAnimationFrame(() => window.speechSynthesis.speak(u));
-      };
+        window.speechSynthesis.speak(u);
+      }
 
-      next();
+      speakNext();
     }
 
-    // ======================
-    // ✅ NOUN PARSE (FIXED plural for iPhone) + SPEAK TEXTS
-    // ======================
     function stripParentheses(s){
       return String(s || '').replace(/\([^)]*\)/g, '').replace(/\s+/g,' ').trim();
     }
@@ -4213,22 +3895,19 @@ lektion16: [
     function parseNounEntry(wordStr){
       let raw = stripParentheses(wordStr);
       raw = raw.replace(/[“”„"]/g,'').trim();
-
       const m = raw.match(/^(der|die|das)\s+(.+)$/i);
       const article = m ? m[1].toLowerCase() : '';
       const rest = m ? m[2] : raw;
-
       const parts = rest.split(',');
       const base = stripParentheses(parts[0] || '').trim();
       const pluralInfo = stripParentheses((parts[1] || '')).trim();
 
       let plural = '';
       if (pluralInfo){
-        if (/^[-–—]+$/.test(pluralInfo)){
-          plural = base; // ✅ plural same as base
-        } else if (pluralInfo.startsWith('-')) {
+        if (/^[-–—]+$/.test(pluralInfo)) plural = '';
+        else if (pluralInfo.startsWith('-')) {
           const suf = pluralInfo.replace(/^-+/, '').trim();
-          plural = suf ? (base + suf) : base;
+          if (suf) plural = base + suf;
         } else {
           plural = pluralInfo;
         }
@@ -4239,22 +3918,14 @@ lektion16: [
     function buildSpeakTextsFromEntry(entry){
       const w = entry && entry.word ? entry.word : '';
       const parsed = parseNounEntry(w);
-
       if (!parsed.isNoun){
         const cleaned = stripParentheses(String(w || '')).split(',')[0].trim();
         return cleaned ? [cleaned] : [];
       }
-
       const singular = (parsed.article + ' ' + parsed.base).trim();
       const texts = [];
       if (singular) texts.push(singular);
-
-      if (parsed.plural){
-        const p = parsed.plural.trim();
-        if (/^(der|die|das)\s+/i.test(p)) texts.push(p);
-        else texts.push(('die ' + p).trim());
-      }
-
+      if (parsed.plural) texts.push(parsed.plural);
       return texts;
     }
 
@@ -4293,11 +3964,7 @@ lektion16: [
 
     function ensureBoxesLength(){
       while (boxes.length < settings.numBoxes) {
-        boxes.push({
-          word:'', example:'', posOverride:'', note:'',
-          arTextManual:'', darTextManual:'',
-          arabicExampleManual:'', darijaExampleManual:'', darijaExampleB1:''
-        });
+        boxes.push({ word:'', example:'', posOverride:'', note:'', arTextManual:'', darTextManual:'', arabicExampleManual:'', darijaExampleManual:'', darijaExampleB1:'' });
       }
       if (boxes.length > settings.numBoxes) boxes = boxes.slice(0, settings.numBoxes);
     }
@@ -4311,10 +3978,8 @@ lektion16: [
       }
     }
 
-    // Build Box
     function createBoxElement(index){
       const data = boxes[index];
-
       const box = document.createElement('div');
       box.className = 'box';
 
@@ -4333,25 +3998,23 @@ lektion16: [
       wordTA.value = data.word;
       wordTA.rows=2;
 
-      // ✅ Speaker Button (WORD) — reads singular + plural if noun
+      // ✅ Speaker Button (WORD)
       const speakBtn = document.createElement('button');
       speakBtn.className = 'speakBtn';
       speakBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>`;
       speakBtn.onclick = (e) => {
         e.stopPropagation();
         hapticTap(10);
-
         const res = lookupSmart(wordTA.value);
         if (res && res.entry){
           const speakTexts = buildSpeakTextsFromEntry(res.entry);
           if (speakTexts.length){
-            speakGermanSequence(speakTexts, { rate: 0.92, gapMs: 260 });
+            speakGermanSequence(speakTexts, { rate: 0.96, gapMs: 350 }); // ✅ تعديل
             return;
           }
         }
-
         const cleaned = stripParentheses(String(wordTA.value || '')).split(',')[0].trim();
-        speakGerman(cleaned, { rate: 0.92 });
+        speakGerman(cleaned, { rate: 0.96 }); // ✅ تعديل
       };
 
       wordWrap.appendChild(wordTA);
@@ -4372,7 +4035,7 @@ lektion16: [
       exLabel.className = 'exampleLabel';
       exLabel.textContent = 'Beispiel';
 
-      // ✅ Speaker Button (EXAMPLE) — clear reading
+      // ✅ Speaker Button (EXAMPLE)
       const exSpeakBtn = document.createElement('button');
       exSpeakBtn.className = 'miniSpeakBtn';
       exSpeakBtn.title = 'Beispiel anhören';
@@ -4386,7 +4049,7 @@ lektion16: [
       exSpeakBtn.onclick = (e) => {
         e.stopPropagation();
         hapticTap(10);
-        speakGerman(exTA.value, { rate: 0.92, gapMs: 120 });
+        speakGerman(exTA.value, { rate: 0.96, gapMs: 120 }); // ✅ تعديل
       };
 
       leftGroup.appendChild(exLabel);
@@ -4516,10 +4179,8 @@ lektion16: [
         data.posOverride = b1.pos;
         data.example = b1.de_example;
         exTA.value = b1.de_example;
-
         data.darijaExampleB1 = b1.darija_example;
 
-        // Auto-correct visible word to exact dictionary form
         data.word = b1.word;
         wordTA.value = b1.word;
 
@@ -4531,8 +4192,7 @@ lektion16: [
       posBadge.onclick = (e) => {
         e.stopPropagation();
         data.posOverride = data.posOverride==='V'?'N':data.posOverride==='N'?'A':'V';
-        render();
-        save();
+        render(); save();
       };
 
       const binds = [
@@ -4544,13 +4204,8 @@ lektion16: [
         [darExTA,'darijaExampleManual'],
         [noteTA,'note']
       ];
-
       binds.forEach(([el, key]) => {
-        el.oninput = () => {
-          data[key] = el.value;
-          autoFitTextarea(el);
-          save();
-        };
+        el.oninput = () => { data[key] = el.value; autoFitTextarea(el); save(); };
       });
 
       box.onclick = (e) => {
@@ -4562,7 +4217,6 @@ lektion16: [
       flip.appendChild(front);
       flip.appendChild(back);
       box.appendChild(flip);
-
       return box;
     }
 
@@ -4579,7 +4233,6 @@ lektion16: [
       localStorage.setItem('dms_boxes', JSON.stringify(boxes));
       localStorage.setItem('dms_settings', JSON.stringify(settings));
     }
-
     function load(){
       try{
         if(localStorage.getItem('dms_boxes')) boxes = JSON.parse(localStorage.getItem('dms_boxes'));
@@ -4590,34 +4243,13 @@ lektion16: [
     numBoxesInput.oninput = () => {
       settings.numBoxes = numBoxesInput.value;
       numBoxesValue.textContent = numBoxesInput.value;
-      updateGrid();
-      save();
+      updateGrid(); save();
     };
+    columnsSelect.onchange = () => { settings.columns = columnsSelect.value; updateGrid(); save(); };
+    boxSizeSelect.onchange = () => { settings.boxSize = boxSizeSelect.value; updateGrid(); save(); };
+    showBackCheckbox.onchange = () => { settings.showBack = showBackCheckbox.checked; updateGrid(); save(); };
 
-    columnsSelect.onchange = () => {
-      settings.columns = columnsSelect.value;
-      updateGrid();
-      save();
-    };
-
-    boxSizeSelect.onchange = () => {
-      settings.boxSize = boxSizeSelect.value;
-      updateGrid();
-      save();
-    };
-
-    showBackCheckbox.onchange = () => {
-      settings.showBack = showBackCheckbox.checked;
-      updateGrid();
-      save();
-    };
-
-    document.getElementById('resetBtn').onclick = () => {
-      boxes=[];
-      updateGrid();
-      save();
-    };
-
+    document.getElementById('resetBtn').onclick = () => { boxes=[]; updateGrid(); save(); };
     window.addEventListener('resize', () => { requestAnimationFrame(updateGrid); });
 
     document.getElementById('waBtn').onclick = () => document.getElementById('waPopup').classList.toggle('open');
@@ -4636,14 +4268,11 @@ lektion16: [
       const ctx = canvas.getContext('2d');
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-
       const particles = [];
       const colors = ['#007AFF', '#34C759', '#FFD60A', '#FF2D55', '#AF52DE'];
-
       for (let i = 0; i < 150; i++) {
         particles.push({
-          x: canvas.width / 2,
-          y: canvas.height / 2,
+          x: canvas.width / 2, y: canvas.height / 2,
           vx: (Math.random() - 0.5) * 15,
           vy: (Math.random() - 0.5) * 15,
           size: Math.random() * 8 + 2,
@@ -4651,11 +4280,9 @@ lektion16: [
           life: 100
         });
       }
-
       function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         let active = false;
-
         particles.forEach(p => {
           if (p.life > 0) {
             active = true;
@@ -4669,11 +4296,9 @@ lektion16: [
             ctx.fill();
           }
         });
-
         if (active) requestAnimationFrame(animate);
         else ctx.clearRect(0, 0, canvas.width, canvas.height);
       }
-
       animate();
     }
 
@@ -4700,7 +4325,6 @@ lektion16: [
           const loadContainer = document.getElementById('loadBarContainer');
           loadContainer.style.display = 'block';
           loadBar.style.width = '0%';
-
           setTimeout(() => { loadBar.style.width = '50%'; }, 80);
           setTimeout(() => { loadBar.style.width = '100%'; }, 320);
 
@@ -4729,6 +4353,7 @@ lektion16: [
             updateGrid();
             fireConfetti();
             hub.classList.remove('open');
+
             loadContainer.style.display = 'none';
             loadBar.style.width = '0%';
             endTransferBar();
@@ -4746,41 +4371,22 @@ lektion16: [
       triggerHaptic(10);
       document.getElementById('vocabHub').classList.remove('open');
     };
-
     document.getElementById('vocabHub').onclick = (e) => {
       if(e.target.id === 'vocabHub') document.getElementById('vocabHub').classList.remove('open');
     };
 
     // =========================================================
-    // ✅ PDF GENERATOR (FAST + "OPENS/DOWNLOADS" on iPhone/Tablet/PC)
+    // PDF GENERATOR (MOBILE-OPTIMIZED + ROBUST)  — تعديل
     // =========================================================
-    function downloadBlob(blob, filename){
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename;
-      a.target = '_blank';
-      a.rel = 'noopener';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 60000);
-    }
-
     document.getElementById('downloadPdfBtn').onclick = async () => {
       const loader = document.getElementById('pdfLoading');
       const progress = document.getElementById('pdfProgress');
       const progressFill = document.getElementById('pdfProgressFill');
-      const btn = document.getElementById('downloadPdfBtn');
 
       try{
-        // ✅ avoid double click
-        btn.disabled = true;
-
         loader.style.display = 'flex';
         progress.style.display = 'block';
         progress.classList.add('active');
-        progressFill.style.width = '0%';
 
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF("p", "mm", "a4");
@@ -4788,15 +4394,16 @@ lektion16: [
         ensureBoxesLength();
 
         const cols = Math.min(Math.max(1, parseInt(settings.columns,10) || 3), 4);
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-        const mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        const canvasScale = mobile ? 2 : 3;
+        // ✅ تعديل: iPhone scale
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        const canvasScale = isIOS ? 1.7 : (isMobile ? 2 : 3);
 
         const pageW = 210;
         const pageH = 297;
         const pad = 12;
         const gap = 4;
-
         const innerW = pageW - (2 * pad);
         const boxMmW = (innerW - (gap * (cols - 1))) / cols;
         const boxMmH = boxMmW * 1.1;
@@ -4813,16 +4420,19 @@ lektion16: [
           if (mode === "front" && headerH > 0) {
             const title = document.createElement("div");
             title.className = "pdfBigTitle";
-            title.textContent = "Deutsch mit Said ist einfacher, als du denkst.";
+
+            // ✅ تعديل: عنوان احترافي
+            title.textContent = "Deutsch mit Said – Professionelles Vokabelblatt";
+            title.style.fontSize = "22px";
+            title.style.letterSpacing = "1px";
 
             const meta = document.createElement("div");
             meta.className = "pdfMeta";
-
             const nm = (document.getElementById('name').value || "").trim();
             const dt = (document.getElementById('date').value || "").trim();
             const tp = (document.getElementById('topic').value || "").trim();
-
             meta.innerHTML = `<span>Name: ${nm||"—"}</span><span>Datum: ${dt||"—"}</span><span>Thema: ${tp||"—"}</span>`;
+
             headerArea.appendChild(title);
             headerArea.appendChild(meta);
           }
@@ -4837,13 +4447,12 @@ lektion16: [
           pdfStage.style.setProperty("--pdfBoxH", boxMmH + "mm");
           pdfStage.style.setProperty("--pdfGap", gap + "mm");
 
-          const rows = Math.ceil(count / cols);
-          const pageData = boxes.slice(startIndex, startIndex + count);
+          let rows = Math.ceil(count / cols);
+          let pageData = boxes.slice(startIndex, startIndex + count);
 
           for (let r = 0; r < rows; r++) {
             for (let c = 0; c < cols; c++) {
-              const itemIndex = (mode === "front") ? (r * cols + c) : (r * cols + (cols - 1 - c));
-
+              let itemIndex = (mode === "front") ? (r * cols + c) : (r * cols + (cols - 1 - c));
               const card = document.createElement("div");
               card.className = "pdfCard";
 
@@ -4863,10 +4472,9 @@ lektion16: [
                 } else {
                   const res = lookupSmart(d.word);
                   const b1 = res ? res.entry : null;
-
-                  const arText  = d.arTextManual || (b1?b1.ar:"");
+                  const arText = d.arTextManual || (b1?b1.ar:"");
                   const darText = d.darTextManual || (b1?b1.darija:"");
-                  const darEx   = d.darijaExampleManual || d.darijaExampleB1 || "";
+                  const darEx = d.darijaExampleManual || d.darijaExampleB1 || "";
 
                   inner.innerHTML = `
                     <div class="pdfAr">${arText}</div>
@@ -4879,76 +4487,65 @@ lektion16: [
 
                 card.appendChild(inner);
               }
-
               g.appendChild(card);
             }
           }
-
           pdfStage.appendChild(g);
         }
 
         let index = 0;
         let isFirstPage = true;
+        let step = 0;
 
         while (index < boxes.length) {
           const headerH = isFirstPage ? 20 : 0;
           const innerH = pageH - (2 * pad);
           const availableGridH = innerH - headerH - 4;
-
           const rowsPerPage = Math.max(1, Math.floor(availableGridH / (boxMmH + gap)));
           const perPage = cols * rowsPerPage;
-          const totalSteps = (Math.ceil(boxes.length / perPage) * 2);
+
+          pdfStage.style.zIndex = "1";
+
+          // progress (front+back)
+          step++;
+          progressFill.style.width = Math.min(100, Math.round((step / (Math.ceil(boxes.length/perPage) * 2)) * 100)) + '%';
 
           // FRONT
           buildPage("front", index, perPage, headerH);
-          await new Promise(r => requestAnimationFrame(() => setTimeout(r, 30)));
-
-          const c1 = await html2canvas(pdfStage, {
-            scale: canvasScale,
-            useCORS: true,
-            backgroundColor: "#ffffff",
-            logging: false
-          });
-
+          await new Promise(r => setTimeout(r, 40));
+          const c1 = await html2canvas(pdfStage, { scale: canvasScale, useCORS: true, backgroundColor: "#ffffff", logging: false });
           if(!isFirstPage) pdf.addPage();
           pdf.addImage(c1.toDataURL("image/png"), "PNG", 0, 0, 210, 297);
 
-          const stepFront = ((index / perPage) * 2) + 1;
-          progressFill.style.width = Math.min(100, Math.round((stepFront / totalSteps) * 100)) + '%';
-
           // BACK
           pdf.addPage();
+          step++;
+          progressFill.style.width = Math.min(100, Math.round((step / (Math.ceil(boxes.length/perPage) * 2)) * 100)) + '%';
+
           buildPage("back", index, perPage, headerH);
-          await new Promise(r => requestAnimationFrame(() => setTimeout(r, 30)));
-
-          const c2 = await html2canvas(pdfStage, {
-            scale: canvasScale,
-            useCORS: true,
-            backgroundColor: "#ffffff",
-            logging: false
-          });
-
+          await new Promise(r => setTimeout(r, 40));
+          const c2 = await html2canvas(pdfStage, { scale: canvasScale, useCORS: true, backgroundColor: "#ffffff", logging: false });
           pdf.addImage(c2.toDataURL("image/png"), "PNG", 0, 0, 210, 297);
-
-          const stepBack = ((index / perPage) * 2) + 2;
-          progressFill.style.width = Math.min(100, Math.round((stepBack / totalSteps) * 100)) + '%';
 
           index += perPage;
           isFirstPage = false;
         }
 
-        const filename = "Deutsch_mit_Said.pdf";
-        const blob = pdf.output('blob');
-        downloadBlob(blob, filename);
+        pdfStage.style.zIndex = "-999";
+        progress.classList.remove('active');
+        progress.style.display = 'none';
+
+        // ✅ تعديل: اسم الملف فيه تاريخ
+        const today = new Date().toISOString().split('T')[0];
+        pdf.save("Deutsch_mit_Said_" + today + ".pdf");
 
       } catch(e){
-        alert("Fehler: " + (e && e.message ? e.message : e));
+        alert("Fehler: " + e.message);
         console.error('PDF Error:', e);
       } finally {
         loader.style.display = 'none';
         progress.classList.remove('active');
         progress.style.display = 'none';
-        btn.disabled = false;
       }
     };
 
