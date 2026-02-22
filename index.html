@@ -23,25 +23,44 @@
 
   <style>
     :root{
-      --carbon:#0B0D0E; --carbon2:#0F1412; --ink:#EAF2EE; --muted:#A7B6AE;
-      --moss:#2E5E3A; --moss2:#3E7A4B; --brg:#004225; --brg2:#0B5A36;
+      --carbon:#0B0D0E;
+      --carbon2:#0F1412;
+      --ink:#EAF2EE;
+      --muted:#A7B6AE;
+      --moss:#2E5E3A;
+      --moss2:#3E7A4B;
+      --brg:#004225;
+      --brg2:#0B5A36;
       --shadow: 0 16px 60px rgba(0,0,0,0.45);
-      --glass1: rgba(255,255,255,0.10); --glass2: rgba(255,255,255,0.06);
-      --wa:#25D366; --waDark:#0b5a46;
+      --glass1: rgba(255,255,255,0.10);
+      --glass2: rgba(255,255,255,0.06);
+      --wa:#25D366;
+      --waDark:#0b5a46;
+
       --blue-grad: linear-gradient(90deg, #2563eb, #3b82f6);
       --box-h: 260px;
       --accent: #3b82f6;
-      --airdrop-blue: #007AFF; --airdrop-green: #34C759; --airdrop-blue-rgb: 0, 122, 255;
+
+      --airdrop-blue: #007AFF;
+      --airdrop-green: #34C759;
+      --airdrop-blue-rgb: 0, 122, 255;
     }
+
     *{ box-sizing:border-box; }
     html, body{ height:100%; width:100%; margin:0; padding:0; }
     body{
-      font-family: Arial, sans-serif; color:var(--ink);
+      font-family: Arial, sans-serif;
+      color:var(--ink);
       background: linear-gradient(180deg, var(--carbon), var(--carbon2));
-      overflow-x:hidden; -webkit-text-size-adjust: 100%;
+      overflow-x:hidden;
+      -webkit-text-size-adjust: 100%;
     }
     body::before{
-      content:""; position: fixed; inset: -35%; z-index: -2; pointer-events:none;
+      content:"";
+      position: fixed;
+      inset: -35%;
+      z-index: -2;
+      pointer-events:none;
       background:
         radial-gradient(60% 50% at 12% 22%, rgba(46,94,58,0.55), transparent 62%),
         radial-gradient(55% 50% at 88% 28%, rgba(0,66,37,0.48), transparent 62%),
@@ -68,43 +87,84 @@
 
     /* ---------- HEADER ---------- */
     .topbar{
-      position: relative; z-index: 5;
-      display:flex; align-items:center; justify-content:space-between;
-      gap:16px; padding:16px; border-radius: 18px;
+      position: relative;
+      z-index: 5;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:16px;
+      border-radius: 18px;
       background: linear-gradient(180deg, var(--glass1), var(--glass2));
       border: 1px solid rgba(255,255,255,0.12);
       backdrop-filter: blur(12px);
       box-shadow: var(--shadow);
       flex-wrap: wrap;
     }
-    .brand{ display:flex; flex-direction:column; gap:3px; flex: 1 1 200px; }
+    .brand{
+      display:flex;
+      flex-direction:column;
+      gap:3px;
+      flex: 1 1 200px;
+    }
     .brandTitle{
       font-size: clamp(18px, 4vw, 22px);
-      font-weight: 900; line-height:1.1;
+      font-weight: 900;
+      line-height:1.1;
       background: linear-gradient(90deg, #d7f7e6, rgba(62,122,75,0.95), rgba(0,66,37,0.95));
-      -webkit-background-clip: text; background-clip: text; color: transparent;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
-    .brandSub{ font-size: 13px; color: var(--muted); font-weight: 800; }
-    .topActions{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end; flex: 1 1 300px; }
+    .brandSub{
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 800;
+    }
+    .topActions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      flex: 1 1 300px;
+    }
     .pill{
-      display:flex; align-items:center; gap:10px; padding:10px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px;
       border-radius: 999px;
       background: rgba(0,0,0,0.16);
       border: 1px solid rgba(255,255,255,0.12);
-      flex-wrap: wrap; width: 100%;
+      flex-wrap: wrap;
+      width: 100%;
     }
     .pill input{
-      padding:10px 12px; border-radius: 999px;
+      padding:10px 12px;
+      border-radius: 999px;
       border: 1px solid rgba(255,255,255,0.14);
-      outline:none; background: rgba(0,0,0,0.24); color: var(--ink);
-      font-size: 14px; font-weight: 800; flex: 1 1 120px; min-width: 80px;
+      outline:none;
+      background: rgba(0,0,0,0.24);
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 800;
+      flex: 1 1 120px;
+      min-width: 80px;
     }
 
     /* ---------- STICKY CONTROLS ---------- */
     #controls{
-      position: sticky; top: 10px; z-index: 100;
-      display:flex; flex-wrap:wrap; gap:12px; padding:16px; border-radius: 18px;
-      justify-content:center; align-items: center;
+      position: sticky;
+      top: 10px;
+      z-index: 100;
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      padding:16px;
+      border-radius: 18px;
+      justify-content:center;
+      align-items: center;
       background: linear-gradient(180deg, rgba(30, 35, 33, 0.85), rgba(15, 20, 18, 0.95));
       border: 1px solid rgba(255,255,255,0.15);
       backdrop-filter: blur(16px);
@@ -112,40 +172,90 @@
       width: 100%;
       transition: all 0.3s ease;
     }
-    .control-group{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:center; }
-    .control-group label{ font-weight: 900; font-size: 14px; color: rgba(234,242,238,0.92); }
-    select, input[type="range"]{
-      padding:8px 12px; border:1px solid rgba(255,255,255,0.14);
-      border-radius: 12px; background: rgba(0,0,0,0.3);
-      color: var(--ink); font-weight: 900; outline: none;
+    .control-group{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+      justify-content:center;
     }
+    .control-group label{
+      font-weight: 900;
+      font-size: 14px;
+      color: rgba(234,242,238,0.92);
+    }
+    select, input[type="range"]{
+      padding:8px 12px;
+      border:1px solid rgba(255,255,255,0.14);
+      border-radius: 12px;
+      background: rgba(0,0,0,0.3);
+      color: var(--ink);
+      font-weight: 900;
+      outline: none;
+    }
+
     .btn{
-      border: none; cursor: pointer; padding:10px 16px; border-radius: 999px;
-      font-weight: 900; transition: all .15s ease;
-      display:flex; align-items:center; justify-content:center; gap:8px; white-space:nowrap;
-      color: var(--ink); font-size: 14px; position: relative; overflow: hidden;
+      border: none;
+      cursor: pointer;
+      padding:10px 16px;
+      border-radius: 999px;
+      font-weight: 900;
+      transition: all .15s ease;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      white-space:nowrap;
+      color: var(--ink);
+      font-size: 14px;
+      position: relative;
+      overflow: hidden;
     }
     .btn:active{ transform: scale(0.95); }
     .btnPrimary{
       background: linear-gradient(90deg, var(--brg), var(--moss2));
-      color:#EAF2EE; box-shadow: 0 8px 20px rgba(0,66,37,0.35);
+      color:#EAF2EE;
+      box-shadow: 0 8px 20px rgba(0,66,37,0.35);
     }
     .btnDanger{
       background: linear-gradient(90deg, #9b2222, #b45309);
-      color:#fff; box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+      color:#fff;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.35);
     }
     .btnVocab{
-      background: var(--blue-grad); color: white;
+      background: var(--blue-grad);
+      color: white;
       box-shadow: 0 8px 20px rgba(37,99,235,0.4);
       border: 1px solid rgba(255,255,255,0.2);
     }
-    .btnVocab:hover { box-shadow: 0 12px 30px rgba(37,99,235,0.6); transform: translateY(-1px); }
+    .btnVocab:hover {
+      box-shadow: 0 12px 30px rgba(37,99,235,0.6);
+      transform: translateY(-1px);
+    }
+
+    /* ✅ Pro disabled state for PDF button */
+    #downloadPdfBtn:disabled{
+      filter: grayscale(.2);
+      transform: none !important;
+      box-shadow: none !important;
+      cursor: not-allowed !important;
+      opacity: .75 !important;
+    }
 
     /* ---------- GRID ---------- */
-    #grid{ display:grid; gap: 16px; width: 100%; background: transparent; padding-bottom: 50px; }
+    #grid{
+      display:grid;
+      gap: 16px;
+      width: 100%;
+      background: transparent;
+      padding-bottom: 50px;
+    }
     .box{
-      width: 100%; height: var(--box-h);
-      border-radius: 16px; position:relative; overflow:hidden;
+      width: 100%;
+      height: var(--box-h);
+      border-radius: 16px;
+      position:relative;
+      overflow:hidden;
       border: 1px solid rgba(255,255,255,0.12);
       background:
         radial-gradient(circle at 10% 0%, rgba(62,122,75,0.15), transparent 60%),
@@ -154,31 +264,75 @@
       contain: content;
       touch-action: pan-y;
     }
-    .flip-card{ width:100%; height:100%; position:relative; transform-style:preserve-3d; transition: transform .6s cubic-bezier(0.4, 0.2, 0.2, 1); }
+    .flip-card{
+      width:100%;
+      height:100%;
+      position:relative;
+      transform-style:preserve-3d;
+      transition: transform .6s cubic-bezier(0.4, 0.2, 0.2, 1);
+    }
     .flip-card.flipped{ transform: rotateY(180deg); }
-    .flip-side{ position:absolute; inset:0; backface-visibility:hidden; display:flex; flex-direction:column; padding:14px; gap:8px; }
-    .flip-back{ transform: rotateY(180deg); direction: rtl; text-align:right; }
+    .flip-side{
+      position:absolute;
+      inset:0;
+      backface-visibility:hidden;
+      display:flex;
+      flex-direction:column;
+      padding:14px;
+      gap:8px;
+    }
+    .flip-back{
+      transform: rotateY(180deg);
+      direction: rtl;
+      text-align:right;
+    }
+
     textarea, input { font-size: 16px !important; }
 
     /* FRONT */
-    .frontWordWrap{ flex: 1; display:flex; align-items:center; justify-content:center; min-height: 45%; position: relative; }
-    .speakBtn{
-      position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
-      background: rgba(255,255,255,0.1);
-      border: none; border-radius: 50%;
-      width: 32px; height: 32px;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; transition: 0.2s;
-      color: var(--ink); z-index: 10;
+    .frontWordWrap{
+      flex: 1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height: 45%;
+      position: relative;
     }
-    .speakBtn:hover{ background: rgba(255,255,255,0.25); transform: translateY(-50%) scale(1.1); }
+    .speakBtn{
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.1);
+      border: none;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.2s;
+      color: var(--ink);
+      z-index: 10;
+    }
+    .speakBtn:hover{
+      background: rgba(255,255,255,0.25);
+      transform: translateY(-50%) scale(1.1);
+    }
     .speakBtn svg{ width: 16px; height: 16px; fill: currentColor; }
 
     .miniSpeakBtn{
-      border:none; cursor:pointer; width: 28px; height: 28px; border-radius: 999px;
+      border:none;
+      cursor:pointer;
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
       background: rgba(255,255,255,0.08);
       border: 1px solid rgba(255,255,255,0.12);
-      display:flex; align-items:center; justify-content:center;
+      display:flex;
+      align-items:center;
+      justify-content:center;
       color: rgba(234,242,238,0.92);
       transition: .2s;
     }
@@ -187,118 +341,354 @@
     .miniSpeakBtn svg{ width: 14px; height: 14px; fill: currentColor; }
 
     .wordInput{
-      width:100%; border:none; outline:none; resize:none; background:transparent;
-      color: var(--ink); font-weight: 900; text-align:center;
-      overflow:hidden; text-shadow: 0 0 15px rgba(46,94,58,0.3);
+      width:100%;
+      border:none;
+      outline:none;
+      resize:none;
+      background:transparent;
+      color: var(--ink);
+      font-weight: 900;
+      text-align:center;
+      overflow:hidden;
+      text-shadow: 0 0 15px rgba(46,94,58,0.3);
       padding-right: 40px;
     }
-    .exampleWrap{ border-top: 1px solid rgba(255,255,255,0.10); padding-top: 8px; flex: 1.2; display:flex; flex-direction:column; gap:6px; }
-    .exampleHeader{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
-    .exampleLabel{ font-size:12px; color: rgba(234,242,238,0.65); font-weight:900; direction:ltr; }
+
+    .exampleWrap{
+      border-top: 1px solid rgba(255,255,255,0.10);
+      padding-top: 8px;
+      flex: 1.2;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+    .exampleHeader{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .exampleLabel{
+      font-size:12px;
+      color: rgba(234,242,238,0.65);
+      font-weight:900;
+      direction:ltr;
+    }
     .autoBtn{
-      border:none; cursor:pointer; padding:6px 10px; border-radius: 999px;
-      font-weight: 900; font-size: 11px; color: #e9fff4;
+      border:none;
+      cursor:pointer;
+      padding:6px 10px;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 11px;
+      color: #e9fff4;
       background: linear-gradient(90deg, rgba(0,66,37,0.92), rgba(62,122,75,0.92));
       border: 1px solid rgba(255,255,255,0.12);
       box-shadow: 0 6px 15px rgba(0,0,0,0.3);
     }
     .autoBtn:active{ transform: scale(0.95); }
-    .autoMsg{ font-size: 11px; font-weight: 900; color: rgba(234,242,238,0.62); min-height: 14px; direction:ltr; text-align:left; }
-    .explainInput{ border:none; outline:none; resize:none; background:transparent; color: rgba(234,242,238,0.92); line-height:1.4; flex:1; }
+    .autoMsg{
+      font-size: 11px;
+      font-weight: 900;
+      color: rgba(234,242,238,0.62);
+      min-height: 14px;
+      direction:ltr;
+      text-align:left;
+    }
+    .explainInput{
+      border:none;
+      outline:none;
+      resize:none;
+      background:transparent;
+      color: rgba(234,242,238,0.92);
+      line-height:1.4;
+      flex:1;
+    }
 
     /* BACK */
     .posBadge{
-      display:inline-flex; align-self:flex-start; padding:4px 10px; border-radius:999px;
-      font-size: 11px; font-weight: 900;
+      display:inline-flex;
+      align-self:flex-start;
+      padding:4px 10px;
+      border-radius:999px;
+      font-size: 11px;
+      font-weight: 900;
       background: rgba(62,122,75,0.2);
       border: 1px solid rgba(62,122,75,0.3);
-      color: #d7f7e6; direction:ltr; cursor:pointer;
+      color: #d7f7e6;
+      direction:ltr;
+      cursor:pointer;
     }
-    .backTopRow{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; margin-top: 8px; flex: 1; }
+    .backTopRow{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+      margin-top: 8px;
+      flex: 1;
+    }
     .arabicCenter{
-      flex: 1.2; text-align:right; font-weight: 700; line-height: 1.6; direction: rtl;
-      color: #e9fff4; font-family: "Amiri", Arial, sans-serif;
-      border: none; outline: none; resize: none; background: transparent; overflow: hidden;
+      flex: 1.2;
+      text-align:right;
+      font-weight: 700;
+      line-height: 1.6;
+      direction: rtl;
+      color: #e9fff4;
+      font-family: "Amiri", Arial, sans-serif;
+      border: none;
+      outline: none;
+      resize: none;
+      background: transparent;
+      overflow: hidden;
     }
     .darijaSide{
-      flex: 1; text-align:right; font-weight: 700; line-height: 1.6; direction: rtl;
+      flex: 1;
+      text-align:right;
+      font-weight: 700;
+      line-height: 1.6;
+      direction: rtl;
       color: rgba(234,242,238,0.85);
-      border: none; outline: none; resize: none; background: transparent; overflow: hidden;
+      border: none;
+      outline: none;
+      resize: none;
+      background: transparent;
+      overflow: hidden;
     }
     .backNoteWrap{
-      margin-top: 4px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.10);
-      display:flex; flex-direction:column; gap:6px; flex: 1.2; min-height: 0;
+      margin-top: 4px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255,255,255,0.10);
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      flex: 1.2;
+      min-height: 0;
     }
-    .noteLabel{ font-size: 12px; font-weight: 800; opacity: .90; direction: rtl; text-align: right; color: rgba(234,242,238,0.90); }
+    .noteLabel{
+      font-size: 12px;
+      font-weight: 800;
+      opacity: .90;
+      direction: rtl;
+      text-align: right;
+      color: rgba(234,242,238,0.90);
+    }
     .noteInput{
-      border:none; outline:none; resize:none; background:transparent; color: rgba(234,242,238,0.92);
-      line-height: 1.5; min-height: 30px; text-align:right; direction: rtl;
-      overflow:hidden; font-family: "Amiri", Arial, sans-serif;
+      border:none;
+      outline:none;
+      resize:none;
+      background:transparent;
+      color: rgba(234,242,238,0.92);
+      line-height: 1.5;
+      min-height: 30px;
+      text-align:right;
+      direction: rtl;
+      overflow:hidden;
+      font-family: "Amiri", Arial, sans-serif;
     }
 
     /* WhatsApp */
     #waBtn{
-      position: fixed; right: 18px; bottom: 18px;
-      width: 54px; height: 54px; border-radius: 999px;
-      background: var(--wa); border: none; cursor: pointer;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 54px;
+      height: 54px;
+      border-radius: 999px;
+      background: var(--wa);
+      border: none;
+      cursor: pointer;
       box-shadow: 0 16px 30px rgba(0,0,0,0.35);
-      display:flex; align-items:center; justify-content:center;
+      display:flex;
+      align-items:center;
+      justify-content:center;
       z-index: 9999;
     }
     #waBtn svg{ width: 28px; height: 28px; fill: #fff; }
 
     #waPopup{
-      position: fixed; left: 50%; top: 50%;
+      position: fixed;
+      left: 50%;
+      top: 50%;
       transform: translate(-50%, -50%);
-      width: 380px; max-width: 95vw;
-      border-radius: 20px; overflow:hidden;
+      width: 380px;
+      max-width: 95vw;
+      border-radius: 20px;
+      overflow:hidden;
       box-shadow: 0 30px 80px rgba(0,0,0,0.7);
-      background:#fff; z-index: 9999; display:none;
+      background:#fff;
+      z-index: 9999;
+      display:none;
     }
     #waPopup.open{ display:block; animation: popUp 0.3s ease; }
     @keyframes popUp {
       from { transform: translate(-50%, -50%) scale(0.8) translateY(20px); opacity: 0; }
-      to   { transform: translate(-50%, -50%) scale(1) translateY(0); opacity: 1; }
+      to { transform: translate(-50%, -50%) scale(1) translateY(0); opacity: 1; }
     }
-    .waHeader{ background: var(--waDark); padding: 14px; display:flex; gap:12px; align-items:center; color:#fff; }
-    .waAvatar{ width: 44px; height: 44px; border-radius: 999px; object-fit: cover; border: 2px solid rgba(255,255,255,0.3); background:#0f172a; }
+    .waHeader{
+      background: var(--waDark);
+      padding: 14px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      color:#fff;
+    }
+    .waAvatar{
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      object-fit: cover;
+      border: 2px solid rgba(255,255,255,0.3);
+      background:#0f172a;
+    }
     .waTitle{ font-weight: 900; font-size: 15px; }
     .waSub{ font-size: 12px; opacity: .9; }
-    .waClose{ margin-left:auto; border:none; background: rgba(255,255,255,0.15); color:#fff; width: 30px; height: 30px; border-radius: 10px; cursor:pointer; font-weight: bold; }
+    .waClose{
+      margin-left:auto;
+      border:none;
+      background: rgba(255,255,255,0.15);
+      color:#fff;
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      cursor:pointer;
+      font-weight: bold;
+    }
     .waBody{ padding: 16px; background: #f0f2f5; }
-    .waBubble{ background:#fff; border-radius: 12px 12px 12px 2px; padding: 12px; border: 1px solid rgba(0,0,0,0.05); font-weight: 800; color:#111; font-size: 14px; }
-    .waBubble small{ display:block; margin-top:6px; color:#666; }
+    .waBubble{
+      background:#fff;
+      border-radius: 12px 12px 12px 2px;
+      padding: 12px;
+      border: 1px solid rgba(0,0,0,0.05);
+      font-weight: 800;
+      color:#111;
+      font-size: 14px;
+    }
+    .waBubble small{
+      display:block;
+      margin-top:6px;
+      color:#666;
+    }
     .waInputWrap{ margin-top: 14px; display:flex; gap:8px; }
-    #waInput{ flex:1; border-radius: 20px; border: 1px solid #ccc; padding: 12px 16px; outline:none; font-weight: 800; font-size: 15px;}
-    #waSend{ border:none; border-radius: 20px; padding: 0 20px; background: var(--wa); color:#fff; font-weight: 900; cursor:pointer; }
+    #waInput{
+      flex:1;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+      padding: 12px 16px;
+      outline:none;
+      font-weight: 800;
+      font-size: 15px;
+    }
+    #waSend{
+      border:none;
+      border-radius: 20px;
+      padding: 0 20px;
+      background: var(--wa);
+      color:#fff;
+      font-weight: 900;
+      cursor:pointer;
+    }
 
     /* PDF STAGE */
     #pdfStage{
-      position: absolute; left: -9999px; top: 0;
-      width: 210mm; height: 297mm; padding: 12mm;
-      background: #ffffff; color: #111; box-sizing: border-box;
-      font-family: Arial, sans-serif; display: flex; flex-direction: column;
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      width: 210mm;
+      height: 297mm;
+      padding: 12mm;
+      background: #ffffff;
+      color: #111;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
       z-index: -999;
     }
     .pdfHeaderArea { height: var(--header-h); width: 100%; margin-bottom: 4mm; }
-    .pdfBigTitle{ margin:0; text-align:center; font-weight: 900; font-size: 18px; color:#0B5A36; line-height: 1.2; }
-    .pdfMeta{ display:flex; justify-content:space-between; gap: 6mm; font-size: 11px; font-weight: 900; margin-top: 5mm; }
-    .pdfMeta span{ border: 1px solid rgba(0,0,0,0.14); border-radius: 999px; padding: 2.5mm 4mm; background: rgba(0,0,0,0.02); }
-    .pdfGrid{ display: grid; gap: var(--pdfGap); grid-template-columns: repeat(var(--pdfCols), var(--pdfBoxW)); grid-auto-rows: var(--pdfBoxH); width: 100%; }
-    .pdfCard{ width: var(--pdfBoxW); height: var(--pdfBoxH); background: #fff; border: 1px solid rgba(0,0,0,0.25); border-radius: 14px; overflow: hidden; }
+    .pdfBigTitle{
+      margin:0;
+      text-align:center;
+      font-weight: 900;
+      font-size: 18px;
+      color:#0B5A36;
+      line-height: 1.2;
+    }
+    .pdfMeta{
+      display:flex;
+      justify-content:space-between;
+      gap: 6mm;
+      font-size: 11px;
+      font-weight: 900;
+      margin-top: 5mm;
+    }
+    .pdfMeta span{
+      border: 1px solid rgba(0,0,0,0.14);
+      border-radius: 999px;
+      padding: 2.5mm 4mm;
+      background: rgba(0,0,0,0.02);
+    }
+    .pdfGrid{
+      display: grid;
+      gap: var(--pdfGap);
+      grid-template-columns: repeat(var(--pdfCols), var(--pdfBoxW));
+      grid-auto-rows: var(--pdfBoxH);
+      width: 100%;
+    }
+    .pdfCard{
+      width: var(--pdfBoxW);
+      height: var(--pdfBoxH);
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.25);
+      border-radius: 14px;
+      overflow: hidden;
+    }
     .pdfCard.empty { border: none; background: transparent; }
-    .pdfCardInner{ padding: 12px; height: 100%; box-sizing: border-box; display: flex; flex-direction: column; gap: 8px; }
+    .pdfCardInner{
+      padding: 12px;
+      height: 100%;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
     .pdfWordWrap{ flex: 1; display:flex; align-items:center; justify-content:center; text-align:center; }
     .pdfWord{ font-weight: 900; font-size: 18px; white-space: pre-wrap; word-break: break-word; color: #000; }
     .pdfLine{ height: 1px; background: rgba(0,0,0,0.15); width: 100%; }
     .pdfExample{ font-size: 12px; line-height: 1.4; flex: 1; color: #222; white-space: pre-wrap; }
-    .pdfAr{ direction: rtl; text-align: center; font-family: "Amiri", Arial, sans-serif; font-weight: 700; font-size: 18px; line-height: 1.5; color: #000; white-space: pre-wrap; }
-    .pdfDar{ direction: rtl; text-align: right; font-weight: 700; font-size: 13px; line-height: 1.5; color: #333; white-space: pre-wrap; }
-    .pdfNote{ direction: rtl; text-align: right; font-size: 12px; line-height: 1.4; font-family: "Amiri", Arial, sans-serif; color: #444; white-space: pre-wrap; }
+
+    .pdfAr{
+      direction: rtl;
+      text-align: center;
+      font-family: "Amiri", Arial, sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 1.5;
+      color: #000;
+      white-space: pre-wrap;
+    }
+    .pdfDar{
+      direction: rtl;
+      text-align: right;
+      font-weight: 700;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #333;
+      white-space: pre-wrap;
+    }
+    .pdfNote{
+      direction: rtl;
+      text-align: right;
+      font-size: 12px;
+      line-height: 1.4;
+      font-family: "Amiri", Arial, sans-serif;
+      color: #444;
+      white-space: pre-wrap;
+    }
 
     /* Loading */
     #pdfLoading {
-      position: fixed; inset: 0;
+      position: fixed;
+      inset: 0;
       background: rgba(0,0,0,0.85);
       z-index: 99999;
       display: none;
@@ -314,15 +704,20 @@
       border: 4px solid rgba(255,255,255,0.3);
       border-top: 4px solid #25D366;
       border-radius: 50%;
-      width: 50px; height: 50px;
+      width: 50px;
+      height: 50px;
       animation: spin 1s linear infinite;
       margin-bottom: 15px;
     }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
 
     /* ✅ CREATIVE HUB (Wortschatz) */
     #vocabHub{
-      position: fixed; inset: 0;
+      position: fixed;
+      inset: 0;
       background: rgba(11, 13, 14, 0.95);
       z-index: 10000;
       display: none;
@@ -334,19 +729,49 @@
     .hubPanel{
       background: linear-gradient(180deg, #1a1d1b, #0f1412);
       border-radius: 24px;
-      max-width: 800px; width: 95%;
-      max-height: 80vh; overflow-y: auto;
+      max-width: 800px;
+      width: 95%;
+      max-height: 80vh;
+      overflow-y: auto;
       padding: 30px;
       box-shadow: 0 0 100px rgba(37,99,235,0.2);
       border: 1px solid rgba(255,255,255,0.1);
       animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    .hubHeader{ display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-    .hubTitle{ font-size: 24px; font-weight: 900; color: #d7f7e6; text-transform: uppercase; letter-spacing: 1px; }
-    .hubClose{ background: rgba(255,255,255,0.1); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; font-size: 24px; cursor: pointer; transition: 0.2s; }
+    @keyframes slideUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .hubHeader{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    .hubTitle{
+      font-size: 24px;
+      font-weight: 900;
+      color: #d7f7e6;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .hubClose{
+      background: rgba(255,255,255,0.1);
+      border: none;
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 24px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
     .hubClose:hover{ background: rgba(255,255,255,0.2); }
-    .hubGrid{ display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; }
+    .hubGrid{
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 16px;
+    }
     .hubCard{
       background: rgba(255,255,255,0.03);
       border: 1px solid rgba(255,255,255,0.08);
@@ -369,16 +794,42 @@
     }
     .hubCard::before{
       content:'';
-      position: absolute; top:0; left:0; width:100%; height:100%;
+      position: absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
       background: radial-gradient(circle at center, rgba(255,255,255,0.1), transparent 70%);
-      opacity: 0; transition: 0.3s;
+      opacity: 0;
+      transition: 0.3s;
     }
     .hubCard:hover::before{ opacity: 1; }
-    .hubCardName{ font-weight: 900; color: #EAF2EE; font-size: 16px; margin-bottom: 5px; z-index: 1; }
-    .hubCardCount{ font-size: 12px; opacity: 0.6; background: rgba(0,0,0,0.3); padding: 4px 10px; border-radius: 20px; z-index: 1; }
+    .hubCardName{
+      font-weight: 900;
+      color: #EAF2EE;
+      font-size: 16px;
+      margin-bottom: 5px;
+      z-index: 1;
+    }
+    .hubCardCount{
+      font-size: 12px;
+      opacity: 0.6;
+      background: rgba(0,0,0,0.3);
+      padding: 4px 10px;
+      border-radius: 20px;
+      z-index: 1;
+    }
 
     /* ✅ Airdrop Loading Bar Animation */
-    #loadBarContainer{ position: fixed; top: 0; left: 0; width: 100%; height: 6px; z-index: 10001; display: none; }
+    #loadBarContainer{
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      z-index: 10001;
+      display: none;
+    }
     #loadBar{
       height: 100%;
       background: linear-gradient(90deg, var(--airdrop-blue), var(--airdrop-green));
@@ -388,19 +839,33 @@
     }
 
     /* ✅ CONFETTI CANVAS */
-    #confettiCanvas{ position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 10002; }
+    #confettiCanvas{
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10002;
+    }
 
     /* Footer */
     .cleanFooter{
-      margin-top:80px; padding:60px 0;
+      margin-top:80px;
+      padding:60px 0;
       border-top:1px solid rgba(255,255,255,0.08);
-      display:flex; justify-content:center;
+      display:flex;
+      justify-content:center;
       background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.25));
     }
     .cleanSocial{ display:flex; gap:60px; }
     .cleanIcon{
-      width:110px; height:110px; border-radius:28px;
-      display:flex; align-items:center; justify-content:center;
+      width:110px;
+      height:110px;
+      border-radius:28px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
       background: linear-gradient(180deg, #0F1412, #0B0D0E);
       border:2px solid #2E5E3A;
       box-shadow:0 25px 70px rgba(0,0,0,0.7);
@@ -421,18 +886,27 @@
       50% { box-shadow: 0 0 0 15px rgba(var(--airdrop-blue-rgb), 0); transform: scale(1.05); }
       100% { box-shadow: 0 0 0 0 rgba(var(--airdrop-blue-rgb), 0); transform: scale(1); }
     }
-    .airdrop-pulse { animation: airdrop-pulse-anim 0.6s ease-out; border-color: var(--airdrop-blue) !important; }
+    .airdrop-pulse {
+      animation: airdrop-pulse-anim 0.6s ease-out;
+      border-color: var(--airdrop-blue) !important;
+    }
 
     #airdrop-transfer-bar{
-      position: fixed; top: 0; left: 0;
-      width: 100%; height: 4px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
       background: transparent;
-      z-index: 99999; pointer-events: none;
-      opacity: 0; transition: opacity 0.2s;
+      z-index: 99999;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
     }
     #airdrop-transfer-bar.active{ opacity: 1; }
     #airdrop-transfer-fill{
-      height: 100%; width: 0%;
+      height: 100%;
+      width: 0%;
       background-color: var(--airdrop-blue);
       box-shadow: 0 0 10px var(--airdrop-blue);
       transition: width 0.3s ease-out, background-color 0.2s;
@@ -445,19 +919,31 @@
     }
     #airdrop-transfer-bar.success #airdrop-transfer-fill::after{
       content: '✓';
-      position: absolute; right: 10px; top: -8px;
-      color: white; font-weight: bold; font-size: 14px;
+      position: absolute;
+      right: 10px;
+      top: -8px;
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
       animation: tick-pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-    @keyframes tick-pop { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+    @keyframes tick-pop {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
 
     /* ✅ PDF Progress Bar */
     #pdfProgress{
-      position: fixed; top: 0; left: 0;
-      width: 100%; height: 4px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
       background: transparent;
-      z-index: 99998; pointer-events: none;
-      opacity: 0; transition: opacity 0.2s;
+      z-index: 99998;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
     }
     #pdfProgress.active{ opacity: 1; }
     #pdfProgressFill{
@@ -606,6 +1092,7 @@
     // =========================================================
     function hapticTap(ms = 10) { if (navigator.vibrate) navigator.vibrate(ms); }
     function flashPulse(el) { if (!el) return; el.classList.remove('airdrop-pulse'); void el.offsetWidth; el.classList.add('airdrop-pulse'); }
+
     let airdropBar = null;
     function startTransferBar(durationMs = 1200) {
       if (!airdropBar) {
@@ -634,7 +1121,7 @@
     // ✅ 1. WORTSCHATZ DATENBANK
     // ================================================================================================
     const WORTSCHATZ_DATA = {
-      
+     
       "Lektion9": [
       // ===== Feste / Bräuche (احتفالات / تقاليد) =====
        { word:"der Ball, -e", pos:"N", ar:"حفلة راقصة", darija:"حفلة ديال الشطيح", de_example:"Wir gehen heute Abend auf einen Ball.", darija_example:"غادين لواحد الحفلة ديال الشطيح هاد الليلة." },
@@ -3365,48 +3852,63 @@ lektion16: [
       s = s.normalize("NFD").replace(/[\u0300-\u036f]/g,"");
       return s;
     }
+
     const QAMOS = Object.create(null);
     function addKey(key, entry){
       key = String(key || '').trim();
       if(!key || key.length < 2) return;
       QAMOS[key] = entry;
     }
+
     function generateVariants(base){
       const out = new Set();
       out.add(base);
       out.add(base.replace(/[\s-]/g,''));
+
       const stripped = base
         .replace(/\s+-\w+$/,'')
         .replace(/\s+-(e|en|er|n|s)$/,'')
         .replace(/(en|er|e|n|s)$/,'');
+
       if(stripped && stripped.length >= 3){
         out.add(stripped);
         out.add(stripped.replace(/[\s-]/g,''));
       }
+
       const simpleUml = base.replace(/ae/g,'a').replace(/oe/g,'o').replace(/ue/g,'u');
       out.add(simpleUml);
       out.add(simpleUml.replace(/[\s-]/g,''));
+
       const simpleUml2 = stripped.replace(/ae/g,'a').replace(/oe/g,'o').replace(/ue/g,'u');
       if(simpleUml2 && simpleUml2.length >= 3){
         out.add(simpleUml2);
         out.add(simpleUml2.replace(/[\s-]/g,''));
       }
+
       const schToCh = base.replace(/sch/g,'ch');
-      out.add(schToCh); out.add(schToCh.replace(/[\s-]/g,''));
+      out.add(schToCh);
+      out.add(schToCh.replace(/[\s-]/g,''));
+
       const chToSch = base.replace(/ch/g,'sch');
-      out.add(chToSch); out.add(chToSch.replace(/[\s-]/g,''));
+      out.add(chToSch);
+      out.add(chToSch.replace(/[\s-]/g,''));
+
       out.add(simpleUml.replace(/sch/g,'ch'));
       out.add(simpleUml.replace(/ch/g,'sch'));
+
       out.add(base.replace(/ss/g,'s'));
       out.add(base.replace(/ss/g,'sz'));
+
       return [...out].filter(v => v && v.length >= 2);
     }
+
     function addToQamos(entry){
       const base = normalizeWord(entry.word);
       const variants = generateVariants(base);
       for(const v of variants) addKey(v, entry);
       addKey(base.replace(/[\s-]/g,''), entry);
     }
+
     function buildQamos(){
       for(const k in QAMOS) delete QAMOS[k];
       Object.values(WORTSCHATZ_DATA).forEach(list => (list||[]).forEach(entry => addToQamos(entry)));
@@ -3433,6 +3935,7 @@ lektion16: [
       }
       return v1[bl];
     }
+
     function lookupSmart(userInput){
       const raw = String(userInput || '').trim();
       if(!raw) return null;
@@ -3441,6 +3944,7 @@ lektion16: [
       for(const v of variants){
         if(QAMOS[v]) return { entry: QAMOS[v], confidence: 1 };
       }
+
       const seen = new Set();
       const candidates = [];
       for(const k in QAMOS){
@@ -3450,9 +3954,11 @@ lektion16: [
           candidates.push(e);
         }
       }
+
       const target = variants[0].replace(/[\s-]/g,'');
       const tl = target.length;
       const maxDist = tl <= 4 ? 1 : (tl <= 7 ? 2 : 3);
+
       let best = null;
       let bestScore = -Infinity;
       for(const e of candidates){
@@ -3475,6 +3981,7 @@ lektion16: [
           best = e;
         }
       }
+
       if(!best) return null;
       const confidence = Math.max(0, Math.min(0.98, bestScore));
       if(confidence < 0.76) return null;
@@ -3483,9 +3990,6 @@ lektion16: [
 
     // ======================
     // ✅ SPEECH (FIXED CLEAR AUDIO ON iPhone/Android)
-    // - better voice selection
-    // - prevents "choked" / "muffled" by stopping correctly and chaining utterances
-    // - works only on user click (speaker buttons)
     // ======================
     const TTS = {
       voices: [],
@@ -3515,25 +4019,20 @@ lektion16: [
         const name = (v.name || '').toLowerCase();
         let s = 0;
 
-        // Language priority
         if (lang === 'de-de') s += 50;
         else if (lang.startsWith('de')) s += 40;
 
-        // Prefer localService on iOS (often clearer)
         if (v.localService) s += 8;
 
-        // Prefer common high-quality engines
         if (name.includes('google')) s += 20;
         if (name.includes('enhanced')) s += 10;
         if (name.includes('premium')) s += 10;
         if (name.includes('neural')) s += 10;
 
-        // Some Apple voices can be great too
-        if (name.includes('anna')) s += 12;     // often iOS German voice
+        if (name.includes('anna')) s += 12;
         if (name.includes('helena')) s += 10;
         if (name.includes('markus')) s += 10;
 
-        // Avoid weird fallback voices
         if (name.includes('compact')) s -= 2;
         if (name.includes('android')) s -= 2;
 
@@ -3542,18 +4041,18 @@ lektion16: [
 
       const german = voices.filter(v => ((v.lang||'').toLowerCase().startsWith('de')));
       if(!german.length) return null;
-
       german.sort((a,b) => scoreVoice(b) - scoreVoice(a));
       return german[0] || null;
     }
 
     function ttsPrimeOnce(){
-      // On iOS, priming helps (must be inside user interaction)
       if(!window.speechSynthesis || TTS.primed) return;
       try{
         window.speechSynthesis.cancel();
         const u = new SpeechSynthesisUtterance(' ');
-        u.volume = 0; u.rate = 1; u.pitch = 1;
+        u.volume = 0;
+        u.rate = 1;
+        u.pitch = 1;
         window.speechSynthesis.speak(u);
         TTS.primed = true;
       }catch(e){}
@@ -3563,7 +4062,6 @@ lektion16: [
       if(!window.speechSynthesis) return;
       try{
         window.speechSynthesis.cancel();
-        // On iOS sometimes cancel needs a tiny extra tick
         if (TTS.isIOS) setTimeout(() => { try { window.speechSynthesis.cancel(); } catch(e){} }, 25);
       }catch(e){}
       TTS.speaking = false;
@@ -3571,16 +4069,14 @@ lektion16: [
 
     function cleanSpeakText(t){
       t = String(t || '').trim();
-      // remove multiple spaces + keep punctuation
       t = t.replace(/\s+/g,' ').trim();
       return t;
     }
 
     function chunkTextForTTS(text, maxLen = 160){
-      // Split by sentence-ish punctuation first, then by length
       const t = cleanSpeakText(text);
       if(!t) return [];
-      const parts = t.split(/([.!?…])\s+/).reduce((acc, cur, i, arr) => {
+      const parts = t.split(/([.!?…])\s+/).reduce((acc, cur) => {
         if (cur === '.' || cur === '!' || cur === '?' || cur === '…') {
           acc[acc.length-1] = (acc[acc.length-1] || '') + cur;
         } else {
@@ -3591,8 +4087,10 @@ lektion16: [
 
       const out = [];
       for(const p of parts){
-        if(p.length <= maxLen){ out.push(p); continue; }
-        // hard split long sentences
+        if(p.length <= maxLen){
+          out.push(p);
+          continue;
+        }
         let start = 0;
         while(start < p.length){
           out.push(p.slice(start, start + maxLen));
@@ -3606,22 +4104,18 @@ lektion16: [
       const t = cleanSpeakText(text);
       if(!t || !window.speechSynthesis) return;
 
-      // MUST be called on click: prime + stop
       ttsPrimeOnce();
       ttsStop();
 
-      // Pick best voice
       ttsRefreshVoices();
       const voice = pickBestGermanVoice();
 
-      // Settings for clarity (not "muffled")
-      const rate = (opts.rate ?? 0.92);   // slightly faster than 0.80 => clearer on many phones
-      const pitch = (opts.pitch ?? 1.00); // neutral pitch => less robotic
+      const rate = (opts.rate ?? 0.92);
+      const pitch = (opts.pitch ?? 1.00);
       const volume = (opts.volume ?? 1.0);
 
       const chunks = chunkTextForTTS(t, 170);
 
-      // Chain utterances to avoid overlap (this fixes "makhno99")
       let i = 0;
       TTS.speaking = true;
 
@@ -3637,13 +4131,8 @@ lektion16: [
         u.volume = volume;
         if (voice) u.voice = voice;
 
-        u.onend = () => {
-          i++;
-          // small gap helps clarity on mobile
-          setTimeout(speakNext, (opts.gapMs ?? 120));
-        };
+        u.onend = () => { i++; setTimeout(speakNext, (opts.gapMs ?? 120)); };
         u.onerror = () => {
-          // fallback without voice selection
           try{
             const f = new SpeechSynthesisUtterance(chunks[i]);
             f.lang='de-DE'; f.rate=rate; f.pitch=pitch; f.volume=volume;
@@ -3654,7 +4143,6 @@ lektion16: [
           }
         };
 
-        // iOS: speaking must start immediately after click -> use rAF instead of setTimeout
         requestAnimationFrame(() => window.speechSynthesis.speak(u));
       };
 
@@ -3676,12 +4164,11 @@ lektion16: [
       const volume = (opts.volume ?? 1.0);
       const gapMs = (opts.gapMs ?? 220);
 
-      // Flatten each item into chunks and chain all
       const queue = [];
       arr.forEach((t, idx) => {
         const chunks = chunkTextForTTS(t, 120);
         chunks.forEach(ch => queue.push(ch));
-        if (idx < arr.length - 1) queue.push('__PAUSE__'); // pause between singular/plural
+        if (idx < arr.length - 1) queue.push('__PAUSE__');
       });
 
       let i = 0;
@@ -3692,8 +4179,8 @@ lektion16: [
           TTS.speaking = false;
           return;
         }
-        const item = queue[i];
 
+        const item = queue[i];
         if(item === '__PAUSE__'){
           i++;
           setTimeout(next, gapMs);
@@ -3716,41 +4203,58 @@ lektion16: [
       next();
     }
 
+    // ======================
+    // ✅ NOUN PARSE (FIXED plural for iPhone) + SPEAK TEXTS
+    // ======================
     function stripParentheses(s){
       return String(s || '').replace(/\([^)]*\)/g, '').replace(/\s+/g,' ').trim();
     }
+
     function parseNounEntry(wordStr){
       let raw = stripParentheses(wordStr);
       raw = raw.replace(/[“”„"]/g,'').trim();
+
       const m = raw.match(/^(der|die|das)\s+(.+)$/i);
       const article = m ? m[1].toLowerCase() : '';
       const rest = m ? m[2] : raw;
+
       const parts = rest.split(',');
       const base = stripParentheses(parts[0] || '').trim();
       const pluralInfo = stripParentheses((parts[1] || '')).trim();
+
       let plural = '';
       if (pluralInfo){
-        if (/^[-–—]+$/.test(pluralInfo)) plural = '';
-        else if (pluralInfo.startsWith('-')) {
+        if (/^[-–—]+$/.test(pluralInfo)){
+          plural = base; // ✅ plural same as base
+        } else if (pluralInfo.startsWith('-')) {
           const suf = pluralInfo.replace(/^-+/, '').trim();
-          if (suf) plural = base + suf;
+          plural = suf ? (base + suf) : base;
         } else {
           plural = pluralInfo;
         }
       }
       return { article, base, plural, isNoun: !!article };
     }
+
     function buildSpeakTextsFromEntry(entry){
       const w = entry && entry.word ? entry.word : '';
       const parsed = parseNounEntry(w);
+
       if (!parsed.isNoun){
         const cleaned = stripParentheses(String(w || '')).split(',')[0].trim();
         return cleaned ? [cleaned] : [];
       }
+
       const singular = (parsed.article + ' ' + parsed.base).trim();
       const texts = [];
       if (singular) texts.push(singular);
-      if (parsed.plural) texts.push(parsed.plural);
+
+      if (parsed.plural){
+        const p = parsed.plural.trim();
+        if (/^(der|die|das)\s+/i.test(p)) texts.push(p);
+        else texts.push(('die ' + p).trim());
+      }
+
       return texts;
     }
 
@@ -3845,6 +4349,7 @@ lektion16: [
             return;
           }
         }
+
         const cleaned = stripParentheses(String(wordTA.value || '')).split(',')[0].trim();
         speakGerman(cleaned, { rate: 0.92 });
       };
@@ -3987,7 +4492,6 @@ lektion16: [
         arExTA.value = data.arabicExampleManual || '';
 
         extraNoteWrap.style.display = (b1 || (data.note||'').trim() !== '') ? 'flex' : 'none';
-
         [wordTA, exTA, arCenter, darSide, arExTA, darExTA, noteTA].forEach(t => autoFitTextarea(t));
       }
 
@@ -4012,29 +4516,41 @@ lektion16: [
         data.posOverride = b1.pos;
         data.example = b1.de_example;
         exTA.value = b1.de_example;
+
         data.darijaExampleB1 = b1.darija_example;
 
         // Auto-correct visible word to exact dictionary form
         data.word = b1.word;
         wordTA.value = b1.word;
 
-        render(); save(); endTransferBar();
+        render();
+        save();
+        endTransferBar();
       };
 
       posBadge.onclick = (e) => {
         e.stopPropagation();
         data.posOverride = data.posOverride==='V'?'N':data.posOverride==='N'?'A':'V';
-        render(); save();
+        render();
+        save();
       };
 
       const binds = [
-        [wordTA,'word'], [exTA,'example'],
-        [arCenter,'arTextManual'], [darSide,'darTextManual'],
-        [arExTA,'arabicExampleManual'], [darExTA,'darijaExampleManual'],
+        [wordTA,'word'],
+        [exTA,'example'],
+        [arCenter,'arTextManual'],
+        [darSide,'darTextManual'],
+        [arExTA,'arabicExampleManual'],
+        [darExTA,'darijaExampleManual'],
         [noteTA,'note']
       ];
+
       binds.forEach(([el, key]) => {
-        el.oninput = () => { data[key] = el.value; autoFitTextarea(el); save(); };
+        el.oninput = () => {
+          data[key] = el.value;
+          autoFitTextarea(el);
+          save();
+        };
       });
 
       box.onclick = (e) => {
@@ -4046,6 +4562,7 @@ lektion16: [
       flip.appendChild(front);
       flip.appendChild(back);
       box.appendChild(flip);
+
       return box;
     }
 
@@ -4062,6 +4579,7 @@ lektion16: [
       localStorage.setItem('dms_boxes', JSON.stringify(boxes));
       localStorage.setItem('dms_settings', JSON.stringify(settings));
     }
+
     function load(){
       try{
         if(localStorage.getItem('dms_boxes')) boxes = JSON.parse(localStorage.getItem('dms_boxes'));
@@ -4072,13 +4590,33 @@ lektion16: [
     numBoxesInput.oninput = () => {
       settings.numBoxes = numBoxesInput.value;
       numBoxesValue.textContent = numBoxesInput.value;
-      updateGrid(); save();
+      updateGrid();
+      save();
     };
-    columnsSelect.onchange = () => { settings.columns = columnsSelect.value; updateGrid(); save(); };
-    boxSizeSelect.onchange = () => { settings.boxSize = boxSizeSelect.value; updateGrid(); save(); };
-    showBackCheckbox.onchange = () => { settings.showBack = showBackCheckbox.checked; updateGrid(); save(); };
 
-    document.getElementById('resetBtn').onclick = () => { boxes=[]; updateGrid(); save(); };
+    columnsSelect.onchange = () => {
+      settings.columns = columnsSelect.value;
+      updateGrid();
+      save();
+    };
+
+    boxSizeSelect.onchange = () => {
+      settings.boxSize = boxSizeSelect.value;
+      updateGrid();
+      save();
+    };
+
+    showBackCheckbox.onchange = () => {
+      settings.showBack = showBackCheckbox.checked;
+      updateGrid();
+      save();
+    };
+
+    document.getElementById('resetBtn').onclick = () => {
+      boxes=[];
+      updateGrid();
+      save();
+    };
 
     window.addEventListener('resize', () => { requestAnimationFrame(updateGrid); });
 
@@ -4098,11 +4636,14 @@ lektion16: [
       const ctx = canvas.getContext('2d');
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+
       const particles = [];
       const colors = ['#007AFF', '#34C759', '#FFD60A', '#FF2D55', '#AF52DE'];
+
       for (let i = 0; i < 150; i++) {
         particles.push({
-          x: canvas.width / 2, y: canvas.height / 2,
+          x: canvas.width / 2,
+          y: canvas.height / 2,
           vx: (Math.random() - 0.5) * 15,
           vy: (Math.random() - 0.5) * 15,
           size: Math.random() * 8 + 2,
@@ -4110,9 +4651,11 @@ lektion16: [
           life: 100
         });
       }
+
       function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         let active = false;
+
         particles.forEach(p => {
           if (p.life > 0) {
             active = true;
@@ -4126,9 +4669,11 @@ lektion16: [
             ctx.fill();
           }
         });
+
         if (active) requestAnimationFrame(animate);
         else ctx.clearRect(0, 0, canvas.width, canvas.height);
       }
+
       animate();
     }
 
@@ -4155,6 +4700,7 @@ lektion16: [
           const loadContainer = document.getElementById('loadBarContainer');
           loadContainer.style.display = 'block';
           loadBar.style.width = '0%';
+
           setTimeout(() => { loadBar.style.width = '50%'; }, 80);
           setTimeout(() => { loadBar.style.width = '100%'; }, 320);
 
@@ -4200,38 +4746,58 @@ lektion16: [
       triggerHaptic(10);
       document.getElementById('vocabHub').classList.remove('open');
     };
+
     document.getElementById('vocabHub').onclick = (e) => {
       if(e.target.id === 'vocabHub') document.getElementById('vocabHub').classList.remove('open');
     };
 
     // =========================================================
-    // PDF GENERATOR (MOBILE-OPTIMIZED + ROBUST)
+    // ✅ PDF GENERATOR (FAST + "OPENS/DOWNLOADS" on iPhone/Tablet/PC)
     // =========================================================
+    function downloadBlob(blob, filename){
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 60000);
+    }
+
     document.getElementById('downloadPdfBtn').onclick = async () => {
       const loader = document.getElementById('pdfLoading');
       const progress = document.getElementById('pdfProgress');
       const progressFill = document.getElementById('pdfProgressFill');
+      const btn = document.getElementById('downloadPdfBtn');
 
       try{
+        // ✅ avoid double click
+        btn.disabled = true;
+
         loader.style.display = 'flex';
         progress.style.display = 'block';
         progress.classList.add('active');
+        progressFill.style.width = '0%';
 
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF("p", "mm", "a4");
 
         ensureBoxesLength();
+
         const cols = Math.min(Math.max(1, parseInt(settings.columns,10) || 3), 4);
 
-        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        const canvasScale = isMobile ? 2 : 4;
+        const mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const canvasScale = mobile ? 2 : 3;
 
         const pageW = 210;
         const pageH = 297;
         const pad = 12;
         const gap = 4;
-        const innerW = pageW - (2 * pad);
 
+        const innerW = pageW - (2 * pad);
         const boxMmW = (innerW - (gap * (cols - 1))) / cols;
         const boxMmH = boxMmW * 1.1;
 
@@ -4251,11 +4817,12 @@ lektion16: [
 
             const meta = document.createElement("div");
             meta.className = "pdfMeta";
+
             const nm = (document.getElementById('name').value || "").trim();
             const dt = (document.getElementById('date').value || "").trim();
             const tp = (document.getElementById('topic').value || "").trim();
-            meta.innerHTML = `<span>Name: ${nm||"—"}</span><span>Datum: ${dt||"—"}</span><span>Thema: ${tp||"—"}</span>`;
 
+            meta.innerHTML = `<span>Name: ${nm||"—"}</span><span>Datum: ${dt||"—"}</span><span>Thema: ${tp||"—"}</span>`;
             headerArea.appendChild(title);
             headerArea.appendChild(meta);
           }
@@ -4270,12 +4837,13 @@ lektion16: [
           pdfStage.style.setProperty("--pdfBoxH", boxMmH + "mm");
           pdfStage.style.setProperty("--pdfGap", gap + "mm");
 
-          let rows = Math.ceil(count / cols);
-          let pageData = boxes.slice(startIndex, startIndex + count);
+          const rows = Math.ceil(count / cols);
+          const pageData = boxes.slice(startIndex, startIndex + count);
 
           for (let r = 0; r < rows; r++) {
             for (let c = 0; c < cols; c++) {
-              let itemIndex = (mode === "front") ? (r * cols + c) : (r * cols + (cols - 1 - c));
+              const itemIndex = (mode === "front") ? (r * cols + c) : (r * cols + (cols - 1 - c));
+
               const card = document.createElement("div");
               card.className = "pdfCard";
 
@@ -4295,9 +4863,10 @@ lektion16: [
                 } else {
                   const res = lookupSmart(d.word);
                   const b1 = res ? res.entry : null;
-                  const arText = d.arTextManual || (b1?b1.ar:"");
+
+                  const arText  = d.arTextManual || (b1?b1.ar:"");
                   const darText = d.darTextManual || (b1?b1.darija:"");
-                  const darEx = d.darijaExampleManual || d.darijaExampleB1 || "";
+                  const darEx   = d.darijaExampleManual || d.darijaExampleB1 || "";
 
                   inner.innerHTML = `
                     <div class="pdfAr">${arText}</div>
@@ -4320,55 +4889,66 @@ lektion16: [
 
         let index = 0;
         let isFirstPage = true;
-        let step = 0;
 
         while (index < boxes.length) {
           const headerH = isFirstPage ? 20 : 0;
           const innerH = pageH - (2 * pad);
           const availableGridH = innerH - headerH - 4;
+
           const rowsPerPage = Math.max(1, Math.floor(availableGridH / (boxMmH + gap)));
           const perPage = cols * rowsPerPage;
-
-          pdfStage.style.zIndex = "1";
-
-          // progress (front+back)
-          step++;
-          progressFill.style.width = Math.min(100, Math.round((step / (Math.ceil(boxes.length/perPage) * 2)) * 100)) + '%';
+          const totalSteps = (Math.ceil(boxes.length / perPage) * 2);
 
           // FRONT
           buildPage("front", index, perPage, headerH);
-          await new Promise(r => setTimeout(r, 40));
-          const c1 = await html2canvas(pdfStage, { scale: canvasScale, useCORS: true, backgroundColor: "#ffffff", logging: false });
+          await new Promise(r => requestAnimationFrame(() => setTimeout(r, 30)));
+
+          const c1 = await html2canvas(pdfStage, {
+            scale: canvasScale,
+            useCORS: true,
+            backgroundColor: "#ffffff",
+            logging: false
+          });
+
           if(!isFirstPage) pdf.addPage();
           pdf.addImage(c1.toDataURL("image/png"), "PNG", 0, 0, 210, 297);
 
+          const stepFront = ((index / perPage) * 2) + 1;
+          progressFill.style.width = Math.min(100, Math.round((stepFront / totalSteps) * 100)) + '%';
+
           // BACK
           pdf.addPage();
-          step++;
-          progressFill.style.width = Math.min(100, Math.round((step / (Math.ceil(boxes.length/perPage) * 2)) * 100)) + '%';
-
           buildPage("back", index, perPage, headerH);
-          await new Promise(r => setTimeout(r, 40));
-          const c2 = await html2canvas(pdfStage, { scale: canvasScale, useCORS: true, backgroundColor: "#ffffff", logging: false });
+          await new Promise(r => requestAnimationFrame(() => setTimeout(r, 30)));
+
+          const c2 = await html2canvas(pdfStage, {
+            scale: canvasScale,
+            useCORS: true,
+            backgroundColor: "#ffffff",
+            logging: false
+          });
+
           pdf.addImage(c2.toDataURL("image/png"), "PNG", 0, 0, 210, 297);
+
+          const stepBack = ((index / perPage) * 2) + 2;
+          progressFill.style.width = Math.min(100, Math.round((stepBack / totalSteps) * 100)) + '%';
 
           index += perPage;
           isFirstPage = false;
         }
 
-        pdfStage.style.zIndex = "-999";
-        progress.classList.remove('active');
-        progress.style.display = 'none';
-
-        pdf.save("Deutsch_mit_Said.pdf");
+        const filename = "Deutsch_mit_Said.pdf";
+        const blob = pdf.output('blob');
+        downloadBlob(blob, filename);
 
       } catch(e){
-        alert("Fehler: " + e.message);
+        alert("Fehler: " + (e && e.message ? e.message : e));
         console.error('PDF Error:', e);
       } finally {
         loader.style.display = 'none';
         progress.classList.remove('active');
         progress.style.display = 'none';
+        btn.disabled = false;
       }
     };
 
