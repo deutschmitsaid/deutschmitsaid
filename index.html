@@ -4224,14 +4224,14 @@ lektion16: [
 
         const res = lookupSmart(wordTA.value);
         if(!res){
-          autoMsg.textContent = "❌ ما لقيتش (قرّب شوية)";
+          autoMsg.textContent = "kein Wort";
           endTransferBar();
           return;
         }
 
         const b1 = res.entry;
         const pct = Math.round((res.confidence || 0.9) * 100);
-        autoMsg.textContent = `✅ ${pct}%`;
+        autoMsg.textContent = `✔ ${pct}%`;
 
         data.posOverride = b1.pos;
         data.example = b1.de_example;
