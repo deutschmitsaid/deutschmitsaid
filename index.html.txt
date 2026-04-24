@@ -2619,7 +2619,7 @@
     const waInput = document.getElementById('waInput');
     const waSend = document.getElementById('waSend');
 
-    const YOUR_PHONE_NUMBER = "0690010348";
+    const YOUR_PHONE_NUMBER = "0602396497";
     function normalizeWaNumber(n){
       let s = String(n||"").replace(/\s+/g,'').trim();
       if (/^0\d{9}$/.test(s)) s = '212' + s.slice(1);
