@@ -5785,169 +5785,87 @@ lektion16: [
       if(e.target.id === 'vocabHub') document.getElementById('vocabHub').classList.remove('open');
     };
 
-    // PDF
     document.getElementById('downloadPdfBtn').onclick = async () => {
-      const loader = document.getElementById('pdfLoading');
-      const progress = document.getElementById('pdfProgress');
-      const progressFill = document.getElementById('pdfProgressFill');
+  const loader = document.getElementById('pdfLoading');
+  const progress = document.getElementById('pdfProgress');
+  const progressFill = document.getElementById('pdfProgressFill');
 
-      try{
-        loader.style.display = 'flex';
-        progress.style.display = 'block';
-        progress.classList.add('active');
+  loader.style.display = 'flex';
+  progress.style.display = 'block';
+  progress.classList.add('active');
+  progressFill.style.width = '0%';
 
-        const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF("p", "mm", "a4");
+  try {
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF('p', 'mm', 'a4');
 
-        ensureBoxesLength();
+    const perPage = 10;
+    const headerH = 25;
+    let index = 0;
+    let isFirstPage = true;
 
-        const cols = Math.min(Math.max(1, parseInt(settings.columns,10) || 3), 4);
-        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-        const canvasScale = isIOS ? 1.7 : (isMobile ? 2 : 3);
+    const totalSteps = Math.ceil(boxes.length / perPage) * 2;
+    let currentStep = 0;
 
-        const pageW = 210;
-        const pageH = 297;
-        const pad = 12;
-        const gap = 4;
-        const innerW = pageW - (2 * pad);
-        const boxMmW = (innerW - (gap * (cols - 1))) / cols;
-        const boxMmH = boxMmW * 1.1;
+    pdfStage.style.zIndex = "9999";
 
-        const pdfStage = document.getElementById('pdfStage');
-
-        function buildPage(mode, startIndex, count, headerH){
-          pdfStage.innerHTML = "";
-
-          const headerArea = document.createElement("div");
-          headerArea.className = "pdfHeaderArea";
-          headerArea.style.setProperty("--header-h", headerH + "mm");
-
-          if (mode === "front" && headerH > 0) {
-            const title = document.createElement("div");
-            title.className = "pdfBigTitle";
-            title.textContent = "Deutsch mit saeed – Professionelles Vokabelblatt";
-            title.style.fontSize = "22px";
-            title.style.letterSpacing = "1px";
-
-            const meta = document.createElement("div");
-            meta.className = "pdfMeta";
-            const nm = (document.getElementById('name').value || "").trim();
-            const dt = (document.getElementById('date').value || "").trim();
-            const tp = (document.getElementById('topic').value || "").trim();
-            meta.innerHTML = `<span>Name: ${nm||"—"}</span><span>Datum: ${dt||"—"}</span><span>Thema: ${tp||"—"}</span>`;
-
-            headerArea.appendChild(title);
-            headerArea.appendChild(meta);
-          }
-
-          pdfStage.appendChild(headerArea);
-
-          const g = document.createElement("div");
-          g.className = "pdfGrid";
-
-          pdfStage.style.setProperty("--pdfCols", String(cols));
-          pdfStage.style.setProperty("--pdfBoxW", boxMmW + "mm");
-          pdfStage.style.setProperty("--pdfBoxH", boxMmH + "mm");
-          pdfStage.style.setProperty("--pdfGap", gap + "mm");
-
-          let rows = Math.ceil(count / cols);
-          let pageData = boxes.slice(startIndex, startIndex + count);
-
-          for (let r = 0; r < rows; r++) {
-            for (let c = 0; c < cols; c++) {
-              let itemIndex = (mode === "front") ? (r * cols + c) : (r * cols + (cols - 1 - c));
-              const card = document.createElement("div");
-              card.className = "pdfCard";
-
-              if (itemIndex >= pageData.length) {
-                card.classList.add("empty");
-              } else {
-                const d = pageData[itemIndex] || {};
-                const inner = document.createElement("div");
-                inner.className = "pdfCardInner";
-
-                if (mode === "front"){
-                  inner.innerHTML = `
-                    <div class="pdfWordWrap"><div class="pdfWord">${(d.word||"")}</div></div>
-                    <div class="pdfLine"></div>
-                    <div class="pdfExample">${(d.example||"")}</div>
-                  `;
-                } else {
-                  const res = lookupSmart(d.word);
-                  const b1 = res ? res.entry : null;
-                  const arText = d.arTextManual || (b1?b1.ar:"");
-                  const darText = d.darTextManual || (b1?b1.darija:"");
-                  const darEx = d.darijaExampleManual || d.darijaExampleB1 || "";
-
-                  inner.innerHTML = `
-                    <div class="pdfAr">${arText}</div>
-                    <div class="pdfDar">${darText}</div>
-                    ${darEx ? `<div class="pdfLine"></div><div class="pdfNote">مثال بالدارجة: ${darEx}</div>` : ''}
-                    ${d.arabicExampleManual ? `<div class="pdfLine"></div><div class="pdfNote">مثال بالعربية: ${d.arabicExampleManual}</div>` : ''}
-                    ${d.note ? `<div class="pdfLine"></div><div class="pdfNote">ملاحظة: ${d.note}</div>` : ''}
-                  `;
-                }
-
-                card.appendChild(inner);
-              }
-              g.appendChild(card);
-            }
-          }
-          pdfStage.appendChild(g);
-        }
-
-        let index = 0;
-        let isFirstPage = true;
-        let step = 0;
-
-        while (index < boxes.length) {
-          const headerH = isFirstPage ? 20 : 0;
-          const innerH = pageH - (2 * pad);
-          const availableGridH = innerH - headerH - 4;
-          const rowsPerPage = Math.max(1, Math.floor(availableGridH / (boxMmH + gap)));
-          const perPage = cols * rowsPerPage;
-
-          pdfStage.style.zIndex = "1";
-
-          step++;
-          progressFill.style.width = Math.min(100, Math.round((step / (Math.ceil(boxes.length/perPage) * 2)) * 100)) + '%';
-
-          buildPage("front", index, perPage, headerH);
-          await new Promise(r => setTimeout(r, 40));
-          const c1 = await html2canvas(pdfStage, { scale: canvasScale, useCORS: true, backgroundColor: "#ffffff", logging: false });
-          if(!isFirstPage) pdf.addPage();
-          pdf.addImage(c1.toDataURL("image/png"), "PNG", 0, 0, 210, 297);
-
-          pdf.addPage();
-          step++;
-          progressFill.style.width = Math.min(100, Math.round((step / (Math.ceil(boxes.length/perPage) * 2)) * 100)) + '%';
-
-          buildPage("back", index, perPage, headerH);
-          await new Promise(r => setTimeout(r, 40));
-          const c2 = await html2canvas(pdfStage, { scale: canvasScale, useCORS: true, backgroundColor: "#ffffff", logging: false });
-          pdf.addImage(c2.toDataURL("image/png"), "PNG", 0, 0, 210, 297);
-
-          index += perPage;
-          isFirstPage = false;
-        }
-
-        pdfStage.style.zIndex = "-999";
-        progress.classList.remove('active');
-        progress.style.display = 'none';
-
-        const today = new Date().toISOString().split('T')[0];
-        pdf.save("Deutsch_mit_saeed_" + today + ".pdf");
-
-      } catch(e){
-        alert("Fehler: " + e.message);
-        console.error('PDF Error:', e);
-      } finally {
-        loader.style.display = 'none';
-        progress.classList.remove('active');
-        progress.style.display = 'none';
-      }
+    // إعدادات html2canvas محسنة للغة العربية والسرعة
+    const canvasOptions = {
+      scale: 1.5, // جودة خفيفة وسريعة للتيليفونات
+      useCORS: true,
+      backgroundColor: "#ffffff",
+      logging: false,
+      letterRendering: true // هادي كتعاون التيليفون باش ميتخربقوش الحروف العربية
     };
+
+    while (index < boxes.length) {
+      if (!isFirstPage) {
+        pdf.addPage();
+      }
+
+      // 1. وجه الورقة (Front)
+      buildPage("front", index, perPage, headerH);
+      await new Promise(r => setTimeout(r, 10)); // تسريع الانتظار لـ 10ms
+      
+      currentStep++;
+      progressFill.style.width = Math.min(100, Math.round((currentStep / totalSteps) * 100)) + '%';
+
+      const c1 = await html2canvas(pdfStage, canvasOptions);
+      // تحويل لـ JPEG بـجودة 0.75 باش يكون الملف خفيف وسريع ف التيليفون
+      pdf.addImage(c1.toDataURL("image/jpeg", 0.75), "JPEG", 0, 0, 210, 297); 
+
+      // 2. ظهر الورقة (Back)
+      pdf.addPage();
+      buildPage("back", index, perPage, headerH);
+      await new Promise(r => setTimeout(r, 10)); // تسريع الانتظار لـ 10ms
+      
+      currentStep++;
+      progressFill.style.width = Math.min(100, Math.round((currentStep / totalSteps) * 100)) + '%';
+
+      const c2 = await html2canvas(pdfStage, canvasOptions);
+      pdf.addImage(c2.toDataURL("image/jpeg", 0.75), "JPEG", 0, 0, 210, 297);
+
+      index += perPage;
+      isFirstPage = false;
+    }
+
+    pdfStage.style.zIndex = "-999";
+    progress.classList.remove('active');
+    progress.style.display = 'none';
+
+    const today = new Date().toISOString().split('T')[0];
+    pdf.save("Deutsch_mit_saeed_" + today + ".pdf");
+
+  } catch (e) {
+    alert("Fehler: " + e.message);
+    console.error('PDF Error:', e);
+  } finally {
+    loader.style.display = 'none';
+    progress.classList.remove('active');
+    progress.style.display = 'none';
+    pdfStage.style.zIndex = "-999";
+  }
+};
 
     window.addEventListener('DOMContentLoaded', () => {
       load();
