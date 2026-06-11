@@ -5915,8 +5915,14 @@ lektion16: [
 
           buildPage("front", index, perPage, headerH);
           await new Promise(r => setTimeout(r, 40));
-          const c1 = await html2canvas(pdfStage, { scale: canvasScale, useCORS: true, backgroundColor: "#ffffff", logging: false });
-          if(!isFirstPage) pdf.addPage();
+const c1 = await html2canvas(pdfStage, {
+  scale: 2,
+  useCORS: true,
+  backgroundColor: "#ffffff",
+  logging: false,
+  letterRendering: true,
+  foreignObjectRendering: true
+});          if(!isFirstPage) pdf.addPage();
           pdf.addImage(c1.toDataURL("image/png"), "PNG", 0, 0, 210, 297);
 
           pdf.addPage();
@@ -5925,8 +5931,14 @@ lektion16: [
 
           buildPage("back", index, perPage, headerH);
           await new Promise(r => setTimeout(r, 40));
-          const c2 = await html2canvas(pdfStage, { scale: canvasScale, useCORS: true, backgroundColor: "#ffffff", logging: false });
-          pdf.addImage(c2.toDataURL("image/png"), "PNG", 0, 0, 210, 297);
+const c2 = await html2canvas(pdfStage, {
+  scale: 2,
+  useCORS: true,
+  backgroundColor: "#ffffff",
+  logging: false,
+  letterRendering: true,
+  foreignObjectRendering: true
+});          pdf.addImage(c2.toDataURL("image/png"), "PNG", 0, 0, 210, 297);
 
           index += perPage;
           isFirstPage = false;
