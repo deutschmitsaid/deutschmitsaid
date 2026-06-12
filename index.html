@@ -769,11 +769,12 @@
       <img class="waAvatar" id="waAvatar" src="saeed.jpg" alt="Said">
       <div>
         <div class="waTitle">saeed</div>
+        <div class="waSub">Deutsch-Fragen?.</div>
       </div>
       <button class="waClose" id="waClose">×</button>
     </div>
     <div class="waBody">
-      <div class="waBubble">Hallo! 👋<br>Schick mir deine Frage zu Deutsch.
+      <div class="waBubble">Hi! 👋<br>Schick mir deine Frage zu Deutsch.<br><small> سولني وأنا نجاوبك 😊</small></div>
       <div class="waInputWrap">
         <input id="waInput" type="text" placeholder="Deine Frage...">
         <button id="waSend">Send</button>
@@ -827,36 +828,6 @@
     // ================================================================================================
     // ✅ 1. WORTSCHATZ DATENBANK
     // ================================================================================================
-    <button id="dafBtn" class="mainBtn">
-  📚 DaF Kompakt Wortschatz
-</button>
-#dafPanel{
-  margin-top:15px;
-  padding:15px;
-  border-radius:14px;
-  background:#ffffff;
-  box-shadow:0 4px 12px rgba(0,0,0,.1);
-}
-
-.lektionItem{
-  padding:12px;
-  margin:8px 0;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:700;
-  transition:.2s;
-}
-
-.lektionItem:hover{
-  background:#e8eefc;
-}
-<div id="dafPanel" style="display:none;">
-  <div class="lektionItem">▶ Lektion1</div>
-  <div class="lektionItem">▶ Lektion2</div>
-  <div class="lektionItem">▶ Lektion3</div>
-  <div class="lektionItem">▶ Lektion4</div>
-  <div class="lektionItem">▶ Lektion5</div>
-</div>
     const WORTSCHATZ_DATA = {
 
       "Lektion1:": [
@@ -5375,26 +5346,7 @@ lektion16: [
       document.documentElement.style.setProperty('--app-max-w', conf.app);
       document.documentElement.style.setProperty('--box-h', conf.boxH);
     }
-#dafPanel{
-  margin-top:15px;
-  padding:15px;
-  border-radius:14px;
-  background:#ffffff;
-  box-shadow:0 4px 12px rgba(0,0,0,.1);
-}
 
-.lektionItem{
-  padding:12px;
-  margin:8px 0;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:700;
-  transition:.2s;
-}
-
-.lektionItem:hover{
-  background:#e8eefc;
-}
     function calculateResponsiveColumns() {
       let userCols = parseInt(settings.columns, 10);
       let screenW = window.innerWidth;
@@ -5549,7 +5501,7 @@ lektion16: [
 
       const arExTA = document.createElement('textarea');
       arExTA.className = 'noteInput';
-      arExTA.placeholder = 'مثال.....';
+      arExTA.placeholder = 'مثال بالعربية...';
       arExTA.value = data.arabicExampleManual;
 
       const darExTA = document.createElement('textarea');
@@ -5567,6 +5519,7 @@ lektion16: [
 
       const nL = document.createElement('div');
       nL.className = 'noteLabel';
+      nL.textContent = 'ملاحظة:';
 
       const noteTA = document.createElement('textarea');
       noteTA.className = 'noteInput';
@@ -6004,17 +5957,6 @@ lektion16: [
       showBackCheckbox.checked = settings.showBack;
       updateGrid();
     });
-    document.getElementById('dafBtn').onclick = function(){
-
-  const panel = document.getElementById('dafPanel');
-
-  if(panel.style.display === 'none'){
-      panel.style.display = 'block';
-  }else{
-      panel.style.display = 'none';
-  }
-
-};
   </script>
 </body>
 </html>
