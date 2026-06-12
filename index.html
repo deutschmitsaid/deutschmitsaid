@@ -827,6 +827,36 @@
     // ================================================================================================
     // ✅ 1. WORTSCHATZ DATENBANK
     // ================================================================================================
+    <button id="dafBtn" class="mainBtn">
+  📚 DaF Kompakt Wortschatz
+</button>
+#dafPanel{
+  margin-top:15px;
+  padding:15px;
+  border-radius:14px;
+  background:#ffffff;
+  box-shadow:0 4px 12px rgba(0,0,0,.1);
+}
+
+.lektionItem{
+  padding:12px;
+  margin:8px 0;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:700;
+  transition:.2s;
+}
+
+.lektionItem:hover{
+  background:#e8eefc;
+}
+<div id="dafPanel" style="display:none;">
+  <div class="lektionItem">▶ Lektion1</div>
+  <div class="lektionItem">▶ Lektion2</div>
+  <div class="lektionItem">▶ Lektion3</div>
+  <div class="lektionItem">▶ Lektion4</div>
+  <div class="lektionItem">▶ Lektion5</div>
+</div>
     const WORTSCHATZ_DATA = {
 
       "Lektion1:": [
@@ -5345,7 +5375,26 @@ lektion16: [
       document.documentElement.style.setProperty('--app-max-w', conf.app);
       document.documentElement.style.setProperty('--box-h', conf.boxH);
     }
+#dafPanel{
+  margin-top:15px;
+  padding:15px;
+  border-radius:14px;
+  background:#ffffff;
+  box-shadow:0 4px 12px rgba(0,0,0,.1);
+}
 
+.lektionItem{
+  padding:12px;
+  margin:8px 0;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:700;
+  transition:.2s;
+}
+
+.lektionItem:hover{
+  background:#e8eefc;
+}
     function calculateResponsiveColumns() {
       let userCols = parseInt(settings.columns, 10);
       let screenW = window.innerWidth;
@@ -5955,6 +6004,17 @@ lektion16: [
       showBackCheckbox.checked = settings.showBack;
       updateGrid();
     });
+    document.getElementById('dafBtn').onclick = function(){
+
+  const panel = document.getElementById('dafPanel');
+
+  if(panel.style.display === 'none'){
+      panel.style.display = 'block';
+  }else{
+      panel.style.display = 'none';
+  }
+
+};
   </script>
 </body>
 </html>
