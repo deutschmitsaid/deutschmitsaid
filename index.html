@@ -751,7 +751,7 @@
   <div id="vocabHub">
     <div class="hubPanel">
       <div class="hubHeader">
-        <div class="hubTitle">wortschatz wählen</div>
+      <div class="hubTitle">Wortschatz Bibliothek</div>
         <button class="hubClose" id="closeVocabHub">×</button>
       </div>
       <div class="hubGrid" id="hubGridContainer"></div>
@@ -5719,59 +5719,100 @@ lektion16: [
       const container = document.getElementById('hubGridContainer');
       container.innerHTML = '';
 
-      Object.keys(WORTSCHATZ_DATA).forEach(lessonTitle => {
-        const card = document.createElement('div');
-        card.className = 'hubCard';
-        const count = (WORTSCHATZ_DATA[lessonTitle] || []).length;
-        card.innerHTML = `<div class="hubCardName">${lessonTitle}</div><div class="hubCardCount">${count} Wörter</div>`;
+      const dafCard = document.createElement('div');
+dafCard.className = 'hubCard';
 
-        card.onclick = () => {
-          triggerHaptic([10, 30, 10]);
-          flashPulse(card);
-          startTransferBar(900);
+dafCard.innerHTML = `
+<div class="hubCardName">📚 DaF Kompakt Wortschatz</div>
+<div class="hubCardCount">Alle Lektionen</div>
+`;
 
-          const loadBar = document.getElementById('loadBar');
-          const loadContainer = document.getElementById('loadBarContainer');
-          loadContainer.style.display = 'block';
-          loadBar.style.width = '0%';
-          setTimeout(() => { loadBar.style.width = '50%'; }, 80);
-          setTimeout(() => { loadBar.style.width = '100%'; }, 320);
+dafCard.onclick = () => {
 
-          setTimeout(() => {
-            const lessonWords = WORTSCHATZ_DATA[lessonTitle] || [];
-            boxes = [];
-            settings.numBoxes = lessonWords.length || 12;
-            numBoxesInput.value = settings.numBoxes;
-            numBoxesValue.textContent = settings.numBoxes;
+  container.innerHTML = '';
 
-            lessonWords.forEach(entry => {
-              boxes.push({
-                word: entry.word,
-                example: entry.de_example,
-                posOverride: entry.pos,
-                note: '',
-                arTextManual: entry.ar,
-                darTextManual: entry.darija,
-                arabicExampleManual: '',
-                darijaExampleManual: '',
-                darijaExampleB1: entry.darija_example
-              });
-            });
+  Object.keys(WORTSCHATZ_DATA).forEach(lessonTitle => {
 
-            save();
-            updateGrid();
-            fireConfetti();
-            hub.classList.remove('open');
+    const card = document.createElement('div');
+    card.className = 'hubCard';
 
-            loadContainer.style.display = 'none';
-            loadBar.style.width = '0%';
-            endTransferBar();
-          }, 650);
-        };
+    const count = (WORTSCHATZ_DATA[lessonTitle] || []).length;
 
-        container.appendChild(card);
-      });
+    card.innerHTML = `
+      <div class="hubCardName">${lessonTitle}</div>
+      <div class="hubCardCount">${count} Wörter</div>
+    `;
 
+    card.onclick = () => {
+
+      triggerHaptic([10,30,10]);
+      flashPulse(card);
+      startTransferBar(900);
+
+      const loadBar = document.getElementById('loadBar');
+      const loadContainer = document.getElementById('loadBarContainer');
+
+      loadContainer.style.display = 'block';
+      loadBar.style.width = '0%';
+
+      setTimeout(() => {
+        loadBar.style.width = '50%';
+      }, 80);
+
+      setTimeout(() => {
+        loadBar.style.width = '100%';
+      }, 320);
+
+      setTimeout(() => {
+
+        const lessonWords = WORTSCHATZ_DATA[lessonTitle] || [];
+
+        boxes = [];
+
+        settings.numBoxes = lessonWords.length || 12;
+
+        numBoxesInput.value = settings.numBoxes;
+        numBoxesValue.textContent = settings.numBoxes;
+
+        lessonWords.forEach(entry => {
+
+          boxes.push({
+            word: entry.word,
+            example: entry.de_example,
+            posOverride: entry.pos,
+            note: '',
+            arTextManual: entry.ar,
+            darTextManual: entry.darija,
+            arabicExampleManual: '',
+            darijaExampleManual: '',
+            darijaExampleB1: entry.darija_example
+          });
+
+        });
+
+        save();
+        updateGrid();
+
+        fireConfetti();
+
+        hub.classList.remove('open');
+
+        loadContainer.style.display = 'none';
+        loadBar.style.width = '0%';
+
+        endTransferBar();
+
+      },650);
+
+    };
+
+    container.appendChild(card);
+
+  });
+
+};
+
+container.appendChild(dafCard);
       hub.classList.add('open');
       endTransferBar();
     };
