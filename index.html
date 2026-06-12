@@ -456,7 +456,7 @@
     .pdfWord{ font-weight: 900; font-size: 18px; white-space: pre-wrap; word-break: break-word; color: #000; }
     .pdfLine{ height: 1px; background: rgba(0,0,0,0.15); width: 100%; }
     .pdfExample{ font-size: 12px; line-height: 1.4; flex: 1; color: #222; white-space: pre-wrap; }
-    .pdfAr{ direction: rtl; text-align: center; font-family: "Amiri", Arial, sans-serif; font-weight: 700; font-size: 18px; line-height: 1.5; color: #000; white-space: pre-wrap; }
+    .pdfAr{ direction: rtl; unicode-bidi: bidi-override; text-align: center; font-family: "Amiri", Arial, sans-serif;} 
     .pdfDar{ direction: rtl; text-align: right; font-weight: 700; font-size: 13px; line-height: 1.5; color: #333; white-space: pre-wrap; }
     .pdfNote{ direction: rtl; text-align: right; font-size: 12px; line-height: 1.4; font-family: "Amiri", Arial, sans-serif; color: #444; white-space: pre-wrap; }
 
@@ -5846,7 +5846,7 @@ container.appendChild(dafCard);
         const cols = Math.min(Math.max(1, parseInt(settings.columns,10) || 3), 4);
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-        const canvasScale = 1;
+        const canvasScale = isIOS ? 2 : 2;
         const pageW = 210;
         const pageH = 297;
         const pad = 12;
