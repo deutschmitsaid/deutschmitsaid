@@ -751,7 +751,7 @@
   <div id="vocabHub">
     <div class="hubPanel">
       <div class="hubHeader">
-      <div class="hubTitle">Wortschatz Bibliothek</div>
+<div class="hubTitle">Wortschatz Bibliothek</div>
         <button class="hubClose" id="closeVocabHub">×</button>
       </div>
       <div class="hubGrid" id="hubGridContainer"></div>
@@ -769,12 +769,12 @@
       <img class="waAvatar" id="waAvatar" src="saeed.jpg" alt="Said">
       <div>
         <div class="waTitle">saeed</div>
-        <div class="waSub">Deutsch-Fragen?.</div>
+        <div class="waSub">.</div>
       </div>
       <button class="waClose" id="waClose">×</button>
     </div>
     <div class="waBody">
-      <div class="waBubble">Hi! 👋<br>Schick mir deine Frage zu Deutsch.<br><small> سولني وأنا نجاوبك 😊</small></div>
+      <div class="waBubble">Hi! 👋<br>Schick mir deine Frage zu Deutsch.<br><small></small></div>
       <div class="waInputWrap">
         <input id="waInput" type="text" placeholder="Deine Frage...">
         <button id="waSend">Send</button>
@@ -5723,7 +5723,7 @@ lektion16: [
 dafCard.className = 'hubCard';
 
 dafCard.innerHTML = `
-<div class="hubCardName">DaF Kompakt</div>
+<div class="hubCardName">📚 DaF Kompakt Wortschatz</div>
 <div class="hubCardCount">Alle Lektionen</div>
 `;
 
@@ -5811,107 +5811,9 @@ dafCard.onclick = () => {
   });
 
 };
-const werkstattCard = document.createElement('div');
 
-werkstattCard.className = 'hubCard';
-
-werkstattCard.innerHTML = `
-<div class="hubCardName">🛠️ Werkstatt</div>
-<div class="hubCardCount">Alle Lektionen</div>
-`;
-
-werkstattCard.onclick = () => {
-
-  container.innerHTML = '';
-
-  Object.keys(WERKSTATT_DATA).forEach(lessonTitle => {
-
-    const card = document.createElement('div');
-
-    card.className = 'hubCard';
-
-    const count = (WERKSTATT_DATA[lessonTitle] || []).length;
-
-    card.innerHTML = `
-      <div class="hubCardName">${lessonTitle}</div>
-      <div class="hubCardCount">${count} Wörter</div>
-    `;
-
-    container.appendChild(card);
-
-  });
-
-};
-const werkstattCard = document.createElement('div');
-
-werkstattCard.className = 'hubCard';
-
-werkstattCard.innerHTML = `
-<div class="hubCardName">🛠️ Werkstatt B2</div>
-<div class="hubCardCount">Tests & Lektionen</div>
-`;
-
-werkstattCard.onclick = () => {
-
-  container.innerHTML = '';
-
-  Object.keys(WortschatzWerkstattB2).forEach(lessonTitle => {
-
-    const card = document.createElement('div');
-
-    card.className = 'hubCard';
-
-    const count =
-      (WortschatzWerkstattB2[lessonTitle] || []).length;
-
-    card.innerHTML = `
-      <div class="hubCardName">${lessonTitle}</div>
-      <div class="hubCardCount">${count} Wörter</div>
-    `;
-
-    card.onclick = () => {
-
-      const lessonWords =
-        WortschatzWerkstattB2[lessonTitle] || [];
-
-      boxes = [];
-
-      settings.numBoxes = lessonWords.length || 12;
-
-      numBoxesInput.value = settings.numBoxes;
-      numBoxesValue.textContent = settings.numBoxes;
-
-      lessonWords.forEach(entry => {
-
-        boxes.push({
-          word: entry.word,
-          example: entry.de_example,
-          posOverride: entry.pos,
-          note: '',
-          arTextManual: entry.ar,
-          darTextManual: entry.darija,
-          arabicExampleManual: '',
-          darijaExampleManual: '',
-          darijaExampleB1: entry.darija_example
-        });
-
-      });
-
-      save();
-      updateGrid();
-
-      hub.classList.remove('open');
-
-    };
-
-    container.appendChild(card);
-
-  });
-
-};
 container.appendChild(dafCard);
-container.appendChild(werkstattCard);
-container.appendChild(werkstattCard);
+
       hub.classList.add('open');
       endTransferBar();
     };
