@@ -6064,11 +6064,20 @@ dafCard.onclick = () => {
   });
 
 };
+const werkstattCard = document.createElement('div');
 
+werkstattCard.className = 'hubCard';
+
+werkstattCard.innerHTML = `
+<div class="hubCardName">Werkstatt</div>
+<div class="hubCardCount">Coming Soon</div>
+`;
+
+werkstattCard.onclick = () => {
+  alert('Werkstatt wird bald verfügbar sein');
+};
 container.appendChild(dafCard);
 container.appendChild(werkstattCard);
-      
-      hub.classList.add('open');
       endTransferBar();
     };
 
