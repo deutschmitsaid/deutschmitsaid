@@ -5824,8 +5824,24 @@ werkstattCard.onclick = () => {
   alert('Werkstatt wird bald verfügbar sein');
 };
 
+
+const projektCard = document.createElement('div');
+
+projektCard.className = 'hubCard';
+
+projektCard.innerHTML = `
+<div class="hubCardName">Projekt Neu</div>
+<div class="hubCardCount">Neue Wörter</div>
+`;
+
+projektCard.onclick = () => {
+  alert('Projekt Neu');
+};
+
+
 container.appendChild(dafCard);
 container.appendChild(werkstattCard);
+container.appendChild(projektCard);
 
 hub.classList.add('open');
 
