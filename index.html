@@ -5720,7 +5720,6 @@ lektion16: [
       container.innerHTML = '';
 
       const dafCard = document.createElement('div');
-
 dafCard.className = 'hubCard';
 
 dafCard.innerHTML = `
@@ -5728,34 +5727,6 @@ dafCard.innerHTML = `
 <div class="hubCardCount">Alle Lektionen</div>
 `;
 
-dafCard.onclick = () => {
-    alert("Wortschatz funktioniert");
-};
-
-container.appendChild(dafCard);
-const werkstattCard = document.createElement('div');
-
-werkstattCard.className = 'hubCard';
-
-werkstattCard.innerHTML = `
-<div class="hubCardName">Werkstatt</div>
-<div class="hubCardCount">Wortschatz</div>
-`;
-
-werkstattCard.onclick = () => {
-
-  const daten = WORTSCHATZ_DATA["Lektion1:"];
-
-  createVocabularyCards(daten);
-
-  hub.classList.remove('open');
-
-};
-
-container.appendChild(werkstattCard);
-hub.classList.add('open');
-
-endTransferBar();
 dafCard.onclick = () => {
 
   container.innerHTML = '';
@@ -5850,37 +5821,7 @@ werkstattCard.innerHTML = `
 `;
 
 werkstattCard.onclick = () => {
-
-  const lessonWords = WORTSCHATZ_DATA["Werkstatt"] || [];
-
-  boxes = [];
-
-  settings.numBoxes = lessonWords.length || 12;
-
-  numBoxesInput.value = settings.numBoxes;
-  numBoxesValue.textContent = settings.numBoxes;
-
-  lessonWords.forEach(entry => {
-
-    boxes.push({
-      word: entry.word,
-      example: entry.de_example,
-      posOverride: entry.pos,
-      note: '',
-      arTextManual: entry.ar,
-      darTextManual: entry.darija,
-      arabicExampleManual: '',
-      darijaExampleManual: '',
-      darijaExampleB1: entry.darija_example
-    });
-
-  });
-
-  save();
-  updateGrid();
-
-  hub.classList.remove('open');
-
+  alert('Werkstatt wird bald verfügbar sein');
 };
 
 
@@ -5894,37 +5835,7 @@ projektCard.innerHTML = `
 `;
 
 projektCard.onclick = () => {
-
-  const lessonWords = WORTSCHATZ_DATA["Lektion1:"] || [];
-
-  boxes = [];
-
-  settings.numBoxes = lessonWords.length || 12;
-
-  numBoxesInput.value = settings.numBoxes;
-  numBoxesValue.textContent = settings.numBoxes;
-
-  lessonWords.forEach(entry => {
-
-    boxes.push({
-      word: entry.word,
-      example: entry.de_example,
-      posOverride: entry.pos,
-      note: '',
-      arTextManual: entry.ar,
-      darTextManual: entry.darija,
-      arabicExampleManual: '',
-      darijaExampleManual: '',
-      darijaExampleB1: entry.darija_example
-    });
-
-  });
-
-  save();
-  updateGrid();
-
-  hub.classList.remove('open');
-
+  alert('Projekt Neu');
 };
 
 
