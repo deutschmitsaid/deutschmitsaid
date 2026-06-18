@@ -5864,7 +5864,37 @@ projektCard.innerHTML = `
 `;
 
 projektCard.onclick = () => {
-  alert('Projekt Neu');
+
+  const lessonWords = WORTSCHATZ_DATA["Lektion1:"] || [];
+
+  boxes = [];
+
+  settings.numBoxes = lessonWords.length || 12;
+
+  numBoxesInput.value = settings.numBoxes;
+  numBoxesValue.textContent = settings.numBoxes;
+
+  lessonWords.forEach(entry => {
+
+    boxes.push({
+      word: entry.word,
+      example: entry.de_example,
+      posOverride: entry.pos,
+      note: '',
+      arTextManual: entry.ar,
+      darTextManual: entry.darija,
+      arabicExampleManual: '',
+      darijaExampleManual: '',
+      darijaExampleB1: entry.darija_example
+    });
+
+  });
+
+  save();
+  updateGrid();
+
+  hub.classList.remove('open');
+
 };
 
 
