@@ -5733,7 +5733,26 @@ dafCard.onclick = () => {
 };
 
 container.appendChild(dafCard);
+const werkstattCard = document.createElement('div');
 
+werkstattCard.className = 'hubCard';
+
+werkstattCard.innerHTML = `
+<div class="hubCardName">Werkstatt</div>
+<div class="hubCardCount">Wortschatz</div>
+`;
+
+werkstattCard.onclick = () => {
+
+  const daten = WORTSCHATZ_DATA["Lektion1:"];
+
+  createVocabularyCards(daten);
+
+  hub.classList.remove('open');
+
+};
+
+container.appendChild(werkstattCard);
 hub.classList.add('open');
 
 endTransferBar();
