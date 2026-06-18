@@ -5711,8 +5711,10 @@ lektion16: [
       animate();
     }
 
-    document.getElementById('vocabBtn').onclick = () => {
-      triggerHaptic([20, 50, 20]);
+vocabBtn.onclick = () => {
+  window.location.href = "werkstatt.html";
+};
+    triggerHaptic([20, 50, 20]);
       startTransferBar(800);
 
       const hub = document.getElementById('vocabHub');
@@ -5842,7 +5844,21 @@ projektCard.onclick = () => {
 container.appendChild(dafCard);
 container.appendChild(werkstattCard);
 container.appendChild(projektCard);
+const werkstattCard = document.createElement('div');
 
+werkstattCard.className = 'hubCard';
+
+werkstattCard.innerHTML = `
+<div style="font-size:48px">⚙️</div>
+<div class="hubCardName">Werkstatt</div>
+<div class="hubCardCount">Neues Projekt</div>
+`;
+
+werkstattCard.onclick = () => {
+   window.location.href = "werkstatt.html";
+};
+
+container.prepend(werkstattCard);
 hub.classList.add('open');
 
 endTransferBar();
