@@ -5720,6 +5720,7 @@ lektion16: [
       container.innerHTML = '';
 
       const dafCard = document.createElement('div');
+
 dafCard.className = 'hubCard';
 
 dafCard.innerHTML = `
@@ -5727,6 +5728,15 @@ dafCard.innerHTML = `
 <div class="hubCardCount">Alle Lektionen</div>
 `;
 
+dafCard.onclick = () => {
+    alert("Wortschatz funktioniert");
+};
+
+container.appendChild(dafCard);
+
+hub.classList.add('open');
+
+endTransferBar();
 dafCard.onclick = () => {
 
   container.innerHTML = '';
