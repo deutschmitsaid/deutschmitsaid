@@ -5850,7 +5850,37 @@ werkstattCard.innerHTML = `
 `;
 
 werkstattCard.onclick = () => {
-  alert('Werkstatt wird bald verfügbar sein');
+
+  const lessonWords = WORTSCHATZ_DATA["Werkstatt"] || [];
+
+  boxes = [];
+
+  settings.numBoxes = lessonWords.length || 12;
+
+  numBoxesInput.value = settings.numBoxes;
+  numBoxesValue.textContent = settings.numBoxes;
+
+  lessonWords.forEach(entry => {
+
+    boxes.push({
+      word: entry.word,
+      example: entry.de_example,
+      posOverride: entry.pos,
+      note: '',
+      arTextManual: entry.ar,
+      darTextManual: entry.darija,
+      arabicExampleManual: '',
+      darijaExampleManual: '',
+      darijaExampleB1: entry.darija_example
+    });
+
+  });
+
+  save();
+  updateGrid();
+
+  hub.classList.remove('open');
+
 };
 
 
