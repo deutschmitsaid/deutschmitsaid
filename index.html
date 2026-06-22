@@ -20,6 +20,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
@@ -53,6 +54,7 @@
       -webkit-text-size-adjust: 100%;
     }
     
+
     /* ===== APP WRAPPER ===== */
     #app{
       max-width: var(--app-max-w, 1100px);
@@ -591,7 +593,7 @@
     ========================================================= */
     @keyframes airdrop-pulse-anim {
       0% { box-shadow: 0 0 0 0 rgba(var(--airdrop-blue-rgb), 0.7); transform: scale(1); }
-      50% { box-shadow: 0 0 0 15px rgba(var(--airdrop-blue-rgb), 0); transform: scale(1.05); }
+      50% { boxhadow: 0 0 0 15px rgba(var(--airdrop-blue-rgb), 0); transform: scale(1.05); }
       100% { box-shadow: 0 0 0 0 rgba(var(--airdrop-blue-rgb), 0); transform: scale(1); }
     }
     .airdrop-pulse { animation: airdrop-pulse-anim 0.6s ease-out; border-color: var(--airdrop-blue) !important; }
@@ -750,7 +752,7 @@
   <div id="vocabHub">
     <div class="hubPanel">
       <div class="hubHeader">
-        <div class="hubTitle">Wortschatz Bibliothek</div>
+<div class="hubTitle">Wortschatz Bibliothek</div>
         <button class="hubClose" id="closeVocabHub">×</button>
       </div>
       <div class="hubGrid" id="hubGridContainer"></div>
@@ -790,7 +792,7 @@
     });
 
     // =========================================================
-    // ✅ AirDrop Helper Module
+    // ✅ AirDrop Helper Module (Haptic + Pulse + Transfer Bar)
     // =========================================================
     function hapticTap(ms = 10) { if (navigator.vibrate) navigator.vibrate(ms); }
     function flashPulse(el) {
@@ -825,12 +827,11 @@
     }
 
     // ================================================================================================
-    // ✅ 1. WORTSCHATZ DATENBANK (تم تصحيح الأخطاء وتجهيز الملفات الثلاثة)
+    // ✅ 1. WORTSCHATZ DATENBANK
     // ================================================================================================
-    
-    // 📖 كتاب DaF Kompakt
     const WORTSCHATZ_DATA = {
-            "Lektion1:": [
+
+      "Lektion1:": [
   // ===== Formular (استمارة) =====
   { word:"der Name, -n", pos:"N", ar:"اسم", darija:"سمية", de_example:"Wie ist Ihr Name?", darija_example:"شنو سميتك؟" },
   { word:"der Vorname, -n", pos:"N", ar:"الاسم الشخصي", darija:"السمية اللولة", de_example:"Mein Vorname ist Saeed.", darija_example:"السمية ديالي سعيد." },
@@ -4905,20 +4906,6 @@ lektion16: [
       ],
        };
 
-    // 📖 كتاب Werkstatt
-    const WORTSCHATZ_WERKSTATT = {
-      "Test 1 - Lesen Teil 1": [
-        // ضيف الكلمات ديال Werkstatt هنا
-      ]
-    };
-
-    // 📖 كتاب Projekt Neu (تمت إضافته كما طلبت)
-    const WORTSCHATZ_PROJEKT_NEU = {
-      "Kapitel 1": [
-        // ضيف الكلمات ديال Projekt Neu هنا
-      ]
-    };
-
     // ================================================================================================
     // ✅ NORMALIZE + QAMOS
     // ================================================================================================
@@ -4986,10 +4973,7 @@ lektion16: [
     }
     function buildQamos(){
       for(const k in QAMOS) delete QAMOS[k];
-      // يتم البحث في جميع الكتب الثلاثة
-      [WORTSCHATZ_DATA, WORTSCHATZ_WERKSTATT, WORTSCHATZ_PROJEKT_NEU].forEach(db => {
-        Object.values(db).forEach(list => (list||[]).forEach(entry => addToQamos(entry)));
-      });
+      Object.values(WORTSCHATZ_DATA).forEach(list => (list||[]).forEach(entry => addToQamos(entry)));
     }
     buildQamos();
 
@@ -5162,6 +5146,7 @@ lektion16: [
       return out.filter(Boolean);
     }
 
+    // ✅ speakGerman (RATE ثابت 0.96)
     function speakGerman(text, opts = {}){
       const t = cleanSpeakText(text);
       if(!t || !window.speechSynthesis) return;
@@ -5233,16 +5218,21 @@ lektion16: [
       return { article, base, plural, isNoun: !!article };
     }
 
+    // ✅ التعديل المطلوب: فقط يتم نطق الكلمات إذا وجد + A وغيرها (مع إزالة الأقواس لكي ينطق ما بداخلها)
     function buildSpeakTextsFromEntry(entry){
       const w = entry && entry.word ? entry.word : '';
+      
       const isNoun = /^(der|die|das)\s+/i.test(w.trim());
       
       if (!isNoun) {
         let s = String(w || '');
+        // التعويض المطلوب بالضبط فقط:
         s = s.replace(/\+\s*A\b/g, 'plus Akkusativ');
         s = s.replace(/\+\s*D\b/g, 'plus Dativ');
         s = s.replace(/\+\s*G\b/g, 'plus Genitiv');
         s = s.replace(/\+\s*N\b/g, 'plus Nominativ');
+        
+        // إزالة رمز الأقواس فقط لكي ينطق الكلمة التي بداخلها بدلاً من تخطيها
         s = s.replace(/[()]/g, ' ');
         s = s.replace(/\s+/g, ' ').trim();
         return s ? [s] : [];
@@ -5265,6 +5255,7 @@ lektion16: [
       return texts;
     }
 
+    // ✅ speakGermanSequence مع تفرقة iOS/PC
     function speakGermanSequence(texts, opts = {}) {
       if (!window.speechSynthesis) return;
 
@@ -5280,6 +5271,7 @@ lektion16: [
       const pitch  = (opts.pitch ?? 1.0);
       const volume = (opts.volume ?? 1);
 
+      // ✅ iOS: نخلي المفرد+الجمع فـ utterance وحدة باش ما يحبسش من بعد الأولى
       if (TTS.isIOS) {
         const joined = arr.join('. ');
         const u = new SpeechSynthesisUtterance(joined);
@@ -5290,23 +5282,31 @@ lektion16: [
         if (voice) u.voice = voice;
 
         try { window.speechSynthesis.resume(); } catch(e) {}
-        setTimeout(() => { try { window.speechSynthesis.speak(u); } catch(e) {} }, 80);
+
+        setTimeout(() => {
+          try { window.speechSynthesis.speak(u); } catch(e) {}
+        }, 80);
+
         return;
       }
 
+      // ✅ PC/Android: chaining عادي
       const gapMs = (opts.gapMs ?? 350);
       let index = 0;
 
       function speakNext() {
         if (index >= arr.length) return;
+
         const u = new SpeechSynthesisUtterance(arr[index]);
         u.lang = "de-DE";
         u.rate = rate;
         u.pitch = pitch;
         u.volume = volume;
         if (voice) u.voice = voice;
+
         u.onend = () => { index++; setTimeout(speakNext, gapMs); };
         u.onerror = () => { index++; setTimeout(speakNext, gapMs); };
+
         window.speechSynthesis.speak(u);
       }
 
@@ -5317,6 +5317,7 @@ lektion16: [
     // ✅ APP LOGIC
     // ======================
 
+    // ✅ Helper function لمسألة القواعد والـ POS لتظهر ككتابة وتنطق بالصوت
     function formatPosText(code) {
       if (code === 'A') return 'plus Akkusativ';
       if (code === 'D') return 'plus Dativ';
@@ -5406,6 +5407,7 @@ lektion16: [
             return;
           }
         }
+        // التعويض في حالة لم يتم العثور على الكلمة
         let rawText = String(wordTA.value || '');
         rawText = rawText.replace(/\+\s*A\b/g, 'plus Akkusativ');
         rawText = rawText.replace(/\+\s*D\b/g, 'plus Dativ');
@@ -5709,72 +5711,6 @@ lektion16: [
       animate();
     }
 
-    // 💡 تم جمع الكود ديال الشارجون في ميثود وحدة باش يكون الكود نقي
-    function loadCategoryIntoHub(dbName, dbObject) {
-      const container = document.getElementById('hubGridContainer');
-      container.innerHTML = '';
-
-      Object.keys(dbObject).forEach(lessonTitle => {
-        const card = document.createElement('div');
-        card.className = 'hubCard';
-        const lessonWords = dbObject[lessonTitle] || [];
-
-        card.innerHTML = `
-          <div class="hubCardName">${lessonTitle}</div>
-          <div class="hubCardCount">${lessonWords.length} Wörter</div>
-        `;
-
-        card.onclick = () => {
-          triggerHaptic([10,30,10]);
-          flashPulse(card);
-          startTransferBar(900);
-
-          const loadBar = document.getElementById('loadBar');
-          const loadContainer = document.getElementById('loadBarContainer');
-
-          loadContainer.style.display = 'block';
-          loadBar.style.width = '0%';
-
-          setTimeout(() => { loadBar.style.width = '50%'; }, 80);
-          setTimeout(() => { loadBar.style.width = '100%'; }, 320);
-
-          setTimeout(() => {
-            boxes = [];
-            settings.numBoxes = lessonWords.length || 12;
-
-            numBoxesInput.value = settings.numBoxes;
-            numBoxesValue.textContent = settings.numBoxes;
-
-            lessonWords.forEach(entry => {
-              boxes.push({
-                word: entry.word || '',
-                example: entry.de_example || '',
-                posOverride: entry.pos || '',
-                note: '',
-                arTextManual: entry.ar || '',
-                darTextManual: entry.darija || '',
-                arabicExampleManual: '',
-                darijaExampleManual: '',
-                darijaExampleB1: entry.darija_example || ''
-              });
-            });
-
-            save();
-            updateGrid();
-            fireConfetti();
-            document.getElementById('vocabHub').classList.remove('open');
-
-            loadContainer.style.display = 'none';
-            loadBar.style.width = '0%';
-            endTransferBar();
-          }, 650);
-        };
-
-        container.appendChild(card);
-      });
-    }
-
-    // 📚 الزر الرئيسي لفتح المكتبة
     document.getElementById('vocabBtn').onclick = () => {
       triggerHaptic([20, 50, 20]);
       startTransferBar(800);
@@ -5783,31 +5719,134 @@ lektion16: [
       const container = document.getElementById('hubGridContainer');
       container.innerHTML = '';
 
-      // 1️⃣ DaF Kompakt
       const dafCard = document.createElement('div');
-      dafCard.className = 'hubCard';
-      dafCard.innerHTML = `<div class="hubCardName">DaF Kompakt</div><div class="hubCardCount">Alle Lektionen</div>`;
-      dafCard.onclick = () => loadCategoryIntoHub("DaF Kompakt", WORTSCHATZ_DATA);
+dafCard.className = 'hubCard';
 
-      // 2️⃣ Werkstatt
-      const werkstattCard = document.createElement('div');
-      werkstattCard.className = 'hubCard';
-      werkstattCard.innerHTML = `<div class="hubCardName">Werkstatt</div><div class="hubCardCount">Neu</div>`;
-      werkstattCard.onclick = () => loadCategoryIntoHub("Werkstatt", WORTSCHATZ_WERKSTATT);
+dafCard.innerHTML = `
+<div class="hubCardName">DaF Kompakt</div>
+<div class="hubCardCount">Alle Lektionen</div>
+`;
 
-      // 3️⃣ Projekt Neu
-      const projektCard = document.createElement('div');
-      projektCard.className = 'hubCard';
-      projektCard.innerHTML = `<div class="hubCardName">Projekt Neu</div><div class="hubCardCount">Neu</div>`;
-      projektCard.onclick = () => loadCategoryIntoHub("Projekt Neu", WORTSCHATZ_PROJEKT_NEU);
+dafCard.onclick = () => {
 
-      container.appendChild(dafCard);
-      container.appendChild(werkstattCard);
-      container.appendChild(projektCard);
+  container.innerHTML = '';
 
-      hub.classList.add('open');
-      endTransferBar();
+  Object.keys(WORTSCHATZ_DATA).forEach(lessonTitle => {
+
+    const card = document.createElement('div');
+    card.className = 'hubCard';
+
+    const count = (WORTSCHATZ_DATA[lessonTitle] || []).length;
+
+    card.innerHTML = `
+      <div class="hubCardName">${lessonTitle}</div>
+      <div class="hubCardCount">${count} Wörter</div>
+    `;
+
+    card.onclick = () => {
+
+      triggerHaptic([10,30,10]);
+      flashPulse(card);
+      startTransferBar(900);
+
+      const loadBar = document.getElementById('loadBar');
+      const loadContainer = document.getElementById('loadBarContainer');
+
+      loadContainer.style.display = 'block';
+      loadBar.style.width = '0%';
+
+      setTimeout(() => {
+        loadBar.style.width = '50%';
+      }, 80);
+
+      setTimeout(() => {
+        loadBar.style.width = '100%';
+      }, 320);
+
+      setTimeout(() => {
+
+        const lessonWords = WORTSCHATZ_DATA[lessonTitle] || [];
+
+        boxes = [];
+
+        settings.numBoxes = lessonWords.length || 12;
+
+        numBoxesInput.value = settings.numBoxes;
+        numBoxesValue.textContent = settings.numBoxes;
+
+        lessonWords.forEach(entry => {
+
+          boxes.push({
+            word: entry.word,
+            example: entry.de_example,
+            posOverride: entry.pos,
+            note: '',
+            arTextManual: entry.ar,
+            darTextManual: entry.darija,
+            arabicExampleManual: '',
+            darijaExampleManual: '',
+            darijaExampleB1: entry.darija_example
+          });
+
+        });
+
+        save();
+        updateGrid();
+
+        fireConfetti();
+
+        hub.classList.remove('open');
+
+        loadContainer.style.display = 'none';
+        loadBar.style.width = '0%';
+
+        endTransferBar();
+
+      },650);
+
     };
+
+    container.appendChild(card);
+
+  });
+
+};
+const werkstattCard = document.createElement('div');
+
+werkstattCard.className = 'hubCard';
+
+werkstattCard.innerHTML = `
+<div class="hubCardName">Werkstatt</div>
+<div class="hubCardCount">Coming Soon</div>
+`;
+
+werkstattCard.onclick = () => {
+  alert('Werkstatt wird bald verfügbar sein');
+};
+
+
+const projektCard = document.createElement('div');
+
+projektCard.className = 'hubCard';
+
+projektCard.innerHTML = `
+<div class="hubCardName">Projekt Neu</div>
+<div class="hubCardCount">Neue Wörter</div>
+`;
+
+projektCard.onclick = () => {
+  alert('Projekt Neu');
+};
+
+
+container.appendChild(dafCard);
+container.appendChild(werkstattCard);
+container.appendChild(projektCard);
+
+hub.classList.add('open');
+
+endTransferBar();
+};
 
     document.getElementById('closeVocabHub').onclick = () => {
       triggerHaptic(10);
@@ -5834,6 +5873,8 @@ lektion16: [
         ensureBoxesLength();
 
         const cols = Math.min(Math.max(1, parseInt(settings.columns,10) || 3), 4);
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
         const canvasScale = 1.3;
         const pageW = 210;
         const pageH = 297;
