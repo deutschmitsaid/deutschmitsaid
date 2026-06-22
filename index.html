@@ -52,7 +52,7 @@
       overflow-x:hidden;
       -webkit-text-size-adjust: 100%;
     }
-
+    
     /* ===== APP WRAPPER ===== */
     #app{
       max-width: var(--app-max-w, 1100px);
@@ -586,7 +586,9 @@
     .cleanIcon svg{ width:55px; height:55px; fill:#3E7A4B; }
     .cleanIcon:hover{ transform:translateY(-8px) scale(1.05); border-color:#3E7A4B; box-shadow:0 35px 90px rgba(0,66,37,0.9); }
 
-    /* ✅ AirDrop style */
+    /* =========================================================
+       ✅ AirDrop style (Pulse + Transfer bar with tick)
+    ========================================================= */
     @keyframes airdrop-pulse-anim {
       0% { box-shadow: 0 0 0 0 rgba(var(--airdrop-blue-rgb), 0.7); transform: scale(1); }
       50% { box-shadow: 0 0 0 15px rgba(var(--airdrop-blue-rgb), 0); transform: scale(1.05); }
@@ -781,16 +783,16 @@
 
   <script>
     // ========= الحماية =========
-    document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
-    document.addEventListener('keydown', function(e) {
-      var k = (e.key || '').toLowerCase();
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', (e) => {
+      const k = (e.key || '').toLowerCase();
       if ((e.ctrlKey || e.metaKey) && ['s','p','c'].includes(k)) e.preventDefault();
     });
 
     // =========================================================
     // ✅ AirDrop Helper Module
     // =========================================================
-    function hapticTap(ms) { ms = ms || 10; if (navigator.vibrate) navigator.vibrate(ms); }
+    function hapticTap(ms = 10) { if (navigator.vibrate) navigator.vibrate(ms); }
     function flashPulse(el) {
       if (!el) return;
       el.classList.remove('airdrop-pulse');
@@ -798,9 +800,8 @@
       el.classList.add('airdrop-pulse');
     }
 
-    var airdropBar = null;
-    function startTransferBar(durationMs) {
-      durationMs = durationMs || 1200;
+    let airdropBar = null;
+    function startTransferBar(durationMs = 1200) {
       if (!airdropBar) {
         airdropBar = document.createElement('div');
         airdropBar.id = 'airdrop-transfer-bar';
@@ -808,25 +809,27 @@
         document.body.appendChild(airdropBar);
       }
       airdropBar.classList.remove('success');
-      var fill = document.getElementById('airdrop-transfer-fill');
+      const fill = document.getElementById('airdrop-transfer-fill');
       fill.style.width = '0%';
       fill.style.transition = 'none';
       airdropBar.classList.add('active');
-      requestAnimationFrame(function() {
-        fill.style.transition = 'width ' + durationMs + 'ms ease-in-out';
+      requestAnimationFrame(() => {
+        fill.style.transition = `width ${durationMs}ms ease-in-out`;
         fill.style.width = '100%';
       });
     }
     function endTransferBar() {
       if (!airdropBar) return;
       airdropBar.classList.add('success');
-      setTimeout(function() { airdropBar.classList.remove('active', 'success'); }, 1400);
+      setTimeout(() => { airdropBar.classList.remove('active', 'success'); }, 1400);
     }
 
     // ================================================================================================
-    // ✅ 1. WORTSCHATZ DATENBANK 
+    // ✅ 1. WORTSCHATZ DATENBANK (تم تصحيح الأخطاء وتجهيز الملفات الثلاثة)
     // ================================================================================================
-    var WORTSCHATZ_DATA = {
+    
+    // 📖 كتاب DaF Kompakt
+    const WORTSCHATZ_DATA = {
             "Lektion1:": [
   // ===== Formular (استمارة) =====
   { word:"der Name, -n", pos:"N", ar:"اسم", darija:"سمية", de_example:"Wie ist Ihr Name?", darija_example:"شنو سميتك؟" },
@@ -4902,8 +4905,9 @@ lektion16: [
       ],
        };
 
-    var WORTSCHATZ_WERKSTATT = {
-      Test1: {
+    // 📖 كتاب Werkstatt
+    const WORTSCHATZ_WERKSTATT = {
+        Test1: {
         Lesen: {
           Teil1: [
             { word:"der Einzelkämpfer, - / die Einzelkämpferin, -nen", pos:"N", ar:"المنافس الفردي", darija:"اللي كيخدم بوحدو", de_example:"Er ist ein typischer Einzelkämpfer.", darija_example:"هو من النوع اللي كيبغي يخدم بوحدو." },
@@ -5559,31 +5563,38 @@ lektion16: [
       }
     };
 
+    // 📖 كتاب Projekt Neu (تمت إضافته كما طلبت)
+    const WORTSCHATZ_PROJEKT_NEU = {
+      "Kapitel 1": [
+        // ضيف الكلمات ديال Projekt Neu هنا
+      ]
+    };
+
     // ================================================================================================
     // ✅ NORMALIZE + QAMOS
     // ================================================================================================
     function normalizeWord(s){
       s = String(s || '').trim().toLowerCase();
       s = s.replace(/^(der|die|das|ein|eine|einen|einem|einer)\s+/i, '');
-      s = s.replace(/[""„"']/g,'');
+      s = s.replace(/[“”„"']/g,'');
       s = s.replace(/[.,;:!?()[\]{}]/g,' ');
       s = s.replace(/\s+/g,' ').trim();
       s = s.replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss');
       s = s.normalize("NFD").replace(/[\u0300-\u036f]/g,"");
       return s;
     }
-    var QAMOS = Object.create(null);
+    const QAMOS = Object.create(null);
     function addKey(key, entry){
       key = String(key || '').trim();
       if(!key || key.length < 2) return;
       QAMOS[key] = entry;
     }
     function generateVariants(base){
-      var out = new Set();
+      const out = new Set();
       out.add(base);
       out.add(base.replace(/[\s-]/g,''));
 
-      var stripped = base
+      const stripped = base
         .replace(/\s+-\w+$/,'')
         .replace(/\s+-(e|en|er|n|s)$/,'')
         .replace(/(en|er|e|n|s)$/,'');
@@ -5593,21 +5604,21 @@ lektion16: [
         out.add(stripped.replace(/[\s-]/g,''));
       }
 
-      var simpleUml = base.replace(/ae/g,'a').replace(/oe/g,'o').replace(/ue/g,'u');
+      const simpleUml = base.replace(/ae/g,'a').replace(/oe/g,'o').replace(/ue/g,'u');
       out.add(simpleUml);
       out.add(simpleUml.replace(/[\s-]/g,''));
 
-      var simpleUml2 = stripped.replace(/ae/g,'a').replace(/oe/g,'o').replace(/ue/g,'u');
+      const simpleUml2 = stripped.replace(/ae/g,'a').replace(/oe/g,'o').replace(/ue/g,'u');
       if(simpleUml2 && simpleUml2.length >= 3){
         out.add(simpleUml2);
         out.add(simpleUml2.replace(/[\s-]/g,''));
       }
 
-      var schToCh = base.replace(/sch/g,'ch');
+      const schToCh = base.replace(/sch/g,'ch');
       out.add(schToCh);
       out.add(schToCh.replace(/[\s-]/g,''));
 
-      var chToSch = base.replace(/ch/g,'sch');
+      const chToSch = base.replace(/ch/g,'sch');
       out.add(chToSch);
       out.add(chToSch.replace(/[\s-]/g,''));
 
@@ -5616,122 +5627,102 @@ lektion16: [
 
       out.add(base.replace(/ss/g,'s'));
       out.add(base.replace(/ss/g,'sz'));
-      return Array.from(out).filter(function(v) { return v && v.length >= 2; });
+      return [...out].filter(v => v && v.length >= 2);
     }
     function addToQamos(entry){
-      var base = normalizeWord(entry.word);
-      var variants = generateVariants(base);
-      for(var i = 0; i < variants.length; i++) addKey(variants[i], entry);
+      const base = normalizeWord(entry.word);
+      const variants = generateVariants(base);
+      for(const v of variants) addKey(v, entry);
       addKey(base.replace(/[\s-]/g,''), entry);
     }
-    
-    function extractWordsFromObject(obj) {
-      if (Array.isArray(obj)) {
-        for (var i = 0; i < obj.length; i++) {
-          if (obj[i] && obj[i].word) {
-            addToQamos(obj[i]);
-          }
-        }
-      } else if (typeof obj === 'object' && obj !== null) {
-        for (var key in obj) {
-          extractWordsFromObject(obj[key]);
-        }
-      }
-    }
-
     function buildQamos(){
-      for(var k in QAMOS) delete QAMOS[k];
-      
-      var keys = Object.keys(WORTSCHATZ_DATA);
-      for(var i = 0; i < keys.length; i++){
-        var list = WORTSCHATZ_DATA[keys[i]] || [];
-        for(var j = 0; j < list.length; j++) addToQamos(list[j]);
-      }
-
-      extractWordsFromObject(WORTSCHATZ_WERKSTATT);
+      for(const k in QAMOS) delete QAMOS[k];
+      // يتم البحث في جميع الكتب الثلاثة
+      [WORTSCHATZ_DATA, WORTSCHATZ_WERKSTATT, WORTSCHATZ_PROJEKT_NEU].forEach(db => {
+        Object.values(db).forEach(list => (list||[]).forEach(entry => addToQamos(entry)));
+      });
     }
     buildQamos();
 
     function levenshtein(a, b){
       a = a || ""; b = b || "";
       if (a === b) return 0;
-      var al = a.length, bl = b.length;
+      const al = a.length, bl = b.length;
       if (al === 0) return bl;
       if (bl === 0) return al;
-      var v0 = new Array(bl + 1);
-      var v1 = new Array(bl + 1);
-      for (var i = 0; i <= bl; i++) v0[i] = i;
-      for (var i = 0; i < al; i++){
+      const v0 = new Array(bl + 1);
+      const v1 = new Array(bl + 1);
+      for (let i = 0; i <= bl; i++) v0[i] = i;
+      for (let i = 0; i < al; i++){
         v1[0] = i + 1;
-        var ca = a.charCodeAt(i);
-        for (var j = 0; j < bl; j++){
-          var cost = (ca === b.charCodeAt(j)) ? 0 : 1;
+        const ca = a.charCodeAt(i);
+        for (let j = 0; j < bl; j++){
+          const cost = (ca === b.charCodeAt(j)) ? 0 : 1;
           v1[j+1] = Math.min(v1[j] + 1, v0[j+1] + 1, v0[j] + cost);
         }
-        for (var j = 0; j <= bl; j++) v0[j] = v1[j];
+        for (let j = 0; j <= bl; j++) v0[j] = v1[j];
       }
       return v1[bl];
     }
 
     function lookupSmart(userInput){
-      var raw = String(userInput || '').trim();
+      const raw = String(userInput || '').trim();
       if(!raw) return null;
-      var n = normalizeWord(raw);
-      var variants = generateVariants(n);
-      for(var vi = 0; vi < variants.length; vi++){
-        if(QAMOS[variants[vi]]) return { entry: QAMOS[variants[vi]], confidence: 1 };
+      const n = normalizeWord(raw);
+      const variants = generateVariants(n);
+      for(const v of variants){
+        if(QAMOS[v]) return { entry: QAMOS[v], confidence: 1 };
       }
-      var seen = {};
-      var candidates = [];
-      for(var k in QAMOS){
-        var e = QAMOS[k];
-        if(e && !seen[e.word]){
-          seen[e.word] = true;
+      const seen = new Set();
+      const candidates = [];
+      for(const k in QAMOS){
+        const e = QAMOS[k];
+        if(e && !seen.has(e.word)){
+          seen.add(e.word);
           candidates.push(e);
         }
       }
-      var target = variants[0].replace(/[\s-]/g,'');
-      var tl = target.length;
-      var maxDist = tl <= 4 ? 1 : (tl <= 7 ? 2 : 3);
-      var best = null;
-      var bestScore = -Infinity;
+      const target = variants[0].replace(/[\s-]/g,'');
+      const tl = target.length;
+      const maxDist = tl <= 4 ? 1 : (tl <= 7 ? 2 : 3);
+      let best = null;
+      let bestScore = -Infinity;
 
-      for(var ci = 0; ci < candidates.length; ci++){
-        var e = candidates[ci];
-        var keyBase = normalizeWord(e.word).replace(/[\s-]/g,'');
+      for(const e of candidates){
+        const keyBase = normalizeWord(e.word).replace(/[\s-]/g,'');
         if(!keyBase) continue;
-        var d = levenshtein(target, keyBase);
+        const d = levenshtein(target, keyBase);
         if(d > maxDist) continue;
 
-        var sim = 1 - (d / Math.max(1, Math.max(keyBase.length, tl)));
-        var bonus = (keyBase.indexOf(target) === 0 || target.indexOf(keyBase) === 0) ? 0.12 : 0;
+        const sim = 1 - (d / Math.max(1, Math.max(keyBase.length, tl)));
+        const bonus = (keyBase.startsWith(target) || target.startsWith(keyBase)) ? 0.12 : 0;
 
-        var vBoost = 0;
-        for(var vvi = 0; vvi < Math.min(variants.length, 6); vvi++){
-          var vc = variants[vvi].replace(/[\s-]/g,'');
-          var dd = levenshtein(vc, keyBase);
-          var s2 = 1 - (dd / Math.max(1, Math.max(keyBase.length, vc.length)));
+        let vBoost = 0;
+        for(const v of variants.slice(0, 6)){
+          const vc = v.replace(/[\s-]/g,'');
+          const dd = levenshtein(vc, keyBase);
+          const s2 = 1 - (dd / Math.max(1, Math.max(keyBase.length, vc.length)));
           if(s2 > vBoost) vBoost = s2;
         }
-        var score = sim + bonus + (vBoost * 0.08);
+        const score = sim + bonus + (vBoost * 0.08);
         if(score > bestScore){ bestScore = score; best = e; }
       }
       if(!best) return null;
-      var confidence = Math.max(0, Math.min(0.98, bestScore));
+      const confidence = Math.max(0, Math.min(0.98, bestScore));
       if(confidence < 0.76) return null;
-      return { entry: best, confidence: confidence };
+      return { entry: best, confidence };
     }
 
     // ======================
     // ✅ SPEECH
     // ======================
-    var TTS = {
+    const TTS = {
       voices: [],
       ready: false,
       primed: false,
       speaking: false,
       isIOS: /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream,
-      isAndroid: /Android/i.test(navigator.userAgent)
+      isAndroid: /Android/i.test(navigator.userAgent),
     };
 
     function ttsRefreshVoices(){
@@ -5745,31 +5736,31 @@ lektion16: [
     }
 
     function pickBestGermanVoice(){
-      var voices = TTS.voices || [];
+      const voices = TTS.voices || [];
       if(!voices.length) return null;
 
-      var scoreVoice = function(v) {
-        var lang = (v.lang || '').toLowerCase();
-        var name = (v.name || '').toLowerCase();
-        var s = 0;
+      const scoreVoice = (v) => {
+        const lang = (v.lang || '').toLowerCase();
+        const name = (v.name || '').toLowerCase();
+        let s = 0;
         if (lang === 'de-de') s += 50;
-        else if (lang.indexOf('de') === 0) s += 40;
+        else if (lang.startsWith('de')) s += 40;
         if (v.localService) s += 8;
-        if (name.indexOf('google') >= 0) s += 20;
-        if (name.indexOf('enhanced') >= 0) s += 10;
-        if (name.indexOf('premium') >= 0) s += 10;
-        if (name.indexOf('neural') >= 0) s += 10;
-        if (name.indexOf('anna') >= 0) s += 12;
-        if (name.indexOf('helena') >= 0) s += 10;
-        if (name.indexOf('markus') >= 0) s += 10;
-        if (name.indexOf('compact') >= 0) s -= 2;
-        if (name.indexOf('android') >= 0) s -= 2;
+        if (name.includes('google')) s += 20;
+        if (name.includes('enhanced')) s += 10;
+        if (name.includes('premium')) s += 10;
+        if (name.includes('neural')) s += 10;
+        if (name.includes('anna')) s += 12;
+        if (name.includes('helena')) s += 10;
+        if (name.includes('markus')) s += 10;
+        if (name.includes('compact')) s -= 2;
+        if (name.includes('android')) s -= 2;
         return s;
       };
 
-      var german = voices.filter(function(v) { return (v.lang||'').toLowerCase().indexOf('de') === 0; });
+      const german = voices.filter(v => ((v.lang||'').toLowerCase().startsWith('de')));
       if(!german.length) return null;
-      german.sort(function(a,b) { return scoreVoice(b) - scoreVoice(a); });
+      german.sort((a,b) => scoreVoice(b) - scoreVoice(a));
       return german[0] || null;
     }
 
@@ -5777,7 +5768,7 @@ lektion16: [
       if(!window.speechSynthesis || TTS.primed) return;
       try{
         window.speechSynthesis.cancel();
-        var u = new SpeechSynthesisUtterance(' ');
+        const u = new SpeechSynthesisUtterance(' ');
         u.volume = 0;
         u.rate = 1;
         u.pitch = 1;
@@ -5790,7 +5781,7 @@ lektion16: [
       if(!window.speechSynthesis) return;
       try{
         window.speechSynthesis.cancel();
-        if (TTS.isIOS) setTimeout(function() { try { window.speechSynthesis.cancel(); } catch(e){} }, 25);
+        if (TTS.isIOS) setTimeout(() => { try { window.speechSynthesis.cancel(); } catch(e){} }, 25);
       }catch(e){}
       TTS.speaking = false;
     }
@@ -5801,21 +5792,19 @@ lektion16: [
       return t;
     }
 
-    function chunkTextForTTS(text, maxLen){
-      maxLen = maxLen || 160;
-      var t = cleanSpeakText(text);
+    function chunkTextForTTS(text, maxLen = 160){
+      const t = cleanSpeakText(text);
       if(!t) return [];
-      var parts = t.split(/([.!?…])\s+/).reduce(function(acc, cur) {
+      const parts = t.split(/([.!?…])\s+/).reduce((acc, cur) => {
         if (cur === '.' || cur === '!' || cur === '?' || cur === '…') acc[acc.length-1] = (acc[acc.length-1] || '') + cur;
         else acc.push(cur);
         return acc;
-      }, []).map(function(s) { return s.trim(); }).filter(Boolean);
+      }, []).map(s => s.trim()).filter(Boolean);
 
-      var out = [];
-      for(var i = 0; i < parts.length; i++){
-        var p = parts[i];
+      const out = [];
+      for(const p of parts){
         if(p.length <= maxLen){ out.push(p); continue; }
-        var start = 0;
+        let start = 0;
         while(start < p.length){
           out.push(p.slice(start, start + maxLen));
           start += maxLen;
@@ -5824,47 +5813,46 @@ lektion16: [
       return out.filter(Boolean);
     }
 
-    function speakGerman(text, opts){
-      opts = opts || {};
-      var t = cleanSpeakText(text);
+    function speakGerman(text, opts = {}){
+      const t = cleanSpeakText(text);
       if(!t || !window.speechSynthesis) return;
 
       ttsPrimeOnce();
       ttsStop();
       ttsRefreshVoices();
 
-      var voice = pickBestGermanVoice();
-      var rate = 0.96;
-      var pitch = (opts.pitch != null ? opts.pitch : 1.00);
-      var volume = (opts.volume != null ? opts.volume : 1.0);
-      var chunks = chunkTextForTTS(t, 170);
+      const voice = pickBestGermanVoice();
+      const rate = 0.96;
+      const pitch = (opts.pitch ?? 1.00);
+      const volume = (opts.volume ?? 1.0);
+      const chunks = chunkTextForTTS(t, 170);
 
-      var i = 0;
+      let i = 0;
       TTS.speaking = true;
 
-      var speakNext = function() {
+      const speakNext = () => {
         if(i >= chunks.length){ TTS.speaking = false; return; }
-        var u = new SpeechSynthesisUtterance(chunks[i]);
+        const u = new SpeechSynthesisUtterance(chunks[i]);
         u.lang = 'de-DE';
         u.rate = rate;
         u.pitch = pitch;
         u.volume = volume;
         if (voice) u.voice = voice;
 
-        u.onend = function() { i++; setTimeout(speakNext, (opts.gapMs != null ? opts.gapMs : 120)); };
-        u.onerror = function() {
+        u.onend = () => { i++; setTimeout(speakNext, (opts.gapMs ?? 120)); };
+        u.onerror = () => {
           try{
-            var f = new SpeechSynthesisUtterance(chunks[i]);
+            const f = new SpeechSynthesisUtterance(chunks[i]);
             f.lang='de-DE';
             f.rate=rate;
             f.pitch=pitch;
             f.volume=volume;
-            f.onend = function() { i++; setTimeout(speakNext, (opts.gapMs != null ? opts.gapMs : 120)); };
+            f.onend = () => { i++; setTimeout(speakNext, (opts.gapMs ?? 120)); };
             window.speechSynthesis.speak(f);
           }catch(e){ TTS.speaking = false; }
         };
 
-        requestAnimationFrame(function() { window.speechSynthesis.speak(u); });
+        requestAnimationFrame(() => window.speechSynthesis.speak(u));
       };
       speakNext();
     }
@@ -5874,34 +5862,34 @@ lektion16: [
     }
 
     function parseNounEntry(wordStr){
-      var raw = stripParentheses(wordStr);
-      raw = raw.replace(/[""„"]/g,'').trim();
-      var m = raw.match(/^(der|die|das)\s+(.+)$/i);
-      var article = m ? m[1].toLowerCase() : '';
-      var rest = m ? m[2] : raw;
-      var parts = rest.split(',');
-      var base = stripParentheses(parts[0] || '').trim();
-      var pluralInfo = stripParentheses((parts[1] || '')).trim();
+      let raw = stripParentheses(wordStr);
+      raw = raw.replace(/[“”„"]/g,'').trim();
+      const m = raw.match(/^(der|die|das)\s+(.+)$/i);
+      const article = m ? m[1].toLowerCase() : '';
+      const rest = m ? m[2] : raw;
+      const parts = rest.split(',');
+      const base = stripParentheses(parts[0] || '').trim();
+      const pluralInfo = stripParentheses((parts[1] || '')).trim();
 
-      var plural = '';
+      let plural = '';
       if (pluralInfo){
         if (/^[-–—]+$/.test(pluralInfo)) plural = '';
-        else if (pluralInfo.charAt(0) === '-') {
-          var suf = pluralInfo.replace(/^-+/, '').trim();
+        else if (pluralInfo.startsWith('-')) {
+          const suf = pluralInfo.replace(/^-+/, '').trim();
           if (suf) plural = base + suf;
         } else {
           plural = pluralInfo;
         }
       }
-      return { article: article, base: base, plural: plural, isNoun: !!article };
+      return { article, base, plural, isNoun: !!article };
     }
 
     function buildSpeakTextsFromEntry(entry){
-      var w = entry && entry.word ? entry.word : '';
-      var isNoun = /^(der|die|das)\s+/i.test(w.trim());
+      const w = entry && entry.word ? entry.word : '';
+      const isNoun = /^(der|die|das)\s+/i.test(w.trim());
       
       if (!isNoun) {
-        var s = String(w || '');
+        let s = String(w || '');
         s = s.replace(/\+\s*A\b/g, 'plus Akkusativ');
         s = s.replace(/\+\s*D\b/g, 'plus Dativ');
         s = s.replace(/\+\s*G\b/g, 'plus Genitiv');
@@ -5911,10 +5899,10 @@ lektion16: [
         return s ? [s] : [];
       }
 
-      var parsed = parseNounEntry(w);
-      var singular = (parsed.article + ' ' + parsed.base).trim();
+      const parsed = parseNounEntry(w);
+      const singular = (parsed.article + ' ' + parsed.base).trim();
 
-      var pluralText = '';
+      let pluralText = '';
       if (parsed.plural){
         pluralText = String(parsed.plural).trim();
         if (!/^(der|die|das)\s+/i.test(pluralText)) {
@@ -5922,64 +5910,64 @@ lektion16: [
         }
       }
 
-      var texts = [];
+      const texts = [];
       if (singular) texts.push(singular);
       if (pluralText) texts.push(pluralText);
       return texts;
     }
 
-    function speakGermanSequence(texts, opts) {
-      opts = opts || {};
+    function speakGermanSequence(texts, opts = {}) {
       if (!window.speechSynthesis) return;
 
-      var arr = (texts || []).map(function(t) { return cleanSpeakText(t); }).filter(Boolean);
+      const arr = (texts || []).map(t => cleanSpeakText(t)).filter(Boolean);
       if (!arr.length) return;
 
       ttsPrimeOnce();
       ttsStop();
       ttsRefreshVoices();
 
-      var voice  = pickBestGermanVoice();
-      var rate   = (opts.rate != null ? opts.rate : 0.96);
-      var pitch  = (opts.pitch != null ? opts.pitch : 1.0);
-      var volume = (opts.volume != null ? opts.volume : 1);
+      const voice  = pickBestGermanVoice();
+      const rate   = (opts.rate ?? 0.96);
+      const pitch  = (opts.pitch ?? 1.0);
+      const volume = (opts.volume ?? 1);
 
       if (TTS.isIOS) {
-        var joined = arr.join('. ');
-        var u = new SpeechSynthesisUtterance(joined);
+        const joined = arr.join('. ');
+        const u = new SpeechSynthesisUtterance(joined);
         u.lang = "de-DE";
         u.rate = rate;
         u.pitch = pitch;
         u.volume = volume;
         if (voice) u.voice = voice;
+
         try { window.speechSynthesis.resume(); } catch(e) {}
-        setTimeout(function() {
-          try { window.speechSynthesis.speak(u); } catch(e) {}
-        }, 80);
+        setTimeout(() => { try { window.speechSynthesis.speak(u); } catch(e) {} }, 80);
         return;
       }
 
-      var gapMs = (opts.gapMs != null ? opts.gapMs : 350);
-      var index = 0;
+      const gapMs = (opts.gapMs ?? 350);
+      let index = 0;
 
       function speakNext() {
         if (index >= arr.length) return;
-        var u = new SpeechSynthesisUtterance(arr[index]);
+        const u = new SpeechSynthesisUtterance(arr[index]);
         u.lang = "de-DE";
         u.rate = rate;
         u.pitch = pitch;
         u.volume = volume;
         if (voice) u.voice = voice;
-        u.onend = function() { index++; setTimeout(speakNext, gapMs); };
-        u.onerror = function() { index++; setTimeout(speakNext, gapMs); };
+        u.onend = () => { index++; setTimeout(speakNext, gapMs); };
+        u.onerror = () => { index++; setTimeout(speakNext, gapMs); };
         window.speechSynthesis.speak(u);
       }
+
       speakNext();
     }
 
     // ======================
     // ✅ APP LOGIC
     // ======================
+
     function formatPosText(code) {
       if (code === 'A') return 'plus Akkusativ';
       if (code === 'D') return 'plus Dativ';
@@ -5988,30 +5976,30 @@ lektion16: [
       return code || 'N/V/A';
     }
 
-    var boxes = [];
-    var settings = { numBoxes: 12, columns: 3, boxSize: 'normal', showBack: false };
+    let boxes = [];
+    let settings = { numBoxes: 12, columns: 3, boxSize: 'normal', showBack: false };
 
-    var grid = document.getElementById('grid');
-    var numBoxesInput = document.getElementById('numBoxes');
-    var numBoxesValue = document.getElementById('numBoxesValue');
-    var columnsSelect = document.getElementById('columns');
-    var boxSizeSelect = document.getElementById('boxSize');
-    var showBackCheckbox = document.getElementById('showBack');
+    const grid = document.getElementById('grid');
+    const numBoxesInput = document.getElementById('numBoxes');
+    const numBoxesValue = document.getElementById('numBoxesValue');
+    const columnsSelect = document.getElementById('columns');
+    const boxSizeSelect = document.getElementById('boxSize');
+    const showBackCheckbox = document.getElementById('showBack');
 
     function applyBoxCssSize(){
-      var sizes = {
+      const sizes = {
         small: { app: '900px', boxH: '220px' },
         normal:{ app: '1100px', boxH: '260px' },
         large: { app: '1400px', boxH: '310px' }
       };
-      var conf = sizes[settings.boxSize] || sizes.normal;
+      const conf = sizes[settings.boxSize] || sizes.normal;
       document.documentElement.style.setProperty('--app-max-w', conf.app);
       document.documentElement.style.setProperty('--box-h', conf.boxH);
     }
 
     function calculateResponsiveColumns() {
-      var userCols = parseInt(settings.columns, 10);
-      var screenW = window.innerWidth;
+      let userCols = parseInt(settings.columns, 10);
+      let screenW = window.innerWidth;
       if (screenW <= 550) return 1;
       if (screenW <= 850) return Math.min(userCols, 2);
       if (screenW <= 1100) return Math.min(userCols, 3);
@@ -6025,54 +6013,51 @@ lektion16: [
       if (boxes.length > settings.numBoxes) boxes = boxes.slice(0, settings.numBoxes);
     }
 
-    function autoFitTextarea(textarea, min, max){
-      min = min || 12;
-      max = max || 18;
+    function autoFitTextarea(textarea, min=12, max=18){
       if(!textarea) return;
       textarea.style.fontSize = max + 'px';
-      for (var s=max; s>=min; s--){
+      for (let s=max; s>=min; s--){
         textarea.style.fontSize = s + 'px';
         if (textarea.scrollHeight <= textarea.clientHeight + 2) break;
       }
     }
 
     function createBoxElement(index){
-      var data = boxes[index];
-      var box = document.createElement('div');
+      const data = boxes[index];
+      const box = document.createElement('div');
       box.className = 'box';
 
-      var flip = document.createElement('div');
+      const flip = document.createElement('div');
       flip.className = 'flip-card' + (settings.showBack ? ' flipped' : '');
 
-      var front = document.createElement('div');
+      const front = document.createElement('div');
       front.className = 'flip-side flip-front';
 
-      var wordWrap = document.createElement('div');
+      const wordWrap = document.createElement('div');
       wordWrap.className = 'frontWordWrap';
 
-      var wordTA = document.createElement('textarea');
+      const wordTA = document.createElement('textarea');
       wordTA.className = 'wordInput';
       wordTA.placeholder = 'Wort';
       wordTA.value = data.word;
-      wordTA.rows = 2;
+      wordTA.rows=2;
 
-      var speakBtn = document.createElement('button');
+      const speakBtn = document.createElement('button');
       speakBtn.className = 'speakBtn';
-      speakBtn.type = 'button';
-      speakBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>';
+      speakBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>`;
       
-      speakBtn.onclick = function(e) {
+      speakBtn.onclick = (e) => {
         e.stopPropagation();
         hapticTap(10);
-        var res = lookupSmart(wordTA.value);
+        const res = lookupSmart(wordTA.value);
         if (res && res.entry){
-          var speakTexts = buildSpeakTextsFromEntry(res.entry);
+          const speakTexts = buildSpeakTextsFromEntry(res.entry);
           if (speakTexts.length){
             speakGermanSequence(speakTexts, { rate: 0.96, gapMs: 350 });
             return;
           }
         }
-        var rawText = String(wordTA.value || '');
+        let rawText = String(wordTA.value || '');
         rawText = rawText.replace(/\+\s*A\b/g, 'plus Akkusativ');
         rawText = rawText.replace(/\+\s*D\b/g, 'plus Dativ');
         rawText = rawText.replace(/\+\s*G\b/g, 'plus Genitiv');
@@ -6084,33 +6069,32 @@ lektion16: [
       wordWrap.appendChild(wordTA);
       wordWrap.appendChild(speakBtn);
 
-      var exWrap = document.createElement('div');
+      const exWrap = document.createElement('div');
       exWrap.className = 'exampleWrap';
 
-      var exHeader = document.createElement('div');
+      const exHeader = document.createElement('div');
       exHeader.className = 'exampleHeader';
 
-      var leftGroup = document.createElement('div');
+      const leftGroup = document.createElement('div');
       leftGroup.style.display = 'flex';
       leftGroup.style.alignItems = 'center';
       leftGroup.style.gap = '8px';
 
-      var exLabel = document.createElement('div');
+      const exLabel = document.createElement('div');
       exLabel.className = 'exampleLabel';
       exLabel.textContent = 'Beispiel';
 
-      var exSpeakBtn = document.createElement('button');
+      const exSpeakBtn = document.createElement('button');
       exSpeakBtn.className = 'miniSpeakBtn';
-      exSpeakBtn.type = 'button';
       exSpeakBtn.title = 'Beispiel anhören';
-      exSpeakBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>';
+      exSpeakBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>`;
 
-      var exTA = document.createElement('textarea');
+      const exTA = document.createElement('textarea');
       exTA.className = 'explainInput';
       exTA.placeholder = 'Beispiel hier...';
       exTA.value = data.example;
 
-      exSpeakBtn.onclick = function(e) {
+      exSpeakBtn.onclick = (e) => {
         e.stopPropagation();
         hapticTap(10);
         speakGerman(exTA.value, { rate: 0.96, gapMs: 120 });
@@ -6119,12 +6103,11 @@ lektion16: [
       leftGroup.appendChild(exLabel);
       leftGroup.appendChild(exSpeakBtn);
 
-      var autoBtn = document.createElement('button');
+      const autoBtn = document.createElement('button');
       autoBtn.className = 'autoBtn';
-      autoBtn.type = 'button';
       autoBtn.textContent = '⚙ Automatik';
 
-      var autoMsg = document.createElement('div');
+      const autoMsg = document.createElement('div');
       autoMsg.className = 'autoMsg';
 
       exHeader.appendChild(leftGroup);
@@ -6136,21 +6119,21 @@ lektion16: [
       front.appendChild(wordWrap);
       front.appendChild(exWrap);
 
-      var back = document.createElement('div');
+      const back = document.createElement('div');
       back.className = 'flip-side flip-back';
 
-      var posBadge = document.createElement('div');
+      const posBadge = document.createElement('div');
       posBadge.className = 'posBadge';
 
-      var topRow = document.createElement('div');
+      const topRow = document.createElement('div');
       topRow.className = 'backTopRow';
 
-      var arCenter = document.createElement('textarea');
+      const arCenter = document.createElement('textarea');
       arCenter.className = 'arabicCenter';
       arCenter.placeholder = 'الترجمة بالعربية...';
       arCenter.value = data.arTextManual;
 
-      var darSide = document.createElement('textarea');
+      const darSide = document.createElement('textarea');
       darSide.className = 'darijaSide';
       darSide.placeholder = 'بالدارجة...';
       darSide.value = data.darTextManual;
@@ -6158,24 +6141,24 @@ lektion16: [
       topRow.appendChild(darSide);
       topRow.appendChild(arCenter);
 
-      var noteWrap = document.createElement('div');
+      const noteWrap = document.createElement('div');
       noteWrap.className = 'backNoteWrap';
 
-      var exL = document.createElement('div');
+      const exL = document.createElement('div');
       exL.className = 'noteLabel';
       exL.textContent = 'أكتب مثالك هنا:';
 
-      var arExTA = document.createElement('textarea');
+      const arExTA = document.createElement('textarea');
       arExTA.className = 'noteInput';
       arExTA.placeholder = 'مثال بالعربية...';
       arExTA.value = data.arabicExampleManual;
 
-      var darExTA = document.createElement('textarea');
+      const darExTA = document.createElement('textarea');
       darExTA.className = 'noteInput';
       darExTA.placeholder = 'مثال بالدارجة...';
       darExTA.value = data.darijaExampleManual;
 
-      var extraNoteWrap = document.createElement('div');
+      const extraNoteWrap = document.createElement('div');
       extraNoteWrap.style.display = 'none';
       extraNoteWrap.style.flexDirection = 'column';
       extraNoteWrap.style.gap='4px';
@@ -6183,11 +6166,11 @@ lektion16: [
       extraNoteWrap.style.marginTop='6px';
       extraNoteWrap.style.paddingTop='6px';
 
-      var nL = document.createElement('div');
+      const nL = document.createElement('div');
       nL.className = 'noteLabel';
       nL.textContent = 'ملاحظة:';
 
-      var noteTA = document.createElement('textarea');
+      const noteTA = document.createElement('textarea');
       noteTA.className = 'noteInput';
       noteTA.value = data.note;
 
@@ -6204,40 +6187,40 @@ lektion16: [
       back.appendChild(noteWrap);
 
       function render(){
-        var res = lookupSmart(wordTA.value);
-        var b1 = res ? res.entry : null;
+        const res = lookupSmart(wordTA.value);
+        const b1 = res ? res.entry : null;
 
-        var currentPos = data.posOverride || (b1 ? b1.pos : 'N');
+        let currentPos = data.posOverride || (b1 ? b1.pos : 'N');
         posBadge.textContent = formatPosText(currentPos);
         
-        arCenter.value = data.arTextManual || (b1 ? b1.ar : '');
-        darSide.value = data.darTextManual || (b1 ? b1.darija : '');
+        arCenter.value = data.arTextManual || (b1?b1.ar:'');
+        darSide.value = data.darTextManual || (b1?b1.darija:'');
 
-        var manualDarEx = (data.darijaExampleManual || '').trim();
-        var autoDarEx = (data.darijaExampleB1 || '').trim();
+        const manualDarEx = (data.darijaExampleManual || '').trim();
+        const autoDarEx = (data.darijaExampleB1 || '').trim();
         darExTA.value = manualDarEx || autoDarEx || '';
         arExTA.value = data.arabicExampleManual || '';
 
         extraNoteWrap.style.display = (b1 || (data.note||'').trim() !== '') ? 'flex' : 'none';
-        [wordTA, exTA, arCenter, darSide, arExTA, darExTA, noteTA].forEach(function(t) { autoFitTextarea(t); });
+        [wordTA, exTA, arCenter, darSide, arExTA, darExTA, noteTA].forEach(t => autoFitTextarea(t));
       }
 
-      autoBtn.onclick = function(e) {
+      autoBtn.onclick = (e) => {
         e.stopPropagation();
         hapticTap(10);
         flashPulse(box);
         startTransferBar(900);
 
-        var res = lookupSmart(wordTA.value);
+        const res = lookupSmart(wordTA.value);
         if(!res){
           autoMsg.textContent = "kein Wort";
           endTransferBar();
           return;
         }
 
-        var b1 = res.entry;
-        var pct = Math.round((res.confidence || 0.9) * 100);
-        autoMsg.textContent = '✔ ' + pct + '%';
+        const b1 = res.entry;
+        const pct = Math.round((res.confidence || 0.9) * 100);
+        autoMsg.textContent = `✔ ${pct}%`;
 
         data.posOverride = b1.pos;
         data.example = b1.de_example;
@@ -6252,18 +6235,18 @@ lektion16: [
         endTransferBar();
       };
 
-      posBadge.onclick = function(e) {
+      posBadge.onclick = (e) => {
         e.stopPropagation();
         hapticTap(10);
-        var cycle = ['N', 'A', 'D', 'G', 'V', 'Adj', 'Adv'];
-        var res = lookupSmart(wordTA.value);
-        var b1 = res ? res.entry : null;
+        const cycle = ['N', 'A', 'D', 'G', 'V', 'Adj', 'Adv'];
+        const res = lookupSmart(wordTA.value);
+        const b1 = res ? res.entry : null;
         
-        var current = data.posOverride || (b1 ? b1.pos : 'N');
-        var idx = cycle.indexOf(current);
+        let current = data.posOverride || (b1 ? b1.pos : 'N');
+        let idx = cycle.indexOf(current);
         if (idx === -1) idx = 0;
         
-        var nextVal = cycle[(idx + 1) % cycle.length];
+        let nextVal = cycle[(idx + 1) % cycle.length];
         data.posOverride = nextVal;
         
         speakGerman(formatPosText(nextVal), { rate: 0.96 });
@@ -6272,7 +6255,7 @@ lektion16: [
         save();
       };
 
-      var binds = [
+      const binds = [
         [wordTA,'word'],
         [exTA,'example'],
         [arCenter,'arTextManual'],
@@ -6281,14 +6264,12 @@ lektion16: [
         [darExTA,'darijaExampleManual'],
         [noteTA,'note']
       ];
-      binds.forEach(function(pair) {
-        var el = pair[0];
-        var key = pair[1];
-        el.oninput = function() { data[key] = el.value; autoFitTextarea(el); save(); };
+      binds.forEach(([el, key]) => {
+        el.oninput = () => { data[key] = el.value; autoFitTextarea(el); save(); };
       });
 
-      box.onclick = function(e) {
-        if(['TEXTAREA','INPUT','BUTTON'].indexOf(e.target.tagName) === -1) flip.classList.toggle('flipped');
+      box.onclick = (e) => {
+        if(!['TEXTAREA','INPUT','BUTTON'].includes(e.target.tagName)) flip.classList.toggle('flipped');
       };
 
       setTimeout(render, 10);
@@ -6303,58 +6284,51 @@ lektion16: [
       ensureBoxesLength();
       applyBoxCssSize();
       grid.innerHTML = '';
-      var safeCols = calculateResponsiveColumns();
-      grid.style.gridTemplateColumns = 'repeat(' + safeCols + ', minmax(0, 1fr))';
-      for(var i = 0; i < boxes.length; i++) grid.appendChild(createBoxElement(i));
+      let safeCols = calculateResponsiveColumns();
+      grid.style.gridTemplateColumns = `repeat(${safeCols}, minmax(0, 1fr))`;
+      boxes.forEach((_, i) => grid.appendChild(createBoxElement(i)));
     }
 
     function save(){
-      try {
-        localStorage.setItem('dms_boxes', JSON.stringify(boxes));
-        localStorage.setItem('dms_settings', JSON.stringify(settings));
-      } catch(e) {}
+      localStorage.setItem('dms_boxes', JSON.stringify(boxes));
+      localStorage.setItem('dms_settings', JSON.stringify(settings));
     }
     function load(){
       try{
-        var b = localStorage.getItem('dms_boxes');
-        if(b) boxes = JSON.parse(b);
-        var s = localStorage.getItem('dms_settings');
-        if(s) {
-          var parsed = JSON.parse(s);
-          for(var k in parsed) settings[k] = parsed[k];
-        }
+        if(localStorage.getItem('dms_boxes')) boxes = JSON.parse(localStorage.getItem('dms_boxes'));
+        if(localStorage.getItem('dms_settings')) settings = {...settings, ...JSON.parse(localStorage.getItem('dms_settings'))};
       }catch(e){}
     }
 
-    numBoxesInput.oninput = function() {
-      settings.numBoxes = parseInt(numBoxesInput.value, 10);
+    numBoxesInput.oninput = () => {
+      settings.numBoxes = numBoxesInput.value;
       numBoxesValue.textContent = numBoxesInput.value;
       updateGrid(); save();
     };
-    columnsSelect.onchange = function() { settings.columns = columnsSelect.value; updateGrid(); save(); };
-    boxSizeSelect.onchange = function() { settings.boxSize = boxSizeSelect.value; updateGrid(); save(); };
-    showBackCheckbox.onchange = function() { settings.showBack = showBackCheckbox.checked; updateGrid(); save(); };
+    columnsSelect.onchange = () => { settings.columns = columnsSelect.value; updateGrid(); save(); };
+    boxSizeSelect.onchange = () => { settings.boxSize = boxSizeSelect.value; updateGrid(); save(); };
+    showBackCheckbox.onchange = () => { settings.showBack = showBackCheckbox.checked; updateGrid(); save(); };
 
-    document.getElementById('resetBtn').onclick = function() { boxes=[]; updateGrid(); save(); };
-    window.addEventListener('resize', function() { requestAnimationFrame(updateGrid); });
+    document.getElementById('resetBtn').onclick = () => { boxes=[]; updateGrid(); save(); };
+    window.addEventListener('resize', () => { requestAnimationFrame(updateGrid); });
 
-    document.getElementById('waBtn').onclick = function() { document.getElementById('waPopup').classList.toggle('open'); };
-    document.getElementById('waClose').onclick = function() { document.getElementById('waPopup').classList.remove('open'); };
-    document.getElementById('waSend').onclick = function() {
-      window.open('https://wa.me/212602396497?text=' + encodeURIComponent(document.getElementById('waInput').value || 'Hallo saeed!'), '_blank');
+    document.getElementById('waBtn').onclick = () => document.getElementById('waPopup').classList.toggle('open');
+    document.getElementById('waClose').onclick = () => document.getElementById('waPopup').classList.remove('open');
+    document.getElementById('waSend').onclick = () => {
+      window.open(`https://wa.me/212602396497?text=${encodeURIComponent(document.getElementById('waInput').value || 'Hallo saeed!')}`, '_blank');
     };
 
     // CREATIVE Hub
-    function triggerHaptic(pattern) { pattern = pattern || [10, 30, 10]; if (navigator.vibrate) navigator.vibrate(pattern); }
+    function triggerHaptic(pattern = [10, 30, 10]) { if (navigator.vibrate) navigator.vibrate(pattern); }
 
     function fireConfetti() {
-      var canvas = document.getElementById('confettiCanvas');
-      var ctx = canvas.getContext('2d');
+      const canvas = document.getElementById('confettiCanvas');
+      const ctx = canvas.getContext('2d');
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      var particles = [];
-      var colors = ['#007AFF', '#34C759', '#FFD60A', '#FF2D55', '#AF52DE'];
-      for (var i = 0; i < 150; i++) {
+      const particles = [];
+      const colors = ['#007AFF', '#34C759', '#FFD60A', '#FF2D55', '#AF52DE'];
+      for (let i = 0; i < 150; i++) {
         particles.push({
           x: canvas.width / 2, y: canvas.height / 2,
           vx: (Math.random() - 0.5) * 15,
@@ -6366,9 +6340,8 @@ lektion16: [
       }
       function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        var active = false;
-        for(var i = 0; i < particles.length; i++){
-          var p = particles[i];
+        let active = false;
+        particles.forEach(p => {
           if (p.life > 0) {
             active = true;
             p.x += p.vx;
@@ -6380,160 +6353,169 @@ lektion16: [
             ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
             ctx.fill();
           }
-        }
+        });
         if (active) requestAnimationFrame(animate);
         else ctx.clearRect(0, 0, canvas.width, canvas.height);
       }
       animate();
     }
 
-    document.getElementById('vocabBtn').onclick = function() {
+    // 💡 تم جمع الكود ديال الشارجون في ميثود وحدة باش يكون الكود نقي
+    function loadCategoryIntoHub(dbName, dbObject) {
+      const container = document.getElementById('hubGridContainer');
+      container.innerHTML = '';
+
+      Object.keys(dbObject).forEach(lessonTitle => {
+        const card = document.createElement('div');
+        card.className = 'hubCard';
+        const lessonWords = dbObject[lessonTitle] || [];
+
+        card.innerHTML = `
+          <div class="hubCardName">${lessonTitle}</div>
+          <div class="hubCardCount">${lessonWords.length} Wörter</div>
+        `;
+
+        card.onclick = () => {
+          triggerHaptic([10,30,10]);
+          flashPulse(card);
+          startTransferBar(900);
+
+          const loadBar = document.getElementById('loadBar');
+          const loadContainer = document.getElementById('loadBarContainer');
+
+          loadContainer.style.display = 'block';
+          loadBar.style.width = '0%';
+
+          setTimeout(() => { loadBar.style.width = '50%'; }, 80);
+          setTimeout(() => { loadBar.style.width = '100%'; }, 320);
+
+          setTimeout(() => {
+            boxes = [];
+            settings.numBoxes = lessonWords.length || 12;
+
+            numBoxesInput.value = settings.numBoxes;
+            numBoxesValue.textContent = settings.numBoxes;
+
+            lessonWords.forEach(entry => {
+              boxes.push({
+                word: entry.word || '',
+                example: entry.de_example || '',
+                posOverride: entry.pos || '',
+                note: '',
+                arTextManual: entry.ar || '',
+                darTextManual: entry.darija || '',
+                arabicExampleManual: '',
+                darijaExampleManual: '',
+                darijaExampleB1: entry.darija_example || ''
+              });
+            });
+
+            save();
+            updateGrid();
+            fireConfetti();
+            document.getElementById('vocabHub').classList.remove('open');
+
+            loadContainer.style.display = 'none';
+            loadBar.style.width = '0%';
+            endTransferBar();
+          }, 650);
+        };
+
+        container.appendChild(card);
+      });
+    }
+
+    // 📚 الزر الرئيسي لفتح المكتبة
+    document.getElementById('vocabBtn').onclick = () => {
       triggerHaptic([20, 50, 20]);
       startTransferBar(800);
 
-      var hub = document.getElementById('vocabHub');
-      var container = document.getElementById('hubGridContainer');
+      const hub = document.getElementById('vocabHub');
+      const container = document.getElementById('hubGridContainer');
       container.innerHTML = '';
 
-      var dafCard = document.createElement('div');
+      // 1️⃣ DaF Kompakt
+      const dafCard = document.createElement('div');
       dafCard.className = 'hubCard';
-      dafCard.innerHTML = '<div class="hubCardName">DaF Kompakt</div><div class="hubCardCount">Alle Lektionen</div>';
+      dafCard.innerHTML = `<div class="hubCardName">DaF Kompakt</div><div class="hubCardCount">Alle Lektionen</div>`;
+      dafCard.onclick = () => loadCategoryIntoHub("DaF Kompakt", WORTSCHATZ_DATA);
 
-      dafCard.onclick = function() {
-        container.innerHTML = '';
-        var lessonKeys = Object.keys(WORTSCHATZ_DATA);
-
-        for(var li = 0; li < lessonKeys.length; li++){
-          (function(lessonTitle){
-            var card = document.createElement('div');
-            card.className = 'hubCard';
-            var count = (WORTSCHATZ_DATA[lessonTitle] || []).length;
-            card.innerHTML = '<div class="hubCardName">' + lessonTitle + '</div><div class="hubCardCount">' + count + ' Wörter</div>';
-
-            card.onclick = function() {
-              triggerHaptic([10,30,10]);
-              flashPulse(card);
-              startTransferBar(900);
-
-              var loadBar = document.getElementById('loadBar');
-              var loadContainer = document.getElementById('loadBarContainer');
-              loadContainer.style.display = 'block';
-              loadBar.style.width = '0%';
-
-              setTimeout(function() { loadBar.style.width = '50%'; }, 80);
-              setTimeout(function() { loadBar.style.width = '100%'; }, 320);
-
-              setTimeout(function() {
-                var lessonWords = WORTSCHATZ_DATA[lessonTitle] || [];
-                boxes = [];
-                settings.numBoxes = lessonWords.length || 12;
-                numBoxesInput.value = settings.numBoxes;
-                numBoxesValue.textContent = settings.numBoxes;
-
-                for(var wi = 0; wi < lessonWords.length; wi++){
-                  var entry = lessonWords[wi];
-                  boxes.push({
-                    word: entry.word,
-                    example: entry.de_example,
-                    posOverride: entry.pos,
-                    note: '',
-                    arTextManual: entry.ar,
-                    darTextManual: entry.darija,
-                    arabicExampleManual: '',
-                    darijaExampleManual: '',
-                    darijaExampleB1: entry.darija_example
-                  });
-                }
-
-                save();
-                updateGrid();
-                fireConfetti();
-                hub.classList.remove('open');
-                loadContainer.style.display = 'none';
-                loadBar.style.width = '0%';
-                endTransferBar();
-              }, 650);
-            };
-
-            container.appendChild(card);
-          })(lessonKeys[li]);
-        }
-      };
-
-      var werkstattCard = document.createElement('div');
+      // 2️⃣ Werkstatt
+      const werkstattCard = document.createElement('div');
       werkstattCard.className = 'hubCard';
-      werkstattCard.innerHTML = '<div class="hubCardName">Werkstatt</div><div class="hubCardCount">Coming Soon</div>';
-      werkstattCard.onclick = function() { alert('Werkstatt wird bald verfügbar sein'); };
+      werkstattCard.innerHTML = `<div class="hubCardName">Werkstatt</div><div class="hubCardCount">Neu</div>`;
+      werkstattCard.onclick = () => loadCategoryIntoHub("Werkstatt", WORTSCHATZ_WERKSTATT);
 
-      var projektCard = document.createElement('div');
+      // 3️⃣ Projekt Neu
+      const projektCard = document.createElement('div');
       projektCard.className = 'hubCard';
-      projektCard.innerHTML = '<div class="hubCardName">Projekt Neu</div><div class="hubCardCount">Neue Wörter</div>';
-      projektCard.onclick = function() { alert('Projekt Neu'); };
+      projektCard.innerHTML = `<div class="hubCardName">Projekt Neu</div><div class="hubCardCount">Neu</div>`;
+      projektCard.onclick = () => loadCategoryIntoHub("Projekt Neu", WORTSCHATZ_PROJEKT_NEU);
 
       container.appendChild(dafCard);
       container.appendChild(werkstattCard);
       container.appendChild(projektCard);
+
       hub.classList.add('open');
       endTransferBar();
     };
 
-    document.getElementById('closeVocabHub').onclick = function() {
+    document.getElementById('closeVocabHub').onclick = () => {
       triggerHaptic(10);
       document.getElementById('vocabHub').classList.remove('open');
     };
-    document.getElementById('vocabHub').onclick = function(e) {
+    document.getElementById('vocabHub').onclick = (e) => {
       if(e.target.id === 'vocabHub') document.getElementById('vocabHub').classList.remove('open');
     };
 
-    // ✅ PDF Generator
-    document.getElementById('downloadPdfBtn').onclick = async function() {
-      var loader = document.getElementById('pdfLoading');
-      var progress = document.getElementById('pdfProgress');
-      var progressFill = document.getElementById('pdfProgressFill');
+    // PDF
+    document.getElementById('downloadPdfBtn').onclick = async () => {
+      const loader = document.getElementById('pdfLoading');
+      const progress = document.getElementById('pdfProgress');
+      const progressFill = document.getElementById('pdfProgressFill');
 
       try{
         loader.style.display = 'flex';
         progress.style.display = 'block';
         progress.classList.add('active');
-        progressFill.style.width = '0%';
 
-        var jsPDF = window.jspdf.jsPDF;
-        var pdf = new jsPDF("p", "mm", "a4");
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF("p", "mm", "a4");
 
         ensureBoxesLength();
 
-        var cols = Math.min(Math.max(1, parseInt(settings.columns,10) || 3), 4);
-        var canvasScale = 1.3;
-        var pageW = 210;
-        var pageH = 297;
-        var pad = 12;
-        var gap = 4;
-        var innerW = pageW - (2 * pad);
-        var boxMmW = (innerW - (gap * (cols - 1))) / cols;
-        var boxMmH = boxMmW * 1.1;
+        const cols = Math.min(Math.max(1, parseInt(settings.columns,10) || 3), 4);
+        const canvasScale = 1.3;
+        const pageW = 210;
+        const pageH = 297;
+        const pad = 12;
+        const gap = 4;
+        const innerW = pageW - (2 * pad);
+        const boxMmW = (innerW - (gap * (cols - 1))) / cols;
+        const boxMmH = boxMmW * 1.1;
 
-        var pdfStage = document.getElementById('pdfStage');
+        const pdfStage = document.getElementById('pdfStage');
 
         function buildPage(mode, startIndex, count, headerH){
           pdfStage.innerHTML = "";
 
-          var headerArea = document.createElement("div");
+          const headerArea = document.createElement("div");
           headerArea.className = "pdfHeaderArea";
           headerArea.style.setProperty("--header-h", headerH + "mm");
 
           if (mode === "front" && headerH > 0) {
-            var title = document.createElement("div");
+            const title = document.createElement("div");
             title.className = "pdfBigTitle";
             title.textContent = "Deutsch mit saeed – Professionelles Vokabelblatt";
             title.style.fontSize = "22px";
             title.style.letterSpacing = "1px";
 
-            var meta = document.createElement("div");
+            const meta = document.createElement("div");
             meta.className = "pdfMeta";
-            var nm = (document.getElementById('name').value || "").trim();
-            var dt = (document.getElementById('date').value || "").trim();
-            var tp = (document.getElementById('topic').value || "").trim();
-            meta.innerHTML = '<span>Name: ' + (nm||"—") + '</span><span>Datum: ' + (dt||"—") + '</span><span>Thema: ' + (tp||"—") + '</span>';
+            const nm = (document.getElementById('name').value || "").trim();
+            const dt = (document.getElementById('date').value || "").trim();
+            const tp = (document.getElementById('topic').value || "").trim();
+            meta.innerHTML = `<span>Name: ${nm||"—"}</span><span>Datum: ${dt||"—"}</span><span>Thema: ${tp||"—"}</span>`;
 
             headerArea.appendChild(title);
             headerArea.appendChild(meta);
@@ -6541,7 +6523,7 @@ lektion16: [
 
           pdfStage.appendChild(headerArea);
 
-          var g = document.createElement("div");
+          const g = document.createElement("div");
           g.className = "pdfGrid";
 
           pdfStage.style.setProperty("--pdfCols", String(cols));
@@ -6549,36 +6531,42 @@ lektion16: [
           pdfStage.style.setProperty("--pdfBoxH", boxMmH + "mm");
           pdfStage.style.setProperty("--pdfGap", gap + "mm");
 
-          var rows = Math.ceil(count / cols);
-          var pageData = boxes.slice(startIndex, startIndex + count);
+          let rows = Math.ceil(count / cols);
+          let pageData = boxes.slice(startIndex, startIndex + count);
 
-          for (var r = 0; r < rows; r++) {
-            for (var c = 0; c < cols; c++) {
-              var itemIndex = (mode === "front") ? (r * cols + c) : (r * cols + (cols - 1 - c));
-              var card = document.createElement("div");
+          for (let r = 0; r < rows; r++) {
+            for (let c = 0; c < cols; c++) {
+              let itemIndex = (mode === "front") ? (r * cols + c) : (r * cols + (cols - 1 - c));
+              const card = document.createElement("div");
               card.className = "pdfCard";
 
               if (itemIndex >= pageData.length) {
                 card.classList.add("empty");
               } else {
-                var d = pageData[itemIndex] || {};
-                var inner = document.createElement("div");
+                const d = pageData[itemIndex] || {};
+                const inner = document.createElement("div");
                 inner.className = "pdfCardInner";
 
                 if (mode === "front"){
-                  inner.innerHTML = '<div class="pdfWordWrap"><div class="pdfWord">' + (d.word||"") + '</div></div><div class="pdfLine"></div><div class="pdfExample">' + (d.example||"") + '</div>';
+                  inner.innerHTML = `
+                    <div class="pdfWordWrap"><div class="pdfWord">${(d.word||"")}</div></div>
+                    <div class="pdfLine"></div>
+                    <div class="pdfExample">${(d.example||"")}</div>
+                  `;
                 } else {
-                  var res = lookupSmart(d.word);
-                  var b1 = res ? res.entry : null;
-                  var arText = d.arTextManual || (b1?b1.ar:"");
-                  var darText = d.darTextManual || (b1?b1.darija:"");
-                  var darEx = d.darijaExampleManual || d.darijaExampleB1 || "";
+                  const res = lookupSmart(d.word);
+                  const b1 = res ? res.entry : null;
+                  const arText = d.arTextManual || (b1?b1.ar:"");
+                  const darText = d.darTextManual || (b1?b1.darija:"");
+                  const darEx = d.darijaExampleManual || d.darijaExampleB1 || "";
 
-                  var html = '<div class="pdfAr">' + arText + '</div><div class="pdfDar">' + darText + '</div>';
-                  if(darEx) html += '<div class="pdfLine"></div><div class="pdfNote">مثال بالدارجة: ' + darEx + '</div>';
-                  if(d.arabicExampleManual) html += '<div class="pdfLine"></div><div class="pdfNote">مثال بالعربية: ' + d.arabicExampleManual + '</div>';
-                  if(d.note) html += '<div class="pdfLine"></div><div class="pdfNote">ملاحظة: ' + d.note + '</div>';
-                  inner.innerHTML = html;
+                  inner.innerHTML = `
+                    <div class="pdfAr">${arText}</div>
+                    <div class="pdfDar">${darText}</div>
+                    ${darEx ? `<div class="pdfLine"></div><div class="pdfNote">مثال بالدارجة: ${darEx}</div>` : ''}
+                    ${d.arabicExampleManual ? `<div class="pdfLine"></div><div class="pdfNote">مثال بالعربية: ${d.arabicExampleManual}</div>` : ''}
+                    ${d.note ? `<div class="pdfLine"></div><div class="pdfNote">ملاحظة: ${d.note}</div>` : ''}
+                  `;
                 }
 
                 card.appendChild(inner);
@@ -6589,36 +6577,35 @@ lektion16: [
           pdfStage.appendChild(g);
         }
 
-        var index = 0;
-        var isFirstPage = true;
-        var step = 0;
-        var totalSteps = Math.ceil(boxes.length / (cols * 3)) * 2;
+        let index = 0;
+        let isFirstPage = true;
+        let step = 0;
 
         while (index < boxes.length) {
-          var headerH = isFirstPage ? 20 : 0;
-          var innerH = pageH - (2 * pad);
-          var availableGridH = innerH - headerH - 4;
-          var rowsPerPage = Math.max(1, Math.floor(availableGridH / (boxMmH + gap)));
-          var perPage = cols * rowsPerPage;
+          const headerH = isFirstPage ? 20 : 0;
+          const innerH = pageH - (2 * pad);
+          const availableGridH = innerH - headerH - 4;
+          const rowsPerPage = Math.max(1, Math.floor(availableGridH / (boxMmH + gap)));
+          const perPage = cols * rowsPerPage;
 
           pdfStage.style.zIndex = "1";
 
           step++;
-          progressFill.style.width = Math.min(100, Math.round((step / totalSteps) * 100)) + '%';
+          progressFill.style.width = Math.min(100, Math.round((step / (Math.ceil(boxes.length/perPage) * 2)) * 100)) + '%';
 
           buildPage("front", index, perPage, headerH);
-          await new Promise(function(r) { setTimeout(r, 50); });
-          var c1 = await html2canvas(pdfStage, { scale: canvasScale, useCORS: true, backgroundColor: "#ffffff", logging: false });
+          await new Promise(r => setTimeout(r, 10));
+          const c1 = await html2canvas(pdfStage, { scale: canvasScale, useCORS: true, backgroundColor: "#ffffff", logging: false });
           if(!isFirstPage) pdf.addPage();
           pdf.addImage(c1.toDataURL("image/png"), "PNG", 0, 0, 210, 297);
 
           pdf.addPage();
           step++;
-          progressFill.style.width = Math.min(100, Math.round((step / totalSteps) * 100)) + '%';
+          progressFill.style.width = Math.min(100, Math.round((step / (Math.ceil(boxes.length/perPage) * 2)) * 100)) + '%';
 
           buildPage("back", index, perPage, headerH);
-          await new Promise(function(r) { setTimeout(r, 50); });
-          var c2 = await html2canvas(pdfStage, { scale: canvasScale, useCORS: true, backgroundColor: "#ffffff", logging: false });
+          await new Promise(r => setTimeout(r, 10));
+          const c2 = await html2canvas(pdfStage, { scale: canvasScale, useCORS: true, backgroundColor: "#ffffff", logging: false });
           pdf.addImage(c2.toDataURL("image/png"), "PNG", 0, 0, 210, 297);
 
           index += perPage;
@@ -6629,7 +6616,7 @@ lektion16: [
         progress.classList.remove('active');
         progress.style.display = 'none';
 
-        var today = new Date().toISOString().split('T')[0];
+        const today = new Date().toISOString().split('T')[0];
         pdf.save("Deutsch_mit_saeed_" + today + ".pdf");
 
       } catch(e){
@@ -6642,8 +6629,7 @@ lektion16: [
       }
     };
 
-    // ✅ INIT - Fixed: use both DOMContentLoaded and fallback
-    function initApp(){
+    window.addEventListener('DOMContentLoaded', () => {
       load();
       numBoxesInput.value = settings.numBoxes;
       numBoxesValue.textContent = settings.numBoxes;
@@ -6651,13 +6637,7 @@ lektion16: [
       boxSizeSelect.value = settings.boxSize;
       showBackCheckbox.checked = settings.showBack;
       updateGrid();
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initApp);
-    } else {
-      initApp();
-    }
+    });
   </script>
 </body>
 </html>
